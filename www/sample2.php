@@ -3,7 +3,7 @@
 define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
 
 //----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/include/h2o/form9.php' );
+require_once( NAHOUW_HOME.'/lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -60,9 +60,9 @@ function CreateForm()
 //----------------------------------------------------------------------------------------------------------------------
 function Demo()
 {
-	//$_POST['cnt_id'] = 4;	
-	//$_POST['cnt_name'] ='MOON';
-  
+  //$_POST['cnt_id'] = 4;
+  //$_POST['cnt_name'] ='MOON';
+
   $form = CreateForm();
 
   if ($form->IsSubmitted( 'submit' ))

@@ -1,14 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'include/test/set/HtmlFormControlSimpleTest.php' );
+require_once( 'test/HtmlFormControlSimpleTest.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlTextTest extends SET_HtmlFormControlSimpleTest
+class SET_HtmlFormControlHiddenTest extends SET_HtmlFormControlSimpleTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   protected function getInputType()
   {
-    return 'text';
+    return 'hidden';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

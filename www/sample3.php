@@ -3,7 +3,7 @@
 define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
 
 //----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/include/h2o/form9.php' );
+require_once( NAHOUW_HOME.'/lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -39,14 +39,14 @@ function CreateForm()
   $countries[] = array( 'cnt_id' => '4', 'cnt_name' => 'UA' );
 
   $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
-  
+
   $control->SetAttribute( 'h2o_options',   $countries    );
  //  $control->SetAttribute( 'h2o_map_id',     'cnt_id'    );
   $control->SetAttribute( 'h2o_map_key',      'cnt_id' );
   $control->SetAttribute( 'h2o_map_label',    'cnt_name' );
   $control->SetAttribute( 'h2o_label_postfix',      '<br/>' );
 
-  
+
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );

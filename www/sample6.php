@@ -3,7 +3,7 @@
 define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
 
 //----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/include/h2o/form9.php' );
+require_once( NAHOUW_HOME.'/lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -35,17 +35,17 @@ function CreateForm()
 
   $control = $fieldset->CreateFormControl( 'radio', 'gender' );
   $control->SetAttribute( 'h2o_prefix', 'male' );
- // $control->SetAttribute( 'checked', true ); 
+ // $control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', '0.0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
   $control->SetAttribute( 'h2o_prefix', 'female' );
-  //$control->SetAttribute( 'checked', true ); 
+  //$control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', '0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
   $control->SetAttribute( 'h2o_prefix', 'unknown' );
-  //$control->SetAttribute( 'checked', true ); 
+  //$control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', 'unknown' );
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
