@@ -1,9 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
-
-//----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/lib/form.php' );
+require_once( __DIR__.'../lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -27,43 +24,43 @@ function Trailer()
 //----------------------------------------------------------------------------------------------------------------------
 function CreateForm()
 {
-  $form = new H2O_HtmlForm();
+  $form = new SET_HtmlForm();
 
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'Name' );
+  $legend->SetAttribute( 'set_inline', 'Name' );
 
   $control = $fieldset->CreateFormControl( 'text', 'first_name' );
-  $control->SetAttribute( 'h2o_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'h2o_position', 'prefix' );
-  $control->SetLabelAttribute( 'h2o_label', 'first  name' );
+  $control->SetAttribute( 'set_postfix', '<br/>' );
+  $control->SetLabelAttribute( 'set_position', 'prefix' );
+  $control->SetLabelAttribute( 'set_label', 'first  name' );
 
   $control = $fieldset->CreateFormControl( 'text', 'last_name' );
-  $control->SetAttribute( 'h2o_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'h2o_position', 'prefix' );
-  $control->SetLabelAttribute( 'h2o_label', 'last  name' );
+  $control->SetAttribute( 'set_postfix', '<br/>' );
+  $control->SetLabelAttribute( 'set_position', 'prefix' );
+  $control->SetLabelAttribute( 'set_label', 'last  name' );
 
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'URI' );
+  $legend->SetAttribute( 'set_inline', 'URI' );
 
   $control = $fieldset->CreateFormControl( 'text', 'email' );
-  $control->SetAttribute( 'h2o_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'h2o_position', 'prefix' );
-  $control->SetLabelAttribute( 'h2o_label', 'email' );
-  $control->AddValidator( new H2O_HtmlFormControlValidatorEmail() );
+  $control->SetAttribute( 'set_postfix', '<br/>' );
+  $control->SetLabelAttribute( 'set_position', 'prefix' );
+  $control->SetLabelAttribute( 'set_label', 'email' );
+  $control->AddValidator( new SET_HtmlFormControlValidatorEmail() );
 
   $control = $fieldset->CreateFormControl( 'text', 'url' );
-  $control->SetAttribute( 'h2o_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'h2o_position', 'prefix' );
-  $control->SetLabelAttribute( 'h2o_label', 'url' );
-  $control->AddValidator( new H2O_HtmlFormControlValidatorHttp() );
+  $control->SetAttribute( 'set_postfix', '<br/>' );
+  $control->SetLabelAttribute( 'set_position', 'prefix' );
+  $control->SetLabelAttribute( 'set_label', 'url' );
+  $control->AddValidator( new SET_HtmlFormControlValidatorHttp() );
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'Other' );
+  $legend->SetAttribute( 'set_inline', 'Other' );
 
   $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
   $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
@@ -71,15 +68,15 @@ function CreateForm()
 
   $control = $fieldset->CreateFormControl( 'select', 'cnt_id' );
 
-  $control->SetAttribute( 'h2o_map_key',        'cnt_id' );
-  $control->SetAttribute( 'h2o_map_label',      'cnt_name' );
-  $control->SetAttribute( 'h2o_value',          '1' );
-  $control->SetAttribute( 'h2o_options',        $countries );
-  $control->SetAttribute( 'h2o_empty_option',   true );
+  $control->SetAttribute( 'set_map_key',        'cnt_id' );
+  $control->SetAttribute( 'set_map_label',      'cnt_name' );
+  $control->SetAttribute( 'set_value',          '1' );
+  $control->SetAttribute( 'set_options',        $countries );
+  $control->SetAttribute( 'set_empty_option',   true );
 
-  $control->SetAttribute( 'h2o_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'h2o_position', 'prefix' );
-  $control->SetLabelAttribute( 'h2o_label', 'Country' );
+  $control->SetAttribute( 'set_postfix', '<br/>' );
+  $control->SetLabelAttribute( 'set_position', 'prefix' );
+  $control->SetLabelAttribute( 'set_label', 'Country' );
 
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );

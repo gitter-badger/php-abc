@@ -1,9 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
-
-//----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/lib/form.php' );
+require_once( __DIR__.'../lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -27,24 +24,24 @@ function Trailer()
 //----------------------------------------------------------------------------------------------------------------------
 function CreateForm()
 {
-  $form = new H2O_HtmlForm();
+  $form = new SET_HtmlForm();
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'Gender' );
+  $legend->SetAttribute( 'set_inline', 'Gender' );
 
   $control = $fieldset->CreateFormControl( 'radio', 'gender' );
-  $control->SetAttribute( 'h2o_prefix', 'male' );
+  $control->SetAttribute( 'set_prefix', 'male' );
  // $control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', '0.0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
-  $control->SetAttribute( 'h2o_prefix', 'female' );
+  $control->SetAttribute( 'set_prefix', 'female' );
   //$control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', '0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
-  $control->SetAttribute( 'h2o_prefix', 'unknown' );
+  $control->SetAttribute( 'set_prefix', 'unknown' );
   //$control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', 'unknown' );
 
