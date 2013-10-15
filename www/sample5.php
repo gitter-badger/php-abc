@@ -3,7 +3,7 @@
 define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
 
 //----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/include/h2o/form9.php' );
+require_once( NAHOUW_HOME.'/lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -38,10 +38,10 @@ function CreateForm()
 
   $control = $fieldset->CreateFormControl( 'invisable', 'example2' );
   $control->SetAttribute( 'value', 'old2' );
-  
+
   $control = $fieldset->CreateFormControl( 'constant', 'example3' );
   $control->SetAttribute( 'h2o_value', 'old3' );
-   
+
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );
   $control->SetAttribute( 'value', 'OK' );

@@ -1,9 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'set/form.php' );
+require_once( 'lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
+class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a select form control.
@@ -12,14 +12,15 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   {
     $form = new SET_HtmlForm();
     $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'radios', 'cnt_id' );
+    $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
 
+    $countries[] = array( 'cnt_id' => '0', 'cnt_name' => '-' );
     $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => '3', 'cnt_name' => 'LU' );
 
     $control->SetAttribute( 'set_map_key',     'cnt_id' );
-    $control->SetAttribute( 'set_options',      $countries );
+    $control->SetAttribute( 'set_options',   $countries );
 
     $form->LoadSubmittedValues();
 
@@ -34,20 +35,22 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   {
     $form = new SET_HtmlForm();
     $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'radios', 'cnt_id' );
+    $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
 
+    $countries[] = array( 'cnt_id' => 0, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 1, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 2, 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => 3, 'cnt_name' => 'LU' );
 
     $control->SetAttribute( 'set_map_key',      'cnt_id' );
     $control->SetAttribute( 'set_options',      $countries );
-    $control->SetAttribute( 'set_value',    '1' );
+    $control->SetAttribute( 'set_map_checked',    '2' );
 
     $form->LoadSubmittedValues();
 
     return $form;
   }
+
 
   //--------------------------------------------------------------------------------------------------------------------
   /** @name ValidTests
@@ -55,29 +58,36 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid.
+  /** Test a check/unchecked checkboxes are added correctly to the values.
    */
   public function testValid1()
   {
-    $_POST['cnt_id'] = '3';
+    $_POST['cnt_id']['3'] = 'on';
 
     $form = $this->SetupForm1();
     $values = $form->GetValues();
 
-    $this->assertEquals( '3', $values['cnt_id'] );
+    // Test checkbox with index 3 has been checked.
+    $this->assertTrue( $values['cnt_id']['3'] );
+
+    // Test checkbox with index 1 has not been checked.
+    $this->assertFalse( $values['cnt_id']['1'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid (even whens tring and integers are mixed).
-   */
+
   public function testValid2()
   {
-    $_POST['cnt_id'] = '3';
+    $_POST['cnt_id']['3'] = 'on';
 
     $form = $this->SetupForm2();
     $values = $form->GetValues();
 
-    $this->assertEquals( '3', $values['cnt_id'] );
+    // Test checkbox with index 3 has been checked.
+    $this->assertTrue( $values['cnt_id']['3'] );
+
+    // Test checkbox with index 1 has not been checked.
+    $this->assertFalse( $values['cnt_id']['1'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -93,14 +103,37 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   public function testWhiteListed1()
   {
     // cnt_id is not a value that is in the whitelist of values (i.e. 1,2, and 3).
-    $_POST['cnt_id'] = 99;
+    $_POST['cnt_id']['99'] = 'on' ;
+
+    $form    = $this->SetupForm1();
+    $values  = $form->GetValues();
+    $changed = $form->GetChangedControls() ;
+
+    $this->assertArrayNotHasKey( 'cnt_id', $changed );
+    $this->assertArrayNotHasKey( '99', $values['cnt_id'] );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  //@}
+  /** @name EmptyTests
+      Tests for submitted values for which @c empty return true.
+   */
+  //@{
+  //--------------------------------------------------------------------------------------------------------------------
+  /** Test a submitted value '0'.
+   */
+  public function test1Empty1()
+  {
+    $_POST['cnt_id']['0'] = 'on';
 
     $form = $this->SetupForm1();
     $values = $form->GetValues();
 
-    $this->assertArrayHasKey( 'cnt_id', $values );
-    $this->assertNull( $values['cnt_id'] );
-    $this->assertEmpty( $form->GetChangedControls() );
+    // Test checkbox with index 3 has been checked.
+    $this->assertTrue( $values['cnt_id']['0'] );
+
+    // Test checkbox with index 1 has not been checked.
+    $this->assertFalse( $values['cnt_id']['1'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

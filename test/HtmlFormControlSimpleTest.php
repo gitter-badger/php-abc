@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'set/form.php' );
+require_once( 'lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Abstract super class for test for @c SET_HtlmFormControlText, @c SET_HtlmFormControlHidden,

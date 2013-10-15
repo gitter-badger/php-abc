@@ -1,14 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'include/test/set/HtmlFormControlSimpleTest.php' );
+require_once( NAHOUW_HOME.'/lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlPasswordTest extends SET_HtmlFormControlSimpleTest
+class SET_HtmlFormControlTextTest extends SET_HtmlFormControlSimpleTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   protected function getInputType()
   {
-    return 'password';
+    return 'text';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

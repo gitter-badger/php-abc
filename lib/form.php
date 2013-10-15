@@ -2917,7 +2917,10 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
         //
         $ret .= "<option value='$code'";
 
-        if ($this->myAttributes['set_value']===$id) $ret .= " selected='selected'";
+        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
+        {
+          $ret .= " selected='selected'";
+        }
 
         if ($map_disabled && !empty($option[$map_disabled])) $ret .= " disabled='disabled'";
 

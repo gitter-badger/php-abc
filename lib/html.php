@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Static class with helper functions for generating HTML code.
  */
-class H2O_Html
+class SET_Html
 {
   /** Counter for generating unique element ID's. See method @a GetAutoId.
    */
@@ -46,6 +46,7 @@ class H2O_Html
    */
   public static function GenerateAttribute( $theName, $theValue )
   {
+    $ret= 'xxxx';
     switch ($theName)
     {
       // Plain text attributes
