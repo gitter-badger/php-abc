@@ -1,9 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
-
-//----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/lib/form.php' );
+require_once( __DIR__.'../lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -27,11 +24,11 @@ function Trailer()
 //----------------------------------------------------------------------------------------------------------------------
 function CreateForm()
 {
-  $form = new H2O_HtmlForm();
+  $form = new SET_HtmlForm();
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'Other' );
+  $legend->SetAttribute( 'set_inline', 'Other' );
 
   $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
   $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
@@ -40,11 +37,11 @@ function CreateForm()
 
   $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
 
-  $control->SetAttribute( 'h2o_options',   $countries    );
- //  $control->SetAttribute( 'h2o_map_id',     'cnt_id'    );
-  $control->SetAttribute( 'h2o_map_key',      'cnt_id' );
-  $control->SetAttribute( 'h2o_map_label',    'cnt_name' );
-  $control->SetAttribute( 'h2o_label_postfix',      '<br/>' );
+  $control->SetAttribute( 'set_options',   $countries    );
+ //  $control->SetAttribute( 'set_map_id',     'cnt_id'    );
+  $control->SetAttribute( 'set_map_key',      'cnt_id' );
+  $control->SetAttribute( 'set_map_label',    'cnt_name' );
+  $control->SetAttribute( 'set_label_postfix',      '<br/>' );
 
 
 

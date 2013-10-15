@@ -1,9 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-define( 'NAHOUW_HOME', dirname(__FILE__).'/..' );
-
-//----------------------------------------------------------------------------------------------------------------------
-require_once( NAHOUW_HOME.'/lib/form.php' );
+require_once( __DIR__.'../lib/form.php' );
 
 //----------------------------------------------------------------------------------------------------------------------
 function Leader()
@@ -27,11 +24,11 @@ function Trailer()
 //----------------------------------------------------------------------------------------------------------------------
 function CreateForm()
 {
-  $form = new H2O_HtmlForm();
+  $form = new SET_HtmlForm();
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'h2o_inline', 'Hidden & Invisable' );
+  $legend->SetAttribute( 'set_inline', 'Hidden & Invisable' );
 
   $control = $fieldset->CreateFormControl( 'hidden', 'example1' );
   $control->SetAttribute( 'value', 'old1' );
@@ -40,7 +37,7 @@ function CreateForm()
   $control->SetAttribute( 'value', 'old2' );
 
   $control = $fieldset->CreateFormControl( 'constant', 'example3' );
-  $control->SetAttribute( 'h2o_value', 'old3' );
+  $control->SetAttribute( 'set_value', 'old3' );
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );
