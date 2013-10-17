@@ -11,18 +11,18 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
   private function SetupForm1()
   {
     $form = new SET_HtmlForm();
-    $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
+    $fieldset = $form->createFieldSet();
+    $control = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => '0', 'cnt_name' => '-' );
     $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => '3', 'cnt_name' => 'LU' );
 
-    $control->SetAttribute( 'set_map_key',     'cnt_id' );
-    $control->SetAttribute( 'set_options',   $countries );
+    $control->setAttribute( 'set_map_key',     'cnt_id' );
+    $control->setAttribute( 'set_options',   $countries );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -34,19 +34,19 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
   private function SetupForm2()
   {
     $form = new SET_HtmlForm();
-    $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'checkboxes', 'cnt_id' );
+    $fieldset = $form->createFieldSet();
+    $control = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => 0, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 1, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 2, 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => 3, 'cnt_name' => 'LU' );
 
-    $control->SetAttribute( 'set_map_key',      'cnt_id' );
-    $control->SetAttribute( 'set_options',      $countries );
-    $control->SetAttribute( 'set_map_checked',    '2' );
+    $control->setAttribute( 'set_map_key',      'cnt_id' );
+    $control->setAttribute( 'set_options',      $countries );
+    $control->setAttribute( 'set_map_checked',    '2' );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -64,8 +64,8 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
   {
     $_POST['cnt_id']['3'] = 'on';
 
-    $form = $this->SetupForm1();
-    $values = $form->GetValues();
+    $form = $this->setupForm1();
+    $values = $form->getValues();
 
     // Test checkbox with index 3 has been checked.
     $this->assertTrue( $values['cnt_id']['3'] );
@@ -80,8 +80,8 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
   {
     $_POST['cnt_id']['3'] = 'on';
 
-    $form = $this->SetupForm2();
-    $values = $form->GetValues();
+    $form = $this->setupForm2();
+    $values = $form->getValues();
 
     // Test checkbox with index 3 has been checked.
     $this->assertTrue( $values['cnt_id']['3'] );
@@ -105,9 +105,9 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
     // cnt_id is not a value that is in the whitelist of values (i.e. 1,2, and 3).
     $_POST['cnt_id']['99'] = 'on' ;
 
-    $form    = $this->SetupForm1();
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls() ;
+    $form    = $this->setupForm1();
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls() ;
 
     $this->assertArrayNotHasKey( 'cnt_id', $changed );
     $this->assertArrayNotHasKey( '99', $values['cnt_id'] );
@@ -126,8 +126,8 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
   {
     $_POST['cnt_id']['0'] = 'on';
 
-    $form = $this->SetupForm1();
-    $values = $form->GetValues();
+    $form = $this->setupForm1();
+    $values = $form->getValues();
 
     // Test checkbox with index 3 has been checked.
     $this->assertTrue( $values['cnt_id']['0'] );

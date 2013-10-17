@@ -11,17 +11,17 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   private function SetupForm1()
   {
     $form = new SET_HtmlForm();
-    $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'radios', 'cnt_id' );
+    $fieldset = $form->createFieldSet();
+    $control = $fieldset->createFormControl( 'radios', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => '3', 'cnt_name' => 'LU' );
 
-    $control->SetAttribute( 'set_map_key',     'cnt_id' );
-    $control->SetAttribute( 'set_options',      $countries );
+    $control->setAttribute( 'set_map_key',     'cnt_id' );
+    $control->setAttribute( 'set_options',      $countries );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -33,18 +33,18 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   private function SetupForm2()
   {
     $form = new SET_HtmlForm();
-    $fieldset = $form->CreateFieldSet();
-    $control = $fieldset->CreateFormControl( 'radios', 'cnt_id' );
+    $fieldset = $form->createFieldSet();
+    $control = $fieldset->createFormControl( 'radios', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => 1, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 2, 'cnt_name' => 'BE' );
     $countries[] = array( 'cnt_id' => 3, 'cnt_name' => 'LU' );
 
-    $control->SetAttribute( 'set_map_key',      'cnt_id' );
-    $control->SetAttribute( 'set_options',      $countries );
-    $control->SetAttribute( 'set_value',    '1' );
+    $control->setAttribute( 'set_map_key',      'cnt_id' );
+    $control->setAttribute( 'set_options',      $countries );
+    $control->setAttribute( 'set_value',    '1' );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -61,8 +61,8 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   {
     $_POST['cnt_id'] = '3';
 
-    $form = $this->SetupForm1();
-    $values = $form->GetValues();
+    $form = $this->setupForm1();
+    $values = $form->getValues();
 
     $this->assertEquals( '3', $values['cnt_id'] );
   }
@@ -74,8 +74,8 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   {
     $_POST['cnt_id'] = '3';
 
-    $form = $this->SetupForm2();
-    $values = $form->GetValues();
+    $form = $this->setupForm2();
+    $values = $form->getValues();
 
     $this->assertEquals( '3', $values['cnt_id'] );
   }
@@ -95,12 +95,12 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
     // cnt_id is not a value that is in the whitelist of values (i.e. 1,2, and 3).
     $_POST['cnt_id'] = 99;
 
-    $form = $this->SetupForm1();
-    $values = $form->GetValues();
+    $form = $this->setupForm1();
+    $values = $form->getValues();
 
     $this->assertArrayHasKey( 'cnt_id', $values );
     $this->assertNull( $values['cnt_id'] );
-    $this->assertEmpty( $form->GetChangedControls() );
+    $this->assertEmpty( $form->getChangedControls() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

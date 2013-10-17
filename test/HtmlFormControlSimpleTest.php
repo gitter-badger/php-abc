@@ -17,12 +17,12 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
   private function SetupForm1( $theValue )
   {
     $form = new SET_HtmlForm();
-    $fieldset= $form->CreateFieldSet();
+    $fieldset= $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( $this->getInputType(), 'name' );
-    if (isset($theValue)) $control->SetAttribute( 'value', $theValue );
+    $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
+    if (isset($theValue)) $control->setAttribute( 'value', $theValue );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -40,9 +40,9 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
     $name         = 'Set Based IT Consultancy';
     $_POST['name'] = $name;
 
-    $form    = $this->SetupForm1( null );
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setupForm1( null );
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
     $this->assertTrue( $changed['name'] );
@@ -56,9 +56,9 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
     $name         = 'Set Based IT Consultancy';
     $_POST['name'] = '';
 
-    $form    = $this->SetupForm1( $name );
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setupForm1( $name );
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     $this->assertEmpty( $values['name'] );
     $this->assertTrue( $changed['name'] );
@@ -78,9 +78,9 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
     $name         = 0;
     $_POST['name'] = $name;
 
-    $form    = $this->SetupForm1( null );
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setupForm1( null );
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
     $this->assertTrue( $changed['name'] );
@@ -94,9 +94,9 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
     $name         = '0.0';
     $_POST['name'] = $name;
 
-    $form    = $this->SetupForm1( '' );
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setupForm1( '' );
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
     $this->assertTrue( $changed['name'] );

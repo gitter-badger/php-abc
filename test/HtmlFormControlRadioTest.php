@@ -11,18 +11,18 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   private function SetForm1()
   {
     $form = new SET_HtmlForm;
-    $fieldset = $form->CreateFieldSet();
+    $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', '1' );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '1' );
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', '2' );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '2' );
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', '3' );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '3' );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
    }
@@ -31,19 +31,19 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   private function SetForm2()
   {
     $form = new SET_HtmlForm;
-    $fieldset = $form->CreateFieldSet();
+    $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', 1 );
-    $control->SetAttribute( 'checked', true );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 1 );
+    $control->setAttribute( 'checked', true );
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', 2 );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 2 );
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', 3 );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 3 );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -52,20 +52,20 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   private function SetForm3()
   {
     $form = new SET_HtmlForm;
-    $fieldset = $form->CreateFieldSet();
+    $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', '0' );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '0' );
 
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', '0.0' );
-    $control->SetAttribute( 'checked', true );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '0.0' );
+    $control->setAttribute( 'checked', true );
 
-    $control = $fieldset->CreateFormControl( 'radio', 'name' );
-    $control->SetAttribute( 'value', ' ' );
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', ' ' );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -82,8 +82,8 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name']= '2';
 
-    $form = $this->SetForm1();
-    $values = $form->GetValues();
+    $form = $this->setForm1();
+    $values = $form->getValues();
 
     $this->assertEquals( '2', $values['name'] );
    }
@@ -95,8 +95,8 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name']= '2';
 
-    $form = $this->SetForm2();
-    $values = $form->GetValues();
+    $form = $this->setForm2();
+    $values = $form->getValues();
 
     $this->assertEquals( 2, $values['name'] );
    }
@@ -108,8 +108,8 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name']= '3';
 
-    $form = $this->SetForm2();
-    $values = $form->GetValues();
+    $form = $this->setForm2();
+    $values = $form->getValues();
 
     $this->assertEquals( 3, $values['name'] );
    }
@@ -121,8 +121,8 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name']= '0.0';
 
-    $form = $this->SetForm3();
-    $values = $form->GetValues();
+    $form = $this->setForm3();
+    $values = $form->getValues();
 
     $this->assertEquals( '0.0', $values['name'] );
    }
@@ -141,12 +141,12 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name'] = 'ten';
 
-    $form = $this->SetForm1();
-    $values = $form->GetValues();
+    $form = $this->setForm1();
+    $values = $form->getValues();
 
     $this->assertArrayHasKey( 'name', $values );
     $this->assertNull( $values['name'] );
-    $this->assertEmpty( $form->GetChangedControls() );
+    $this->assertEmpty( $form->getChangedControls() );
 
    }
 
@@ -158,9 +158,9 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name'] = '10';
 
-    $form    = $this->SetForm2();
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setForm2();
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     $this->assertArrayHasKey( 'name', $values );
     $this->assertNull( $values['name'] );

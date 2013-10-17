@@ -12,12 +12,12 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet( 'fieldset' );
 
-    $control = $fieldset->CreateFormControl( 'text', 'url' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorHttp() );
+    $control = $fieldset->createFormControl( 'text', 'url' );
+    $control->addValidator( new SET_HtmlFormControlValidatorHttp() );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -33,9 +33,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttp()
   {
     $_POST['url'] = 'http://www.setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -44,9 +44,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttp2()
   {
     $_POST['url'] = 'http://www.google.com';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -55,9 +55,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttp3()
   {
     $_POST['url'] = 'http://www.php.net';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -66,9 +66,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttpNull()
   {
     $_POST['url'] = null;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -77,9 +77,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttpFalse()
   {
     $_POST['url'] = false;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -88,9 +88,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testValidHttpEmpty()
   {
     $_POST['url'] = '';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 //--------------------------------------------------------------------------------------------------------------------
   //@}
@@ -105,9 +105,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testInvalidHttp1()
   {
     $_POST['url'] = 'hffd//:www.setbased/nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse($form->Validate() );
+    $this->assertFalse($form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -116,9 +116,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testInvalidHttp2()
   {
     $_POST['url'] = 'http//golgelinva';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse($form->Validate() );
+    $this->assertFalse($form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -127,9 +127,9 @@ class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
   public function testInvalidHttp3()
  {
     $_POST['url'] = 'ftp//:!#$%&\'*+-/=?^_`{}|~ed.com';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse($form->Validate() );
+    $this->assertFalse($form->validate() );
   }
 
    //--------------------------------------------------------------------------------------------------------------------

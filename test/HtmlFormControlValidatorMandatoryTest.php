@@ -12,12 +12,12 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet( 'fieldset' );
 
-    $control = $fieldset->CreateFormControl( $theType, 'input' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorMandatory() );
+    $control = $fieldset->createFormControl( $theType, 'input' );
+    $control->addValidator( new SET_HtmlFormControlValidatorMandatory() );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -29,12 +29,12 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet( 'fieldset' );
 
-    $control = $fieldset->CreateFormControl( 'checkbox', 'box' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorMandatory() );
+    $control = $fieldset->createFormControl( 'checkbox', 'box' );
+    $control->addValidator( new SET_HtmlFormControlValidatorMandatory() );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -54,9 +54,9 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
     foreach( $types as $i => $type )
     {
       $_POST['input'] = 'Set Based IT Consultancy';
-      $form = $this->SetupForm1( $type );
+      $form = $this->setupForm1( $type );
 
-      $this->assertTrue( $form->Validate(), sprintf( "type: '%s'.", $type )  );
+      $this->assertTrue( $form->validate(), sprintf( "type: '%s'.", $type )  );
     }
   }
 
@@ -66,9 +66,9 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
   public function testValidCheckedCheckbox()
   {
     $_POST['box'] = 'on';
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -98,9 +98,9 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
       {
 
         $_POST['input'] = $value;
-        $form = $this->SetupForm1( $type );
+        $form = $this->setupForm1( $type );
 
-        $this->assertFalse( $form->Validate(),
+        $this->assertFalse( $form->validate(),
                             sprintf( "type: '%s', value: '%s'.", $type, var_export( $value, true ) ) );
       }
     }
@@ -120,9 +120,9 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
       {
 
         $_POST['input'] = $value;
-        $form = $this->SetupForm1( $type );
+        $form = $this->setupForm1( $type );
 
-        $this->assertFalse( $form->Validate(),
+        $this->assertFalse( $form->validate(),
                             sprintf( "type: '%s', value: '%s'.", $type, var_export( $value, true ) ) );
       }
     }
@@ -134,9 +134,9 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
   public function testinvalidUncheckedCheckbox()
   {
     $_POST = array();
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

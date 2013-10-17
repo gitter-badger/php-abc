@@ -9,12 +9,12 @@ class SET_HtmlFormControlConstantTest extends PHPUnit_Framework_TestCase
   private function SetupForm1()
   {
     $form = new SET_HtmlForm();
-    $fieldset= $form->CreateFieldSet();
+    $fieldset= $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'constant' , 'name' );
-    $control->SetAttribute( 'set_value', '1' );
+    $control = $fieldset->createFormControl( 'constant' , 'name' );
+    $control->setAttribute( 'set_value', '1' );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -24,9 +24,9 @@ class SET_HtmlFormControlConstantTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name'] = '2';
 
-    $form    = $this->SetupForm1();
-    $values  = $form->GetValues();
-    $changed = $form->GetChangedControls();
+    $form    = $this->setupForm1();
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
 
     // Assert the value of "name" is still "1".
     $this->assertEquals( '1', $values['name'] );

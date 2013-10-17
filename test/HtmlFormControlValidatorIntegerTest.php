@@ -12,12 +12,12 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet();
+    $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'text', 'integer' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorInteger() );
+    $control = $fieldset->createFormControl( 'text', 'integer' );
+    $control->addValidator( new SET_HtmlFormControlValidatorInteger() );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -29,12 +29,12 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet();
+    $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->CreateFormControl( 'text', 'integer' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorInteger( -1, 10 ) );
+    $control = $fieldset->createFormControl( 'text', 'integer' );
+    $control->addValidator( new SET_HtmlFormControlValidatorInteger( -1, 10 ) );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -50,9 +50,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger1()
   {
     $_POST['integer'] = 0;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -61,9 +61,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger2()
   {
     $_POST['integer'] = '56';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -72,9 +72,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger3()
   {
     $_POST['integer'] = 37 ;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -83,9 +83,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger4()
   {
     $_POST['integer'] = '-11' ;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -94,9 +94,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger5()
   {
     $_POST['integer'] = -45 ;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -108,9 +108,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger6()
   {
     $_POST['integer'] = '-1' ;
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -119,9 +119,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger7()
   {
     $_POST['integer'] = '0' ;
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -130,9 +130,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger8()
   {
     $_POST['integer'] = '3' ;
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -141,9 +141,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testValidInteger9()
   {
     $_POST['integer'] = '10' ;
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -158,9 +158,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger1()
   {
     $_POST['integer'] = 'string';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -169,9 +169,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger2()
   {
     $_POST['integer'] = '0.1';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -180,9 +180,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger3()
   {
     $_POST['integer'] = '123abc'; // My favorite password ;-)
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -194,9 +194,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger4()
   {
     $_POST['integer'] = '-9';
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -205,9 +205,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger5()
   {
     $_POST['integer'] = '-2';
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -216,9 +216,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger6()
   {
     $_POST['integer'] = '11';
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -227,9 +227,9 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
   public function testInvalidInteger7()
   {
     $_POST['integer'] = '23';
-    $form = $this->SetupForm2();
+    $form = $this->setupForm2();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
   //--------------------------------------------------------------------------------------------------------------------
   //@}

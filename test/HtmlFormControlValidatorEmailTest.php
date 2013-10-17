@@ -12,12 +12,12 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   {
     $form = new set_HtmlForm();
 
-    $fieldset = $form->CreateFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet( 'fieldset' );
 
-    $control = $fieldset->CreateFormControl( 'text', 'email' );
-    $control->AddValidator( new SET_HtmlFormControlValidatorEmail() );
+    $control = $fieldset->createFormControl( 'text', 'email' );
+    $control->addValidator( new SET_HtmlFormControlValidatorEmail() );
 
-    $form->LoadSubmittedValues();
+    $form->loadSubmittedValues();
 
     return $form;
   }
@@ -33,9 +33,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmail1()
   {
     $_POST['email'] = 'info@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -44,9 +44,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmail2()
   {
     $_POST['email'] = 'p.r.water@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -55,9 +55,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmail3()
   {
     $_POST['email'] = 'disposable.style.email.with+symbol@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -66,9 +66,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   // public function testValidEmail4()
   // {
   //   $_POST['email'] = 'postbox@com';
-  //   $form = $this->SetupForm1();
+  //   $form = $this->setupForm1();
   //
-  //   $this->assertTrue( $form->Validate() );
+  //   $this->assertTrue( $form->validate() );
   // }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -79,9 +79,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   {
     $local = str_repeat( 'x', 64 );
     $_POST['email'] = "$local@setbased.nl";
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -91,9 +91,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmailWithLongDomain()
   {
     $_POST['email'] = 'info@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -102,9 +102,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmailNull()
   {
     $_POST['email'] = null;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -113,9 +113,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmailFalse()
   {
     $_POST['email'] = false;
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -124,9 +124,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testValidEmailEmpty()
   {
     $_POST['email'] = '';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -142,9 +142,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmail1()
   {
     $_POST['email'] = '"much.more unusual"@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -153,9 +153,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmail2()
   {
     $_POST['email'] = '"very.unusual.@.unusual.com"@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -164,9 +164,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmail3()
   {
     $_POST['email'] = '!#$%&\'*+-/=?^_`{}|~@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertTrue( $form->Validate() );
+    $this->assertTrue( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -175,9 +175,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmail4()
   {
     $_POST['email'] = 'info@localhost';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -186,9 +186,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmailWithoutAt()
   {
     $_POST['email'] = 'info.setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -197,9 +197,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmailWith2Ats1()
   {
     $_POST['email'] = 'info@info@setbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -208,9 +208,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmailWith2Ats2()
   {
     $_POST['email'] = 'info@setbased.nl@info';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -219,9 +219,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   public function testInvalidEmailWithNoexitantDomain()
   {
     $_POST['email'] = 'info@xsetbased.nl';
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -232,9 +232,9 @@ class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
   {
     $local = str_repeat( 'x', 65 );
     $_POST['email'] = "$local@setbased.nl";
-    $form = $this->SetupForm1();
+    $form = $this->setupForm1();
 
-    $this->assertFalse( $form->Validate() );
+    $this->assertFalse( $form->validate() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

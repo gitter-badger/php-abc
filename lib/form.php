@@ -16,23 +16,23 @@ require_once( __DIR__.'/html.php' );
 class SET_HtmlClean
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public static function PruneWhitespace( $theValue )
+  public static function pruneWhitespace( $theValue )
   {
     if (empty($theValue)) return $theValue;
     else                  return trim( mb_ereg_replace( '[\ \t\n\r\0\x0B\xA0]+', ' ', $theValue, 'p' ) );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public static function TrimWhitespace( $theValue )
+  public static function trimWhitespace( $theValue )
   {
     if (empty($theValue)) return $theValue;
     else                  return trim( $theValue, " \t\n\r\0\x0B\xA0" );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public static function NormalizeUrl( $theValue )
+  public static function normalizeUrl( $theValue )
   {
-    $value = self::TrimWhitespace( $theValue );
+    $value = self::trimWhitespace( $theValue );
 
     if ($value===null || $value===false || $value==='') return false;
 
@@ -88,9 +88,9 @@ class SET_HtmlClean
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public static function TidyHtml( $theValue )
+  public static function tidyHtml( $theValue )
   {
-    $value = self::TrimWhitespace( $theValue );
+    $value = self::trimWhitespace( $theValue );
 
     if ($value===null || $value===false || $value==='') return false;
 
@@ -124,12 +124,12 @@ interface SET_HtmlObfuscator
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the obfuscate value of @a $theValue.
    */
-  public function Encode( $theValue );
+  public function encode( $theValue );
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the deobfuscate value of @a $theCode.
    */
-  public function Decode( $theCode );
+  public function decode( $theCode );
 
   //--------------------------------------------------------------------------------------------------------------------
 }
@@ -140,7 +140,7 @@ interface SET_HtmlObfuscator
 interface SET_HtmlFormControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function Validate( $theFormControl );
+  public function validate( $theFormControl );
 
   //--------------------------------------------------------------------------------------------------------------------
 }
@@ -156,7 +156,7 @@ class SET_HtmlFormControlValidatorMandatory implements SET_HtmlFormControlValida
   /** Validates recursively if one of the leaves of @a $theArray has a non-empty value.
       @param $theArray A nested array.
    */
-  private function ValidateArray( $theArray )
+  private function validateArray( $theArray )
   {
     foreach( $theArray as $element )
     {
@@ -166,7 +166,7 @@ class SET_HtmlFormControlValidatorMandatory implements SET_HtmlFormControlValida
       }
       else
       {
-        $tmp = $this->ValidateArray( $element );
+        $tmp = $this->validateArray( $element );
         if ($tmp===true) return true;
       }
     }
@@ -175,13 +175,13 @@ class SET_HtmlFormControlValidatorMandatory implements SET_HtmlFormControlValida
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Validate( $theFormControl )
+  public function validate( $theFormControl )
   {
-    $value = $theFormControl->GetSubmittedValue();
+    $value = $theFormControl->getSubmittedValue();
 
     if ($value===null || $value===false || $value==='') return false;
 
-    if (is_array($value)) return $this->ValidateArray( $value );
+    if (is_array($value)) return $this->validateArray( $value );
 
     return true;
   }
@@ -219,12 +219,12 @@ class SET_HtmlFormControlValidatorInteger implements SET_HtmlFormControlValidato
    *  Returns @c true if the value of @a $theFormControl is an integer.
    *  Otherwise returns @c false.
    */
-  public function Validate( $theFormControl )
+  public function validate( $theFormControl )
   {
     $options = array( 'options' => array( 'min_range' => $this->myMinValue,
                                           'max_range' => $this->myMaxValue ) );
 
-    $value = $theFormControl->GetSubmittedValue();
+    $value = $theFormControl->getSubmittedValue();
 
     // An empty value is valid.
     if ($value===null || $value===false || $value==='') return true;
@@ -257,9 +257,9 @@ class SET_HtmlFormControlValidatorEmail implements SET_HtmlFormControlValidator
    *  is valided as well if the domain in the email address realy exists.
    *  Otherwise returns @a false.
    */
-  public function Validate( $theFormControl )
+  public function validate( $theFormControl )
   {
-    $value = $theFormControl->GetSubmittedValue();
+    $value = $theFormControl->getSubmittedValue();
 
     // An empty value is valid.
     if ($value===null || $value===false || $value==='') return true;
@@ -298,9 +298,9 @@ class SET_HtmlFormControlValidatorHttp implements SET_HtmlFormControlValidator
    *  Returns @a true if the value of @a $theFormControl is a valid http URL.
    *  Otherwise returns @a false.
    */
-  public function Validate( $theFormControl )
+  public function validate( $theFormControl )
   {
-    $value = $theFormControl->GetSubmittedValue();
+    $value = $theFormControl->getSubmittedValue();
 
     // An empty value is valid.
     if ($value===null || $value===false || $value==='') return true;
@@ -319,7 +319,7 @@ class SET_HtmlFormControlValidatorHttp implements SET_HtmlFormControlValidator
 
     // Test that the page actually exits. We consider all HTTP 200-399 responses are valid.
     $hdrs = get_headers( $url );
-    $ok   = (is_array($hdrs) && preg_match('/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/',$hdrs[0]));
+    $ok   = (is_array($hdrs) && preg_match('/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/', $hdrs[0]));
 
     return $ok;
   }
@@ -360,13 +360,13 @@ abstract class SET_HtmlFormControl
   //--------------------------------------------------------------------------------------------------------------------
   /** Adds validator @a $theValidator to this form control.
    */
-  public function AddValidator( $theValidator )
+  public function addValidator( $theValidator )
   {
     $this->myValidators[] = $theValidator;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlFormControl::SetAttribute.
+  /** Helper function for SET_HtmlFormControl::setAttribute.
       Sets the value attribute with name @a $theName to @a $theValue. If @a $theValue is @c null, @c false, or @c ''
       the attribute is unset.
       @param $theName  The name of the attribute.
@@ -374,7 +374,7 @@ abstract class SET_HtmlFormControl
 
       @todo Document how attribute class is handled.
    */
-  protected function SetAttributeBase( $theName, $theValue )
+  protected function setAttributeBase( $theName, $theValue )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -403,31 +403,31 @@ abstract class SET_HtmlFormControl
       @todo Document how attribute class is handled.
       @todo Document @a theExtendedFlag
    */
-  abstract public function SetAttribute( $theName, $theValue, $theExtendedFlag=false );
+  abstract public function setAttribute( $theName, $theValue, $theExtendedFlag=false );
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function GetAttribute( $theName )
+  public function getAttribute( $theName )
   {
     return (isset($this->myAttributes[$theName])) ? $this->myAttributes[$theName] : null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  abstract public function Generate( $theParentName );
+  abstract public function generate( $theParentName );
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the local name of this form control
    */
-  public function GetLocalName()
+  public function getLocalName()
   {
     return $this->myAttributes['name'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GetSubmitName( $theParentSubmitName )
+  protected function getSubmitName( $theParentSubmitName )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if ($theParentSubmitName!==false)
     {
@@ -443,7 +443,7 @@ abstract class SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function GetErrorMessages( $theRecursiveFlag=false )
+  public function getErrorMessages( $theRecursiveFlag=false )
   {
     return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
   }
@@ -451,25 +451,25 @@ abstract class SET_HtmlFormControl
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the submitted value of this form control.
    */
-  public function GetSubmittedValue()
+  public function getSubmittedValue()
   {
     return $this->myAttributes['set_submitted_value'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetErrorMessage( $theMessage )
+  public function setErrorMessage( $theMessage )
   {
     $this->myAttributes['set_errmsg'][] = $theMessage;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  abstract public function SetValuesBase( &$theValues );
+  abstract public function setValuesBase( &$theValues );
 
   //--------------------------------------------------------------------------------------------------------------------
-  abstract protected function ValidateBase( &$theInvalidFormControls );
+  abstract protected function validateBase( &$theInvalidFormControls );
 
   //--------------------------------------------------------------------------------------------------------------------
-  abstract protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
+  abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
 
   //--------------------------------------------------------------------------------------------------------------------
 }
@@ -502,11 +502,11 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
 
     // A simple form control must have a name.
     $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SET_Html::Error( 'Name is emtpy' );
+    if ($local_name===false) SET_Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetLabelAttribute( $theName, $theValue, $theExtendedFlag=false  )
+  public function setLabelAttribute( $theName, $theValue, $theExtendedFlag=false  )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -572,13 +572,13 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GeneratePrefixLabel()
+  protected function generatePrefixLabel()
   {
     $ret = false;
 
@@ -586,7 +586,7 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
     {
       if ($this->myAttributes['id']=='')
       {
-        $id = SET_Html::GetAutoId();
+        $id = SET_Html::getAutoId();
         $this->myAttributes['id']       = $id;
         $this->myLabelAttributes['for'] = $id;
       }
@@ -595,18 +595,18 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
         $this->myLabelAttributes['for'] = $this->myAttributes['id'];
       }
 
-      if ($this->myLabelAttributes['set_position']=='prefix') $ret .= $this->GenerateLabel();
+      if ($this->myLabelAttributes['set_position']=='prefix') $ret .= $this->generateLabel();
     }
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GeneratePostfixLabel()
+  protected function generatePostfixLabel()
   {
     if (isset($this->myLabelAttributes['set_position']) && $this->myLabelAttributes['set_position']=='postfix')
     {
-      $ret = $this->GenerateLabel();
+      $ret = $this->generateLabel();
     }
     else
     {
@@ -617,7 +617,7 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateLabel()
+  protected function generateLabel()
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<label';
@@ -655,7 +655,7 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
       case 'onkeypress':
       case 'ononkeydown':
       case 'onkeyup':
-        return SET_Html::Error( 'not implemented' );
+        return SET_Html::error( 'not implemented' );
         break;
 
 
@@ -676,13 +676,13 @@ abstract class SET_HtmlFormControlSimple extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
 
     foreach( $this->myValidators as $validator )
     {
-      $valid = $validator->Validate( $this );
+      $valid = $validator->validate( $this );
       if ($valid!==true)
       {
         $local_name = $this->myAttributes['name'];
@@ -708,106 +708,21 @@ class SET_HtmlFormControlText extends SET_HtmlFormControlSimple
   {
     parent::__construct( $theName );
 
-    $this->myAttributes['set_clean'] = 'SET_HtmlClean::PruneWhitespace';
+    $this->myAttributes['set_clean'] = 'SET_HtmlClean::pruneWhitespace';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Sets attribute \a $theName to value \a $theValue.
-    * The following attributes are supported.
-    * <ul>
-    * <li>Basic attributes
-    *   <ul>
-    *   <li>\a alt Alternate text for controls of the type image.
-    *   <li>\a checked When the type attribute has the value radio or checkbox, this attribute specifies that the
-    *       radio/checkbox is selected. Any none empty value indicates that radio/checkbox is selected.
-    *   <li>\a maxlength (Number) When the type attribute has the value text or password, this attribute specifies the
-    *       maximum number of characters the user may enter. This number should not exceed the value specified in
-    *       the size attribute..
-    *   <li>\a size (Number) This attribute tells the Web browser the initial width of the control. The width is given
-    *       in pixels except when the type attribute has the value text or password. In such cases, its value is
-    *       the number of characters.
-    *   <li>\a value (Text) Value associated with a control.
-    *   </ul>
-    *  <li>Advanced Attributes
-    *    <ul>
-    *   <li>\a accept (ContentTypes) This attribute specifies a comma-separated list of content types that a server
-    *       processing this form will handle correctly.
-    *   <li>\a accesskey (Character) Accessibility key character.
-    *   <li>\a disabled Disables the control for user input. Any none empty value indicates that the control is
-    *       disabled.
-    *   <li>\a ismap If present, this attribute specifies that a server-side image map should be used. Possible value
-    *       is ismap.
-    *   <li>\a onblur (Script) A client-side script event that occurs when an element loses focus either by the
-    *        pointing device or by tabbing navigation.
-    *   <li>\a onchange (Script) A client-side script event that occurs when a control loses the input focus and
-    *       its value is modified prior to its next receiving focus.
-    *   <li>\a onfocus (Script) A client-side script event that occurs when an element receives focus either by the
-    *       pointing device or by tabbing navigation.
-    *   <li>\a onselect (Script) A client-side script event that occurs when a user selects some text in a text field.
-    *   <li>\a readonly If present, this attribute prohibits changes to the value in the control. Possible value is readonly.
-    *   <li>\a src (URI) When the type attribute has the value image, this attribute specifies the location of the
-    *       image to be used to decorate the graphical submit button.
-    *   <li>\a tabindex (Number) Position in tabbing order.
-    *   <li>\a usemap (IDReference) When the type attribute has the value image, this attribute associates the image
-    *        to a client-side image map defined by a map element. The value of this attribute must match the id
-    *        attribute of the map element.
-    *   </ul>
-    *   <li>Common core attributes
-    *   <ul>
-    *   <li>\a class (NameTokens) This attribute assigns a class name or set of class names to an element. Any
-    *       number of elements may be assigned the same class name or set of class names. Multiple class names must
-    *       be separated by white space characters. Class names are typically used to apply CSS formatting rules to
-    *       an element.
-    *   <li>\a id (ID) This attribute assigns an ID to an element. This ID must be unique in a document. This ID can
-    *       be used by client-side scripts (such as JavaScript) to select elements, apply CSS formatting rules, or
-    *       to build relationships between elements.
-    *   <li>\a title (Text) This attribute offers advisory information. Some Web browsers will display this
-    *       information as tooltips. Assistive technologies may make this information available to users as
-    *       additional information about the element.
-    *   </ul>
-    *   <li>Common internationalization attributes
-    *   <ul>
-    *   <li>\a xml:lang (NameToken) This attribute specifies the base language of an element's attribute values and
-    *       text content.
-    *   <li>\a dir This attribute specifies the base direction of text. Possible values:
-    *        ltr: Left-to-right
-             rtl: Right-to-left
-    *   </ul>
-    *   <li>Common event attributes
-    *   <ul>
-    *   <li>\a onclick (Script) A client-side script event that occurs when a pointing device button is clicked over an element.
-    *   <li>\a ondblclick (Script) A client-side script event that occurs when a pointing device button is double-clicked over an element.
-    *   <li>\a onmousedown (Script) A client-side script event that occurs when a pointing device button is pressed down over an element.
-    *   <li>\a onmouseup (Script) A client-side script event that occurs when a pointing device button is released over an element.
-    *   <li>\a onmouseover (Script) A client-side script event that occurs when a pointing device is moved onto an element.
-    *   <li>\a onmousemove (Script) A client-side script event that occurs when a pointing device is moved within an element.
-    *   <li>\a onmouseout (Script) A client-side script event that occurs when a pointing device is moved away from an element.
-    *   <li>\a onkeypress (Script) A client-side script event that occurs when a key is pressed down over an element then released.
-    *   <li>\a onkeydown (Script) A client-side script event that occurs when a key is pressed down over an element.
-    *   <li>\a onkeyup (Script) A client-side script event that occurs when a key is released over an element.
-    *   </ul>
-    *   <li>Common style attribute
-    *   <ul>
-    *   <li>\a style (Text) This attribute specifies formatting style information for the current element. The
-    *       content of this attribute is called inline CSS. The style attribute is deprecated (considered outdated),
-    *       because it fuses together content and formatting.
-    *   </ul>
-    *   <li> H2O Attributes
-    *   <ul>
-    *   <li>\a set_prefix (html) Code placed before the code of the form control object.
-    *   <li>\a set_postfix (html) Code placed after the code of the form control object.
-    *   </ul>
-    *   </ul>
     */
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'maxlength':
-    // case 'name':
+      // case 'name':
     case 'size':
-    // case 'type':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -851,66 +766,71 @@ class SET_HtmlFormControlText extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'text' );
+    $ret .= SET_Html::generateAttribute( 'type', 'text' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        case 'size':
-          if (isset($this->myAttributes['maxlength'])) $value = min( $value, $this->myAttributes['maxlength'] );
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
-          break;
+      case 'size':
+        if (isset($this->myAttributes['maxlength'])) $value = min( $value, $this->myAttributes['maxlength'] );
+        $ret .= SET_Html::generateAttribute( $name, $value );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
-    if (isset($this->myAttributes['set_clean'])) $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
-    else                                         $new_value = $theSubmittedValue[$submit_name];
-
+    if (isset($this->myAttributes['set_clean']))
+    {
+      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+    }
+    else
+    {
+      $new_value = $theSubmittedValue[$submit_name];
+    }
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
     if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
@@ -930,7 +850,7 @@ class SET_HtmlFormControlText extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -940,7 +860,7 @@ class SET_HtmlFormControlText extends SET_HtmlFormControlSimple
       // The value of a input:text must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -966,19 +886,19 @@ class SET_HtmlFormControlPassword extends SET_HtmlFormControlSimple
   {
     parent::__construct( $theName );
 
-    $this->myAttributes['set_clean'] = 'SET_HtmlClean::PruneWhitespace';
+    $this->myAttributes['set_clean'] = 'SET_HtmlClean::pruneWhitespace';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'maxlength':
-    // case 'name':
+      // case 'name':
     case 'size':
-    // case 'type':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -1022,66 +942,71 @@ class SET_HtmlFormControlPassword extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'password' );
+    $ret .= SET_Html::generateAttribute( 'type', 'password' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        case 'size':
-          if (isset($this->myAttributes['maxlength'])) $value = min( $value, $this->myAttributes['maxlength'] );
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
-          break;
+      case 'size':
+        if (isset($this->myAttributes['maxlength'])) $value = min( $value, $this->myAttributes['maxlength'] );
+        $ret .= SET_Html::generateAttribute( $name, $value );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
-    if ($this->myAttributes['set_clean']) $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
-    else                                  $new_value = $theSubmittedValue[$submit_name];
-
+    if ($this->myAttributes['set_clean'])
+    {
+      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+    }
+    else
+    {
+      $new_value = $theSubmittedValue[$submit_name];
+    }
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
     if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
@@ -1101,7 +1026,7 @@ class SET_HtmlFormControlPassword extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -1111,7 +1036,7 @@ class SET_HtmlFormControlPassword extends SET_HtmlFormControlSimple
       // The value of a input:password must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -1133,13 +1058,7 @@ class SET_HtmlFormControlPassword extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlHidden extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -1189,61 +1108,66 @@ class SET_HtmlFormControlHidden extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'hidden' );
+    $ret .= SET_Html::generateAttribute( 'type', 'hidden' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
-    if (isset($this->myAttributes['set_clean'])) $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
-    else                                         $new_value = $theSubmittedValue[$submit_name];
-
+    if (isset($this->myAttributes['set_clean']))
+    {
+      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+    }
+    else
+    {
+      $new_value = $theSubmittedValue[$submit_name];
+    }
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
     if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
@@ -1263,7 +1187,7 @@ class SET_HtmlFormControlHidden extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -1273,7 +1197,7 @@ class SET_HtmlFormControlHidden extends SET_HtmlFormControlSimple
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -1295,21 +1219,15 @@ class SET_HtmlFormControlHidden extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlInvisable extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'maxlength':
-    // case 'name':
+      // case 'name':
     case 'size':
-    // case 'type':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -1353,53 +1271,53 @@ class SET_HtmlFormControlInvisable extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'hidden' );
+    $ret .= SET_Html::generateAttribute( 'type', 'hidden' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Note: by definition the value of a input:invisible form control will not be changed, whatever is submitted.
     $local_name = $this->myAttributes['name'];
@@ -1412,7 +1330,7 @@ class SET_HtmlFormControlInvisable extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -1422,7 +1340,7 @@ class SET_HtmlFormControlInvisable extends SET_HtmlFormControlSimple
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -1446,20 +1364,14 @@ class SET_HtmlFormControlInvisable extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlRadio extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'checked':
-    //case 'name':
-    //case 'type':
+      //case 'name':
+      //case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -1504,57 +1416,57 @@ class SET_HtmlFormControlRadio extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_prefix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'radio' );
+    $ret .= SET_Html::generateAttribute( 'type', 'radio' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if ((string)$theSubmittedValue[$submit_name]===(string)$this->myAttributes['value'])
     {
@@ -1575,7 +1487,7 @@ class SET_HtmlFormControlRadio extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -1585,7 +1497,7 @@ class SET_HtmlFormControlRadio extends SET_HtmlFormControlSimple
       // The value of a input:checkbox must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when empty? */
@@ -1609,20 +1521,14 @@ class SET_HtmlFormControlRadio extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlCheckbox extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'checked':
-    // case 'name':
-    // case 'type':
+      // case 'name':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -1667,57 +1573,57 @@ class SET_HtmlFormControlCheckbox extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_prefix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'checkbox' );
+    $ret .= SET_Html::generateAttribute( 'type', 'checkbox' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if (empty($this->myAttributes['checked'])!==empty($theSubmittedValue[$submit_name]))
     {
@@ -1745,7 +1651,7 @@ class SET_HtmlFormControlCheckbox extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -1755,7 +1661,7 @@ class SET_HtmlFormControlCheckbox extends SET_HtmlFormControlSimple
       // The value of a input:checkbox must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when empty? */
@@ -1784,21 +1690,13 @@ class SET_HtmlFormControlPushMe extends SET_HtmlFormControlSimple
   protected $myButtonType;
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Creates a SET_HtmlFormControlPushMe object.
-   */
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
-    // case 'name':
-    // case 'type':
+      // case 'name':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -1841,60 +1739,61 @@ class SET_HtmlFormControlPushMe extends SET_HtmlFormControlSimple
     case 'set_prefix':
     case 'set_postfix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', $this->myButtonType );
+    $ret .= SET_Html::generateAttribute( 'type', $this->myButtonType );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          // For buttons we use local names. It is the task of the developer to ensure the local names of buttons are unique.
-          $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-          $local_name  = $this->myAttributes['name'];
-          $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
+        // are unique.
+        $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
+        $local_name  = $this->myAttributes['name'];
+        $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if ($theSubmittedValue[$submit_name]===$this->myAttributes['value'])
     {
@@ -1909,9 +1808,9 @@ class SET_HtmlFormControlPushMe extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
-    // We don't set the value of a button via SET_HtmlForm::SetValues() method. So, nothing to do.
+    // We don't set the value of a button via SET_HtmlForm::setValues() method. So, nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -1971,13 +1870,7 @@ class SET_HtmlFormControlButton extends SET_HtmlFormControlPushMe
 class SET_HtmlFormControlFile extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -2027,57 +1920,57 @@ class SET_HtmlFormControlFile extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= '<input';
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'file' );
+    $ret .= SET_Html::generateAttribute( 'type', 'file' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if ($_FILES[$submit_name]['error']===0)
     {
@@ -2095,7 +1988,7 @@ class SET_HtmlFormControlFile extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
@@ -2109,20 +2002,14 @@ class SET_HtmlFormControlFile extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlImage extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'alt':
-    // case 'name':
-    // case 'type':
+      // case 'name':
+      // case 'type':
     case 'value':
 
       // Advanced attributes.
@@ -2168,60 +2055,60 @@ class SET_HtmlFormControlImage extends SET_HtmlFormControlSimple
     case 'set_postfix':
     case 'set_clean':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName  )
+  public function generate( $theParentName  )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= $this->GeneratePrefixLabel();
+    $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SET_Html::GenerateAttribute( 'type', 'image' );
+    $ret .= SET_Html::generateAttribute( 'type', 'image' );
 
     foreach( $this->myAttributes as $name => $value )
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $global_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $global_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
 
     $ret .= '/>';
-    $ret .= $this->GeneratePostfixLabel();
+    $ret .= $this->generatePostfixLabel();
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     /** @todo Implement LoadSumittedValuesBase for control type image.
      */
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
@@ -2233,7 +2120,7 @@ class SET_HtmlFormControlImage extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlSpan extends SET_HtmlFormControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -2266,23 +2153,23 @@ class SET_HtmlFormControlSpan extends SET_HtmlFormControl
     case 'set_prefix':
     case 'set_postfix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<span';
@@ -2296,7 +2183,7 @@ class SET_HtmlFormControlSpan extends SET_HtmlFormControl
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">";
@@ -2310,19 +2197,19 @@ class SET_HtmlFormControlSpan extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
@@ -2334,7 +2221,7 @@ class SET_HtmlFormControlSpan extends SET_HtmlFormControl
 class SET_HtmlFormControlLink extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -2383,23 +2270,23 @@ class SET_HtmlFormControlLink extends SET_HtmlFormControlSimple
     case 'set_prefix':
     case 'set_postfix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<a';
@@ -2413,7 +2300,7 @@ class SET_HtmlFormControlLink extends SET_HtmlFormControlSimple
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">";
@@ -2427,19 +2314,19 @@ class SET_HtmlFormControlLink extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
@@ -2451,7 +2338,7 @@ class SET_HtmlFormControlLink extends SET_HtmlFormControlSimple
 class SET_HtmlFormControlDiv extends SET_HtmlFormControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -2484,23 +2371,23 @@ class SET_HtmlFormControlDiv extends SET_HtmlFormControl
     case 'set_prefix':
     case 'set_postfix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<div';
@@ -2514,7 +2401,7 @@ class SET_HtmlFormControlDiv extends SET_HtmlFormControl
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -2528,19 +2415,19 @@ class SET_HtmlFormControlDiv extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
@@ -2552,34 +2439,34 @@ class SET_HtmlFormControlDiv extends SET_HtmlFormControl
 class SET_HtmlFormControlConstant extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
     case 'set_value':
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     return false;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $local_name = $this->myAttributes['name'];
 
@@ -2590,13 +2477,13 @@ class SET_HtmlFormControlConstant extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -2606,7 +2493,7 @@ class SET_HtmlFormControlConstant extends SET_HtmlFormControlSimple
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -2630,7 +2517,7 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
   {
     parent::__construct( $theName );
 
-    $this->myAttributes['set_clean'] = 'SET_HtmlClean::TrimWhitespace';
+    $this->myAttributes['set_clean'] = 'SET_HtmlClean::trimWhitespace';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -2651,7 +2538,7 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
     * client-side scripts (such as JavaScript) to select elements, apply CSS formatting rules, or to build
     * relationships between elements.
     */
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -2700,23 +2587,23 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
     case 'set_prefix':
     case 'set_postfix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<textarea';
@@ -2725,18 +2612,18 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">";
 
-    if (!empty($this->myAttributes['set_text'])) $ret .= SET_Html::Txt2Html( $this->myAttributes['set_text'] );
+    if (!empty($this->myAttributes['set_text'])) $ret .= SET_Html::txt2Html( $this->myAttributes['set_text'] );
     $ret .= "</textarea>";
 
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
@@ -2745,15 +2632,20 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
-    if (isset($this->myAttributes['set_clean'])) $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
-    else                                         $new_value = $theSubmittedValue[$submit_name];
-
+    if (isset($this->myAttributes['set_clean']))
+    {
+      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+    }
+    else
+    {
+      $new_value = $theSubmittedValue[$submit_name];
+    }
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
     if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
@@ -2772,7 +2664,7 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if (isset($theValues[$local_name]))
@@ -2782,7 +2674,7 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SET_Html::Error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SET_Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */
@@ -2802,15 +2694,15 @@ class SET_HtmlFormControlTextArea extends SET_HtmlFormControlSimple
 class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
       // Basic attributes.
     case 'multiple':
-    // case 'name':
+      // case 'name':
     case 'size':
-    // case 'type':
+      // case 'type':
 
       // Advanced attributes.
     case 'disabled':
@@ -2855,17 +2747,17 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
     case 'set_prefix':
     case 'set_value':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -2873,7 +2765,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
   //--------------------------------------------------------------------------------------------------------------------
   /** @todo Implement 'multiple'.
    */
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<select';
@@ -2882,13 +2774,13 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
     {
       switch ($name)
       {
-        case 'name':
-          $submit_name = $this->GetSubmitName( $theParentName );
-          $ret .= SET_Html::GenerateAttribute( $name, $submit_name );
-          break;
+      case 'name':
+        $submit_name = $this->getSubmitName( $theParentName );
+        $ret .= SET_Html::generateAttribute( $name, $submit_name );
+        break;
 
-        default:
-          $ret .= SET_Html::GenerateAttribute( $name, $value );
+      default:
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -2912,7 +2804,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
         $id = $option[$map_key];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->Encode( $id ) : $id;
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
         //
         $ret .= "<option value='$code'";
@@ -2925,7 +2817,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
         if ($map_disabled && !empty($option[$map_disabled])) $ret .= " disabled='disabled'";
 
         $ret .= ">";
-        $ret .= SET_Html::Txt2Html( $option[$map_label] );
+        $ret .= SET_Html::txt2Html( $option[$map_label] );
         $ret .= "</option>\n";
       }
     }
@@ -2938,11 +2830,11 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
@@ -2972,7 +2864,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
             $id = $option[$map_key];
 
             // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-            $code = ($map_obfuscator) ? $map_obfuscator->Encode( $id ) : $id;
+            $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
             if ($submitted===(string)$code)
             {
@@ -3009,7 +2901,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     /** @todo check on type and value is in list of options. */
     $local_name = $this->myAttributes['name'];
@@ -3023,7 +2915,7 @@ class SET_HtlmFormControlSelect extends SET_HtmlFormControlSimple
 class SET_HtlmFormControlRadios extends SET_HtmlFormControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -3063,23 +2955,23 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
     case 'set_prefix':
     case 'set_value':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<div';
@@ -3093,7 +2985,7 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -3105,12 +2997,12 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
       $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
-      $submit_name = $this->GetSubmitName( $theParentName );
+      $submit_name = $this->getSubmitName( $theParentName );
       foreach( $this->myAttributes['set_options'] as $option )
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->Encode( $option[$map_key] ) : $option[$map_key];
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
-        $for_id = SET_Html::GetAutoId();
+        $for_id = SET_Html::getAutoId();
 
         $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
 
@@ -3125,7 +3017,7 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
 
         $label  = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
         $label .= "<label for='$for_id'>";
-        $label .= SET_Html::Txt2Html( $option[$map_label] );
+        $label .= SET_Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
         if (isset($this->myAttributes['set_label_postfix'])) $label .= $this->myAttributes['set_label_postfix'];
 
@@ -3143,13 +3035,13 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
 
     foreach( $this->myValidators as $validator )
     {
-      $valid = $validator->Validate( $this );
+      $valid = $validator->validate( $this );
       if ($valid!==true)
       {
         $local_name = $this->myAttributes['name'];
@@ -3163,11 +3055,11 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
@@ -3184,7 +3076,7 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
         $id = $option[$map_key];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->Encode( $id ) : $id;
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
         if ($submitted_value===(string)$code)
         {
@@ -3220,7 +3112,7 @@ class SET_HtlmFormControlRadios extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     $this->myAttributes['set_value'] = $theValues[$local_name];
@@ -3242,11 +3134,11 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
 
     // A SET_HtlmFormControlCheckboxes must always have a name.
     $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SET_Html::Error( 'Name is emtpy' );
+    if ($local_name===false) SET_Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -3287,25 +3179,25 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
     case 'set_postfix':
     case 'set_prefix':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
-    $submit_name = $this->GetSubmitName( $theParentName );
+    $submit_name = $this->getSubmitName( $theParentName );
 
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<div';
@@ -3319,7 +3211,7 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -3335,26 +3227,26 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
 
       foreach( $this->myAttributes['set_options'] as $option )
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->Encode( $option[$map_key] ) : $option[$map_key];
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
         if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
-        else                                    $id = SET_Html::GetAutoId();
+        else                                    $id = SET_Html::getAutoId();
 
         $input = "<input type='checkbox'";
 
-        $input .= SET_Html::GenerateAttribute( 'name', "${submit_name}[$code]" );
+        $input .= SET_Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-        $input .= SET_Html::GenerateAttribute( 'id', $id );
+        $input .= SET_Html::generateAttribute( 'id', $id );
 
-        if ($map_checked) $input .= SET_Html::GenerateAttribute( 'checked', $option[$map_checked] );
+        if ($map_checked) $input .= SET_Html::generateAttribute( 'checked', $option[$map_checked] );
 
-        if ($map_disabled) $input .= SET_Html::GenerateAttribute( 'disabled', $option[$map_checked] );
+        if ($map_disabled) $input .= SET_Html::generateAttribute( 'disabled', $option[$map_checked] );
 
         $input .= "/>";
 
         $label  = $this->myAttributes['set_label_prefix'];
         $label .= "<label for='$id'>";
-        $label .= SET_Html::Txt2Html( $option[$map_label] );
+        $label .= SET_Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
         $label .= $this->myAttributes['set_label_postfix'];
 
@@ -3372,13 +3264,13 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateBase( &$theInvalidFormControls )
+  protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
 
     foreach( $this->myValidators as $validator )
     {
-      $valid = $validator->Validate( $this );
+      $valid = $validator->validate( $this );
       if ($valid!==true)
       {
         $local_name = $this->myAttributes['name'];
@@ -3392,7 +3284,7 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if ($local_name!==false) $values = &$theValues[$local_name];
@@ -3420,11 +3312,11 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_checked    = (isset($this->myAttributes['set_map_checked']))    ?  $this->myAttributes['set_map_checked']    : 'set_map_checked';
@@ -3438,7 +3330,7 @@ class SET_HtlmFormControlCheckboxes extends SET_HtmlFormControl
         $id = $option[$map_key];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->Encode( $id ) : $id;
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
         // Get the orginal value (i.e. the option is checked or not).
         $value = (isset($option[$map_checked])) ? $option[$map_checked] : false;
@@ -3477,7 +3369,7 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   //--------------------------------------------------------------------------------------------------------------------
   /** A factory for creating form control objects.
     */
-  public function CreateFormControl( $theType, $theName )
+  public function createFormControl( $theType, $theName )
   {
     switch ($theType)
     {
@@ -3572,35 +3464,35 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
     case 'set_obfuscator':
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
-    $submit_name = $this->GetSubmitName( $theParentName );
+    $submit_name = $this->getSubmitName( $theParentName );
 
     $ret = false;
     foreach( $this->myControls as $control )
     {
-      $ret .= $control->Generate( $submit_name );
+      $ret .= $control->generate( $submit_name );
       $ret .= "\n";
     }
 
@@ -3608,14 +3500,14 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function GetErrorMessages( $theRecursiveFlag=false )
+  public function getErrorMessages( $theRecursiveFlag=false )
   {
     $ret = array();
     if ($theRecursiveFlag)
     {
       foreach( $this->myControls as $control )
       {
-        $tmp = $control->GetErrorMessages( true );
+        $tmp = $control->getErrorMessages( true );
         if (is_array($tmp))
         {
           $ret = array_merge( $ret, $tmp );
@@ -3635,11 +3527,11 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function LoadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->Encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
 
     if ($local_name===false)
     {
@@ -3656,7 +3548,7 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
     foreach( $this->myControls as $control )
     {
-      $control->LoadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
+      $control->loadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
     }
 
     if ($local_name!==false)
@@ -3670,7 +3562,7 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValuesBase( &$theValues )
+  public function setValuesBase( &$theValues )
   {
     $local_name = $this->myAttributes['name'];
     if ($local_name!==false) $values = &$theValues[$local_name];
@@ -3678,19 +3570,19 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
     foreach( $this->myControls as $control )
     {
-      $control->SetValuesBase( $values );
+      $control->setValuesBase( $values );
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function ValidateSelf( &$theInvalidFormControls )
+  protected function validateSelf( &$theInvalidFormControls )
   {
     $local_name = $this->myAttributes['name'];
     $valid      = true;
 
     foreach( $this->myValidators as $validator )
     {
-      $valid = $validator->Validate( $this );
+      $valid = $validator->validate( $this );
       if ($valid!==true)
       {
         if ($local_name!==false) $theInvalidFormControls[$local_name] = true;
@@ -3704,14 +3596,14 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function ValidateBase( &$theInvalidFormControls )
+  public function validateBase( &$theInvalidFormControls )
   {
     $tmp = array();
 
     // First, validate all child form controls.
     foreach( $this->myControls as $control )
     {
-      $control->ValidateBase( $tmp );
+      $control->validateBase( $tmp );
     }
 
     $local_name = $this->myAttributes['name'];
@@ -3719,7 +3611,7 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
     if (empty($tmp))
     {
       // All the individual child form controls are valid. Validate the child form controls as a whole.
-      $valid = $this->ValidateSelf( $theInvalidFormControls );
+      $valid = $this->validateSelf( $theInvalidFormControls );
     }
     else
     {
@@ -3752,7 +3644,7 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
       @sa GetFormControlByPath.
    */
-  public function FindFormControlByPath( $thePath )
+  public function findFormControlByPath( $thePath )
   {
     if ($thePath===null || $thePath===false || $thePath==='' || $thePath==='/')
     {
@@ -3771,12 +3663,12 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
         else
         {
           array_shift( $parts );
-          return $control->FindFormControlByPathBase( implode( '/', $parts ) );
+          return $control->findFormControlByPathBase( implode( '/', $parts ) );
         }
       }
       else
       {
-        $tmp = $control->FindFormControlByPathBase( $thePath );
+        $tmp = $control->findFormControlByPathBase( $thePath );
         if ($tmp) return $tmp;
       }
     }
@@ -3793,11 +3685,11 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
       @sa FindFormControlByPath.
    */
-  public function GetFormControlByPath( $thePath )
+  public function getFormControlByPath( $thePath )
   {
-    $control = $this->FindFormControlByPath( $thePath );
+    $control = $this->findFormControlByPath( $thePath );
 
-    if ($control===null) SET_Html::Error( "No form control with path '%s' exists.", $thePath );
+    if ($control===null) SET_Html::error( "No form control with path '%s' exists.", $thePath );
 
     return $control;
   }
@@ -3811,15 +3703,15 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
       @sa GetFormControlByName.
    */
-  public function FindFormControlByName( $theName )
+  public function findFormControlByName( $theName )
   {
     foreach( $this->myControls as $control )
     {
       if ($control->myAttributes['name']===$theName) return $control;
 
-      if (is_a($control,'SET_HtmlFormControlComplex'))
+      if (is_a($control, 'SET_HtmlFormControlComplex'))
       {
-        $tmp = $control->FindFormControlByName( $theName );
+        $tmp = $control->findFormControlByName( $theName );
         if ($tmp) return $tmp;
       }
     }
@@ -3836,11 +3728,11 @@ class SET_HtmlFormControlComplex extends SET_HtmlFormControl
 
       @sa FindFormControlByName.
    */
-  public function GetFormControlByName( $theName )
+  public function getFormControlByName( $theName )
   {
-    $control = $this->FindFormControlByName( $theName );
+    $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) SET_Html::Error( "No form control with name '%s' found.", $theName );
+    if ($control===null) SET_Html::error( "No form control with name '%s' found.", $theName );
 
     return $control;
   }
@@ -3854,13 +3746,7 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
   protected $myLegend;
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName=false )
-  {
-    parent::__construct( $theName );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -3888,23 +3774,23 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
       // Common style attribute.
     case 'style':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function CreateLegend( $theType='legend' )
+  public function createLegend( $theType='legend' )
   {
     switch ($theType)
     {
@@ -3922,7 +3808,7 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateOpenTag()
+  protected function generateOpenTag()
   {
     $ret = '<fieldset';
     foreach( $this->myAttributes as $name => $value )
@@ -3934,7 +3820,7 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
         break;
 
       default:
-        $ret .= SET_Html::GenerateAttribute( $name, $value );
+        $ret .= SET_Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -3943,16 +3829,16 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateLegend()
+  protected function generateLegend()
   {
-    if ($this->myLegend) $ret = $this->myLegend->Generate();
+    if ($this->myLegend) $ret = $this->myLegend->generate();
     else                 $ret = false;
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateCloseTag()
+  protected function generateCloseTag()
   {
     $ret = "</fieldset>\n";
 
@@ -3960,15 +3846,15 @@ class SET_HtmlFieldSet extends SET_HtmlFormControlComplex
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate( $theParentName )
+  public function generate( $theParentName )
   {
-    $ret  = $this->GenerateOpenTag();
+    $ret  = $this->generateOpenTag();
 
-    $ret .= $this->GenerateLegend();
+    $ret .= $this->generateLegend();
 
-    $ret .= parent::Generate( $theParentName );
+    $ret .= parent::generate( $theParentName );
 
-    $ret .= $this->GenerateCloseTag();
+    $ret .= $this->generateCloseTag();
 
     return $ret;
   }
@@ -3988,14 +3874,14 @@ class SET_HtmlLegend
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlLegend::SetAttribute. Sets the value of attribute with name @a $theName of this form to
-      @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+  /** Helper function for SET_HtmlLegend::setAttribute. Sets the value of attribute with name @a $theName of this form
+      to @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
 
       @todo Document how attribute class is handled.
    */
-  protected function SetAttributeBase( $theName, $theValue )
+  protected function setAttributeBase( $theName, $theValue )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -4016,7 +3902,7 @@ class SET_HtmlLegend
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -4047,32 +3933,32 @@ class SET_HtmlLegend
       // Common style attribute.
     case 'style':
 
-     // H2O attributes.
+      // H2O attributes.
     case 'set_inline':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate()
+  public function generate()
   {
     $ret .= "<legend";
 
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SET_Html::GenerateAttribute( $name, $value );
+      $ret .= SET_Html::generateAttribute( $name, $value );
     }
 
     $ret .= '>';
@@ -4098,16 +3984,16 @@ class SET_HtmlForm
    */
   protected $myFieldSets = array();
 
-  /** After a call to SET_HtmlForm::LoadSubmittedValues holds the names of the form controls of which the value has
+  /** After a call to SET_HtmlForm::loadSubmittedValues holds the names of the form controls of which the value has
       changed.
    */
   protected $myChangedControls = array();
 
-  /** After a call to SET_HtmlForm::LoadSubmittedValues holds the white-listed submitted values.
+  /** After a call to SET_HtmlForm::loadSubmittedValues holds the white-listed submitted values.
    */
   protected $myValues = array();
 
-  /** After a call to SET_HtmlForm::Validate holds the names of the form controls which have valid one or more
+  /** After a call to SET_HtmlForm::validate holds the names of the form controls which have valid one or more
       validation tests.
    */
   protected $myInvalidControls = array();
@@ -4131,7 +4017,7 @@ class SET_HtmlForm
       @param  $theName The name (which might be empty) of the fieldset.
       @return The created fieldset.
    */
-  public function CreateFieldSet( $theType='fieldset', $theName=false )
+  public function createFieldSet( $theType='fieldset', $theName=false )
   {
     switch ($theType)
     {
@@ -4150,14 +4036,14 @@ class SET_HtmlForm
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlForm::SetAttribute. Sets the value of attribute with name @a $theName of this form to
+  /** Helper function for SET_HtmlForm::setAttribute. Sets the value of attribute with name @a $theName of this form to
       @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
 
       @todo Document how attribute class is handled.
    */
-  protected function SetAttributeBase( $theName, $theValue )
+  protected function setAttributeBase( $theName, $theValue )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -4186,7 +4072,7 @@ class SET_HtmlForm
       @todo Document how attribute class is handled.
       @todo Document @a theExtendedFlag
    */
-  public function SetAttribute( $theName, $theValue, $theExtendedFlag=false )
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
   {
     switch ($theName)
     {
@@ -4224,23 +4110,23 @@ class SET_HtmlForm
       // Common style attribute.
     case 'style':
 
-      $this->SetAttributeBase( $theName, $theValue );
+      $this->setAttributeBase( $theName, $theValue );
       break;
 
     default:
       if ($theExtendedFlag)
       {
-        $this->SetAttributeBase( $theName, $theValue );
+        $this->setAttributeBase( $theName, $theValue );
       }
       else
       {
-        SET_Html::Error( "Unsupported attribute '%s'.", $theName );
+        SET_Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function LoadSubmittedValues()
+  public function loadSubmittedValues()
   {
     switch ($this->myAttributes['method'])
     {
@@ -4253,25 +4139,25 @@ class SET_HtmlForm
       break;
 
     default:
-      SET_Html::Error( "Unknown method '%s'.", $this->myAttributes['method'] );
+      SET_Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
     }
 
     foreach( $this->myFieldSets as $fieldset )
     {
-      $fieldset->LoadSubmittedValuesBase( $values, $this->myValues, $this->myChangedControls );
+      $fieldset->loadSubmittedValuesBase( $values, $this->myValues, $this->myChangedControls );
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Validates all form controls of this form against all their installed validation checks.
       @return @c true if and only if all form controls fulfill all their validation checks. Otherwise, returns @c false.
-      @note This method should only be involked after method SET_HtmlForm::LoadSubmittedValues() has been involked.
+      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
    */
-  public function Validate()
+  public function validate()
   {
     foreach( $this->myFieldSets as $fieldset )
     {
-      $fieldset->ValidateBase( $this->myInvalidControls );
+      $fieldset->validateBase( $this->myInvalidControls );
     }
 
     return (empty($this->myInvalidControls));
@@ -4280,20 +4166,20 @@ class SET_HtmlForm
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
               @c false.
-      @note This method should only be involked after method SET_HtmlForm::LoadSubmittedValues() has been involked.
+      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
    */
-  public function HaveChangedInputs()
+  public function haveChangedInputs()
   {
     return !empty($this->myChangedControls);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateOpenTag()
+  protected function generateOpenTag()
   {
     $ret = '<form';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SET_Html::GenerateAttribute( $name, $value );
+      $ret .= SET_Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -4301,19 +4187,19 @@ class SET_HtmlForm
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateBody()
+  protected function generateBody()
   {
     $ret = false;
     foreach( $this->myFieldSets as $fieldset )
     {
-      $ret .= $fieldset->Generate( false );
+      $ret .= $fieldset->generate( false );
     }
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function GenerateCloseTag()
+  protected function generateCloseTag()
   {
     $ret = "</form>\n";
 
@@ -4321,13 +4207,13 @@ class SET_HtmlForm
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function Generate()
+  public function generate()
   {
-    $ret = $this->GenerateOpenTag();
+    $ret = $this->generateOpenTag();
 
-    $ret .= $this->GenerateBody();
+    $ret .= $this->generateBody();
 
-    $ret .= $this->GenerateCloseTag();
+    $ret .= $this->generateCloseTag();
 
     return $ret;
   }
@@ -4336,19 +4222,19 @@ class SET_HtmlForm
   /** Returns the submitted values of all form controls.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) the submitted value).
-      @note This method should only be involked after method SET_HtmlForm::LoadSubmittedValues() has been involked.
+      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
    */
-  public function GetValues()
+  public function getValues()
   {
     return $this->myValues;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function SetValues( $theValues )
+  public function setValues( $theValues )
   {
     foreach( $this->myFieldSets as $fieldset )
     {
-      $fieldset->SetValuesBase( $theValues );
+      $fieldset->setValuesBase( $theValues );
     }
   }
 
@@ -4356,9 +4242,9 @@ class SET_HtmlForm
   /** Returns all form control names of which the value has been changed.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) @c true).
-      @note This method should only be involked after method SET_HtmlForm::LoadSubmittedValues() has been involked.
+      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
    */
-  public function GetChangedControls()
+  public function getChangedControls()
   {
     return $this->myChangedControls;
   }
@@ -4367,9 +4253,9 @@ class SET_HtmlForm
   /** Returns all form controls which failed one or more validation tests.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) @c true).
-      @note This method should only be involked after method SET_HtmlForm::Validate() has been involked.
+      @note This method should only be involked after method SET_HtmlForm::validate() has been involked.
    */
-  public function GetInvalidControls()
+  public function getInvalidControls()
   {
     return $this->myInvalidControls;
   }
@@ -4377,7 +4263,7 @@ class SET_HtmlForm
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns @c true if @a $theArray has one or more scalars. Otherwise, returns @c false.
    */
-  static public function HasScalars( $theArray )
+  static public function hasScalars( $theArray )
   {
     $ret = false;
     foreach( $theArray as $tmp )
@@ -4395,7 +4281,7 @@ class SET_HtmlForm
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns @c true if the element (of type submit or image) has been submitted.
    */
-  public function IsSubmitted( $theName )
+  public function isSubmitted( $theName )
   {
     /** @todo check value is whitelisted. */
     switch ($this->myAttributes['method'])
@@ -4409,7 +4295,7 @@ class SET_HtmlForm
       break;
 
     default:
-      SET_Html::Error( "Unknown method '%s'.", $this->myAttributes['method'] );
+      SET_Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
     }
 
     return false;
@@ -4424,7 +4310,7 @@ class SET_HtmlForm
 
       @sa GetFormControlByPath.
    */
-  public function FindFormControlByPath( $thePath )
+  public function findFormControlByPath( $thePath )
   {
     if ($thePath===null || $thePath===false || $thePath==='' || $thePath==='/')
     {
@@ -4437,7 +4323,7 @@ class SET_HtmlForm
     $parts = preg_split( '/\/+/', $thePath );
     foreach( $this->myFieldSets as $control )
     {
-      if ($control->GetLocalName()===$parts[0])
+      if ($control->getLocalName()===$parts[0])
       {
         if (sizeof($parts)===1)
         {
@@ -4446,12 +4332,12 @@ class SET_HtmlForm
         else
         {
           array_shift( $parts );
-          return $control->FindFormControlByPathBase( implode( '/', $parts ) );
+          return $control->findFormControlByPathBase( implode( '/', $parts ) );
         }
       }
       else
       {
-        $tmp = $control->FindFormControlByPathBase( $thePath );
+        $tmp = $control->findFormControlByPathBase( $thePath );
         if ($tmp) return $tmp;
       }
     }
@@ -4468,11 +4354,11 @@ class SET_HtmlForm
 
       @sa FindFormControlByPath.
    */
-  public function GetFormControlByPath( $thePath )
+  public function getFormControlByPath( $thePath )
   {
-    $control = $this->FindFormControlByPath( $thePath );
+    $control = $this->findFormControlByPath( $thePath );
 
-    if ($control===null) SET_Html::Error( "No form control with path '%s' exists.", $thePath );
+    if ($control===null) SET_Html::error( "No form control with path '%s' exists.", $thePath );
 
     return $control;
   }
@@ -4486,13 +4372,13 @@ class SET_HtmlForm
 
       @sa GetFormControlByName.
    */
-  public function FindFormControlByName( $theName )
+  public function findFormControlByName( $theName )
   {
     foreach( $this->myFieldSets as $fieldset )
     {
-      if ($fieldset->GetLocalName()===$theName) return $fieldset;
+      if ($fieldset->getLocalName()===$theName) return $fieldset;
 
-      $control = $fieldset->FindFormControlByName( $theName );
+      $control = $fieldset->findFormControlByName( $theName );
       if ($control) return $control;
     }
 
@@ -4508,11 +4394,11 @@ class SET_HtmlForm
 
       @sa FindFormControlByName.
    */
-  public function GetFormControlByName( $theName )
+  public function getFormControlByName( $theName )
   {
-    $control = $this->FindFormControlByName( $theName );
+    $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) SET_Html::Error( sprintf( "No form control with name '%s' found.", $theName ) );
+    if ($control===null) SET_Html::error( sprintf( "No form control with name '%s' found.", $theName ) );
 
     return $control;
   }
