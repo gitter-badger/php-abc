@@ -125,7 +125,7 @@ class SET_Html
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns a string that can be safely used an ID for an element. The format of the id is 'h2o_<n>' where n is
+  /** Returns an string that can be safely used an ID for an element. The format of the id is 'set_<n>' where n is
    * incremented with call to @a GetAutoId.
    */
   public static function GetAutoId()
