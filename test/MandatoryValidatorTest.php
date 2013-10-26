@@ -1,21 +1,21 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCase
+class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a single form control of type $theType.
    */
   private function SetupForm1( $theType )
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( $theType, 'input' );
-    $control->addValidator( new SET_HtmlFormControlValidatorMandatory() );
+    $control->addValidator( new \SetBased\Html\Form\MandatoryValidator() );
 
     $form->loadSubmittedValues();
 
@@ -27,12 +27,12 @@ class SET_HtmlFormControlValidatorMandatoryTest extends PHPUnit_Framework_TestCa
    */
   private function SetupForm2()
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'checkbox', 'box' );
-    $control->addValidator( new SET_HtmlFormControlValidatorMandatory() );
+    $control->addValidator( new \SetBased\Html\Form\MandatoryValidator() );
 
     $form->loadSubmittedValues();
 

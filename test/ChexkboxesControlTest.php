@@ -1,16 +1,16 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
+class CheckboxesControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a select form control.
    */
   private function SetupForm1()
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
 
@@ -33,7 +33,7 @@ class SET_HtmlFormControlCheckboxesTest extends PHPUnit_Framework_TestCase
    */
   private function SetupForm2()
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
 

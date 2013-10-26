@@ -1,21 +1,21 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlValidatorEmailTest extends PHPUnit_Framework_TestCase
+class ValidatorEmailTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid email address) values.
    */
   private function SetupForm1()
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'text', 'email' );
-    $control->addValidator( new SET_HtmlFormControlValidatorEmail() );
+    $control->addValidator( new \SetBased\Html\Form\EmailValidator() );
 
     $form->loadSubmittedValues();
 

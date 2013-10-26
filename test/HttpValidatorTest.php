@@ -1,21 +1,21 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlValidatorHttpTest extends PHPUnit_Framework_TestCase
+class HttpValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid url address).
    */
   private function SetupForm1()
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'text', 'url' );
-    $control->addValidator( new SET_HtmlFormControlValidatorHttp() );
+    $control->addValidator( new \SetBased\Html\Form\HttpValidator() );
 
     $form->loadSubmittedValues();
 

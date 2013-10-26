@@ -1,15 +1,24 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'test/HtmlFormControlSimpleTest.php' );
+/** @author Paul Water
+ *
+ * @par Copyright:
+ * Set Based IT Consultancy
+ *
+ * $Date: 2013/03/04 19:02:37 $
+ *
+ * $Revision:  $
+ */
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlPasswordTest extends SET_HtmlFormControlSimpleTest
+/** @brief Interface for defining classes that validate form control elements direved from SET_HtmlFormControl.
+ */
+interface ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
-  {
-    return 'password';
-  }
+  public function validate( $theFormControl );
 
   //--------------------------------------------------------------------------------------------------------------------
 }

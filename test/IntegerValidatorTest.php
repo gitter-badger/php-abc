@@ -1,21 +1,21 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
+class IntegerValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid inter) values.
    */
   private function SetupForm1()
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'text', 'integer' );
-    $control->addValidator( new SET_HtmlFormControlValidatorInteger() );
+    $control->addValidator( new \SetBased\Html\Form\IntegerValidator() );
 
     $form->loadSubmittedValues();
 
@@ -27,12 +27,12 @@ class SET_HtmlFormControlValidatorIntegerTest extends PHPUnit_Framework_TestCase
    */
   private function SetupForm2()
   {
-    $form = new set_HtmlForm();
+    $form = new \SetBased\Html\Form();
 
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'text', 'integer' );
-    $control->addValidator( new SET_HtmlFormControlValidatorInteger( -1, 10 ) );
+    $control->addValidator( new \SetBased\Html\Form\IntegerValidator( -1, 10 ) );
 
     $form->loadSubmittedValues();
 

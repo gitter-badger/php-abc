@@ -1,18 +1,18 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
+class SelectControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a select form control.
    */
   private function SetupForm1()
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl( 'radios', 'cnt_id' );
+    $control = $fieldset->createFormControl( 'select', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
@@ -20,6 +20,7 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
 
     $control->setAttribute( 'set_map_key',     'cnt_id' );
     $control->setAttribute( 'set_options',      $countries );
+    $control->setAttribute( 'set_empty_option', true );
 
     $form->loadSubmittedValues();
 
@@ -27,14 +28,14 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a select form control. Difference between this function
-      and SetupForm1 are the cnt_id are integers.
+  /** Setups a form with a select form control. Difference between this function and SetupForm1 are the cnt_id are
+      integers.
    */
   private function SetupForm2()
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl( 'radios', 'cnt_id' );
+    $control = $fieldset->createFormControl( 'select', 'cnt_id' );
 
     $countries[] = array( 'cnt_id' => 1, 'cnt_name' => 'NL' );
     $countries[] = array( 'cnt_id' => 2, 'cnt_name' => 'BE' );
@@ -42,7 +43,8 @@ class SET_HtmlFormControlRadiosTest extends PHPUnit_Framework_TestCase
 
     $control->setAttribute( 'set_map_key',      'cnt_id' );
     $control->setAttribute( 'set_options',      $countries );
-    $control->setAttribute( 'set_value',    '1' );
+    $control->setAttribute( 'set_empty_option', true );
+    $control->setAttribute( 'set_value',       ' 1' );
 
     $form->loadSubmittedValues();
 

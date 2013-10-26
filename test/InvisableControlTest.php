@@ -1,14 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormControlInvisableTest extends PHPUnit_Framework_TestCase
+class InvisableControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   private function SetupForm1()
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset= $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'invisable' , 'name' );

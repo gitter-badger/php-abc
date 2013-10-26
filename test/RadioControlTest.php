@@ -1,16 +1,16 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
+class RadioControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Test form for radio.
    */
   private function SetForm1()
   {
-    $form = new SET_HtmlForm;
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
@@ -30,7 +30,7 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   private function SetForm2()
   {
-    $form = new SET_HtmlForm;
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
@@ -51,7 +51,7 @@ class SET_HtmlFormContorlRadioTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   private function SetForm3()
   {
-    $form = new SET_HtmlForm;
+    $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );

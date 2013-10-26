@@ -1,12 +1,12 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'lib/form.php' );
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Abstract super class for test for @c SET_HtlmFormControlText, @c SET_HtlmFormControlHidden,
            @c SET_HtlmFormControlPassword.
  */
-abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
+abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   abstract protected function getInputType();
@@ -16,7 +16,7 @@ abstract class SET_HtmlFormControlSimpleTest extends PHPUnit_Framework_TestCase
    */
   private function SetupForm1( $theValue )
   {
-    $form = new SET_HtmlForm();
+    $form = new \SetBased\Html\Form();
     $fieldset= $form->createFieldSet();
 
     $control = $fieldset->createFormControl( $this->getInputType(), 'name' );

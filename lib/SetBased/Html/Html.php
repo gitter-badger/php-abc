@@ -10,9 +10,12 @@
  * $Revision: 1.2 $
  */
 //----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Html;
+
+//----------------------------------------------------------------------------------------------------------------------
 /** @brief Static class with helper functions for generating HTML code.
  */
-class SET_Html
+class Html
 {
   /** Counter for generating unique element ID's. See method @a GetAutoId.
    */

@@ -1,0 +1,253 @@
+<?php
+//----------------------------------------------------------------------------------------------------------------------
+/** @author Paul Water
+ *
+ * @par Copyright:
+ * Set Based IT Consultancy
+ *
+ * $Date: 2013/03/04 19:02:37 $
+ *
+ * $Revision:  $
+ */
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Html\Form;
+
+//----------------------------------------------------------------------------------------------------------------------
+/**
+   @todo Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
+ */
+class CheckboxesControl extends Control
+{
+  //--------------------------------------------------------------------------------------------------------------------
+  public function __construct( $theName )
+  {
+    parent::__construct( $theName );
+
+    // A ControlCheckboxes must always have a name.
+    $local_name = $this->myAttributes['name'];
+    if ($local_name===false) SetBased\Html\Html::error( 'Name is emtpy' );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
+  {
+    switch ($theName)
+    {
+      // Common core attributes.
+    case 'class':
+    case 'id':
+    case 'title':
+
+      // Common internationalization attributes.
+    case 'xml:lang':
+    case 'dir':
+
+      // Common event attributes.
+    case 'onclick':
+    case 'ondblclick':
+    case 'onkeydown':
+    case 'onkeypress':
+    case 'onkeyup':
+    case 'onmousedown':
+    case 'onmousemove':
+    case 'onmouseout':
+    case 'onmouseover':
+    case 'onmouseup':
+
+      // Common style attribute.
+    case 'style':
+
+      // H2O Attributes
+    case 'set_label_postfix':
+    case 'set_label_prefix':
+    case 'set_map_checked':
+    case 'set_map_disabled':
+    case 'set_map_id':
+    case 'set_map_key':
+    case 'set_map_label':
+    case 'set_map_obfuscator':
+    case 'set_options':
+    case 'set_postfix':
+    case 'set_prefix':
+
+      $this->setAttributeBase( $theName, $theValue );
+      break;
+
+    default:
+      if ($theExtendedFlag)
+      {
+        $this->setAttributeBase( $theName, $theValue );
+      }
+      else
+      {
+        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+      }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function generate( $theParentName )
+  {
+    $submit_name = $this->getSubmitName( $theParentName );
+
+    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret .= '<div';
+
+    foreach( $this->myAttributes as $name => $value )
+    {
+      switch ($name)
+      {
+      case 'name':
+        // Nothing to do
+        break;
+
+      default:
+        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      }
+    }
+    $ret .= ">\n";
+
+    if (is_array($this->myAttributes['set_options']))
+    {
+      $map_id         = $this->myAttributes['set_map_id'];
+      $map_key        = $this->myAttributes['set_map_key'];
+      $map_label      = $this->myAttributes['set_map_label'];
+      $map_checked    = $this->myAttributes['set_map_checked'];
+      $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+      $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
+
+      foreach( $this->myAttributes['set_options'] as $option )
+      {
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
+
+        if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
+        else                                    $id = SetBased\Html\Html::getAutoId();
+
+        $input = "<input type='checkbox'";
+
+        $input .= SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
+
+        $input .= SetBased\Html\Html::generateAttribute( 'id', $id );
+
+        if ($map_checked) $input .= SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
+
+        if ($map_disabled) $input .= SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+
+        $input .= "/>";
+
+        $label  = $this->myAttributes['set_label_prefix'];
+        $label .= "<label for='$id'>";
+        $label .= SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $label .= "</label>";
+        $label .= $this->myAttributes['set_label_postfix'];
+
+        $ret .= $input;
+        $ret .= $label;
+        $ret .= "\n";
+      }
+    }
+
+    $ret .= "</div>";
+
+    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function validateBase( &$theInvalidFormControls )
+  {
+    $valid = true;
+
+    foreach( $this->myValidators as $validator )
+    {
+      $valid = $validator->validate( $this );
+      if ($valid!==true)
+      {
+        $local_name = $this->myAttributes['name'];
+        $theInvalidFormControls[$local_name] = true;
+
+        break;
+      }
+    }
+
+    return $valid;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function setValuesBase( &$theValues )
+  {
+    $local_name = $this->myAttributes['name'];
+    if ($local_name!==false) $values = &$theValues[$local_name];
+    else                     $values = &$theValues;
+
+    $map_key     = $this->myAttributes['set_map_key'];
+    $map_checked = $this->myAttributes['set_map_checked'];
+    if (!$map_checked)
+    {
+      $this->myAttributes['set_map_checked'] = 'set_map_checked';
+      $map_checked                           = 'set_map_checked';
+      /** @todo More elegant handling of empty and default values */
+    }
+
+    $checked = array();
+    foreach( $values as $value )
+    {
+      $checked[$value[$map_key]] = true;
+    }
+
+    foreach( $this->myAttributes['set_options'] as $id => $option )
+    {
+      $this->myAttributes['set_options'][$id][$map_checked] = $checked[$option[$map_key]];
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  {
+    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
+    $local_name  = $this->myAttributes['name'];
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+
+    $map_key        = $this->myAttributes['set_map_key'];
+    $map_checked    = (isset($this->myAttributes['set_map_checked']))    ?  $this->myAttributes['set_map_checked']    : 'set_map_checked';
+    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ?  $this->myAttributes['set_map_obfuscator'] : null;
+
+    if (isset($theSubmittedValue[$submit_name]))
+    {
+      foreach( $this->myAttributes['set_options'] as $i => $option )
+      {
+        // Get the (database) ID of the option.
+        $id = $option[$map_key];
+
+        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+
+        // Get the orginal value (i.e. the option is checked or not).
+        $value = (isset($option[$map_checked])) ? $option[$map_checked] : false;
+
+        // Get the submitted value (i.e. the option is checked or not).
+        $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
+
+        // If the orginal value differs from the submitted value then the form control has been changed.
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$local_name][$id] = true;
+
+        // Set the white listed value.
+        $theWhiteListValue[$local_name][$id]                 = !empty($submitted);
+        $this->myAttributes['set_options'][$i][$map_checked] = !empty($submitted);
+      }
+    }
+    else
+    {
+      // No checkboxes have been checked.
+      $theWhiteListValue[$local_name] = array();
+    }
+
+    // Set the submitted value to be used method GetSubmittedValue.
+    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$local_name];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+}
+
+//----------------------------------------------------------------------------------------------------------------------
