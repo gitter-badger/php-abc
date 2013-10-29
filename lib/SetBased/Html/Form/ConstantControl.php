@@ -31,7 +31,7 @@ class ConstantControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -70,7 +70,7 @@ class ConstantControl extends SimpleControl
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */

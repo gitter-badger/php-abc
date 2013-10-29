@@ -160,7 +160,7 @@ class Form
       }
       else
       {
-        SET_Html::error( "Unsupported attribute '%s'.", $theName );
+        Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -179,7 +179,7 @@ class Form
       break;
 
     default:
-      SET_Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
+      Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
     }
 
     foreach( $this->myFieldSets as $fieldset )
@@ -219,7 +219,7 @@ class Form
     $ret = '<form';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SET_Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -335,7 +335,7 @@ class Form
       break;
 
     default:
-      SET_Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
+      Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
     }
 
     return false;
@@ -398,7 +398,7 @@ class Form
   {
     $control = $this->findFormControlByPath( $thePath );
 
-    if ($control===null) SET_Html::error( "No form control with path '%s' exists.", $thePath );
+    if ($control===null) Html::error( "No form control with path '%s' exists.", $thePath );
 
     return $control;
   }
@@ -438,7 +438,7 @@ class Form
   {
     $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) SET_Html::error( sprintf( "No form control with name '%s' found.", $theName ) );
+    if ($control===null) Html::error( sprintf( "No form control with name '%s' found.", $theName ) );
 
     return $control;
   }

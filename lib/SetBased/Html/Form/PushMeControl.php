@@ -85,7 +85,7 @@ class PushMeControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -97,7 +97,7 @@ class PushMeControl extends SimpleControl
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', $this->myButtonType );
+    $ret .= \SetBased\Html\Html::generateAttribute( 'type', $this->myButtonType );
 
     foreach( $this->myAttributes as $name => $value )
     {
@@ -109,11 +109,11 @@ class PushMeControl extends SimpleControl
         $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
         $local_name  = $this->myAttributes['name'];
         $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $submit_name );
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
 

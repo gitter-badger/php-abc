@@ -41,7 +41,7 @@ abstract class SimpleControl extends Control
 
     // A simple form control must have a name.
     $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($local_name===false) \SetBased\Html\Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ abstract class SimpleControl extends Control
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -125,7 +125,7 @@ abstract class SimpleControl extends Control
     {
       if ($this->myAttributes['id']=='')
       {
-        $id = SetBased\Html\Html::getAutoId();
+        $id = \SetBased\Html\Html::getAutoId();
         $this->myAttributes['id']       = $id;
         $this->myLabelAttributes['for'] = $id;
       }
@@ -194,7 +194,7 @@ abstract class SimpleControl extends Control
       case 'onkeypress':
       case 'ononkeydown':
       case 'onkeyup':
-        return SetBased\Html\Html::error( 'not implemented' );
+        return \SetBased\Html\Html::error( 'not implemented' );
         break;
 
 

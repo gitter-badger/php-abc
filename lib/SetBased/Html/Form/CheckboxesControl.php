@@ -25,7 +25,7 @@ class CheckboxesControl extends Control
 
     // A ControlCheckboxes must always have a name.
     $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($local_name===false) \SetBased\Html\Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ class CheckboxesControl extends Control
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -102,7 +102,7 @@ class CheckboxesControl extends Control
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -121,23 +121,23 @@ class CheckboxesControl extends Control
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
         if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
-        else                                    $id = SetBased\Html\Html::getAutoId();
+        else                                    $id = \SetBased\Html\Html::getAutoId();
 
         $input = "<input type='checkbox'";
 
-        $input .= SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        $input .= \SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-        $input .= SetBased\Html\Html::generateAttribute( 'id', $id );
+        $input .= \SetBased\Html\Html::generateAttribute( 'id', $id );
 
-        if ($map_checked) $input .= SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
+        if ($map_checked) $input .= \SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
 
-        if ($map_disabled) $input .= SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+        if ($map_disabled) $input .= \SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
 
         $input .= "/>";
 
         $label  = $this->myAttributes['set_label_prefix'];
         $label .= "<label for='$id'>";
-        $label .= SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
         $label .= $this->myAttributes['set_label_postfix'];
 

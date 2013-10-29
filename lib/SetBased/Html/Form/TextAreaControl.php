@@ -101,7 +101,7 @@ class TextAreaControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -118,16 +118,16 @@ class TextAreaControl extends SimpleControl
       {
       case 'name':
         $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $submit_name );
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">";
 
-    if (!empty($this->myAttributes['set_text'])) $ret .= SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
+    if (!empty($this->myAttributes['set_text'])) $ret .= \SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
     $ret .= "</textarea>";
 
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
@@ -178,7 +178,7 @@ class TextAreaControl extends SimpleControl
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when false or ''? */

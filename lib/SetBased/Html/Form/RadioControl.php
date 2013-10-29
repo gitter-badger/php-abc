@@ -83,7 +83,7 @@ class RadioControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -95,7 +95,7 @@ class RadioControl extends SimpleControl
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', 'radio' );
+    $ret .= \SetBased\Html\Html::generateAttribute( 'type', 'radio' );
 
     foreach( $this->myAttributes as $name => $value )
     {
@@ -103,11 +103,11 @@ class RadioControl extends SimpleControl
       {
       case 'name':
         $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $submit_name );
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
 
@@ -154,7 +154,7 @@ class RadioControl extends SimpleControl
       // The value of a input:checkbox must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
       }
 
       /** @todo unset when empty? */
