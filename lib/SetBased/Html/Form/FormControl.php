@@ -51,7 +51,7 @@ abstract class FormControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlFormControl::setAttribute.
+  /** Helper function for FormControl::setAttribute.
       Sets the value attribute with name @a $theName to @a $theValue. If @a $theValue is @c null, @c false, or @c ''
       the attribute is unset.
       @param $theName  The name of the attribute.

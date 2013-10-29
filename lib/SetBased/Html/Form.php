@@ -24,16 +24,16 @@ class Form
    */
   protected $myFieldSets = array();
 
-  /** After a call to SET_HtmlForm::loadSubmittedValues holds the names of the form controls of which the value has
+  /** After a call to Form::loadSubmittedValues holds the names of the form controls of which the value has
       changed.
    */
   protected $myChangedControls = array();
 
-  /** After a call to SET_HtmlForm::loadSubmittedValues holds the white-listed submitted values.
+  /** After a call to Form::loadSubmittedValues holds the white-listed submitted values.
    */
   protected $myValues = array();
 
-  /** After a call to SET_HtmlForm::validate holds the names of the form controls which have valid one or more
+  /** After a call to Form::validate holds the names of the form controls which have valid one or more
       validation tests.
    */
   protected $myInvalidControls = array();
@@ -51,9 +51,9 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /** Creates a fieldset of type @a $theType and with name @a $theName and appends this fieldset to the list of field
       sets of this form.
-      @param  $theType The class name of the fieldset which must be derived from class SET_HtmlFieldSet. The following
+      @param  $theType The class name of the fieldset which must be derived from class FieldSet. The following
                        alias are implemented:
-                       - fieldset: class SET_HtmlFieldSet
+                       - fieldset: class FieldSet
       @param  $theName The name (which might be empty) of the fieldset.
       @return The created fieldset.
    */
@@ -76,7 +76,7 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlForm::setAttribute. Sets the value of attribute with name @a $theName of this form to
+  /** Helper function for Form::setAttribute. Sets the value of attribute with name @a $theName of this form to
       @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
@@ -191,7 +191,7 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /** Validates all form controls of this form against all their installed validation checks.
       @return @c true if and only if all form controls fulfill all their validation checks. Otherwise, returns @c false.
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method Form::loadSubmittedValues() has been involked.
    */
   public function validate()
   {
@@ -206,7 +206,7 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
               @c false.
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method Form::loadSubmittedValues() has been involked.
    */
   public function haveChangedInputs()
   {
@@ -282,7 +282,7 @@ class Form
   /** Returns all form control names of which the value has been changed.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) @c true).
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method Form::loadSubmittedValues() has been involked.
    */
   public function getChangedControls()
   {
@@ -293,7 +293,7 @@ class Form
   /** Returns all form controls which failed one or more validation tests.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) @c true).
-      @note This method should only be involked after method SET_HtmlForm::validate() has been involked.
+      @note This method should only be involked after method Form::validate() has been involked.
    */
   public function getInvalidControls()
   {

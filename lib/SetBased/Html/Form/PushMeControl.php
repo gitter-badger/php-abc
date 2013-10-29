@@ -146,7 +146,7 @@ class PushMeControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    // We don't set the value of a button via SET_HtmlForm::setValues() method. So, nothing to do.
+    // We don't set the value of a button via Form::setValues() method. So, nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
