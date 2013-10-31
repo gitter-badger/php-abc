@@ -49,7 +49,7 @@ class Html
    */
   public static function generateAttribute( $theName, $theValue )
   {
-    $ret= 'xxxx';
+    $ret= '';
     switch ($theName)
     {
       // Plain text attributes

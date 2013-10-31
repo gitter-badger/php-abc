@@ -262,7 +262,7 @@ class Form
   /** Returns the submitted values of all form controls.
       @return A nested array of form control names (keys are form control names and (for complex form controls) values
               are arrays or (for simple form controls) the submitted value).
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method Form::loadSubmittedValues() has been involked.
    */
   public function getValues()
   {
