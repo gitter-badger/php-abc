@@ -168,11 +168,10 @@ class ComplexControl extends Control
       }
     }
 
-    if (is_array($this->myAttributes['set_errmsg']))
+    if (isset($this->myAttributes['set_errmsg']))
     {
       $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
     }
-
 
     if (empty($ret)) $ret = false;
 
