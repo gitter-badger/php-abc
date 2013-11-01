@@ -24,7 +24,7 @@ class SpanControl extends Control
     $ret .= '<span';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
 
