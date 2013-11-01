@@ -107,44 +107,59 @@ class CheckboxesControl extends Control
     }
     $ret .= ">\n";
 
-    if (is_array($this->myAttributes['set_options']))
+    if (isset($this->myAttributes['set_options']))
     {
-      $map_id         = $this->myAttributes['set_map_id'];
-      $map_key        = $this->myAttributes['set_map_key'];
-      $map_label      = $this->myAttributes['set_map_label'];
-      $map_checked    = $this->myAttributes['set_map_checked'];
-      $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
-      $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
-      foreach( $this->myAttributes['set_options'] as $option )
+      if (is_array($this->myAttributes['set_options']))
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
+        if(isset($this->myAttributes['set_map_key'])) $map_key = $this->myAttributes['set_map_key'];
+        else Html::error( "Not set mandatory attribute 'set_map_key'." );
 
-        if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
-        else                                    $id = \SetBased\Html\Html::getAutoId();
+        if(isset($this->myAttributes['set_map_label'])) $map_label = $this->myAttributes['set_map_label'];
+        else Html::error( "Not set mandatory attribute 'set_map_label'." );
 
-        $input = "<input type='checkbox'";
+        $map_id         = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
+        $map_checked    = (isset($this->myAttributes['set_map_checked']))    ? $this->myAttributes['set_map_checked']    : null;
+        $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+        $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
-        $input .= \SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        foreach( $this->myAttributes['set_options'] as $option )
+        {
+          $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
-        $input .= \SetBased\Html\Html::generateAttribute( 'id', $id );
+          if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
+          else                                    $id = \SetBased\Html\Html::getAutoId();
 
-        if ($map_checked) $input .= \SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
+          $input = "<input type='checkbox'";
 
-        if ($map_disabled) $input .= \SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+          $input .= \SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-        $input .= "/>";
+          $input .= \SetBased\Html\Html::generateAttribute( 'id', $id );
 
-        $label  = $this->myAttributes['set_label_prefix'];
-        $label .= "<label for='$id'>";
-        $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
-        $label .= "</label>";
-        $label .= $this->myAttributes['set_label_postfix'];
+          if ($map_checked) $input .= \SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
 
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+          if ($map_disabled) $input .= \SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+
+          $input .= "/>";
+
+          $label  = isset($this->myAttributes['set_label_prefix']) ? $this->myAttributes['set_label_prefix'] : null;  // optional
+          $label .= "<label for='$id'>";
+          $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
+          $label .= "</label>";
+          $label .= isset($this->myAttributes['set_label_postfix']) ? $this->myAttributes['set_label_postfix'] : null;  // optional
+
+          $ret .= $input;
+          $ret .= $label;
+          $ret .= "\n";
+        }
       }
+      else
+      {
+        Html::error( "Invalid attribute type given %s, expected array.", gettype($this->myAttributes['set_options']) );
+      }
+    }
+    else
+    {
+      Html::error( "Not set mandatory attribute 'set_options'." );
     }
 
     $ret .= "</div>";
