@@ -191,7 +191,7 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /** Validates all form controls of this form against all their installed validation checks.
       @return @c true if and only if all form controls fulfill all their validation checks. Otherwise, returns @c false.
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method @a loadSubmittedValues() has been involked.
    */
   public function validate()
   {
@@ -206,7 +206,7 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
               @c false.
-      @note This method should only be involked after method SET_HtmlForm::loadSubmittedValues() has been involked.
+      @note This method should only be involked after method @a loadSubmittedValues() has been involked.
    */
   public function haveChangedInputs()
   {
@@ -410,7 +410,7 @@ class Form
       @param  $theName The name of the searched form control.
       @return A form control with name $theName or @c null of no form control has been found.
 
-      @sa GetFormControlByName.
+      @sa getFormControlByName.
    */
   public function findFormControlByName( $theName )
   {
@@ -432,7 +432,7 @@ class Form
       @param  $theName The name of the searched form control.
       @return A form control with name $theName.
 
-      @sa FindFormControlByName.
+      @sa findFormControlByName.
    */
   public function getFormControlByName( $theName )
   {

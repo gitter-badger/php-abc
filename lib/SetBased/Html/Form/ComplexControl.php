@@ -230,17 +230,14 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   protected function validateSelf( &$theInvalidFormControls )
   {
-    $local_name = $this->myAttributes['name'];
-    $valid      = true;
+    $valid = true;
 
     foreach( $this->myValidators as $validator )
     {
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        if ($local_name!==false) $theInvalidFormControls[$local_name] = true;
-        else                     $theInvalidFormControls              = true;
-
+        $theInvalidFormControls[] = $this;
         break;
       }
     }
@@ -259,8 +256,6 @@ class ComplexControl extends Control
       $control->validateBase( $tmp );
     }
 
-    $local_name = $this->myAttributes['name'];
-
     if (empty($tmp))
     {
       // All the individual child form controls are valid. Validate the child form controls as a whole.
@@ -268,19 +263,8 @@ class ComplexControl extends Control
     }
     else
     {
-      // One or more input values are invalid. Append the names of the invalid form controls to $theInvalidFormControls.
-      $local_name = $this->myAttributes['name'];
-      if ($local_name!==false)
-      {
-        $theInvalidFormControls[$local_name] = $tmp;
-      }
-      else
-      {
-        foreach( $tmp as $name => $t )
-        {
-          $theInvalidFormControls[$name] = $t;
-        }
-      }
+      // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
+      $theInvalidFormControls[] = $tmp;
 
       $valid = false;
     }

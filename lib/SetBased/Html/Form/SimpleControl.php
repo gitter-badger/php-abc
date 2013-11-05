@@ -224,9 +224,7 @@ abstract class SimpleControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        $local_name = $this->myAttributes['name'];
-        $theInvalidFormControls[$local_name] = true;
-
+        $theInvalidFormControls[] = $this;
         break;
       }
     }
