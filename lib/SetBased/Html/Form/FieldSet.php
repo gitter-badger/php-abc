@@ -11,6 +11,7 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 class FieldSet extends ComplexControl
@@ -56,7 +57,7 @@ class FieldSet extends ComplexControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -67,7 +68,7 @@ class FieldSet extends ComplexControl
     switch ($theType)
     {
     case 'legend':
-      $tmp = new SET_HtmlLegend();
+      $tmp = new \SetBased\Html\Legend();
       break;
 
     default:
@@ -92,7 +93,7 @@ class FieldSet extends ComplexControl
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";

@@ -23,7 +23,7 @@ class Legend
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlLegend::setAttribute. Sets the value of attribute with name @a $theName of this form
+  /** Helper function for Legend::setAttribute. Sets the value of attribute with name @a $theName of this form
       to @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
@@ -95,7 +95,7 @@ class Legend
       }
       else
       {
-        SET_Html::error( "Unsupported attribute '%s'.", $theName );
+        Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -107,7 +107,7 @@ class Legend
 
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SET_Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
 
     $ret .= '>';

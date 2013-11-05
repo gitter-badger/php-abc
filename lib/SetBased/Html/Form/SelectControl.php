@@ -80,7 +80,7 @@ class SelectControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -99,11 +99,11 @@ class SelectControl extends SimpleControl
       {
       case 'name':
         $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $submit_name );
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -140,7 +140,7 @@ class SelectControl extends SimpleControl
         if ($map_disabled && !empty($option[$map_disabled])) $ret .= " disabled='disabled'";
 
         $ret .= ">";
-        $ret .= SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $ret .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
         $ret .= "</option>\n";
       }
     }

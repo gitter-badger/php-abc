@@ -81,7 +81,7 @@ class ImageControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -93,7 +93,7 @@ class ImageControl extends SimpleControl
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', 'image' );
+    $ret .= \SetBased\Html\Html::generateAttribute( 'type', 'image' );
 
     foreach( $this->myAttributes as $name => $value )
     {
@@ -101,11 +101,11 @@ class ImageControl extends SimpleControl
       {
       case 'name':
         $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $global_name );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $global_name );
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
 

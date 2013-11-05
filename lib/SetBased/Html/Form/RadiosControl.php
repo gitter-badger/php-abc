@@ -67,7 +67,7 @@ class RadiosControl extends Control
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -87,7 +87,7 @@ class RadiosControl extends Control
         break;
 
       default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+        $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
       }
     }
     $ret .= ">\n";
@@ -104,7 +104,7 @@ class RadiosControl extends Control
       {
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
-        $for_id = SetBased\Html\Html::getAutoId();
+        $for_id = \SetBased\Html\Html::getAutoId();
 
         $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
 
@@ -119,7 +119,7 @@ class RadiosControl extends Control
 
         $label  = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
         $label .= "<label for='$for_id'>";
-        $label .= SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
         if (isset($this->myAttributes['set_label_postfix'])) $label .= $this->myAttributes['set_label_postfix'];
 

@@ -132,7 +132,7 @@ class ComplexControl extends Control
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -168,11 +168,10 @@ class ComplexControl extends Control
       }
     }
 
-    if (is_array($this->myAttributes['set_errmsg']))
+    if (isset($this->myAttributes['set_errmsg']))
     {
       $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
     }
-
 
     if (empty($ret)) $ret = false;
 
@@ -326,7 +325,7 @@ class ComplexControl extends Control
   {
     $control = $this->findFormControlByPath( $thePath );
 
-    if ($control===null) SetBased\Html\Html::error( "No form control with path '%s' exists.", $thePath );
+    if ($control===null) \SetBased\Html\Html::error( "No form control with path '%s' exists.", $thePath );
 
     return $control;
   }
@@ -369,7 +368,7 @@ class ComplexControl extends Control
   {
     $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) SetBased\Html\Html::error( "No form control with name '%s' found.", $theName );
+    if ($control===null) \SetBased\Html\Html::error( "No form control with name '%s' found.", $theName );
 
     return $control;
   }

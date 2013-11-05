@@ -13,7 +13,7 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Interface for defining classes that validate form control elements direved from SET_HtmlFormControl.
+/** @brief Interface for defining classes that validate form control elements direved from FormControl.
  */
 interface ControlValidator
 {
