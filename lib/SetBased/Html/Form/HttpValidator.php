@@ -29,7 +29,7 @@ class HttpValidator implements ControlValidator
     $value = $theFormControl->getSubmittedValue();
 
     // An empty value is valid.
-    if ($value===null || $value===false || $value==='') return true;
+    if ($value==='' || $value===null || $value===false) return true;
 
     // Objects and arrays are not a valid http URL.
     if (!is_scalar($value)) return false;

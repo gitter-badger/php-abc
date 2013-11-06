@@ -31,13 +31,13 @@ class Legend
    */
   public function setAttribute( $theName, $theValue )
   {
-    if ($theValue===null ||$theValue===false ||$theValue==='')
+    if ($theValue==='' || $theValue===null || $theValue===false)
     {
       unset( $this->myAttributes[$theName] );
     }
     else
     {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      if ($theName=='class' && isset($this->myAttributes[$theName]))
       {
         $this->myAttributes[$theName] .= ' ';
         $this->myAttributes[$theName] .= $theValue;

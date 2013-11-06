@@ -53,7 +53,7 @@ class FieldSet extends ComplexControl
   protected function generateLegend()
   {
     if ($this->myLegend) $ret = $this->myLegend->generate();
-    else                 $ret = false;
+    else                 $ret = '';
 
     return $ret;
   }

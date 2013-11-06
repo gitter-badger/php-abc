@@ -34,10 +34,10 @@ class Clean
   {
     $value = self::trimWhitespace( $theValue );
 
-    if ($value===null || $value===false || $value==='') return false;
+    if ($value==='' || $value===null || $value===false) return '';
 
     $parts = parse_url( $value );
-    if (!is_array( $parts )) return false;
+    if (!is_array( $parts )) return '';
 
     if (sizeof( $parts )==1 && isset( $parts['path']))
     {
@@ -71,11 +71,11 @@ class Clean
 
     if (isset($parts['pass']))
     {
-      $url .= "$parts[user]:$parts[pass]@";
+      $url .= $parts['user'].':'.$parts['pass'].'@';
     }
     elseif (isset($parts['user']))
     {
-      $url .= "$parts[user]@";
+      $url .= $parts['user'].'@';
     }
 
     if (isset($parts['host']))     $url .= $parts['host'];
@@ -92,7 +92,7 @@ class Clean
   {
     $value = self::trimWhitespace( $theValue );
 
-    if ($value===null || $value===false || $value==='') return false;
+    if ($value==='' || $value===null || $value===false) return false;
 
     $tidy_config = array( 'clean'          => false,
                           'output-xhtml'   => true,
@@ -107,7 +107,7 @@ class Clean
 
     if (preg_match( '/^(([\ \r\n\t])|(<p>)|(<\/p>)|(&nbsp;))*$/', $value )==1)
     {
-      $value = false;
+      $value = '';
     }
 
     return $value;

@@ -46,13 +46,13 @@ abstract class SimpleControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function setLabelAttribute( $theName, $theValue, $theExtendedFlag=false  )
   {
-    if ($theValue===null ||$theValue===false ||$theValue==='')
+    if ($theValue==='' || $theValue===null || $theValue===false)
     {
       unset( $this->myLabelAttributes[$theName] );
     }
     else
     {
-      if ($theName==='class' && isset($this->myLabelAttributes[$theName]))
+      if ($theName=='class' && isset($this->myLabelAttributes[$theName]))
       {
         $this->myLabelAttributes[$theName] .= ' ';
         $this->myLabelAttributes[$theName] .= $theValue;
@@ -67,7 +67,7 @@ abstract class SimpleControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   protected function generatePrefixLabel()
   {
-    $ret = false;
+    $ret = '';
 
     if (isset($this->myLabelAttributes['set_position']))
     {
@@ -97,7 +97,7 @@ abstract class SimpleControl extends Control
     }
     else
     {
-      $ret = false;
+      $ret = '';
     }
 
     return $ret;

@@ -76,22 +76,24 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for Form::setAttribute. Sets the value of attribute with name @a $theName of this form to
-      @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+  /** Sets the value of attribute with name @a $theName of this form to @a $theValue. If @a $theValue is @c null,
+      @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
 
-      @todo Document how attribute class is handled.
+      Remarks:
+      * Attribute 'method' is set default to 'post'.
+      * Attribute 'action' is set default to the current URL.
    */
-  protected function setAttributeBase( $theName, $theValue )
+  public function setAttribute( $theName, $theValue )
   {
-    if ($theValue===null ||$theValue===false ||$theValue==='')
+    if ($theValue==='' || $theValue===null || $theValue===false)
     {
       unset( $this->myAttributes[$theName] );
     }
     else
     {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      if ($theName=='class' && isset($this->myAttributes[$theName]))
       {
         $this->myAttributes[$theName] .= ' ';
         $this->myAttributes[$theName] .= $theValue;
@@ -99,68 +101,6 @@ class Form
       else
       {
         $this->myAttributes[$theName] = $theValue;
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /** Sets the value of attribute with name @a $theName of this form to @a $theValue. If @a $theValue is @c null,
-      @c false, or @c '' the attribute is unset.
-      @param $theName  The name of the attribute.
-      @param $theValue The value for the attribute.
-
-      @todo Document how attribute class is handled.
-      @todo Document @a theExtendedFlag
-   */
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Basic attributes.
-    case 'action':
-    case 'method':
-
-      // Advanced attributes.
-    case 'accept':
-    case 'accept-charsets':
-    case 'enctype':
-    case 'onreset':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }
@@ -305,7 +245,7 @@ class Form
    */
   static public function hasScalars( $theArray )
   {
-    $ret = false;
+    $ret = '';
     foreach( $theArray as $tmp )
     {
       if (is_scalar($tmp))

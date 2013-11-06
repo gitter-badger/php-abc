@@ -46,7 +46,7 @@ class MandatoryValidator implements ControlValidator
   {
     $value = $theFormControl->getSubmittedValue();
 
-    if ($value===null || $value===false || $value==='') return false;
+    if ($value==='' || $value===null || $value===false) return false;
 
     if (is_array($value)) return $this->validateArray( $value );
 

@@ -17,7 +17,7 @@ namespace SetBased\Html;
  */
 class Html
 {
-  /** Counter for generating unique element ID's. See method @a GetAutoId.
+  /** Counter for generating unique element ID's. See method @a getAutoId.
    */
   private static $ourAutoId = 0;
 
@@ -49,7 +49,8 @@ class Html
    */
   public static function generateAttribute( $theName, $theValue )
   {
-    $ret= '';
+    $ret = '';
+
     switch ($theName)
     {
     // Boolean attributes
@@ -71,6 +72,7 @@ class Html
         $ret .= "'";
       }
       break;
+    }
 
     return $ret;
   }
