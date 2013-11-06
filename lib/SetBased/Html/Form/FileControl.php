@@ -78,7 +78,7 @@ class FileControl extends SimpleControl
       }
       else
       {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        \SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
       }
     }
   }

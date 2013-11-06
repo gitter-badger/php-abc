@@ -73,7 +73,7 @@ abstract class SimpleControl extends Control
     {
       if ($this->myAttributes['id']=='')
       {
-        $id = SetBased\Html\Html::getAutoId();
+        $id = \SetBased\Html\Html::getAutoId();
         $this->myAttributes['id']       = $id;
         $this->myLabelAttributes['for'] = $id;
       }

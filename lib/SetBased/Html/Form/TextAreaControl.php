@@ -38,7 +38,7 @@ class TextAreaControl extends SimpleControl
     }
     $ret .= ">";
 
-    if (!empty($this->myAttributes['set_text'])) $ret .= SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
+    if (!empty($this->myAttributes['set_text'])) $ret .= \SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
 
     $ret .= "</textarea>";
 

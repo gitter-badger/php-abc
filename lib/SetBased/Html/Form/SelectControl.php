@@ -64,7 +64,7 @@ class SelectControl extends SimpleControl
         if ($map_disabled && !empty($option[$map_disabled])) $ret .= " disabled='disabled'";
 
         $ret .= ">";
-        $ret .= SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $ret .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
         $ret .= "</option>\n";
       }
     }

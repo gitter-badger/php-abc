@@ -147,11 +147,10 @@ class ComplexControl extends Control
       }
     }
 
-    if (is_array($this->myAttributes['set_errmsg']))
+    if (isset($this->myAttributes['set_errmsg']))
     {
       $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
     }
-
 
     if (empty($ret)) $ret = false;
 
@@ -214,9 +213,7 @@ class ComplexControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        if ($this->myName!==false) $theInvalidFormControls[$this->myName] = true;
-        else                     $theInvalidFormControls              = true;
-
+        $theInvalidFormControls[] = $this;
         break;
       }
     }
@@ -242,18 +239,8 @@ class ComplexControl extends Control
     }
     else
     {
-      // One or more input values are invalid. Append the names of the invalid form controls to $theInvalidFormControls.
-      if ($this->myName!==false)
-      {
-        $theInvalidFormControls[$this->myName] = $tmp;
-      }
-      else
-      {
-        foreach( $tmp as $name => $t )
-        {
-          $theInvalidFormControls[$name] = $t;
-        }
-      }
+      // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
+      $theInvalidFormControls[] = $tmp;
 
       $valid = false;
     }
@@ -315,7 +302,7 @@ class ComplexControl extends Control
   {
     $control = $this->findFormControlByPath( $thePath );
 
-    if ($control===null) SetBased\Html\Html::error( "No form control with path '%s' exists.", $thePath );
+    if ($control===null) \SetBased\Html\Html::error( "No form control with path '%s' exists.", $thePath );
 
     return $control;
   }
@@ -358,7 +345,7 @@ class ComplexControl extends Control
   {
     $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) SetBased\Html\Html::error( "No form control with name '%s' found.", $theName );
+    if ($control===null) \SetBased\Html\Html::error( "No form control with name '%s' found.", $theName );
 
     return $control;
   }

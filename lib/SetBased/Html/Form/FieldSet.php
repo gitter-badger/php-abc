@@ -11,6 +11,7 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 class FieldSet extends ComplexControl
@@ -23,7 +24,7 @@ class FieldSet extends ComplexControl
     switch ($theType)
     {
     case 'legend':
-      $tmp = new SET_HtmlLegend();
+      $tmp = new \SetBased\Html\Legend();
       break;
 
     default:
