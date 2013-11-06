@@ -71,7 +71,7 @@ abstract class SimpleControl extends Control
 
     if (isset($this->myLabelAttributes['set_position']))
     {
-      if ($this->myAttributes['id']=='')
+      if (!isset($this->myAttributes['id']))
       {
         $id = \SetBased\Html\Html::getAutoId();
         $this->myAttributes['id']       = $id;
@@ -109,16 +109,17 @@ abstract class SimpleControl extends Control
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
     $ret .= '<label';
 
-    foreach( $this->myLabelAttributes as $index => $value )
+    foreach( $this->myLabelAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
 
     $ret .= $this->myLabelAttributes['set_label'];
     $ret .= '</label>';
 
-    $ret .= $this->myLabelAttributes['set_postfix']."\n";
+    $ret .= (isset($this->myAttributes['set_postfix'])) ? $this->myAttributes['set_postfix'] : '';
+    $ret .= "\n";
 
     return $ret;
   }

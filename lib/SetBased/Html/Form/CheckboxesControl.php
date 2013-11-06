@@ -37,7 +37,7 @@ class CheckboxesControl extends Control
     $ret .= '<div';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 

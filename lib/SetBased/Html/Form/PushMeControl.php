@@ -37,11 +37,12 @@ class PushMeControl extends SimpleControl
 
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
+   // print_r( $this);
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();

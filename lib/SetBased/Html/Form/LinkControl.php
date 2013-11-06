@@ -24,7 +24,7 @@ class LinkControl extends SimpleControl
     $ret .= '<a';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
     if (!empty($this->myAttributes['set_html'])) $ret .= $this->myAttributes['set_html'];

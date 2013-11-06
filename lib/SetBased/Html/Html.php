@@ -47,7 +47,7 @@ class Html
   /** Returns a string with attribute @a $theName with value @a $theValue, e.g. type='text'. This function takes care
    *  about proper escaping of @a $theValue.
    */
-  public static function generateAttribute( $theName, $theValue )
+  public static function generateAttribute( $theName, $theValue, $flag=false )
   {
     $ret = '';
 
@@ -67,7 +67,7 @@ class Html
       {
         $ret  = ' ';
         $ret .= htmlspecialchars( $theName, ENT_QUOTES, 'UTF-8' );
-        $ret .= "='"
+        $ret .= "='";
         $ret .= htmlspecialchars( $theValue, ENT_QUOTES, 'UTF-8' );
         $ret .= "'";
       }

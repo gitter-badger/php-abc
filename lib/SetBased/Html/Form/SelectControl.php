@@ -28,7 +28,7 @@ class SelectControl extends SimpleControl
     $ret .= '<select';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
