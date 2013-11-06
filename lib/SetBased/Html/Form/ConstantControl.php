@@ -16,38 +16,15 @@ namespace SetBased\Html\Form;
 class ConstantControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-    case 'set_value':
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    return false;
+    return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $local_name = $this->myAttributes['name'];
-
-    $theWhiteListValue[$local_name] = $this->myAttributes['set_value'];
+    $theWhiteListValue[$this->myName] = $this->myAttributes['set_value'];
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $this->myAttributes['set_value'];
@@ -62,15 +39,14 @@ class ConstantControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    if (isset($theValues[$local_name]))
+    if (isset($theValues[$this->myName]))
     {
-      $value = $theValues[$local_name];
+      $value = $theValues[$this->myName];
 
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

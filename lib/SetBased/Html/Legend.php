@@ -23,14 +23,13 @@ class Legend
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for SET_HtmlLegend::setAttribute. Sets the value of attribute with name @a $theName of this form
-      to @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+  /** Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+      @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
 
-      @todo Document how attribute class is handled.
    */
-  protected function setAttributeBase( $theName, $theValue )
+  public function setAttribute( $theName, $theValue )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -51,69 +50,15 @@ class Legend
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Advanced attributes.
-    case 'accesskey':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O attributes.
-    case 'set_inline':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SET_Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate()
   {
-    $ret .= "<legend";
-
+    $ret = "<legend";
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= SET_Html::generateAttribute( $name, $value );
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
-
     $ret .= '>';
-
     $ret .= $this->myAttributes['set_inline'];
-
     $ret .= "</legend>\n";
 
     return $ret;

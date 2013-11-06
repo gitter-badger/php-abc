@@ -18,96 +18,22 @@ namespace SetBased\Html\Form;
 class HiddenControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Basic attributes.
-    // case 'name':
-    // case 'type':
-    case 'value':
-
-      // Advanced attributes.
-    case 'accept':
-    case 'accesskey':
-    case 'disabled':
-    case 'ismap':
-    case 'onblur':
-    case 'onchange':
-    case 'onfocus':
-    case 'onselect':
-    case 'readonly':
-    case 'tabindex':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes
-    case 'set_prefix':
-    case 'set_postfix':
-    case 'set_clean':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName  )
   {
+    $this->myAttributes['type'] = 'hidden';
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
-
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', 'hidden' );
-
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
-
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
+
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
@@ -117,8 +43,7 @@ class HiddenControl extends SimpleControl
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     if (isset($this->myAttributes['set_clean']))
     {
@@ -135,12 +60,12 @@ class HiddenControl extends SimpleControl
 
     if ($old_value!==$new_value)
     {
-      $theChangedInputs[$local_name] = true;
+      $theChangedInputs[$this->myName] = true;
       $this->myAttributes['value']   = $new_value;
     }
 
     // Any text can be in a input:hidden box. So, any value is white listed.
-    $theWhiteListValue[$local_name] = $new_value;
+    $theWhiteListValue[$this->myName] = $new_value;
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $new_value;
@@ -149,15 +74,14 @@ class HiddenControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    if (isset($theValues[$local_name]))
+    if (isset($theValues[$this->myName]))
     {
-      $value = $theValues[$local_name];
+      $value = $theValues[$this->myName];
 
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

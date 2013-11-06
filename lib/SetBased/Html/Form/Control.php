@@ -17,12 +17,17 @@ namespace SetBased\Html\Form;
  */
 abstract class Control
 {
+  /** The (local) name of this form control.
+   */
+  protected $myName;
+
   protected $myValidators = array();
 
   protected $myAttributes = array();
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Object creator. Creates a form control with (local) name @a $theName.
+  /** Object creator.
+      @param $theName The name of this form control.
    */
   public function __construct( $theName )
   {
@@ -30,12 +35,12 @@ abstract class Control
     {
       // We consider null, bool(false), and string(0) as empty. In these cases we set the name to false such that
       // we only have to test against false using the === operator in other parts of the code.
-      $this->myAttributes['name'] = false;
+      $this->myName = false;
     }
     else
     {
       // We consider int(0), float(0), string(0) "", string(3) "0.0" as non empty names.
-      $this->myAttributes['name'] = (string)$theName;
+      $this->myName = (string)$theName;
     }
 
     /** @todo Consider throw exception when name is not a scalar or set name to false.
@@ -51,15 +56,13 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Helper function for Control::setAttribute.
-      Sets the value attribute with name @a $theName to @a $theValue. If @a $theValue is @c null, @c false, or @c ''
-      the attribute is unset.
+  /** Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+      @c null, @c false, or @c '' the attribute is unset.
       @param $theName  The name of the attribute.
       @param $theValue The value for the attribute.
 
-      @todo Document how attribute class is handled.
    */
-  protected function setAttributeBase( $theName, $theValue )
+  public function setAttribute( $theName, $theValue )
   {
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
@@ -80,17 +83,9 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-      @c null, @c false, or @c '' the attribute is unset.
-      @param $theName  The name of the attribute.
-      @param $theValue The value for the attribute.
-
-      @todo Document how attribute class is handled.
-      @todo Document @a theExtendedFlag
+  /** Returns the value of an attribute.
+      @param $theName The name of the requested attribute.
    */
-  abstract public function setAttribute( $theName, $theValue, $theExtendedFlag=false );
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function getAttribute( $theName )
   {
     return (isset($this->myAttributes[$theName])) ? $this->myAttributes[$theName] : null;
@@ -104,15 +99,17 @@ abstract class Control
    */
   public function getLocalName()
   {
-    return $this->myAttributes['name'];
+    return $this->myName;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /** Returns the name this will be used for this form control when the form is submitted.
+      @param The submit name of the parent form control of this form control.
+   */
   protected function getSubmitName( $theParentSubmitName )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     if ($theParentSubmitName!==false)
     {

@@ -52,47 +52,6 @@ class Html
     $ret= 'xxxx';
     switch ($theName)
     {
-      // Plain text attributes
-    case 'accept':
-    case 'accept-charsets':
-    case 'accesskey':
-    case 'action':
-    case 'alt':
-    case 'charset':
-    case 'class':
-    case 'cols':
-    case 'colspan':
-    case 'coords':
-    case 'dir':
-    case 'enctype':
-    case 'href':
-    case 'hreflang':
-    case 'id':
-    case 'maxlength':
-    case 'method':
-    case 'name':
-    case 'rel':
-    case 'rev':
-    case 'rows':
-    case 'shape':
-    case 'size':
-    case 'src':
-    case 'style':
-    case 'tabindex':
-    case 'title':
-    case 'type':
-    case 'usemap':
-    case 'value':
-    case 'xml:lang':
-      if ($theValue!==null && $theValue!==false && $theValue!=='')
-      {
-        $ret  = " $theName='";
-        $ret .= htmlspecialchars( $theValue, ENT_QUOTES, 'UTF-8' );
-        $ret .= "'";
-      }
-      break;
-
-
     // Boolean attributes
     case 'checked':
     case 'disabled':
@@ -102,27 +61,16 @@ class Html
       if (!empty($theValue)) $ret = " $theName='$theName'";
       break;
 
-
-    // Event attributes
-    case 'onblur':
-    case 'onchange':
-    case 'onclick':
-    case 'ondbclick':
-    case 'onfocus':
-    case 'onkeydown':
-    case 'onkeypress':
-    case 'onkeyup':
-    case 'onmousedown':
-    case 'onmouseout':
-    case 'onmouseover':
-    case 'onmouseup':
-    case 'onreset':
-    case 'onselect':
-    case 'onsubmit':
-      /** @todo proper escaping of javascript */
-      if ($theValue!==null && $theValue!==false && $theValue!=='') $ret = " $theName=\"$theValue\"";
+    default:
+      if ($theValue!==null && $theValue!==false && $theValue!=='' && substr( $theName, 0, 4 )!='set_')
+      {
+        $ret  = ' ';
+        $ret .= htmlspecialchars( $theName, ENT_QUOTES, 'UTF-8' );
+        $ret .= "='"
+        $ret .= htmlspecialchars( $theValue, ENT_QUOTES, 'UTF-8' );
+        $ret .= "'";
+      }
       break;
-    }
 
     return $ret;
   }

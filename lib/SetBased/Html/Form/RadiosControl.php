@@ -17,78 +17,14 @@ use SetBased\Html;
 class RadiosControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes
-    case 'set_label_postfix':
-    case 'set_label_prefix':
-    case 'set_map_disabled':
-    case 'set_map_key':
-    case 'set_map_label':
-    case 'set_map_obfuscator':
-    case 'set_options':
-    case 'set_postfix':
-    case 'set_prefix':
-    case 'set_value':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= '<div';
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
+    $ret .= '<div';
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        // Element div does not have attribute 'name'. So, nothing to do.
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -146,9 +82,7 @@ class RadiosControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        $local_name = $this->myAttributes['name'];
-        $theInvalidFormControls[$local_name] = true;
-
+        $theInvalidFormControls[] = $this;
         break;
       }
     }
@@ -160,8 +94,7 @@ class RadiosControl extends Control
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
@@ -184,10 +117,10 @@ class RadiosControl extends Control
         {
           // If the orginal value differs from the submitted value then the form control has been changed.
           if (!isset($this->myAttributes['set_value']) ||
-              $this->myAttributes['set_value']!==$id) $theChangedInputs[$local_name] = true;
+              $this->myAttributes['set_value']!==$id) $theChangedInputs[$this->myName] = true;
 
           // Set the white listed value.
-          $theWhiteListValue[$local_name]  = $id;
+          $theWhiteListValue[$this->myName]  = $id;
           $this->myAttributes['set_value'] = $id;
 
           // Leave the loop.
@@ -198,26 +131,25 @@ class RadiosControl extends Control
     else
     {
       // No radio button has been checked.
-      $theWhiteListValue[$local_name]  = null;
+      $theWhiteListValue[$this->myName]  = null;
       $this->myAttributes['set_value'] = null;
     }
 
-    if (!array_key_exists( $local_name, $theWhiteListValue ))
+    if (!array_key_exists( $this->myName, $theWhiteListValue ))
     {
       // The white listed value has not been set. This can only happen when a none white listed value has been submitted.
       // In this case we ignore this and assume the default value has been submitted.
-      $theWhiteListValue[$local_name] = (isset($this->myAttributes['set_value'])) ? $this->myAttributes['set_value'] : null;
+      $theWhiteListValue[$this->myName] = (isset($this->myAttributes['set_value'])) ? $this->myAttributes['set_value'] : null;
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$local_name];
+    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    $this->myAttributes['set_value'] = $theValues[$local_name];
+    $this->myAttributes['set_value'] = $theValues[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

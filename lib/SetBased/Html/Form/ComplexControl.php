@@ -117,32 +117,11 @@ class ComplexControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-    case 'set_obfuscator':
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
     $submit_name = $this->getSubmitName( $theParentName );
 
-    $ret = false;
+    $ret = '';
     foreach( $this->myControls as $control )
     {
       $ret .= $control->generate( $submit_name );
@@ -183,10 +162,9 @@ class ComplexControl extends Control
   public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($local_name===false)
+    if ($this->myName===false)
     {
       $tmp1 = &$theSubmittedValue;
       $tmp2 = &$theWhiteListValue;
@@ -195,8 +173,8 @@ class ComplexControl extends Control
     else
     {
       $tmp1 = &$theSubmittedValue[$submit_name];
-      $tmp2 = &$theWhiteListValue[$local_name];
-      $tmp3 = &$theChangedInputs[$local_name];
+      $tmp2 = &$theWhiteListValue[$this->myName];
+      $tmp3 = &$theChangedInputs[$this->myName];
     }
 
     foreach( $this->myControls as $control )
@@ -204,10 +182,10 @@ class ComplexControl extends Control
       $control->loadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
     }
 
-    if ($local_name!==false)
+    if ($this->myName!==false)
     {
-      if (empty($theWhiteListValue[$local_name])) unset( $theWhiteListValue[$local_name] );
-      if (empty($theChangedInputs[$local_name]))  unset( $theChangedInputs[$local_name] );
+      if (empty($theWhiteListValue[$this->myName])) unset( $theWhiteListValue[$this->myName] );
+      if (empty($theChangedInputs[$this->myName]))  unset( $theChangedInputs[$this->myName] );
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
@@ -217,9 +195,8 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    if ($local_name!==false) $values = &$theValues[$local_name];
-    else                     $values = &$theValues;
+    if ($this->myName!==false) $values = &$theValues[$this->myName];
+    else                       $values = &$theValues;
 
     foreach( $this->myControls as $control )
     {
@@ -230,15 +207,14 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   protected function validateSelf( &$theInvalidFormControls )
   {
-    $local_name = $this->myAttributes['name'];
-    $valid      = true;
+    $valid = true;
 
     foreach( $this->myValidators as $validator )
     {
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        if ($local_name!==false) $theInvalidFormControls[$local_name] = true;
+        if ($this->myName!==false) $theInvalidFormControls[$this->myName] = true;
         else                     $theInvalidFormControls              = true;
 
         break;
@@ -259,8 +235,6 @@ class ComplexControl extends Control
       $control->validateBase( $tmp );
     }
 
-    $local_name = $this->myAttributes['name'];
-
     if (empty($tmp))
     {
       // All the individual child form controls are valid. Validate the child form controls as a whole.
@@ -269,10 +243,9 @@ class ComplexControl extends Control
     else
     {
       // One or more input values are invalid. Append the names of the invalid form controls to $theInvalidFormControls.
-      $local_name = $this->myAttributes['name'];
-      if ($local_name!==false)
+      if ($this->myName!==false)
       {
-        $theInvalidFormControls[$local_name] = $tmp;
+        $theInvalidFormControls[$this->myName] = $tmp;
       }
       else
       {

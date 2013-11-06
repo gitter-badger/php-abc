@@ -13,7 +13,7 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Validates if the value of a form control (derived from SET_HtmlFormControl) is a valid http URL.
+/** @brief Validates if the value of a form control is a valid http URL.
  *
  * @note Can only be applied on form controls which values are strings.
  */

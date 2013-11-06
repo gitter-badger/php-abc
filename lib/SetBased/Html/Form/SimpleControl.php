@@ -40,8 +40,7 @@ abstract class SimpleControl extends Control
     parent::__construct( $theName );
 
     // A simple form control must have a name.
-    $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($this->myName===false) SetBased\Html\Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -50,68 +49,17 @@ abstract class SimpleControl extends Control
     if ($theValue===null ||$theValue===false ||$theValue==='')
     {
       unset( $this->myLabelAttributes[$theName] );
-      return;
     }
-
-    switch ($theName)
+    else
     {
-      // Basic attributes.
-    // case 'for':
-
-      // Advanced attributes.
-    case 'accesskey':
-    case 'onblur':
-    case 'onfocus':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes
-    case 'set_label':
-    case 'set_position':
-    case 'set_prefix':
-    case 'set_postfix':
-
       if ($theName==='class' && isset($this->myLabelAttributes[$theName]))
       {
         $this->myLabelAttributes[$theName] .= ' ';
-        $this->myLabelAttributes[$theName] .= (string)$theValue;
+        $this->myLabelAttributes[$theName] .= $theValue;
       }
       else
       {
-        $this->myLabelAttributes[$theName] = (string)$theValue;
-      }
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->myLabelAttributes[$theName] = (string)$theValue;
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
+        $this->myLabelAttributes[$theName] = $theValue;
       }
     }
   }
@@ -163,51 +111,12 @@ abstract class SimpleControl extends Control
 
     foreach( $this->myLabelAttributes as $index => $value )
     {
-      switch ($index)
-      {
-       // Common core attributes
-      case 'for':
-        if ($value!='') $ret .= " $index='$value'";
-        break;
-
-
-      case 'class':
-      case 'id':
-      case 'title':
-        if ($value!='') $ret .= " $index='$value'";
-        break;
-
-
-      case 'xml:lang':
-      case 'dir':
-        if ($value!='') $ret .= " $index='$value'";
-        break;
-
-
-      // Common event attributes
-      case 'onclick':
-      case 'ondbclick':
-      case 'onmousedown':
-      case 'onmouseup':
-      case 'onmouseover':
-      case 'onmouseout':
-      case 'onkeypress':
-      case 'ononkeydown':
-      case 'onkeyup':
-        return SetBased\Html\Html::error( 'not implemented' );
-        break;
-
-
-      // Common style attribute
-      case 'style':
-        if ($value!='') $ret .= " $index='$value'";
-        break;
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
 
     $ret .= $this->myLabelAttributes['set_label'];
-    $ret .= "</label>";
+    $ret .= '</label>';
 
     $ret .= $this->myLabelAttributes['set_postfix']."\n";
 
@@ -224,9 +133,7 @@ abstract class SimpleControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        $local_name = $this->myAttributes['name'];
-        $theInvalidFormControls[$local_name] = true;
-
+        $theInvalidFormControls[] = $this;
         break;
       }
     }

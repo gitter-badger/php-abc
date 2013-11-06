@@ -18,50 +18,6 @@ class FieldSet extends ComplexControl
   protected $myLegend;
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function createLegend( $theType='legend' )
   {
     switch ($theType)
@@ -85,15 +41,7 @@ class FieldSet extends ComplexControl
     $ret = '<fieldset';
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        // Element fieldset does not have a attribute name. So, nothing to do.
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 

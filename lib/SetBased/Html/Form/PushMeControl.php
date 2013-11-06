@@ -26,99 +26,26 @@ class PushMeControl extends SimpleControl
   protected $myButtonType;
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Basic attributes.
-      // case 'name':
-      // case 'type':
-    case 'value':
-
-      // Advanced attributes.
-    case 'accept':
-    case 'accesskey':
-    case 'disabled':
-    case 'ismap':
-    case 'onblur':
-    case 'onchange':
-    case 'onfocus':
-    case 'onselect':
-    case 'readonly':
-    case 'tabindex':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes
-    case 'set_prefix':
-    case 'set_postfix':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $this->myAttributes['type'] = $this->myButtonType;
+
+    // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
+    // are unique.
+    $obfuscator = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
+    $this->myAttributes['name'] = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
-
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', $this->myButtonType );
-
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
-        // are unique.
-        $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-        $local_name  = $this->myAttributes['name'];
-        $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
-
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
+
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
@@ -128,15 +55,14 @@ class PushMeControl extends SimpleControl
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     if ($theSubmittedValue[$submit_name]===$this->myAttributes['value'])
     {
       // We don't register buttons as a changed input, otherwise every submited form will always have changed inputs.
-      // $theChangedInputs[$local_name] = true;
+      // $theChangedInputs[$this->myName] = true;
 
-      $theWhiteListValue[$local_name] = $this->myAttributes['value'];
+      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
     }
 
     // Set the submitted value to be used method GetSubmittedValue.

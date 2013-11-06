@@ -24,65 +24,7 @@ class CheckboxesControl extends Control
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    $local_name = $this->myAttributes['name'];
-    if ($local_name===false) SetBased\Html\Html::error( 'Name is emtpy' );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onkeydown':
-    case 'onkeypress':
-    case 'onkeyup':
-    case 'onmousedown':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onmouseover':
-    case 'onmouseup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes
-    case 'set_label_postfix':
-    case 'set_label_prefix':
-    case 'set_map_checked':
-    case 'set_map_disabled':
-    case 'set_map_id':
-    case 'set_map_key':
-    case 'set_map_label':
-    case 'set_map_obfuscator':
-    case 'set_options':
-    case 'set_postfix':
-    case 'set_prefix':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
+    if ($this->myName===false) SetBased\Html\Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -91,19 +33,11 @@ class CheckboxesControl extends Control
     $submit_name = $this->getSubmitName( $theParentName );
 
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= '<div';
 
+    $ret .= '<div';
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        // Nothing to do
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -164,8 +98,7 @@ class CheckboxesControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        $local_name = $this->myAttributes['name'];
-        $theInvalidFormControls[$local_name] = true;
+        $theInvalidFormControls[$this->myName] = true;
 
         break;
       }
@@ -177,9 +110,8 @@ class CheckboxesControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    if ($local_name!==false) $values = &$theValues[$local_name];
-    else                     $values = &$theValues;
+    if ($this->myName!==false) $values = &$theValues[$this->myName];
+    else                       $values = &$theValues;
 
     $map_key     = $this->myAttributes['set_map_key'];
     $map_checked = $this->myAttributes['set_map_checked'];
@@ -206,8 +138,7 @@ class CheckboxesControl extends Control
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_checked    = (isset($this->myAttributes['set_map_checked']))    ?  $this->myAttributes['set_map_checked']    : 'set_map_checked';
@@ -230,21 +161,21 @@ class CheckboxesControl extends Control
         $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
         // If the orginal value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted)) $theChangedInputs[$local_name][$id] = true;
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = true;
 
         // Set the white listed value.
-        $theWhiteListValue[$local_name][$id]                 = !empty($submitted);
+        $theWhiteListValue[$this->myName][$id]                 = !empty($submitted);
         $this->myAttributes['set_options'][$i][$map_checked] = !empty($submitted);
       }
     }
     else
     {
       // No checkboxes have been checked.
-      $theWhiteListValue[$local_name] = array();
+      $theWhiteListValue[$this->myName] = array();
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$local_name];
+    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

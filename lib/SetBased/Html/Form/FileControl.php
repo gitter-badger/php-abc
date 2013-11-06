@@ -86,28 +86,20 @@ class FileControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName  )
   {
+    $this->myAttributes['type'] = 'file';
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+
     $ret .= $this->generatePrefixLabel();
     $ret .= '<input';
-
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', 'file' );
-
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
-
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
+
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
@@ -117,18 +109,17 @@ class FileControl extends SimpleControl
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     if ($_FILES[$submit_name]['error']===0)
     {
-      $theChangedInputs[$local_name]  = true;
-      $theWhiteListValue[$local_name] = $_FILES[$submit_name];
+      $theChangedInputs[$this->myName]  = true;
+      $theWhiteListValue[$this->myName] = $_FILES[$submit_name];
       $this->myAttributes['value']    = $_FILES[$submit_name];
     }
     else
     {
-      $theWhiteListValue[$local_name] = false;
+      $theWhiteListValue[$this->myName] = false;
     }
 
     // Set the submitted value to be used method GetSubmittedValue.

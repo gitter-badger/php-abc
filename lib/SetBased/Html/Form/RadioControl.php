@@ -21,98 +21,22 @@ use SetBased\Html;
 class RadioControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function setAttribute( $theName, $theValue, $theExtendedFlag=false )
-  {
-    switch ($theName)
-    {
-      // Basic attributes.
-    case 'checked':
-      //case 'name':
-      //case 'type':
-    case 'value':
-
-      // Advanced attributes.
-    case 'accept':
-    case 'accesskey':
-    case 'disabled':
-    case 'ismap':
-    case 'onblur':
-    case 'onchange':
-    case 'onfocus':
-    case 'onselect':
-    case 'readonly':
-    case 'tabindex':
-
-      // Common core attributes.
-    case 'class':
-    case 'id':
-    case 'title':
-
-      // Common internationalization attributes.
-    case 'xml:lang':
-    case 'dir':
-
-      // Common event attributes.
-    case 'onclick':
-    case 'ondblclick':
-    case 'onmousedown':
-    case 'onmouseup':
-    case 'onmouseover':
-    case 'onmousemove':
-    case 'onmouseout':
-    case 'onkeypress':
-    case 'onkeydown':
-    case 'onkeyup':
-
-      // Common style attribute.
-    case 'style':
-
-      // H2O Attributes xxx
-    case 'set_clean':
-    case 'set_obfuscator':
-    case 'set_postfix':
-    case 'set_prefix':
-
-      $this->setAttributeBase( $theName, $theValue );
-      break;
-
-    default:
-      if ($theExtendedFlag)
-      {
-        $this->setAttributeBase( $theName, $theValue );
-      }
-      else
-      {
-        SetBased\Html\Html::error( "Unsupported attribute '%s'.", $theName );
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName  )
   {
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $this->myAttributes['type'] = 'radio';
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
-
-    $ret .= SetBased\Html\Html::generateAttribute( 'type', 'radio' );
-
     foreach( $this->myAttributes as $name => $value )
     {
-      switch ($name)
-      {
-      case 'name':
-        $submit_name = $this->getSubmitName( $theParentName );
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $submit_name );
-        break;
-
-      default:
-        $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
-      }
+      $ret .= SetBased\Html\Html::generateAttribute( $name, $value );
     }
-
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
+
     if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
 
     return $ret;
@@ -122,39 +46,37 @@ class RadioControl extends SimpleControl
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $local_name  = $this->myAttributes['name'];
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $local_name ) : $local_name;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     if ((string)$theSubmittedValue[$submit_name]===(string)$this->myAttributes['value'])
     {
-      if (empty($this->myAttributes['checked'])) $theChangedInputs[$local_name] = true;
+      if (empty($this->myAttributes['checked'])) $theChangedInputs[$this->myName] = true;
       $this->myAttributes['checked']  = true;
-      $theWhiteListValue[$local_name] = $this->myAttributes['value'];
+      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
 
       // Set the submitted value to be used method GetSubmittedValue.
-      $this->myAttributes['set_submitted_value'] =  $theWhiteListValue[$local_name];
+      $this->myAttributes['set_submitted_value'] =  $theWhiteListValue[$this->myName];
     }
     else
     {
-      if (!empty($this->myAttributes['checked'])) $theChangedInputs[$local_name] = true;
+      if (!empty($this->myAttributes['checked'])) $theChangedInputs[$this->myName] = true;
       $this->myAttributes['checked'] = false;
 
-      if (!array_key_exists( $local_name, $theWhiteListValue )) $theWhiteListValue[$local_name] = null;
+      if (!array_key_exists( $this->myName, $theWhiteListValue )) $theWhiteListValue[$this->myName] = null;
     }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $local_name = $this->myAttributes['name'];
-    if (isset($theValues[$local_name]))
+    if (isset($theValues[$this->myName]))
     {
-      $value = $theValues[$local_name];
+      $value = $theValues[$this->myName];
 
       // The value of a input:checkbox must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $local_name );
+        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when empty? */
