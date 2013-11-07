@@ -136,15 +136,9 @@ class CheckboxesControl extends Control
       /** @todo More elegant handling of empty and default values */
     }
 
-    $checked = array();
-    foreach( $values as $value )
-    {
-      $checked[$value[$map_key]] = true;
-    }
-
     foreach( $this->myAttributes['set_options'] as $id => $option )
     {
-      $this->myAttributes['set_options'][$id][$map_checked] = $checked[$option[$map_key]];
+      $this->myAttributes['set_options'][$id][$map_checked] = !empty( $values[$option[$map_key]] );
     }
   }
 
