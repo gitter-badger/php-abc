@@ -48,14 +48,14 @@ class SelectControl extends SimpleControl
       foreach( $this->myAttributes['set_options'] as $option )
       {
         // Get the (database) ID of the option.
-        $id = $option[$map_key];
+        $id = (string)$option[$map_key];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
         //
         $ret .= "<option value='$code'";
-
+        
         if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
         {
           $ret .= " selected='selected'";
@@ -86,14 +86,13 @@ class SelectControl extends SimpleControl
     $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
+    // Normalize default value as a string.
+    $value = isset($this->myAttributes['set_value']) ? (string)$this->myAttributes['set_value'] : '';
 
     if (isset($theSubmittedValue[$submit_name]))
     {
       // Normalize the submitted value as a string.
       $submitted = (string)$theSubmittedValue[$submit_name];
-
-      // Normalize default value as a string.
-      $value = isset($this->myAttributes['set_value']) ? (string)$this->myAttributes['set_value'] : '';
 
       if (empty($this->myAttributes['set_empty_option']) && $submitted===' ')
       {
@@ -114,7 +113,7 @@ class SelectControl extends SimpleControl
 
             if ($submitted===(string)$code)
             {
-              // If the orginal value differs from the submitted value then the form control has been changed.
+              // If the original value differs from the submitted value then the form control has been changed.
               if ($value!==(string)$id) $theChangedInputs[$this->myName] = true;
 
               // Set the white listed value.
@@ -149,8 +148,8 @@ class SelectControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    /** @todo check on type and value is in list of options. */
-    $this->myAttributes['set_value'] = $theValues[$this->myName];
+     /** @todo check on type and value is in list of options. */
+    $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
