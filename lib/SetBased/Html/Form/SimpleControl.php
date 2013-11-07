@@ -1,31 +1,29 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** Class for generating form control elements of type
-  * \li text
-  * \li password
-  * \li hidden
-  * \li checkbox
-  * \li radio
-  * \li submit
-  * \li reset
-  * \li button
-  * \li file
-  * \li image
-  */
+ * \li text
+ * \li password
+ * \li hidden
+ * \li checkbox
+ * \li radio
+ * \li submit
+ * \li reset
+ * \li button
+ * \li file
+ * \li image
+ */
 
 abstract class SimpleControl extends Control
 {
@@ -33,22 +31,29 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Creates a SimpleControl object for generating a form control element of @a $theType with (local)
-    * name \a $theName.
-    */
+   * name \a $theName.
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
 
     // A simple form control must have a name.
-    if ($this->myName===false) SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($this->myName===false)
+    {
+      \SetBased\Html\Html::error( 'Name is empty' );
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function setLabelAttribute( $theName, $theValue, $theExtendedFlag=false  )
+  /**
+   * @param string $theName
+   * @param string $theValue
+   */
+  public function setLabelAttribute( $theName, $theValue )
   {
     if ($theValue==='' || $theValue===null || $theValue===false)
     {
-      unset( $this->myLabelAttributes[$theName] );
+      unset($this->myLabelAttributes[$theName]);
     }
     else
     {
@@ -73,7 +78,7 @@ abstract class SimpleControl extends Control
     {
       if (!isset($this->myAttributes['id']))
       {
-        $id = \SetBased\Html\Html::getAutoId();
+        $id                             = \SetBased\Html\Html::getAutoId();
         $this->myAttributes['id']       = $id;
         $this->myLabelAttributes['for'] = $id;
       }
@@ -82,8 +87,35 @@ abstract class SimpleControl extends Control
         $this->myLabelAttributes['for'] = $this->myAttributes['id'];
       }
 
-      if ($this->myLabelAttributes['set_position']=='prefix') $ret .= $this->generateLabel();
+      if ($this->myLabelAttributes['set_position']=='prefix')
+      {
+        $ret .= $this->generateLabel();
+      }
     }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function generateLabel()
+  {
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret .= '<label';
+
+    foreach ($this->myLabelAttributes as $name => $value)
+    {
+      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+    }
+    $ret .= '>';
+
+    $ret .= $this->myLabelAttributes['set_label'];
+    $ret .= '</label>';
+
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix'];
+    }
+    $ret .= "\n";
 
     return $ret;
   }
@@ -104,32 +136,11 @@ abstract class SimpleControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function generateLabel()
-  {
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= '<label';
-
-    foreach( $this->myLabelAttributes as $name => $value )
-    {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
-    }
-    $ret .= ">";
-
-    $ret .= $this->myLabelAttributes['set_label'];
-    $ret .= '</label>';
-
-    $ret .= (isset($this->myAttributes['set_postfix'])) ? $this->myAttributes['set_postfix'] : '';
-    $ret .= "\n";
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
 
-    foreach( $this->myValidators as $validator )
+    foreach ($this->myValidators as $validator)
     {
       $valid = $validator->validate( $this );
       if ($valid!==true)

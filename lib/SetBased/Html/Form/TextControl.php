@@ -1,16 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -27,7 +25,7 @@ class TextControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function generate( $theParentName  )
+  public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'text';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
@@ -36,7 +34,7 @@ class TextControl extends SimpleControl
     {
       if (isset($this->myAttributes['size']))
       {
-        $this->myAttributes['size'] = min( $this->myAttributes['size'] , $this->myAttributes['maxlength'] );
+        $this->myAttributes['size'] = min( $this->myAttributes['size'], $this->myAttributes['maxlength'] );
       }
       else
       {
@@ -49,14 +47,17 @@ class TextControl extends SimpleControl
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
 
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix'];
+    }
 
     return $ret;
   }
@@ -77,13 +78,19 @@ class TextControl extends SimpleControl
     }
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
-    if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
-    if ($new_value==='' || $new_value===null || $new_value===false) $new_value = '';
+    if ($old_value==='' || $old_value===null || $old_value===false)
+    {
+      $old_value = '';
+    }
+    if ($new_value==='' || $new_value===null || $new_value===false)
+    {
+      $new_value = '';
+    }
 
     if ($old_value!==$new_value)
     {
       $theChangedInputs[$this->myName] = true;
-      $this->myAttributes['value']   = $new_value;
+      $this->myAttributes['value']     = $new_value;
     }
 
     // The user can enter any text in a input:text box. So, any value is white listed.
@@ -101,7 +108,7 @@ class TextControl extends SimpleControl
       $value = $theValues[$this->myName];
 
       // The value of a input:text must be a scalar.
-      if (!is_scalar($value))
+      if (!is_scalar( $value ))
       {
         SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }

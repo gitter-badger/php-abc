@@ -1,12 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
@@ -18,19 +15,25 @@ class DivControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= '<div';
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
-    if (!empty($this->myAttributes['set_html'])) $ret .= $this->myAttributes['set_html']."\n";
+    if (!empty($this->myAttributes['set_html']))
+    {
+      $ret .= $this->myAttributes['set_html']."\n";
+    }
     $ret .= "</div>";
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix']."\n";
+    }
 
     return $ret;
   }

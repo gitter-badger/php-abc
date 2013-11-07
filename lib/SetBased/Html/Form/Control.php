@@ -1,33 +1,41 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Abstract class for objects for generation HTML code for form controls.
+/**
+ * Class Control Abstract class for objects for generation HTML code for form controls.
+ * @package SetBased\Html\Form
  */
 abstract class Control
 {
-  /** The (local) name of this form control.
+  /**
+   * @var string The (local) name of this form control.
    */
   protected $myName;
 
+  /**
+   * @var array The validators for this form control.
+   */
   protected $myValidators = array();
 
+  /**
+   * The attributes of this form control.
+   * @var array $myAttributes
+   */
   protected $myAttributes = array();
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
-      @param $theName The name of this form control.
+   *
+   * @param $theName string The (local) name of this form control.
    */
   public function __construct( $theName )
   {
@@ -42,13 +50,13 @@ abstract class Control
       // We consider int(0), float(0), string(0) "", string(3) "0.0" as non empty names.
       $this->myName = (string)$theName;
     }
-
-    /** @todo Consider throw exception when name is not a scalar or set name to false.
-     */
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Adds validator @a $theValidator to this form control.
+  /**
+   * Adds @a $theValidator as a validator for this form control.
+   *
+   * @param $theValidator ControlValidator
    */
   public function addValidator( $theValidator )
   {
@@ -57,16 +65,16 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-      @c null, @c false, or @c '' the attribute is unset.
-      @param $theName  The name of the attribute.
-      @param $theValue The value for the attribute.
-
+   * @c null, @c false, or @c '' the attribute is unset.
+   *
+   * @param $theName  string The name of the attribute.
+   * @param $theValue string The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
     if ($theValue==='' || $theValue===null || $theValue===false)
     {
-      unset( $this->myAttributes[$theName] );
+      unset($this->myAttributes[$theName]);
     }
     else
     {
@@ -83,8 +91,12 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the value of an attribute.
-      @param $theName The name of the requested attribute.
+  /**
+   * Returns the value of an attribute.
+   *
+   * @param $theName string The name of the requested attribute.
+   *
+   * @return string|null
    */
   public function getAttribute( $theName )
   {
@@ -103,8 +115,10 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the name this will be used for this form control when the form is submitted.
-      @param The submit name of the parent form control of this form control.
+  /**
+   * @param $theParentSubmitName string The submit name of the parent form control of this form control.
+   *
+   * @return string The name this will be used for this form control when the form is submitted.
    */
   protected function getSubmitName( $theParentSubmitName )
   {
@@ -113,8 +127,14 @@ abstract class Control
 
     if ($theParentSubmitName!==false)
     {
-      if ($submit_name!==false) $global_name = $theParentSubmitName.'['.$submit_name.']';
-      else                      $global_name = $theParentSubmitName;
+      if ($submit_name!==false)
+      {
+        $global_name = $theParentSubmitName.'['.$submit_name.']';
+      }
+      else
+      {
+        $global_name = $theParentSubmitName;
+      }
     }
     else
     {
@@ -125,7 +145,7 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getErrorMessages( $theRecursiveFlag=false )
+  public function getErrorMessages( $theRecursiveFlag = false )
   {
     return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
   }
@@ -151,6 +171,13 @@ abstract class Control
   abstract protected function validateBase( &$theInvalidFormControls );
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theSubmittedValue array
+   * @param $theWhiteListValue array
+   * @param $theChangedInputs  array
+   *
+   * @return void
+   */
   abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
 
   //--------------------------------------------------------------------------------------------------------------------

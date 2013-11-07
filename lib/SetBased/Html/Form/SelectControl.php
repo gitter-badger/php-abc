@@ -1,16 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -26,7 +24,7 @@ class SelectControl extends SimpleControl
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= '<select';
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
@@ -38,14 +36,14 @@ class SelectControl extends SimpleControl
       $ret .= "<option value=' '></option>\n";
     }
 
-    if (is_array($this->myAttributes['set_options']))
+    if (is_array( $this->myAttributes['set_options'] ))
     {
       $map_key        = $this->myAttributes['set_map_key'];
       $map_label      = $this->myAttributes['set_map_label'];
-      $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+      $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
-      foreach( $this->myAttributes['set_options'] as $option )
+      foreach ($this->myAttributes['set_options'] as $option)
       {
         // Get the (database) ID of the option.
         $id = $option[$map_key];
@@ -61,7 +59,10 @@ class SelectControl extends SimpleControl
           $ret .= " selected='selected'";
         }
 
-        if ($map_disabled && !empty($option[$map_disabled])) $ret .= " disabled='disabled'";
+        if ($map_disabled && !empty($option[$map_disabled]))
+        {
+          $ret .= " disabled='disabled'";
+        }
 
         $ret .= ">";
         $ret .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
@@ -71,7 +72,10 @@ class SelectControl extends SimpleControl
 
     $ret .= "</select>";
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix']."\n";
+    }
 
     return $ret;
   }
@@ -83,7 +87,7 @@ class SelectControl extends SimpleControl
     $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
-    $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+    $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
 
@@ -98,13 +102,16 @@ class SelectControl extends SimpleControl
       if (empty($this->myAttributes['set_empty_option']) && $submitted===' ')
       {
         $theWhiteListValue[$this->myName] = null;
-        if ($value!=='' && $value!==' ') $theChangedInputs[$this->myName] = true;
+        if ($value!=='' && $value!==' ')
+        {
+          $theChangedInputs[$this->myName] = true;
+        }
       }
       else
       {
-        if (is_array($this->myAttributes['set_options']))
+        if (is_array( $this->myAttributes['set_options'] ))
         {
-          foreach( $this->myAttributes['set_options'] as $option )
+          foreach ($this->myAttributes['set_options'] as $option)
           {
             // Get the (database) ID of the option.
             $id = $option[$map_key];
@@ -114,12 +121,15 @@ class SelectControl extends SimpleControl
 
             if ($submitted===(string)$code)
             {
-              // If the orginal value differs from the submitted value then the form control has been changed.
-              if ($value!==(string)$id) $theChangedInputs[$this->myName] = true;
+              // If the original value differs from the submitted value then the form control has been changed.
+              if ($value!==(string)$id)
+              {
+                $theChangedInputs[$this->myName] = true;
+              }
 
               // Set the white listed value.
-              $this->myAttributes['set_value'] = $id;
-              $theWhiteListValue[$this->myName]  = $id;
+              $this->myAttributes['set_value']  = $id;
+              $theWhiteListValue[$this->myName] = $id;
 
               // Leave the loop.
               break;
@@ -132,7 +142,10 @@ class SelectControl extends SimpleControl
     {
       // No value has been submitted.
       $theWhiteListValue[$this->myName] = null;
-      if ($value!=='' && $value!==' ') $theChangedInputs[$this->myName] = true;
+      if ($value!=='' && $value!==' ')
+      {
+        $theChangedInputs[$this->myName] = true;
+      }
     }
 
     if (!array_key_exists( $this->myName, $theWhiteListValue ))

@@ -1,16 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -22,21 +20,21 @@ class RadiosControl extends Control
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= '<div';
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
-    if (is_array($this->myAttributes['set_options']))
+    if (is_array( $this->myAttributes['set_options'] ))
     {
       $map_key        = $this->myAttributes['set_map_key'];
       $map_label      = $this->myAttributes['set_map_label'];
-      $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+      $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
       $submit_name = $this->getSubmitName( $theParentName );
-      foreach( $this->myAttributes['set_options'] as $option )
+      foreach ($this->myAttributes['set_options'] as $option)
       {
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
@@ -49,15 +47,21 @@ class RadiosControl extends Control
           $input .= " checked='checked'";
         }
 
-        if ($map_disabled && !empty($option[$map_disabled])) $input .= " disabled='disabled'";
+        if ($map_disabled && !empty($option[$map_disabled]))
+        {
+          $input .= " disabled='disabled'";
+        }
 
         $input .= "/>";
 
-        $label  = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
+        $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
         $label .= "<label for='$for_id'>";
         $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
-        if (isset($this->myAttributes['set_label_postfix'])) $label .= $this->myAttributes['set_label_postfix'];
+        if (isset($this->myAttributes['set_label_postfix']))
+        {
+          $label .= $this->myAttributes['set_label_postfix'];
+        }
 
         $ret .= $input;
         $ret .= $label;
@@ -67,7 +71,10 @@ class RadiosControl extends Control
 
     $ret .= "</div>";
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix']."\n";
+    }
 
     return $ret;
   }
@@ -77,7 +84,7 @@ class RadiosControl extends Control
   {
     $valid = true;
 
-    foreach( $this->myValidators as $validator )
+    foreach ($this->myValidators as $validator)
     {
       $valid = $validator->validate( $this );
       if ($valid!==true)
@@ -97,7 +104,7 @@ class RadiosControl extends Control
     $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
-    $map_disabled   = (isset($this->myAttributes['set_map_disabled']))   ? $this->myAttributes['set_map_disabled']   : null;
+    $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
     if (isset($theSubmittedValue[$submit_name]))
@@ -105,7 +112,7 @@ class RadiosControl extends Control
       // Normalize the submitted value as a string.
       $submitted_value = (string)$theSubmittedValue[$submit_name];
 
-      foreach( $this->myAttributes['set_options'] as $option )
+      foreach ($this->myAttributes['set_options'] as $option)
       {
         // Get the (database) ID of the option.
         $id = $option[$map_key];
@@ -117,11 +124,15 @@ class RadiosControl extends Control
         {
           // If the orginal value differs from the submitted value then the form control has been changed.
           if (!isset($this->myAttributes['set_value']) ||
-              $this->myAttributes['set_value']!==$id) $theChangedInputs[$this->myName] = true;
+            $this->myAttributes['set_value']!==$id
+          )
+          {
+            $theChangedInputs[$this->myName] = true;
+          }
 
           // Set the white listed value.
-          $theWhiteListValue[$this->myName]  = $id;
-          $this->myAttributes['set_value'] = $id;
+          $theWhiteListValue[$this->myName] = $id;
+          $this->myAttributes['set_value']  = $id;
 
           // Leave the loop.
           break;
@@ -131,8 +142,8 @@ class RadiosControl extends Control
     else
     {
       // No radio button has been checked.
-      $theWhiteListValue[$this->myName]  = null;
-      $this->myAttributes['set_value'] = null;
+      $theWhiteListValue[$this->myName] = null;
+      $this->myAttributes['set_value']  = null;
     }
 
     if (!array_key_exists( $this->myName, $theWhiteListValue ))

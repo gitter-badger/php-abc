@@ -1,16 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -32,22 +30,25 @@ class PushMeControl extends SimpleControl
 
     // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
     // are unique.
-    $obfuscator = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
+    $obfuscator                 = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $this->myAttributes['name'] = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
-   // print_r( $this);
+    // print_r( $this);
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix'];
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix'];
+    }
 
     return $ret;
   }
