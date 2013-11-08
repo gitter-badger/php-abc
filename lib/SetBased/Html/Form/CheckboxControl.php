@@ -79,13 +79,6 @@ class CheckboxControl extends SimpleControl
     {
       $value = $theValues[$this->myName];
 
-      // The value of a input:checkbox must be a scalar.
-      if (!is_scalar($value))
-      {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when empty? */
       $this->myAttributes['checked'] = !empty($value);
     }
     else
