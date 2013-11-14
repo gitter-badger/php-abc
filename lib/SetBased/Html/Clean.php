@@ -1,12 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
@@ -16,20 +13,26 @@ namespace SetBased\Html;
 class Clean
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return string
+   */
   public static function pruneWhitespace( $theValue )
   {
-    if (empty($theValue)) return $theValue;
+    if (empty($theValue))
+    {
+      return $theValue;
+    }
     else                  return trim( mb_ereg_replace( '[\ \t\n\r\0\x0B\xA0]+', ' ', $theValue, 'p' ) );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public static function trimWhitespace( $theValue )
-  {
-    if (empty($theValue)) return $theValue;
-    else                  return trim( $theValue, " \t\n\r\0\x0B\xA0" );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return bool|string
+   */
   public static function normalizeUrl( $theValue )
   {
     $value = self::trimWhitespace( $theValue );
@@ -39,13 +42,13 @@ class Clean
     $parts = parse_url( $value );
     if (!is_array( $parts )) return false;
 
-    if (sizeof( $parts )==1 && isset( $parts['path']))
+    if (sizeof( $parts )==1 && isset($parts['path']))
     {
       $i = strpos( $parts['path'], '/' );
       if ($i===false)
       {
         $parts['host'] = $parts['path'];
-        unset( $parts['path'] );
+        unset($parts['path']);
       }
       else
       {
@@ -56,7 +59,7 @@ class Clean
 
     if (isset($parts['scheme']))
     {
-      $sep = (strtolower($parts['scheme']) == 'mailto' ? ':' : '://');
+      $sep = (strtolower( $parts['scheme'] )=='mailto' ? ':' : '://');
       $url = strtolower( $parts['scheme'] ).$sep;
     }
     else
@@ -78,26 +81,46 @@ class Clean
       $url .= "$parts[user]@";
     }
 
-    if (isset($parts['host']))     $url .= $parts['host'];
-    if (isset($parts['port']))     $url .= ':'.$parts['port'];
-    if (isset($parts['path']))     $url .= $parts['path'];
-    if (isset($parts['query']))    $url .= '?'.$parts['query'];
+    if (isset($parts['host'])) $url .= $parts['host'];
+    if (isset($parts['port'])) $url .= ':'.$parts['port'];
+    if (isset($parts['path'])) $url .= $parts['path'];
+    if (isset($parts['query'])) $url .= '?'.$parts['query'];
     if (isset($parts['fragment'])) $url .= '#'.$parts['fragment'];
 
     return $url;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return string
+   */
+  public static function trimWhitespace( $theValue )
+  {
+    if (empty($theValue))
+    {
+      return $theValue;
+    }
+    else                  return trim( $theValue, " \t\n\r\0\x0B\xA0" );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return bool|string
+   */
   public static function tidyHtml( $theValue )
   {
     $value = self::trimWhitespace( $theValue );
 
     if ($value===null || $value===false || $value==='') return false;
 
-    $tidy_config = array( 'clean'          => false,
-                          'output-xhtml'   => true,
-                          'show-body-only' => true,
-                          'wrap'           => 100 );
+    $tidy_config = array('clean'          => false,
+                         'output-xhtml'   => true,
+                         'show-body-only' => true,
+                         'wrap'           => 100);
 
     $tidy = new tidy;
 

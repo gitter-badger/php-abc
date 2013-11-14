@@ -1,34 +1,35 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 class FieldSet extends ComplexControl
 {
+  /**
+   * @var Html\Legend
+   */
   protected $myLegend;
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function createLegend( $theType='legend' )
+  public function createLegend( $theType = 'legend' )
   {
     switch ($theType)
     {
-    case 'legend':
-      $tmp = new \SetBased\Html\Legend();
-      break;
+      case 'legend':
+        $tmp = new Html\Legend();
+        break;
 
-    default:
-      $tmp = new $theType();
+      default:
+        $tmp = new $theType();
     }
 
     $this->myLegend = $tmp;
@@ -37,12 +38,26 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  public function generate( $theParentName )
+  {
+    $ret = $this->generateOpenTag();
+
+    $ret .= $this->generateLegend();
+
+    $ret .= parent::generate( $theParentName );
+
+    $ret .= $this->generateCloseTag();
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   protected function generateOpenTag()
   {
     $ret = '<fieldset';
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -52,7 +67,10 @@ class FieldSet extends ComplexControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function generateLegend()
   {
-    if ($this->myLegend) $ret = $this->myLegend->generate();
+    if ($this->myLegend)
+    {
+      $ret = $this->myLegend->generate();
+    }
     else                 $ret = false;
 
     return $ret;
@@ -67,22 +85,6 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function generate( $theParentName )
-  {
-    $ret  = $this->generateOpenTag();
-
-    $ret .= $this->generateLegend();
-
-    $ret .= parent::generate( $theParentName );
-
-    $ret .= $this->generateCloseTag();
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
 }
-
-
 
 //----------------------------------------------------------------------------------------------------------------------

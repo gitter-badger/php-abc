@@ -11,23 +11,31 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+use SetBased\Html\Html;
 
-//----------------------------------------------------------------------------------------------------------------------
 /**
    @todo Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
  */
 class CheckboxesControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theName
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    if ($this->myName===false) SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($this->myName===false) Html::error( 'Name is emtpy' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $submit_name = $this->getSubmitName( $theParentName );
@@ -37,7 +45,7 @@ class CheckboxesControl extends Control
     $ret .= '<div';
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -61,23 +69,23 @@ class CheckboxesControl extends Control
           $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
           if ($map_id && isset($option[$map_id])) $id = $option[$map_id];
-          else                                    $id = \SetBased\Html\Html::getAutoId();
+          else                                    $id = Html::getAutoId();
 
           $input = "<input type='checkbox'";
 
-          $input .= \SetBased\Html\Html::generateAttribute( 'name', "${submit_name}[$code]" );
+          $input .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-          $input .= \SetBased\Html\Html::generateAttribute( 'id', $id );
+          $input .= Html::generateAttribute( 'id', $id );
 
-          if ($map_checked) $input .= \SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
+          if ($map_checked) $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
 
-          if ($map_disabled) $input .= \SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+          if ($map_disabled) $input .= Html::generateAttribute( 'disabled', $option[$map_checked] );
 
           $input .= "/>";
 
           $label  = isset($this->myAttributes['set_label_prefix']) ? $this->myAttributes['set_label_prefix'] : null;  // optional
           $label .= "<label for='$id'>";
-          $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
+          $label .= Html::txt2Html( $option[$map_label] );
           $label .= "</label>";
           $label .= isset($this->myAttributes['set_label_postfix']) ? $this->myAttributes['set_label_postfix'] : null;  // optional
 
@@ -104,6 +112,11 @@ class CheckboxesControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theInvalidFormControls
+   *
+   * @return bool
+   */
   protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
@@ -122,6 +135,9 @@ class CheckboxesControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     if ($this->myName!==false) $values = &$theValues[$this->myName];
@@ -143,6 +159,11 @@ class CheckboxesControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;

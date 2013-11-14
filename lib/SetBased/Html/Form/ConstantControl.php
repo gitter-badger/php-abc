@@ -13,15 +13,29 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class ConstantControl
+ * @package SetBased\Html\Form
+ */
 class ConstantControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $theWhiteListValue[$this->myName] = $this->myAttributes['set_value'];
@@ -31,12 +45,18 @@ class ConstantControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theInvalidFormControls
+   */
   protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   */
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))
@@ -46,7 +66,7 @@ class ConstantControl extends SimpleControl
       // The value of a input:hidden must be a scalar.
       if (!is_scalar($value))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

@@ -26,6 +26,11 @@ class PushMeControl extends SimpleControl
   protected $myButtonType;
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = $this->myButtonType;
@@ -42,7 +47,7 @@ class PushMeControl extends SimpleControl
     $ret .= "<input";
     foreach( $this->myAttributes as $name => $value )
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -53,6 +58,13 @@ class PushMeControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theSubmittedValue array
+   * @param $theWhiteListValue array
+   * @param $theChangedInputs  array
+   *
+   * @return mixed|void
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
@@ -71,6 +83,11 @@ class PushMeControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   *
+   * @return mixed|void
+   */
   public function setValuesBase( &$theValues )
   {
     // We don't set the value of a button via Form::setValues() method. So, nothing to do.
