@@ -180,16 +180,6 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $list = $xpath->query( "/form/fieldset/div/input[@name='cnt_id[4]' and @type='checkbox' and @id='4' and not(@checked)]" );
     $this->assertEquals( 1, $list->length );
 
-
-
-    // setup form with 5 countries
-    // 2 check
-
-
-    // set vales
-    // 3 checked and one that was checked is unchecked
-
-
   }
 
   //--------------------------------------------------------------------------------------------------------------------
