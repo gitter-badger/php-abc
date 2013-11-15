@@ -14,7 +14,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control.
    */
-  private function SetupForm1( $theValue )
+  private function setupForm1( $theValue )
   {
     $form = new \SetBased\Html\Form();
     $fieldset= $form->createFieldSet();

@@ -1,18 +1,18 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class ButtonControlTest
+ * Class ResetControlTest
  */
-class ButtonControlTest extends PushMeControlTest
+class ResetControlTest extends PushMeControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Return  button type for form control.
+   * Return reset type for form control.
    * @return string
    */
   protected function getControlType()
   {
-    return 'button';
+    return 'reset';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

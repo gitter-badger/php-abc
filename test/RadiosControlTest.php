@@ -8,7 +8,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a select form control.
    */
-  private function SetupForm1()
+  private function setupForm1()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -30,7 +30,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   /** Setups a form with a select form control. Difference between this function
       and SetupForm1 are the cnt_id are integers.
    */
-  private function SetupForm2()
+  private function setupForm2()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();

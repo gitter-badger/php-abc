@@ -8,7 +8,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a single form control of type $theType.
    */
-  private function SetupForm1( $theType )
+  private function setupForm1( $theType )
   {
     $form = new \SetBased\Html\Form();
 
@@ -25,7 +25,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a checkbox form control.
    */
-  private function SetupForm2()
+  private function setupForm2()
   {
     $form = new \SetBased\Html\Form();
 

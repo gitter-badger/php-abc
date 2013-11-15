@@ -62,17 +62,15 @@ class PushMeControl extends SimpleControl
    * @param $theSubmittedValue array
    * @param $theWhiteListValue array
    * @param $theChangedInputs  array
-   *
-   * @return mixed|void
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($theSubmittedValue[$submit_name]===$this->myAttributes['value'])
+    if (isset($theSubmittedValue[$submit_name]) && $theSubmittedValue[$submit_name]===$this->myAttributes['value'])
     {
-      // We don't register buttons as a changed input, otherwise every submited form will always have changed inputs.
+      // We don't register buttons as a changed input, otherwise every submitted form will always have changed inputs.
       // $theChangedInputs[$this->myName] = true;
 
       $theWhiteListValue[$this->myName] = $this->myAttributes['value'];

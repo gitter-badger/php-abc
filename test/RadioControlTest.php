@@ -8,7 +8,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Test form for radio.
    */
-  private function SetForm1()
+  private function setForm1()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -25,10 +25,10 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $form->loadSubmittedValues();
 
     return $form;
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
-  private function SetForm2()
+  private function setForm2()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -49,7 +49,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  private function SetForm3()
+  private function setForm3()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -72,7 +72,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**@name ValidTests
-     Test for valid submitted values.
+  Test for valid submitted values.
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     $this->assertEquals( '2', $values['name'] );
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /** A white list values must be valid.
@@ -99,7 +99,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     $this->assertEquals( 2, $values['name'] );
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /** A white listed value must be valid (even whens tring and integers are mixed).
@@ -112,9 +112,9 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     $this->assertEquals( 3, $values['name'] );
-   }
+  }
 
-     //--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   /** A white listed value must be valid (even whens tring and integers are mixed).
    */
   public function testValid4()
@@ -125,12 +125,12 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     $this->assertEquals( '0.0', $values['name'] );
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   //@}
   /** @name WhiteListTest
-      Test for white list valus.
+  Test for white list valus.
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $this->assertNull( $values['name'] );
     $this->assertEmpty( $form->getChangedControls() );
 
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Only white list values must be value.
@@ -165,7 +165,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $this->assertArrayHasKey( 'name', $values );
     $this->assertNull( $values['name'] );
     $this->assertTrue( $changed['name'] );
-   }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   //@}

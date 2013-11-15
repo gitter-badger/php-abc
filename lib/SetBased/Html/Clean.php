@@ -109,7 +109,7 @@ class Clean
   /**
    * @param $theValue string
    *
-   * @return bool|string
+   * @return string
    */
   public static function tidyHtml( $theValue )
   {
@@ -130,7 +130,7 @@ class Clean
 
     if (preg_match( '/^(([\ \r\n\t])|(<p>)|(<\/p>)|(&nbsp;))*$/', $value )==1)
     {
-      $value = false;
+      $value = '';
     }
 
     return $value;
