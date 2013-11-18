@@ -364,7 +364,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $doc->loadXML( $form );
     $xpath = new DOMXpath($doc);
 
-    // Asset that the checkboxes are set or unset accoridng to the $values.
+    // Asset that the checkboxes are set or unset according to the $values.
     $list = $xpath->query( "/form/fieldset/div/input[@name='cnt_id[0]' and @type='checkbox' and @checked='checked']" );
     $this->assertEquals( 1, $list->length );
 

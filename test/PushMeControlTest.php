@@ -61,6 +61,34 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
   abstract protected function getControlType();
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Method SetValue() has no effect for buttons.
+   */
+  public function testSetValues()
+  {
+    // Create form.
+    $form = new \SetBased\Html\Form();
+    $fieldset = $form->CreateFieldSet();
+    $button = $fieldset->CreateFormControl( $this->getControlType(), 'button' );
+    $button->setAttribute( 'value', "Do not push" );
+
+    // Set the values for button.
+    $values['button'] = 'Push';
+    $form->setValues( $values );
+
+    // Generate HTML.
+    $html = $form->generate();
+
+    $doc = new DOMDocument();
+    $doc->loadXML( $html );
+    $xpath = new DOMXpath($doc);
+
+    // Names of buttons must be absolute setValue has no effect for buttons.
+    $list = $xpath->query( "/form/fieldset/input[@name='button' and @value='Do not push' and @type='".$this->getControlType()."']" );
+    $this->assertEquals( 1, $list->length );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-class TextControlTest extends SimpleControlTest
+use SetBased\Html\Form;
+
+//----------------------------------------------------------------------------------------------------------------------
+class TextAreaControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -12,8 +15,9 @@ class TextControlTest extends SimpleControlTest
 
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'text', 'test' );
+    $control  = $fieldset->createFormControl( 'textarea', 'test' );
     $control->setAttribute( 'value', 'Hello World!' );
+    $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
 
     $form->loadSubmittedValues();
 
@@ -22,14 +26,8 @@ class TextControlTest extends SimpleControlTest
 
     $this->assertEquals( 'Hello World!', $values['test'] );
 
-    //$this->assertFalse( $changed['test'] );
+    $this->assertFalse( $changed['test'] );
 
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
-  {
-    return 'text';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

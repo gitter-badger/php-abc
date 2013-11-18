@@ -90,11 +90,11 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only whitelisted values must be loaded.
+  /** Only white listed values must be loaded.
   */
   public function testWhiteListed1()
   {
-    // cnt_id is not a value that is in the whitelist of values (i.e. 1,2, and 3).
+    // cnt_id is not a value that is in the white list of values (i.e. 1,2, and 3).
     $_POST['cnt_id'] = 99;
 
     $form = $this->setupForm1();
