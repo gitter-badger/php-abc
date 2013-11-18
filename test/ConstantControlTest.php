@@ -31,7 +31,7 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     // Assert the value of "name" is still "1".
     $this->assertEquals( '1', $values['name'] );
 
-    // Assert "name" has not be recored as a changed value.
+    // Assert "name" has not be recoded as a changed value.
     $this->assertArrayNotHasKey( 'name', $changed );
   }
 

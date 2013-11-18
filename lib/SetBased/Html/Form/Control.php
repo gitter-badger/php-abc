@@ -22,12 +22,12 @@ abstract class Control
   protected $myName;
 
   /**
-   * @var array
+   * @var \SetBased\Html\Form\ControlValidator[]
    */
   protected $myValidators = array();
 
   /**
-   * @var array
+   * @var string[]
    */
   protected $myAttributes = array();
 

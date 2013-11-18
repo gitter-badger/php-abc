@@ -22,7 +22,10 @@ class Html
   private static $ourAutoId = 0;
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Throws an exception with text @a $theMessage.
+  /**
+   * Throws an exception with text @a $theMessage.
+   *
+   * @throws Exception
    */
   public static function error()
   {
