@@ -5,6 +5,7 @@ class TextControlTest extends SimpleControlTest
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test cleaning is done before testing value of the form control has changed.
+   * For text field whitespace cleaner set default.
    */
   public function testPruneWhitespaceNoChanged()
   {
@@ -20,9 +21,11 @@ class TextControlTest extends SimpleControlTest
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
+    // After clean '  Hello    World!   ' must be equal 'Hello World!'.
     $this->assertEquals( 'Hello World!', $values['test'] );
 
-    //$this->assertFalse( $changed['test'] );
+    // Value not change.
+    $this->assertArrayNotHasKey( 'test', $changed );
 
   }
 

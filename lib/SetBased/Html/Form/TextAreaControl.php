@@ -32,6 +32,7 @@ class TextAreaControl extends SimpleControl
     $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= '<textarea';
+
     foreach( $this->myAttributes as $name => $value )
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
@@ -62,9 +63,8 @@ class TextAreaControl extends SimpleControl
       $new_value = $theSubmittedValue[$submit_name];
     }
     // Normalize old (original) value and new (submitted) value.
-    $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
-    if ($old_value==='' || $old_value===null || $old_value===false) $old_value = '';
-    if ($new_value==='' || $new_value===null || $new_value===false) $new_value = '';
+    $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
+    $new_value = (string)$new_value;
 
     if ($old_value!==$new_value)
     {

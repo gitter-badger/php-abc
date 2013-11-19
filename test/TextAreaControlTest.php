@@ -17,6 +17,8 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'textarea', 'test' );
     $control->setAttribute( 'value', 'Hello World!' );
+
+    // Set cleaner for textarea field (default it off).
     $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
 
     $form->loadSubmittedValues();
@@ -24,10 +26,11 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
+    // After clean '  Hello    World!   ' must be equal 'Hello World!'.
     $this->assertEquals( 'Hello World!', $values['test'] );
 
-    $this->assertFalse( $changed['test'] );
-
+    // Value not change.
+    $this->assertArrayNotHasKey( 'test', $changed );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

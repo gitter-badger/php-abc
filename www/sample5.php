@@ -9,7 +9,7 @@ function Leader()
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
   echo "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' dir='ltr'>\n";
   echo "<head>\n";
-  echo "<title>Sample Hidden</title>\n";
+  echo "<title>Sample Hidden, Invisible and Constant.</title>\n";
   echo "</head>\n";
   echo "<body>\n";
 }
@@ -28,18 +28,18 @@ function CreateForm()
 
   $fieldset = $form->CreateFieldSet();
   $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Hidden and Invisable' );
+  $legend->SetAttribute( 'set_inline', 'Hidden, Invisible and Constant' );
 
-  $control = $fieldset->CreateFormControl( 'hidden', 'example1' );
+  $control = $fieldset->CreateFormControl( 'hidden', 'example1_hidden' );
   $control->SetAttribute( 'value', 'old1' );
 
-  $control = $fieldset->CreateFormControl( 'invisable', 'example2' );
+  $control = $fieldset->CreateFormControl( 'invisible', 'example2_invisible' );
   $control->SetAttribute( 'value', 'old2' );
 
-  $control = $fieldset->CreateFormControl( 'constant', 'example3' );
+  $control = $fieldset->CreateFormControl( 'constant', 'example3_constant' );
   $control->SetAttribute( 'set_value', 'old3' );
 
-  $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
+  $fieldset = $form->CreateFieldSet( 'fieldset', '' );
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );
   $control->SetAttribute( 'value', 'OK' );
 
@@ -53,9 +53,10 @@ function Demo()
 
   if ($form->IsSubmitted( 'submit' ))
   {
-    $_POST['example1'] = 'new value1';
-    $_POST['example2'] = 'new value2';
-    $_POST['example3'] = 'new value3';
+    $_POST['example1_hidden'] = 'new value1';
+    $_POST['example2_invisible'] = 'new value2';
+    $_POST['example3_constant'] = 'new value3';
+
     $form->LoadSubmittedValues();
     $valid = $form->Validate();
     if (!$valid && false)

@@ -57,7 +57,6 @@ function Demo()
 
   if ($form->IsSubmitted( 'submit' ))
   {
-    //$_POST[gender] = "It";
     $form->LoadSubmittedValues();
 
     $valid = $form->Validate();
