@@ -84,7 +84,7 @@ class CheckboxControl extends SimpleControl
 
     if (empty($this->myAttributes['checked'])!==empty($theSubmittedValue[$submit_name]))
     {
-      $theChangedInputs[$this->myName] = true;
+      $theChangedInputs[$this->myName] = $this;
     }
 
     /** @todo Decide whether to test submited value is white listed, i.e. $this->myAttributes['value'] (or 'on'

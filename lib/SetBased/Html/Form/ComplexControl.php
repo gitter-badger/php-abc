@@ -229,7 +229,7 @@ class ComplexControl extends Control
     else
     {
       // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
-      $theInvalidFormControls[] = $tmp;
+      $theInvalidFormControls[] = $tmp; 
 
       $valid = false;
     }

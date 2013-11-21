@@ -146,7 +146,7 @@ class CheckboxesControl extends Control
       $valid = $validator->validate( $this );
       if ($valid!==true)
       {
-        $theInvalidFormControls[$this->myName] = true;
+        $theInvalidFormControls[$this->myName] = $this;
         break;
       }
     }
