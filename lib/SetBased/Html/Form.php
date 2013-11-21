@@ -173,7 +173,7 @@ class Form
         Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
     }
 
-    foreach ($this->myFieldSets as $fieldset)
+    foreach ($this->myFieldSets as $fieldSet)
     {
       $fieldSet->loadSubmittedValuesBase( $values, $this->myValues, $this->myChangedControls );
     }
@@ -235,7 +235,7 @@ class Form
   protected function generateBody()
   {
     $ret = false;
-    foreach ($this->myFieldSets as $fieldset)
+    foreach ($this->myFieldSets as $fieldSet)
     {
       $ret .= $fieldSet->generate( false );
     }
@@ -341,7 +341,8 @@ class Form
    *
    * @param  $thePath string  The path of the searched form control.
    *
-   * @return Form\Control A form control with path $thePath.
+   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl
+   *
    * @sa FindFormControlByPath.
    */
   public function getFormControlByPath( $thePath )
@@ -360,7 +361,8 @@ class Form
    *
    * @param  $thePath string The path of the searched form control.
    *
-   * @return Form\Control | null A form control with path $thePath or @c null of no form control has been found.
+   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl|null
+   *
    * @sa GetFormControlByPath.
    */
   public function findFormControlByPath( $thePath )
@@ -412,7 +414,8 @@ class Form
    *
    * @param  $theName string The name of the searched form control.
    *
-   * @return Form\Control A form control with name $theName.
+   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl
+   *
    * @sa findFormControlByName.
    */
   public function getFormControlByName( $theName )
@@ -434,7 +437,8 @@ class Form
    *
    * @param  $theName string The name of the searched form control.
    *
-   * @return Form\Control A form control with name $theName or @c null of no form control has been found.
+   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl|null
+   *
    * @sa getFormControlByName.
    */
   public function findFormControlByName( $theName )
@@ -443,7 +447,7 @@ class Form
     {
       if ($fieldSet->getLocalName()===$theName) return $fieldSet;
       {
-        return $fieldset;
+        return $fieldSet;
       }
 
       $control = $fieldSet->findFormControlByName( $theName );
@@ -457,9 +461,6 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-    {
-      Html::error( sprintf( "No form control with name '%s' found.", $theName ) );
-    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------

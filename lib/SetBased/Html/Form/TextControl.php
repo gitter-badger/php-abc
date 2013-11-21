@@ -9,8 +9,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html;
-
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Class for form controls of type input:text.
  */
@@ -21,7 +19,8 @@ class TextControl extends SimpleControl
   {
     parent::__construct( $theName );
 
-    $this->myAttributes['set_clean'] = '\SetBased\Html\Clean::pruneWhitespace';
+    // By default whitespace is pruned from text form controls.
+    $this->myCleaner = Cleaner\PruneWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -65,17 +64,18 @@ class TextControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if (isset($this->myAttributes['set_clean']))
+    // Get the submitted value and cleaned (if required).
+    if ($this->myCleaner)
     {
-      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+      $new_value = $this->myCleaner->clean( $theSubmittedValue[$submit_name] );
     }
     else
     {
       $new_value = $theSubmittedValue[$submit_name];
     }
+
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
     $new_value = (string)$new_value;

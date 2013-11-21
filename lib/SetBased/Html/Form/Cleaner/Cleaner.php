@@ -8,25 +8,22 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html;
+namespace SetBased\Html\Form\Cleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Interface for defining classes for obfuscating and un-obfuscating database ID.
+ * @brief Interface for defining classes for cleaning submitted values and translated formatted values to
+ *        machine values.
  */
-interface Obfuscator
+interface Cleaner
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the obfuscated value of @a $theValue.
+  /**
+   * Returns the cleaned value of @a $theValue.
+   *
+   * @param $theValue mixed
    */
-  public function encode( $theValue );
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the un-obfuscated value of @a $theCode.
-   */
-  public function decode( $theCode );
-
-  //--------------------------------------------------------------------------------------------------------------------
+  public function clean( $theValue );
 }
 
 //----------------------------------------------------------------------------------------------------------------------

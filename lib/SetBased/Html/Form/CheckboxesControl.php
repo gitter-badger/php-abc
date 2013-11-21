@@ -9,8 +9,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html\Html;
-
 /**
  * @todo Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
  */
@@ -25,10 +23,7 @@ class CheckboxesControl extends Control
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    if ($this->myName===false) SetBased\Html\Html::error( 'Name is emtpy' );
-    {
-      SetBased\Html\Html::error( 'Name is emtpy' );
-    }
+    if ($this->myName===false) \SetBased\Html\Html::error( 'Name is empty' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -56,18 +51,6 @@ class CheckboxesControl extends Control
       {
         if (!isset($this->myAttributes['set_map_key'])) Html::error( "Not set mandatory attribute 'set_map_key'." );
         if (!isset($this->myAttributes['set_map_label'])) Html::error( "Not set mandatory attribute 'set_map_label'." );
-          $map_key = $this->myAttributes['set_map_key'];
-        }
-        else
-        {
-          Html::error( "Not set mandatory attribute 'set_map_key'." );
-        }
-          $map_label = $this->myAttributes['set_map_label'];
-        }
-        else
-        {
-          Html::error( "Not set mandatory attribute 'set_map_label'." );
-        }
 
         $map_key        = $this->myAttributes['set_map_key'];
         $map_label      = $this->myAttributes['set_map_label'];
@@ -81,12 +64,6 @@ class CheckboxesControl extends Control
           $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
           $id =  ($map_id && isset($option[$map_id]))?  $id = $option[$map_id] : Html::getAutoId();
-            $id = $option[$map_id];
-          }
-          else
-          {
-            $id = \SetBased\Html\Html::getAutoId();
-          }
 
           $input = "<input type='checkbox'";
 
@@ -129,28 +106,21 @@ class CheckboxesControl extends Control
 
     $ret .= "</div>";
 
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix']."\n";
-    }
+    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
+   *
    * @param $theValues
    */
   public function setValuesBase( &$theValues )
   {
-    if ($this->myName!==false) $values = & $theValues[$this->myName];
-    else                       $values = & $theValues;
-      $values = & $theValues[$this->myName];
-    }
-    else
-    {
-      $values = & $theValues;
-    }
+    if ($this->myName!=='') $values = & $theValues[$this->myName];
+    else                    $values = & $theValues;
 
     $map_key     = $this->myAttributes['set_map_key'];
     $map_checked = $this->myAttributes['set_map_checked'];
@@ -198,8 +168,7 @@ class CheckboxesControl extends Control
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_checked    = (isset($this->myAttributes['set_map_checked'])) ? $this->myAttributes['set_map_checked'] : 'set_map_checked';
@@ -222,10 +191,7 @@ class CheckboxesControl extends Control
         $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
         // If the original value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted))
-        {
-          $theChangedInputs[$this->myName][$id] = true;
-        }
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = true;
 
         // Set the white listed value.
         $theWhiteListValue[$this->myName][$id]               = !empty($submitted);

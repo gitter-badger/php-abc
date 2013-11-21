@@ -42,8 +42,7 @@ class HiddenControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     if (isset($this->myAttributes['set_clean']))
     {
@@ -53,15 +52,10 @@ class HiddenControl extends SimpleControl
     {
       $new_value = $theSubmittedValue[$submit_name];
     }
+
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
     $new_value = (string)$new_value;
-      $old_value = '';
-    }
-    if ($new_value==='' || $new_value===null || $new_value===false)
-    {
-      $new_value = '';
-    }
 
     if ($old_value!==$new_value)
     {

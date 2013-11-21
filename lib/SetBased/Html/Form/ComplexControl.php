@@ -12,8 +12,10 @@ namespace SetBased\Html\Form;
 //----------------------------------------------------------------------------------------------------------------------
 class ComplexControl extends Control
 {
-  /** The child HTML form controls
-   * @var array Control
+  /**
+   * The child HTML form controls of this form control.
+   *
+   * @var \SetBased\Html\Form\ComplexControl[]|\SetBased\Html\Form\Control[]
    */
   protected $myControls = array();
 
@@ -21,7 +23,7 @@ class ComplexControl extends Control
   /**
    * A factory for creating form control objects.
    *
-   * @param  $theType string The class name of the formcontrol which must be derived from class FormControl.
+   * @param  $theType string The class name of the form control which must be derived from class FormControl.
    * @param  $theName string The name (which might be empty for complex form controls) of the form control.
    *
    * @return ComplexControl|SimpleControl
@@ -156,10 +158,7 @@ class ComplexControl extends Control
       $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
     }
 
-    if (empty($ret))
-    {
-      $ret = false;
-    }
+    if (empty($ret)) $ret = false;
 
     return $ret;
   }
@@ -167,10 +166,9 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($this->myName===false)
+    if ($this->myName==='')
     {
       $tmp1 = & $theSubmittedValue;
       $tmp2 = & $theWhiteListValue;
@@ -188,16 +186,10 @@ class ComplexControl extends Control
       $control->loadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
     }
 
-    if ($this->myName!==false)
+    if ($this->myName!=='')
     {
       if (empty($theWhiteListValue[$this->myName])) unset($theWhiteListValue[$this->myName]);
       if (empty($theChangedInputs[$this->myName])) unset($theChangedInputs[$this->myName]);
-        unset($theWhiteListValue[$this->myName]);
-      }
-      if (empty($theChangedInputs[$this->myName]))
-      {
-        unset($theChangedInputs[$this->myName]);
-      }
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
@@ -207,17 +199,16 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    if ($this->myName!==false)
-    {
-      $values = & $theValues[$this->myName];
-    }
-    else                       $values = & $theValues;
+    if ($this->myName!=='') $values = & $theValues[$this->myName];
+    else                    $values = & $theValues;
+
     foreach ($this->myControls as $control)
     {
       $values = & $theValues[$this->myName];
     }
-    else
-    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   public function validateBase( &$theInvalidFormControls )
   {
     $tmp = array();
@@ -266,13 +257,14 @@ class ComplexControl extends Control
   /** Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
    * exists the first found form control is returned. If no form control with @a $thePath exists an exception will
    * be thrown.
+   *
    * @param  $thePath string The path of the searched form control.
-   * @return A form control with path $thePath.
+   *
+   * @return ComplexControl|Control
+   *
    * @sa FindFormControlByPath.
    */
   public function getFormControlByPath( $thePath )
-  {
-    $control = $this->findFormControlByPath( $thePath );
   {
     $control = $this->findFormControlByPath( $thePath );
 
@@ -285,13 +277,11 @@ class ComplexControl extends Control
   /** Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
    * exists the first found form control is returned. If no form control with @a $thePath exists @c null is
    * returned.
+   *
    * @param  $thePath string The path of the searched form control.
-   * @return A form control with path $thePath or @c null of no form control has been found.
-   * @sa GetFormControlByPath.
    *
-   * @param  $thePath The path of the searched form control.
+   * @return ComplexControl|Control
    *
-   * @return A form control with path $thePath or @c null of no form control has been found.
    * @sa GetFormControlByPath.
    */
   public function findFormControlByPath( $thePath )
@@ -335,8 +325,9 @@ class ComplexControl extends Control
    * exists the first found form control is returned. If no form control with @a $theName exists an exception will
    * be thrown.
    * @param  $theName string The name of the searched form control.
-   * @return A form control with name $theName.
-   * @sa FindFormControlByName.
+   *
+   * @return ComplexControl|Control
+   *
    * @sa FindFormControlByName.
    */
   public function getFormControlByName( $theName )
@@ -352,32 +343,32 @@ class ComplexControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Searches for the form control with name @a $theName. If more than one form control with name @a $theName
+  /**
+   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
    * exists the first found form control is returned. If no form control with @a $theName exists @c null is
    * returned.
+   *
    * @param  $theName The name of the searched form control.
-   * @return A form control with name $theName or @c null of no form control has been found.
-   * @sa GetFormControlByName.
+   *
+   * @return ComplexControl|Control
+   *
    * @sa GetFormControlByName.
    */
   public function findFormControlByName( $theName )
   {
     foreach ($this->myControls as $control)
     {
-      if ($control->myAttributes['name']===$theName)
-      {
-        return $control;
-      }
+      if ($control->myAttributes['name']===$theName) return $control;
 
       if (is_a( $control, 'ControlComplex' ))
       {
         $tmp = $control->findFormControlByName( $theName );
-        if ($tmp)
-        {
-          return $tmp;
-        }
+        if ($tmp) return $tmp;
       }
     }
+
+    return null;
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
