@@ -196,10 +196,10 @@ abstract class Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($theParentSubmitName!==false)
+    if ($theParentSubmitName!=='')
     {
-      if ($submit_name!==false) $global_name = $theParentSubmitName.'['.$submit_name.']';
-      else                      $global_name = $theParentSubmitName;
+      if ($submit_name!=='') $global_name = $theParentSubmitName.'['.$submit_name.']';
+      else                   $global_name = $theParentSubmitName;
     }
     else
     {

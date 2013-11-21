@@ -18,11 +18,19 @@ interface Obfuscator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the obfuscated value of @a $theValue.
+   *
+   * @param $theValue string|null
+   *
+   * @return string|null
    */
   public function encode( $theValue );
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the un-obfuscated value of @a $theCode.
+   *
+   * @param $theCode string|null
+   *
+   * @return string|null
    */
   public function decode( $theCode );
 
