@@ -7,25 +7,19 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class for form controls of type input:button.
- * Class ButtonControl
- * @package SetBased\Html\Form
+/** @brief Class for form controls of type input:submit.
  */
-class ButtonControl extends PushMeControl
+class SubmitControl extends PushMeControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param string $theName
-   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
 
-    $this->myButtonType = 'button';
+    $this->myButtonType = 'submit';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

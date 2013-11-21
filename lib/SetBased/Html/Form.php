@@ -26,7 +26,7 @@ class Form
   /**
    * The field sets of this form.
    *
-   * @var \SetBased\Html\Form\FieldSet[]
+   * @var \SetBased\Html\Form\Control\FieldSet[]
    */
   protected $myFieldSets = array();
 
@@ -97,14 +97,14 @@ class Form
    *                  - fieldset: class FieldSet
    * @param  $theName string The name (which might be empty) of the fieldset.
    *
-   * @return  \SetBased\Html\Form\FieldSet
+   * @return  \SetBased\Html\Form\Control\FieldSet
    */
   public function createFieldSet( $theType = 'fieldset', $theName = '' )
   {
     switch ($theType)
     {
       case 'fieldset':
-        $type = '\SetBased\Html\Form\FieldSet';
+        $type = '\SetBased\Html\Form\Control\FieldSet';
         break;
 
       default:
@@ -326,7 +326,7 @@ class Form
    *
    * @param  $thePath string  The path of the searched form control.
    *
-   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl
+   * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl
    *
    * @sa FindFormControlByPath.
    */
@@ -346,7 +346,7 @@ class Form
    *
    * @param  $thePath string The path of the searched form control.
    *
-   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl|null
+   * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl|null
    *
    * @sa GetFormControlByPath.
    */
@@ -397,7 +397,7 @@ class Form
    *
    * @param  $theName string The name of the searched form control.
    *
-   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl
+   * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl
    *
    * @sa findFormControlByName.
    */
@@ -418,7 +418,7 @@ class Form
    *
    * @param  $theName string The name of the searched form control.
    *
-   * @return \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl|null
+   * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl|null
    *
    * @sa getFormControlByName.
    */

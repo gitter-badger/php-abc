@@ -7,33 +7,32 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type image.
- */
-class ImageControl extends SimpleControl
+use SetBased\Html\Html;
+
+class LinkControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'image';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
-
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
-    $ret .= $this->generatePrefixLabel();
-    $ret .= "<input";
+    $ret .= '<a';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= '/>';
-    $ret .= $this->generatePostfixLabel();
+    $ret .= '>';
+    if (!empty($this->myAttributes['set_html']))
+    {
+      $ret .= $this->myAttributes['set_html'];
+    }
+    $ret .= '</a>';
 
     if (isset($this->myAttributes['set_postfix']))
     {
-      $ret .= $this->myAttributes['set_postfix'];
+      $ret .= $this->myAttributes['set_postfix']."\n";
     }
 
     return $ret;
@@ -42,8 +41,13 @@ class ImageControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    /** @todo Implement LoadSumittedValuesBase for control type image.
-     */
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function validateBase( &$theInvalidFormControls )
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

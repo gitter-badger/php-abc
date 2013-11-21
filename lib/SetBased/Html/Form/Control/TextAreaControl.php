@@ -7,36 +7,47 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
-
-use SetBased\Html;
+namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:radio.
- * @todo Add attribute for label.
- */
-class RadioControl extends SimpleControl
+use SetBased\Html\Html;
+
+class TextAreaControl extends SimpleControl
 {
+  //--------------------------------------------------------------------------------------------------------------------
+  public function __construct( $theName )
+  {
+    parent::__construct( $theName );
+
+    // By default whitespace is trimmed from textarea form controls.
+    $this->myCleaner = \SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::get();
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'radio';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
-    $ret .= $this->generatePrefixLabel();
-    $ret .= "<input";
+    $ret .= '<textarea';
+
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= '/>';
-    $ret .= $this->generatePostfixLabel();
+    $ret .= ">";
+
+    if (!empty($this->myAttributes['set_text']))
+    {
+      $ret .= Html::txt2Html( $this->myAttributes['set_text'] );
+    }
+
+    $ret .= "</textarea>";
 
     if (isset($this->myAttributes['set_postfix']))
     {
-      $ret .= $this->myAttributes['set_postfix'];
+      $ret .= $this->myAttributes['set_postfix']."\n";
     }
 
     return $ret;
@@ -47,31 +58,30 @@ class RadioControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ((string)$theSubmittedValue[$submit_name]===(string)$this->myAttributes['value'])
+    // Get the submitted value and cleaned (if required).
+    if ($this->myCleaner)
     {
-      if (empty($this->myAttributes['checked']))
-      {
-        $theChangedInputs[$this->myName] = $this;
-      }
-      $this->myAttributes['checked']    = true;
-      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
-
-      // Set the submitted value to be used method GetSubmittedValue.
-      $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
+      $new_value = $this->myCleaner->clean( $theSubmittedValue[$submit_name] );
     }
     else
     {
-      if (!empty($this->myAttributes['checked']))
-      {
-        $theChangedInputs[$this->myName] = $this;
-      }
-      $this->myAttributes['checked'] = false;
-
-      if (!array_key_exists( $this->myName, $theWhiteListValue ))
-      {
-        $theWhiteListValue[$this->myName] = null;
-      }
+      $new_value = $theSubmittedValue[$submit_name];
     }
+
+    // Normalize old (original) value and new (submitted) value.
+    $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
+    $new_value = (string)$new_value;
+
+    if ($old_value!==$new_value)
+    {
+      $theChangedInputs[$this->myName] = $this;
+      $this->myAttributes['set_text']  = $new_value;
+    }
+
+    $theWhiteListValue[$this->myName] = $new_value;
+
+    // Set the submitted value to be used method GetSubmittedValue.
+    $this->myAttributes['set_submitted_value'] = $new_value;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -81,19 +91,19 @@ class RadioControl extends SimpleControl
     {
       $value = $theValues[$this->myName];
 
-      // The value of a input:checkbox must be a scalar.
+      // The value of a input:hidden must be a scalar.
       if (!is_scalar( $value ))
       {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
-      /** @todo unset when empty? */
-      $this->myAttributes['checked'] = !empty($value);
+      /** @todo unset when false or ''? */
+      $this->myAttributes['set_text'] = (string)$value;
     }
     else
     {
       // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['checked']);
+      unset($this->myAttributes['set_text']);
     }
   }
 

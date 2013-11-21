@@ -7,7 +7,7 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -70,7 +70,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param $theValidator ControlValidator
+   * @param $theValidator \SetBased\Html\Form\ControlValidator
    */
   public function addValidator( $theValidator )
   {

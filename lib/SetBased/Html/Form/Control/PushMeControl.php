@@ -7,28 +7,44 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
-use SetBased\Html\Html;
+use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
+/** @brief Base class for form controls submit, reset, and button
  */
-class InvisibleControl extends SimpleControl
+class PushMeControl extends SimpleControl
 {
+  /** The type of this button. Valid values are:
+   *  \li submit
+   *  \li reset
+   *  \li button
+   */
+  protected $myButtonType;
+
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'hidden';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type'] = $this->myButtonType;
+
+    // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
+    // are unique.
+    $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
+    // print_r( $this);
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -42,38 +58,36 @@ class InvisibleControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theSubmittedValue array
+   * @param $theWhiteListValue array
+   * @param $theChangedInputs  array
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    // Note: by definition the value of a input:invisible form control will not be changed, whatever is submitted.
-    $value = $this->myAttributes['value'];
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $theWhiteListValue[$this->myName] = $value;
+    if (isset($theSubmittedValue[$submit_name]) && $theSubmittedValue[$submit_name]===$this->myAttributes['value'])
+    {
+      // We don't register buttons as a changed input, otherwise every submitted form will always have changed inputs.
+      // $theChangedInputs[$this->myName] = $this;
+
+      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
+    }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $value;
+    $this->myAttributes['set_submitted_value'] = $this->myAttributes['value'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   *
+   * @return mixed|void
+   */
   public function setValuesBase( &$theValues )
   {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $this->myAttributes[$this->myName];
-
-      // The value of a input:hidden must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['value'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['value']);
-    }
+    // We don't set the value of a button via Form::setValues() method. So, nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

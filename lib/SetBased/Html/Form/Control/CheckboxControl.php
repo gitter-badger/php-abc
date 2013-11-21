@@ -7,24 +7,35 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
+//----------------------------------------------------------------------------------------------------------------------
+  /** @brief Class for form controls of type input:checkbox.
+   * @todo Add attribute for label.
+   */
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type file.
+/**
+ * Class CheckboxControl
+ * @package SetBased\Html\Form
  */
-class FileControl extends SimpleControl
+class CheckboxControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'file';
+    $this->myAttributes['type'] = 'checkbox';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= $this->generatePrefixLabel();
-    $ret .= '<input';
+    $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -41,32 +52,63 @@ class FileControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   *
+   * @return mixed|void
+   */
   public function setValuesBase( &$theValues )
   {
-    // Nothing to do.
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      $this->myAttributes['checked'] = !empty($value);
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['checked']);
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param  $theSubmittedValue array
+   * @param  $theWhiteListValue array
+   * @param  $theChangedInputs  array
+   *
+   * @return mixed|void
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($_FILES[$submit_name]['error']===0)
+    if (empty($this->myAttributes['checked'])!==empty($theSubmittedValue[$submit_name]))
     {
-      $theChangedInputs[$this->myName]  = $this;
-      $theWhiteListValue[$this->myName] = $_FILES[$submit_name];
-      $this->myAttributes['value']      = $_FILES[$submit_name];
+      $theChangedInputs[$this->myName] = $this;
+    }
+
+    /** @todo Decide whether to test submited value is white listed, i.e. $this->myAttributes['value'] (or 'on'
+     *  if $this->myAttributes['value'] is null) or null.
+     */
+    if (!empty($theSubmittedValue[$submit_name]))
+    {
+      $this->myAttributes['checked']    = true;
+      $this->myAttributes['value']      = $theSubmittedValue[$submit_name];
+      $theWhiteListValue[$this->myName] = true;
     }
     else
     {
+      $this->myAttributes['checked']    = false;
+      $this->myAttributes['value']      = '';
       $theWhiteListValue[$this->myName] = false;
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue;
+    $this->myAttributes['set_submitted_value'] = $this->myAttributes['checked'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
-
 //----------------------------------------------------------------------------------------------------------------------

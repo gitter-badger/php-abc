@@ -7,27 +7,28 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
+//----------------------------------------------------------------------------------------------------------------------
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type input:text.
+/** @brief Class for form controls of type input:password.
  */
-class TextControl extends SimpleControl
+class PasswordControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   public function __construct( $theName )
   {
     parent::__construct( $theName );
 
-    // By default whitespace is pruned from text form controls.
-    $this->myCleaner = Cleaner\PruneWhitespaceCleaner::get();
+    // By default whitespace is trimmed from password form controls.
+    $this->myCleaner = \SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'text';
+    $this->myAttributes['type'] = 'password';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
     if (isset($this->myAttributes['maxlength']))
@@ -42,11 +43,11 @@ class TextControl extends SimpleControl
       }
     }
 
+
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
-
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -60,6 +61,29 @@ class TextControl extends SimpleControl
     }
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function setValuesBase( &$theValues )
+  {
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      // The value of a input:password must be a scalar.
+      if (!is_scalar( $value ))
+      {
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+      }
+
+      /** @todo unset when false or ''? */
+      $this->myAttributes['value'] = (string)$value;
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['value']);
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -87,34 +111,11 @@ class TextControl extends SimpleControl
       $this->myAttributes['value']     = $new_value;
     }
 
-    // The user can enter any text in a input:text box. So, any value is white listed.
+    // The user can enter any text in a input:password box. So, any value is white listed.
     $theWhiteListValue[$this->myName] = $new_value;
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $new_value;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:text must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['value'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['value']);
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

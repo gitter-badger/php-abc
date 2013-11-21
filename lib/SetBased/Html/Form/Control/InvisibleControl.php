@@ -7,13 +7,14 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type input:hidden.
+//----------------------------------------------------------------------------------------------------------------------
+/** @brief Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
  */
-class HiddenControl extends SimpleControl
+class InvisibleControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
@@ -41,11 +42,23 @@ class HiddenControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  {
+    // Note: by definition the value of a input:invisible form control will not be changed, whatever is submitted.
+    $value = $this->myAttributes['value'];
+
+    $theWhiteListValue[$this->myName] = $value;
+
+    // Set the submitted value to be used method GetSubmittedValue.
+    $this->myAttributes['set_submitted_value'] = $value;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))
     {
-      $value = $theValues[$this->myName];
+      $value = $this->myAttributes[$this->myName];
 
       // The value of a input:hidden must be a scalar.
       if (!is_scalar( $value ))
@@ -61,37 +74,6 @@ class HiddenControl extends SimpleControl
       // No value specified for this form control: unset the value of this form control.
       unset($this->myAttributes['value']);
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
-  {
-    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
-
-    if (isset($this->myAttributes['set_clean']))
-    {
-      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
-    }
-    else
-    {
-      $new_value = $theSubmittedValue[$submit_name];
-    }
-
-    // Normalize old (original) value and new (submitted) value.
-    $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
-    $new_value = (string)$new_value;
-
-    if ($old_value!==$new_value)
-    {
-      $theChangedInputs[$this->myName] = $this;
-      $this->myAttributes['value']     = $new_value;
-    }
-
-    // Any text can be in a input:hidden box. So, any value is white listed.
-    $theWhiteListValue[$this->myName] = $new_value;
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $new_value;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

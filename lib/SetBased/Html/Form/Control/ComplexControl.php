@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
@@ -27,83 +27,83 @@ class ComplexControl extends Control
     switch ($theType)
     {
       case 'text':
-        $type = '\SetBased\Html\Form\TextControl';
+        $type = '\SetBased\Html\Form\Control\TextControl';
         break;
 
       case 'password':
-        $type = '\SetBased\Html\Form\PasswordControl';
+        $type = '\SetBased\Html\Form\Control\PasswordControl';
         break;
 
       case 'checkbox':
-        $type = '\SetBased\Html\Form\CheckboxControl';
+        $type = '\SetBased\Html\Form\Control\CheckboxControl';
         break;
 
       case 'radio':
-        $type = '\SetBased\Html\Form\RadioControl';
+        $type = '\SetBased\Html\Form\Control\RadioControl';
         break;
 
       case 'submit':
-        $type = '\SetBased\Html\Form\SubmitControl';
+        $type = '\SetBased\Html\Form\Control\SubmitControl';
         break;
 
       case 'image':
-        $type = '\SetBased\Html\Form\ImageControl';
+        $type = '\SetBased\Html\Form\Control\ImageControl';
         break;
 
       case 'reset':
-        $type = '\SetBased\Html\Form\ResetControl';
+        $type = '\SetBased\Html\Form\Control\ResetControl';
         break;
 
       case 'button':
-        $type = '\SetBased\Html\Form\ButtonControl';
+        $type = '\SetBased\Html\Form\Control\ButtonControl';
         break;
 
       case 'hidden':
-        $type = '\SetBased\Html\Form\HiddenControl';
+        $type = '\SetBased\Html\Form\Control\HiddenControl';
         break;
 
       case 'file':
-        $type = '\SetBased\Html\Form\FileControl';
+        $type = '\SetBased\Html\Form\Control\FileControl';
         break;
 
       case 'invisible':
-        $type = '\SetBased\Html\Form\InvisibleControl';
+        $type = '\SetBased\Html\Form\Control\InvisibleControl';
         break;
 
       case 'textarea':
-        $type = '\SetBased\Html\Form\TextAreaControl';
+        $type = '\SetBased\Html\Form\Control\TextAreaControl';
         break;
 
       case 'complex':
-        $type = '\SetBased\Html\Form\ComplexControl';
+        $type = '\SetBased\Html\Form\Control\ComplexControl';
         break;
 
       case 'select':
-        $type = '\SetBased\Html\Form\SelectControl';
+        $type = '\SetBased\Html\Form\Control\SelectControl';
         break;
 
       case 'span':
-        $type = '\SetBased\Html\Form\SpanControl';
+        $type = '\SetBased\Html\Form\Control\SpanControl';
         break;
 
       case 'div':
-        $type = '\SetBased\Html\Form\DivControl';
+        $type = '\SetBased\Html\Form\Control\DivControl';
         break;
 
       case 'a':
-        $type = '\SetBased\Html\Form\LinkControl';
+        $type = '\SetBased\Html\Form\Control\LinkControl';
         break;
 
       case 'constant':
-        $type = '\SetBased\Html\Form\ConstantControl';
+        $type = '\SetBased\Html\Form\Control\ConstantControl';
         break;
 
       case 'radios':
-        $type = '\SetBased\Html\Form\RadiosControl';
+        $type = '\SetBased\Html\Form\Control\RadiosControl';
         break;
 
       case 'checkboxes':
-        $type = '\SetBased\Html\Form\CheckboxesControl';
+        $type = '\SetBased\Html\Form\Control\CheckboxesControl';
         break;
 
       default:

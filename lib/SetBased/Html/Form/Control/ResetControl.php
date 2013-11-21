@@ -7,19 +7,19 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:submit.
+/** @brief Class for form controls of type input:reset.
  */
-class SubmitControl extends PushMeControl
+class ResetControl extends PushMeControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   public function __construct( $theName )
   {
     parent::__construct( $theName );
 
-    $this->myButtonType = 'submit';
+    $this->myButtonType = 'reset';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

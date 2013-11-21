@@ -7,24 +7,34 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-class RadiosControl extends Control
+class SelectControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /** @todo Implement 'multiple'.
+   */
   public function generate( $theParentName )
   {
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
     $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
-    $ret .= '<div';
+    $ret .= '<select';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
+
+
+    if (!empty($this->myAttributes['set_empty_option']))
+    {
+      $ret .= "<option value=' '></option>\n";
+    }
 
     if (is_array( $this->myAttributes['set_options'] ))
     {
@@ -33,43 +43,34 @@ class RadiosControl extends Control
       $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
-      $submit_name = $this->getSubmitName( $theParentName );
       foreach ($this->myAttributes['set_options'] as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
+        // Get the (database) ID of the option.
+        $id = (string)$option[$map_key];
 
-        $for_id = \SetBased\Html\Html::getAutoId();
+        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
 
-        $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
-
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$option[$map_key])
+        //
+        $ret .= "<option value='$code'";
+        
+        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
         {
-          $input .= " checked='checked'";
+          $ret .= " selected='selected'";
         }
 
         if ($map_disabled && !empty($option[$map_disabled]))
         {
-          $input .= " disabled='disabled'";
+          $ret .= " disabled='disabled'";
         }
 
-        $input .= "/>";
-
-        $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
-        $label .= "<label for='$for_id'>";
-        $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
-        $label .= "</label>";
-        if (isset($this->myAttributes['set_label_postfix']))
-        {
-          $label .= $this->myAttributes['set_label_postfix'];
-        }
-
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+        $ret .= ">";
+        $ret .= Html::txt2Html( $option[$map_label] );
+        $ret .= "</option>\n";
       }
     }
 
-    $ret .= "</div>";
+    $ret .= "</select>";
 
     if (isset($this->myAttributes['set_postfix']))
     {
@@ -77,24 +78,6 @@ class RadiosControl extends Control
     }
 
     return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function validateBase( &$theInvalidFormControls )
-  {
-    $valid = true;
-
-    foreach ($this->myValidators as $validator)
-    {
-      $valid = $validator->validate( $this );
-      if ($valid!==true)
-      {
-        $theInvalidFormControls[] = $this;
-        break;
-      }
-    }
-
-    return $valid;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -106,50 +89,68 @@ class RadiosControl extends Control
     $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
+    // Normalize default value as a string.
+    $value = isset($this->myAttributes['set_value']) ? (string)$this->myAttributes['set_value'] : '';
+
     if (isset($theSubmittedValue[$submit_name]))
     {
       // Normalize the submitted value as a string.
-      $submitted_value = (string)$theSubmittedValue[$submit_name];
+      $submitted = (string)$theSubmittedValue[$submit_name];
 
-      foreach ($this->myAttributes['set_options'] as $option)
+      if (empty($this->myAttributes['set_empty_option']) && $submitted===' ')
       {
-        // Get the (database) ID of the option.
-        $id = $option[$map_key];
-
-        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
-
-        if ($submitted_value===(string)$code)
+        $theWhiteListValue[$this->myName] = null;
+        if ($value!=='' && $value!==' ')
         {
-          // If the orginal value differs from the submitted value then the form control has been changed.
-          if (!isset($this->myAttributes['set_value']) ||
-            $this->myAttributes['set_value']!==$id
-          )
+          $theChangedInputs[$this->myName] = $this;
+        }
+      }
+      else
+      {
+        if (is_array( $this->myAttributes['set_options'] ))
+        {
+          foreach ($this->myAttributes['set_options'] as $option)
           {
-            $theChangedInputs[$this->myName] = $this;
+            // Get the (database) ID of the option.
+            $id = $option[$map_key];
+
+            // If an obfuscator is installed compute the obfuscated code of the (database) ID.
+            $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+
+            if ($submitted===(string)$code)
+            {
+              // If the original value differs from the submitted value then the form control has been changed.
+              if ($value!==(string)$id)
+              {
+                $theChangedInputs[$this->myName] = $this;
+              }
+
+              // Set the white listed value.
+              $this->myAttributes['set_value']  = $id;
+              $theWhiteListValue[$this->myName] = $id;
+
+              // Leave the loop.
+              break;
+            }
           }
-
-          // Set the white listed value.
-          $theWhiteListValue[$this->myName] = $id;
-          $this->myAttributes['set_value']  = $id;
-
-          // Leave the loop.
-          break;
         }
       }
     }
     else
     {
-      // No radio button has been checked.
+      // No value has been submitted.
       $theWhiteListValue[$this->myName] = null;
-      $this->myAttributes['set_value']  = null;
+      if ($value!=='' && $value!==' ')
+      {
+        $theChangedInputs[$this->myName] = $this;
+      }
     }
 
     if (!array_key_exists( $this->myName, $theWhiteListValue ))
     {
       // The white listed value has not been set. This can only happen when a none white listed value has been submitted.
       // In this case we ignore this and assume the default value has been submitted.
-      $theWhiteListValue[$this->myName] = (isset($this->myAttributes['set_value'])) ? $this->myAttributes['set_value'] : null;
+      $theWhiteListValue[$this->myName] = isset($this->myAttributes['set_value']) ? $this->myAttributes['set_value'] : null;
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
@@ -159,7 +160,8 @@ class RadiosControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-    $this->myAttributes['set_value'] = $theValues[$this->myName];
+     /** @todo check on type and value is in list of options. */
+    $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

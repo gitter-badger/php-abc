@@ -40,7 +40,7 @@ class IntegerValidator implements ControlValidator
    *  * The value of @a $theFormControl is an integer.
    *  Otherwise returns @c false.
    *
-   * @param $theFormControl \SetBased\Html\Form\Control
+   * @param $theFormControl \SetBased\Html\Form\Control\Control
    *
    * @return bool
    */

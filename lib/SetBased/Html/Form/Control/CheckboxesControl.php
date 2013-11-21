@@ -7,7 +7,7 @@
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 /**
@@ -24,7 +24,7 @@ class CheckboxesControl extends Control
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    if ($this->myName===false) Html::error( 'Name is empty' );
+    if ($this->myName==='') Html::error( 'Name is empty' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
