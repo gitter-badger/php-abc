@@ -42,7 +42,7 @@ function CreateForm()
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
   $control->SetAttribute( 'set_prefix', 'unknown' );
-  //$control->SetAttribute( 'checked', true );
+  $control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', 'unknown' );
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
