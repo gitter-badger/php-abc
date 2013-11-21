@@ -3,7 +3,7 @@
 use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class ConstantControlTest extends PHPUnit_Framework_TestCase
+class InvisibleControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   private function setupForm1()
@@ -11,15 +11,15 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     $form = new \SetBased\Html\Form();
     $fieldset= $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( 'constant', 'name' );
-    $control->setAttribute( 'set_value', '1' );
+    $control = $fieldset->createFormControl( 'invisible', 'name' );
+    $control->setAttribute( 'value', '1' );
 
     $form->loadSubmittedValues();
 
     return $form;
   }
 
-  //-------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   public function testForm1()
   {
     $_POST['name'] = '2';
@@ -31,7 +31,7 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     // Assert the value of "name" is still "1".
     $this->assertEquals( '1', $values['name'] );
 
-    // Assert "name" has not be recoded as a changed value.
+    // Assert "name" has not be recorded as a changed value.
     $this->assertArrayNotHasKey( 'name', $changed );
   }
 
@@ -39,4 +39,5 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 

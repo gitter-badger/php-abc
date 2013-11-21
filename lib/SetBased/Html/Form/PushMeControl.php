@@ -24,6 +24,11 @@ class PushMeControl extends SimpleControl
   protected $myButtonType;
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = $this->myButtonType;
@@ -40,7 +45,7 @@ class PushMeControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -54,14 +59,19 @@ class PushMeControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theSubmittedValue array
+   * @param $theWhiteListValue array
+   * @param $theChangedInputs  array
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
     $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($theSubmittedValue[$submit_name]===$this->myAttributes['value'])
+    if (isset($theSubmittedValue[$submit_name]) && $theSubmittedValue[$submit_name]===$this->myAttributes['value'])
     {
-      // We don't register buttons as a changed input, otherwise every submited form will always have changed inputs.
+      // We don't register buttons as a changed input, otherwise every submitted form will always have changed inputs.
       // $theChangedInputs[$this->myName] = true;
 
       $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
@@ -72,6 +82,11 @@ class PushMeControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   *
+   * @return mixed|void
+   */
   public function setValuesBase( &$theValues )
   {
     // We don't set the value of a button via Form::setValues() method. So, nothing to do.

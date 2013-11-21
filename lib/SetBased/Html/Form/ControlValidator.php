@@ -10,13 +10,18 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Interface for defining classes that validate form control elements direved from FormControl.
+/**
+ * Interface for defining classes that validate form control elements derived from FormControl
+ * Interface ControlValidator
+ * @package SetBased\Html\Form
  */
 interface ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param Control $theFormControl
+   * @param $theFormControl
+   *
+   * @return mixed
    */
   public function validate( $theFormControl );
 

@@ -8,7 +8,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid email address) values.
    */
-  private function SetupForm1()
+  private function setupForm1()
   {
     $form = new \SetBased\Html\Form();
 

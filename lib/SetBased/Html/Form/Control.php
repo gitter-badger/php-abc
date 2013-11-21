@@ -11,24 +11,24 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class Control Abstract class for objects for generation HTML code for form controls.
+ * Class Control Abstract class for objects for generation HTML code for form control.
  * @package SetBased\Html\Form
  */
 abstract class Control
 {
   /**
-   * @var string The (local) name of this form control.
+   * @var string
    */
   protected $myName;
 
   /**
-   * @var array The validators for this form control.
+   * @var \SetBased\Html\Form\ControlValidator[]
    */
   protected $myValidators = array();
 
   /**
-   * The attributes of this form control.
-   * @var array $myAttributes
+   * @var string[]
+   */
    */
   protected $myAttributes = array();
 
@@ -68,11 +68,11 @@ abstract class Control
    * @c null, @c false, or @c '' the attribute is unset.
    *
    * @param $theName  string The name of the attribute.
-   * @param $theValue string The value for the attribute.
+   * @param $theValue mixed The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
-    if ($theValue==='' || $theValue===null || $theValue===false)
+    if ($theValue===null || $theValue===false || $theValue==='')
     {
       unset($this->myAttributes[$theName]);
     }
@@ -104,6 +104,11 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return mixed
+   */
   abstract public function generate( $theParentName );
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -120,31 +125,12 @@ abstract class Control
    *
    * @return string The name this will be used for this form control when the form is submitted.
    */
-  protected function getSubmitName( $theParentSubmitName )
-  {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
-
-    if ($theParentSubmitName!==false)
-    {
-      if ($submit_name!==false)
-      {
         $global_name = $theParentSubmitName.'['.$submit_name.']';
       }
       else
       {
         $global_name = $theParentSubmitName;
       }
-    }
-    else
-    {
-      $global_name = $submit_name;
-    }
-
-    return $global_name;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function getErrorMessages( $theRecursiveFlag = false )
   {
     return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
@@ -159,15 +145,56 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theMessage
+   */
   public function setErrorMessage( $theMessage )
   {
     $this->myAttributes['set_errmsg'][] = $theMessage;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues
+   *
+   * @return mixed
+   */
   abstract public function setValuesBase( &$theValues );
 
   //--------------------------------------------------------------------------------------------------------------------
+  /** Returns the name this will be used for this form control when the form is submitted.
+   *
+   * @param $theParentSubmitName string The submit name of the parent form control of this form control.
+   *
+   * @return string
+   */
+  protected function getSubmitName( $theParentSubmitName )
+  {
+    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
+    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+
+    if ($theParentSubmitName!==false)
+    {
+      if ($submit_name!==false)
+      {
+        $global_name = $theParentSubmitName.'['.$submit_name.']';
+      }
+      else                      $global_name = $theParentSubmitName;
+    }
+    else
+    {
+      $global_name = $submit_name;
+    }
+
+    return $global_name;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theInvalidFormControls
+   *
+   * @return mixed
+   */
   abstract protected function validateBase( &$theInvalidFormControls );
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -176,7 +203,7 @@ abstract class Control
    * @param $theWhiteListValue array
    * @param $theChangedInputs  array
    *
-   * @return void
+   * @return mixed
    */
   abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
 

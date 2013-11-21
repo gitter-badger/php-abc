@@ -14,7 +14,7 @@ use SetBased\Html;
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
  */
-class InvisableControl extends SimpleControl
+class InvisibleControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
@@ -63,7 +63,7 @@ class InvisableControl extends SimpleControl
       // The value of a input:hidden must be a scalar.
       if (!is_scalar( $value ))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

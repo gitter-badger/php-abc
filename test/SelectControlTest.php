@@ -8,7 +8,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a select form control.
    */
-  private function SetupForm1()
+  private function setupForm1()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -31,7 +31,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
   /** Setups a form with a select form control. Difference between this function and SetupForm1 are the cnt_id are
       integers.
    */
-  private function SetupForm2()
+  private function setupForm2()
   {
     $form = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
@@ -90,11 +90,11 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only whitelisted values must be loaded.
+  /** Only white listed values must be loaded.
   */
   public function testWhiteListed1()
   {
-    // cnt_id is not a value that is in the whitelist of values (i.e. 1,2, and 3).
+    // cnt_id is not a value that is in the white list of values (i.e. 1,2, and 3).
     $_POST['cnt_id'] = 99;
 
     $form = $this->setupForm1();

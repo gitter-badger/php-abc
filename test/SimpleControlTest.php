@@ -4,7 +4,7 @@ use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Abstract super class for test for @c SET_HtlmFormControlText, @c SET_HtlmFormControlHidden,
-           @c SET_HtlmFormControlPassword.
+ * @c SET_HtlmFormControlPassword.
  */
 abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 {
@@ -12,12 +12,13 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   abstract protected function getInputType();
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a text form control.
+  /**
+   * Setups a form with a text form control.
    */
-  private function SetupForm1( $theValue )
+  private function setupForm1( $theValue )
   {
-    $form = new \SetBased\Html\Form();
-    $fieldset= $form->createFieldSet();
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
     if (isset($theValue)) $control->setAttribute( 'value', $theValue );
@@ -27,11 +28,6 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     return $form;
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  /** @name ValidTests
-      Tests for valid submitted values.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** Test a submitted value.
    */
@@ -49,7 +45,8 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test a submitted empty value.
+  /**
+   * Test a submitted empty value.
    */
   public function testValid102()
   {
@@ -64,12 +61,6 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $this->assertTrue( $changed['name'] );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //@}
-  /** @name EmptyTests
-      Tests for submitted values for which @c empty return true.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** Test a submitted value '0'.
    */
@@ -103,7 +94,8 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
 
-  //--------------------------------------------------------------------------------------------------------------------
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+

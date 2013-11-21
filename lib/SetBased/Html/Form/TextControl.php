@@ -77,15 +77,8 @@ class TextControl extends SimpleControl
       $new_value = $theSubmittedValue[$submit_name];
     }
     // Normalize old (original) value and new (submitted) value.
-    $old_value = (isset($this->myAttributes['value'])) ? $this->myAttributes['value'] : null;
-    if ($old_value==='' || $old_value===null || $old_value===false)
-    {
-      $old_value = '';
-    }
-    if ($new_value==='' || $new_value===null || $new_value===false)
-    {
-      $new_value = '';
-    }
+    $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
+    $new_value = (string)$new_value;
 
     if ($old_value!==$new_value)
     {
@@ -110,7 +103,7 @@ class TextControl extends SimpleControl
       // The value of a input:text must be a scalar.
       if (!is_scalar( $value ))
       {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

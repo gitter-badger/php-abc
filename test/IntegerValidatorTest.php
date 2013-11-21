@@ -8,7 +8,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid inter) values.
    */
-  private function SetupForm1()
+  private function setupForm1()
   {
     $form = new \SetBased\Html\Form();
 
@@ -25,7 +25,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid inter) values.
    */
-  private function SetupForm2()
+  private function setupForm2()
   {
     $form = new \SetBased\Html\Form();
 

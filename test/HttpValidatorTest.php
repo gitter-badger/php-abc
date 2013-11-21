@@ -8,7 +8,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /** Setups a form with a text form control (which must be a valid url address).
    */
-  private function SetupForm1()
+  private function setupForm1()
   {
     $form = new \SetBased\Html\Form();
 
@@ -92,7 +92,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
 
     $this->assertTrue( $form->validate() );
   }
-//--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   //@}
 
   /** @name InvalidTests
@@ -100,7 +100,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
    */
   //@{
   //--------------------------------------------------------------------------------------------------------------------
-  /** An unsual url address must be invalid.
+  /** An usual url address must be invalid.
    */
   public function testInvalidHttp1()
   {
@@ -111,7 +111,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**  An unsual url address must be invalid.
+  /**  An usual url address must be invalid.
    */
   public function testInvalidHttp2()
   {
@@ -125,18 +125,18 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   /** A strange but valid url address must be valid.
    */
   public function testInvalidHttp3()
- {
+  {
     $_POST['url'] = 'ftp//:!#$%&\'*+-/=?^_`{}|~ed.com';
     $form = $this->setupForm1();
 
     $this->assertFalse($form->validate() );
   }
 
-   //--------------------------------------------------------------------------------------------------------------------
-  /**
+   //-------------------------------------------------------------------------------------------------------------------
+   /**
    @}
    */
-  //--------------------------------------------------------------------------------------------------------------------
+   //-------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------

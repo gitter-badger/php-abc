@@ -9,7 +9,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html;
 
-//----------------------------------------------------------------------------------------------------------------------
 class Legend
 {
   protected $myAttributes = array();
@@ -51,7 +50,7 @@ class Legend
     $ret = "<legend";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '>';
     $ret .= $this->myAttributes['set_inline'];

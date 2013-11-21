@@ -9,7 +9,7 @@ function Leader()
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
   echo "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' dir='ltr'>\n";
   echo "<head>\n";
-  echo "<title>Sample Hidden, Invisible and Constant.</title>\n";
+  echo "<title>Sample Buttons</title>\n";
   echo "</head>\n";
   echo "<body>\n";
 }
@@ -26,22 +26,26 @@ function CreateForm()
 {
   $form = new \SetBased\Html\Form();
 
-  $fieldset = $form->CreateFieldSet();
-  $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Hidden, Invisible and Constant' );
+  $complex1 = $form->CreateFieldSet();
+  $legend = $complex1->CreateLegend();
+  $legend->SetAttribute( 'set_inline', 'Buttons' );
 
-  $control = $fieldset->CreateFormControl( 'hidden', 'example1_hidden' );
-  $control->SetAttribute( 'value', 'old1' );
+  $complex2 = $complex1->CreateFormControl( 'complex' , 'level1' );
+  $fieldset = $complex2->CreateFormControl( 'complex' , 'level2' );
 
-  $control = $fieldset->CreateFormControl( 'invisible', 'example2_invisible' );
-  $control->SetAttribute( 'value', 'old2' );
 
-  $control = $fieldset->CreateFormControl( 'constant', 'example3_constant' );
-  $control->SetAttribute( 'set_value', 'old3' );
+  $control = $fieldset->CreateFormControl( 'text' , 'text' );
+  $control->setAttribute('value', 'Sample text');
 
-  $fieldset = $form->CreateFieldSet( 'fieldset', '' );
+  $control = $fieldset->CreateFormControl( 'button' , 'button' );
+  $control->setAttribute('value', 'Sample Button');
+
+
+  $control = $fieldset->CreateFormControl( 'reset' , 'reset' );
+  $control->setAttribute('value', 'Reset Button');
+
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );
-  $control->SetAttribute( 'value', 'OK' );
+  $control->setAttribute('value', 'Submit Button');
 
   return $form;
 }
@@ -53,11 +57,8 @@ function Demo()
 
   if ($form->IsSubmitted( 'submit' ))
   {
-    $_POST['example1_hidden'] = 'new value1';
-    $_POST['example2_invisible'] = 'new value2';
-    $_POST['example3_constant'] = 'new value3';
-
     $form->LoadSubmittedValues();
+
     $valid = $form->Validate();
     if (!$valid && false)
     {

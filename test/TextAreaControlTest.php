@@ -1,11 +1,13 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-class TextControlTest extends SimpleControlTest
+use SetBased\Html\Form;
+
+//----------------------------------------------------------------------------------------------------------------------
+class TextAreaControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test cleaning is done before testing value of the form control has changed.
-   * For text field whitespace cleaner set default.
    */
   public function testPruneWhitespaceNoChanged()
   {
@@ -13,8 +15,11 @@ class TextControlTest extends SimpleControlTest
 
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'text', 'test' );
+    $control  = $fieldset->createFormControl( 'textarea', 'test' );
     $control->setAttribute( 'value', 'Hello World!' );
+
+    // Set cleaner for textarea field (default it off).
+    $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
 
     $form->loadSubmittedValues();
 
@@ -26,13 +31,6 @@ class TextControlTest extends SimpleControlTest
 
     // Value not change.
     $this->assertArrayNotHasKey( 'test', $changed );
-
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
-  {
-    return 'text';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

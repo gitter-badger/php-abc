@@ -19,7 +19,10 @@ class Html
   private static $ourAutoId = 0;
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Throws an exception with text @a $theMessage.
+  /**
+   * Throws an exception with text @a $theMessage.
+   *
+   * @throws Exception
    */
   public static function error()
   {
@@ -47,7 +50,7 @@ class Html
   /** Returns a string with attribute @a $theName with value @a $theValue, e.g. type='text'. This function takes care
    *  about proper escaping of @a $theValue.
    */
-  public static function generateAttribute( $theName, $theValue, $flag = false )
+  public static function generateAttribute( $theName, $theValue )
   {
     $ret = '';
 

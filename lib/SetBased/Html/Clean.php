@@ -13,19 +13,29 @@ namespace SetBased\Html;
 class Clean
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return string
+   */
   public static function pruneWhitespace( $theValue )
   {
-    if (empty($theValue))
+    if (empty($theValue)) return $theValue;
+    else                  return trim( mb_ereg_replace( '[\ \t\n\r\0\x0B\xA0]+', ' ', $theValue, 'p' ) );
+  }
+
     {
-      return $theValue;
+    if (empty($theValue)) return $theValue;
     }
-    else
-    {
-      return trim( mb_ereg_replace( '[\ \t\n\r\0\x0B\xA0]+', ' ', $theValue, 'p' ) );
-    }
+    else                  return trim( mb_ereg_replace( '[\ \t\n\r\0\x0B\xA0]+', ' ', $theValue, 'p' ) );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return bool|string
+   */
   public static function normalizeUrl( $theValue )
   {
     $value = self::trimWhitespace( $theValue );
@@ -80,10 +90,10 @@ class Clean
       $url .= $parts['user'].'@';
     }
 
-    if (isset($parts['host']))
-    {
-      $url .= $parts['host'];
-    }
+    if (isset($parts['host'])) $url .= $parts['host'];
+    if (isset($parts['port'])) $url .= ':'.$parts['port'];
+    if (isset($parts['path'])) $url .= $parts['path'];
+    if (isset($parts['query'])) $url .= '?'.$parts['query'];
     if (isset($parts['port']))
     {
       $url .= ':'.$parts['port'];
@@ -105,19 +115,26 @@ class Clean
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return string
+   */
   public static function trimWhitespace( $theValue )
   {
     if (empty($theValue))
     {
       return $theValue;
     }
-    else
-    {
-      return trim( $theValue, " \t\n\r\0\x0B\xA0" );
-    }
+    else                  return trim( $theValue, " \t\n\r\0\x0B\xA0" );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValue string
+   *
+   * @return string
+   */
   public static function tidyHtml( $theValue )
   {
     $value = self::trimWhitespace( $theValue );

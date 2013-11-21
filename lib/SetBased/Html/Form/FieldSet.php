@@ -14,6 +14,9 @@ use SetBased\Html;
 //----------------------------------------------------------------------------------------------------------------------
 class FieldSet extends ComplexControl
 {
+  /**
+   * @var Html\Legend
+   */
   protected $myLegend;
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -22,7 +25,7 @@ class FieldSet extends ComplexControl
     switch ($theType)
     {
       case 'legend':
-        $tmp = new \SetBased\Html\Legend();
+        $tmp = new Html\Legend();
         break;
 
       default:
@@ -35,12 +38,26 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  public function generate( $theParentName )
+  {
+    $ret = $this->generateOpenTag();
+
+    $ret .= $this->generateLegend();
+
+    $ret .= parent::generate( $theParentName );
+
+    $ret .= $this->generateCloseTag();
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   protected function generateOpenTag()
   {
     $ret = '<fieldset';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -71,22 +88,6 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function generate( $theParentName )
-  {
-    $ret = $this->generateOpenTag();
-
-    $ret .= $this->generateLegend();
-
-    $ret .= parent::generate( $theParentName );
-
-    $ret .= $this->generateCloseTag();
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
 }
-
-
 
 //----------------------------------------------------------------------------------------------------------------------

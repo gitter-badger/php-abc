@@ -10,12 +10,23 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:checkbox.
- * @todo Add attribute for label.
+  /** @brief Class for form controls of type input:checkbox.
+   * @todo Add attribute for label.
+   */
+use SetBased\Html\Html;
+
+/**
+ * Class CheckboxControl
+ * @package SetBased\Html\Form
  */
 class CheckboxControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'checkbox';
@@ -27,7 +38,7 @@ class CheckboxControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -41,19 +52,17 @@ class CheckboxControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theValues mixed
+   *
+   * @return mixed|void
+   */
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))
     {
       $value = $theValues[$this->myName];
 
-      // The value of a input:checkbox must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when empty? */
       $this->myAttributes['checked'] = !empty($value);
     }
     else
@@ -64,6 +73,13 @@ class CheckboxControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param  $theSubmittedValue array
+   * @param  $theWhiteListValue array
+   * @param  $theChangedInputs  array
+   *
+   * @return mixed|void
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
@@ -71,7 +87,7 @@ class CheckboxControl extends SimpleControl
 
     if (empty($this->myAttributes['checked'])!==empty($theSubmittedValue[$submit_name]))
     {
-      $theChangedInputs[$this->myName] = true;
+      $theChangedInputs[$this->myName] = $this;
     }
 
     /** @todo Decide whether to test submited value is white listed, i.e. $this->myAttributes['value'] (or 'on'
