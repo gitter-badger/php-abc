@@ -8,7 +8,6 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
-
 use SetBased\Html\Html;
 
 /**
@@ -25,7 +24,7 @@ class CheckboxesControl extends Control
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    if ($this->myName===false) Html::error( 'Name is emtpy' );
+    if ($this->myName===false) Html::error( 'Name is empty' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -74,8 +73,14 @@ class CheckboxesControl extends Control
           $input .= Html::generateAttribute( 'id', $id );
 
           if ($map_checked && isset($option[$map_checked])) $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
+          {
+            $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
+          }
 
           if ($map_disabled) $input .= Html::generateAttribute( 'disabled', $option[$map_disabled] );
+          {
+            $input .= Html::generateAttribute( 'disabled', $option[$map_checked] );
+          }
 
           $input .= "/>";
 
@@ -109,12 +114,14 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theValues
+   * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
+   *
+   * @param $theValues array
    */
   public function setValuesBase( &$theValues )
   {
-    if ($this->myName!==false) $values = & $theValues[$this->myName];
-    else                       $values = & $theValues;
+    if ($this->myName!=='') $values = & $theValues[$this->myName];
+    else                    $values = & $theValues;
 
     $map_key     = $this->myAttributes['set_map_key'];
     $map_checked = $this->myAttributes['set_map_checked'];
@@ -162,8 +169,7 @@ class CheckboxesControl extends Control
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     $map_key        = $this->myAttributes['set_map_key'];
     $map_checked    = (isset($this->myAttributes['set_map_checked'])) ? $this->myAttributes['set_map_checked'] : 'set_map_checked';
@@ -172,6 +178,7 @@ class CheckboxesControl extends Control
     if (isset($theSubmittedValue[$submit_name]))
     {
       foreach ($this->myAttributes['set_options'] as $i => $option)
+
       {
         // Get the (database) ID of the option.
         $id = (string)$option[$map_key];

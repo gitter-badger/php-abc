@@ -1,28 +1,29 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
+/**
+ * @author Paul Water
  * @par Copyright:
  * Set Based IT Consultancy
  * $Date: 2013/03/04 19:02:37 $
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Cleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:submit.
+/**
+ * @brief Interface for defining classes for cleaning submitted values and translated formatted values to
+ *        machine values.
  */
-class SubmitControl extends PushMeControl
+interface Cleaner
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-
-    $this->myButtonType = 'submit';
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the cleaned value of @a $theValue.
+   *
+   * @param $theValue mixed
+   */
+  public function clean( $theValue );
 }
 
 //----------------------------------------------------------------------------------------------------------------------

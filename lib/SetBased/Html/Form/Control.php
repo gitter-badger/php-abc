@@ -16,46 +16,61 @@ namespace SetBased\Html\Form;
  */
 abstract class Control
 {
-  /** The (local) name of this form control.
+  /**
+   * The (local) name of this form control.
    * @var string
    */
   protected $myName;
 
   /**
+   * The HTML attributes of this form control.
+   * @var string[]
+   */
+  protected $myAttributes = array();
+
+  /**
+   * The validators that will be used to validate this form control.
    * @var \SetBased\Html\Form\ControlValidator[]
    */
   protected $myValidators = array();
 
   /**
-   * @var string[]
+   * The obfuscator to obfuscate the (submitted) name of this form control.
+   * @var \SetBased\Html\Obfuscator
    */
-  protected $myAttributes = array();
+  protected $myObfuscator;
 
-  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The cleaner to clean and/or translate (to machine format) the submitted value.
+   * @var \SetBased\Html\Obfuscator
+   */
+  protected $myCleaner;
+
+ //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
    *
-   * @param $theName string The name of this form control.
+   * @param $theName string The (local) name of this form control.
    */
   public function __construct( $theName )
   {
     if ($theName===null || $theName===false || $theName==='')
     {
-      // We consider null, bool(false), and string(0) as empty. In these cases we set the name to false such that
-      // we only have to test against false using the === operator in other parts of the code.
-      $this->myName = false;
+      // We consider null, bool(false), and string(0) as empty. In these cases we set the name to '' such that
+      // we only have to test against '' using the === operator in other parts of the code.
+      $this->myName = '';
     }
     else
     {
       // We consider int(0), float(0), string(0) "", string(3) "0.0" as non empty names.
       $this->myName = (string)$theName;
     }
-
-    /** @todo Consider throw exception when name is not a scalar or set name to false.
-     */
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Adds validator @a $theValidator to this form control.
+  /**
+   * Adds a validator for this form control.
+   *
+   * @param $theValidator ControlValidator
    */
   public function addValidator( $theValidator )
   {
@@ -77,7 +92,7 @@ abstract class Control
     }
     else
     {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      if ($theName=='class' && isset($this->myAttributes[$theName]))
       {
         $this->myAttributes[$theName] .= ' ';
         $this->myAttributes[$theName] .= $theValue;
@@ -90,11 +105,12 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the value of an attribute.
+  /**
+   * Returns the value of an attribute.
    *
    * @param $theName string The name of the requested attribute.
    *
-   * @return null
+   * @return string|null
    */
   public function getAttribute( $theName )
   {
@@ -110,7 +126,10 @@ abstract class Control
   abstract public function generate( $theParentName );
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the local name of this form control
+  /**
+   * Returns the local name of this form control
+   *
+   * @return string
    */
   public function getLocalName()
   {
@@ -119,9 +138,11 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param bool $theRecursiveFlag ComplexControl
+   * Returns the the error messages of this form control.
    *
-   * @return array | null
+   * @param bool $theRecursiveFlag
+   *
+   * @return null|string
    */
   public function getErrorMessages( $theRecursiveFlag = false )
   {
@@ -147,6 +168,17 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the obfuscator of the form control.
+   *
+   * @param $theObfuscator \SetBased\Html\Obfuscator The obfuscator for the form control.
+   */
+  public function setObfuscator( $theObfuscator )
+  {
+    $this->myObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param $theValues
    *
    * @return mixed
@@ -162,16 +194,12 @@ abstract class Control
    */
   protected function getSubmitName( $theParentSubmitName )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ($theParentSubmitName!==false)
+    if ($theParentSubmitName!=='')
     {
-      if ($submit_name!==false)
-      {
-        $global_name = $theParentSubmitName.'['.$submit_name.']';
-      }
-      else                      $global_name = $theParentSubmitName;
+      if ($submit_name!=='') $global_name = $theParentSubmitName.'['.$submit_name.']';
+      else                   $global_name = $theParentSubmitName;
     }
     else
     {

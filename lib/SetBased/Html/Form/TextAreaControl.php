@@ -1,19 +1,17 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
-use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 class TextAreaControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -21,7 +19,8 @@ class TextAreaControl extends SimpleControl
   {
     parent::__construct( $theName );
 
-    $this->myAttributes['set_clean'] = '\SetBased\Html\Clean::trimWhitespace';
+    // By default whitespace is trimmed from textarea form controls.
+    $this->myCleaner = Cleaner\PruneWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -29,21 +28,27 @@ class TextAreaControl extends SimpleControl
   {
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
 
     $ret .= '<textarea';
 
-    foreach( $this->myAttributes as $name => $value )
+    foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
 
-    if (!empty($this->myAttributes['set_text'])) $ret .= \SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
+    if (!empty($this->myAttributes['set_text']))
+    {
+      $ret .= Html::txt2Html( $this->myAttributes['set_text'] );
+    }
 
     $ret .= "</textarea>";
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+    if (isset($this->myAttributes['set_postfix']))
+    {
+      $ret .= $this->myAttributes['set_postfix']."\n";
+    }
 
     return $ret;
   }
@@ -51,25 +56,26 @@ class TextAreaControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    $obfuscator  = (isset($this->myAttributes['set_obfuscator'])) ? $this->myAttributes['set_obfuscator'] : null;
-    $submit_name = ($obfuscator) ? $obfuscator->encode( $this->myName ) : $this->myName;
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if (isset($this->myAttributes['set_clean']))
+    // Get the submitted value and cleaned (if required).
+    if ($this->myCleaner)
     {
-      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+      $new_value = $this->myCleaner->clean( $theSubmittedValue[$submit_name] );
     }
     else
     {
       $new_value = $theSubmittedValue[$submit_name];
     }
+
     // Normalize old (original) value and new (submitted) value.
     $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
     $new_value = (string)$new_value;
 
     if ($old_value!==$new_value)
     {
-      $theChangedInputs[$this->myName]  = true;
-      $this->myAttributes['set_text'] = $new_value;
+      $theChangedInputs[$this->myName] = true;
+      $this->myAttributes['set_text']  = $new_value;
     }
 
     $theWhiteListValue[$this->myName] = $new_value;
@@ -86,9 +92,9 @@ class TextAreaControl extends SimpleControl
       $value = $theValues[$this->myName];
 
       // The value of a input:hidden must be a scalar.
-      if (!is_scalar($value))
+      if (!is_scalar( $value ))
       {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

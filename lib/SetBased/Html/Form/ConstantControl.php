@@ -1,12 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2013/03/04 19:02:37 $
- *
  * $Revision:  $
  */
 //----------------------------------------------------------------------------------------------------------------------
@@ -45,9 +42,6 @@ class ConstantControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theInvalidFormControls
-   */
   protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.
@@ -64,7 +58,7 @@ class ConstantControl extends SimpleControl
       $value = $theValues[$this->myName];
 
       // The value of a input:hidden must be a scalar.
-      if (!is_scalar($value))
+      if (!is_scalar( $value ))
       {
         \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }

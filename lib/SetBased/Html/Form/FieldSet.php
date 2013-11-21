@@ -71,7 +71,10 @@ class FieldSet extends ComplexControl
     {
       $ret = $this->myLegend->generate();
     }
-    else                 $ret = false;
+    else
+    {
+      $ret = '';
+    }
 
     return $ret;
   }

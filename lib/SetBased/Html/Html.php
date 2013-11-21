@@ -1,12 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 /** @author Paul Water
- *
  * @par Copyright:
  * Set Based IT Consultancy
- *
  * $Date: 2011/09/14 19:55:10 $
- *
  * $Revision: 1.2 $
  */
 //----------------------------------------------------------------------------------------------------------------------
@@ -17,7 +14,7 @@ namespace SetBased\Html;
  */
 class Html
 {
-  /** Counter for generating unique element ID's. See method @a GetAutoId.
+  /** Counter for generating unique element ID's. See method @a getAutoId.
    */
   private static $ourAutoId = 0;
 
@@ -25,19 +22,22 @@ class Html
   /**
    * Throws an exception with text @a $theMessage.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public static function error()
   {
     $args   = func_get_args();
     $format = array_shift( $args );
 
-    foreach( $args as &$arg )
+    foreach ($args as &$arg)
     {
-      if (!is_scalar( $arg )) $arg = var_export( $arg, true );
+      if (!is_scalar( $arg ))
+      {
+        $arg = var_export( $arg, true );
+      }
     }
 
-    throw new Exception( vsprintf( $format, $args ) );
+    throw new \Exception(vsprintf( $format, $args ));
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -56,25 +56,28 @@ class Html
 
     switch ($theName)
     {
-    // Boolean attributes
-    case 'checked':
-    case 'disabled':
-    case 'ismap':
-    case 'multiple':
-    case 'readonly':
-      if (!empty($theValue)) $ret = " $theName='$theName'";
-      break;
-
-    default:
-      if ($theValue!==null && $theValue!==false && $theValue!=='' && substr( $theName, 0, 4 )!='set_')
+      // Boolean attributes
+      case 'checked':
+      case 'disabled':
+      case 'ismap':
+      case 'multiple':
+      case 'readonly':
+      if (!empty($theValue))
       {
-        $ret  = ' ';
-        $ret .= htmlspecialchars( $theName, ENT_QUOTES, 'UTF-8' );
-        $ret .= "='";
-        $ret .= htmlspecialchars( $theValue, ENT_QUOTES, 'UTF-8' );
-        $ret .= "'";
+        $ret = " $theName='$theName'";
       }
-      break;
+        break;
+
+      default:
+        if ($theValue!==null && $theValue!==false && $theValue!=='' && substr( $theName, 0, 4 )!='set_')
+        {
+          $ret = ' ';
+          $ret .= htmlspecialchars( $theName, ENT_QUOTES, 'UTF-8' );
+          $ret .= "='";
+          $ret .= htmlspecialchars( $theValue, ENT_QUOTES, 'UTF-8' );
+          $ret .= "'";
+        }
+        break;
     }
 
     return $ret;

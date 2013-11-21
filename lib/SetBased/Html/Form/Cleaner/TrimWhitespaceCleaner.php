@@ -1,40 +1,47 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html;
+namespace SetBased\Html\Form\Cleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Interface for defining classes for obfuscating and un-obfuscating database ID.
+ * Class PruneWhitespaceCleaner
+ * @package SetBased\Html\Form\Cleaner
  */
-interface Obfuscator
+class TrimWhitespaceCleaner implements Cleaner
 {
-  //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the obfuscated value of @a $theValue.
-   *
-   * @param $theValue string|null
-   *
-   * @return string|null
+   * @var TrimWhitespaceCleaner The singleton instance of this class.
    */
-  public function encode( $theValue );
+  static private $ourSingleton;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the un-obfuscated value of @a $theCode.
-   *
-   * @param $theCode string|null
-   *
-   * @return string|null
+   * @return PruneWhitespaceCleaner
    */
-  public function decode( $theCode );
+  public static function get()
+  {
+    if (!self::$ourSingleton) self::$ourSingleton = new self();
+
+    return self::$ourSingleton;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns @a $theValue with leading and training whitespace removed.
+   *
+   * @param $theValue string
+   *
+   * @return string
+   */
+  public function clean( $theValue )
+  {
+    if ($theValue==='' || $theValue===null || $theValue===false)
+    {
+      return '';
+    }
+
+    return trim( $theValue, " \t\n\r\0\x0B\xA0" );
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
