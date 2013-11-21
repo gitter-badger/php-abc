@@ -72,14 +72,14 @@ class CheckboxesControl extends Control
 
           $input .= Html::generateAttribute( 'id', $id );
 
-          if ($map_checked && isset($option[$map_checked])) $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
+          if ($map_checked && isset($option[$map_checked]))
           {
             $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
           }
 
-          if ($map_disabled) $input .= Html::generateAttribute( 'disabled', $option[$map_disabled] );
+          if ($map_disabled && isset($option[$map_disabled]))
           {
-            $input .= Html::generateAttribute( 'disabled', $option[$map_checked] );
+            $input .= Html::generateAttribute( 'disabled', $option[$map_disabled] );
           }
 
           $input .= "/>";
@@ -193,7 +193,7 @@ class CheckboxesControl extends Control
         $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
         // If the original value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = true;
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
 
         // Set the white listed value.
         $theWhiteListValue[$this->myName][$id]               = !empty($submitted);

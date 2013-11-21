@@ -164,7 +164,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
 
     $this->assertArrayHasKey( 'name', $values );
     $this->assertNull( $values['name'] );
-    $this->assertTrue( $changed['name'] );
+
+    $this->assertNotEmpty( $changed['name'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

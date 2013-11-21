@@ -52,8 +52,8 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
     // Value set from POST.
     $this->assertTrue( $values['test2'] );
 
-    // Value is change.
-    $this->assertTrue( $changed['test2'] );
+    // Assert value has changed.
+    $this->assertNotEmpty( $changed['test2'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
     $this->assertFalse( $values['test3'] );
 
     // Value is change.
-    $this->assertTrue( $changed['test3'] );
+    $this->assertNotEmpty( $changed['test3'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

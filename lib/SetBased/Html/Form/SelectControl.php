@@ -102,7 +102,7 @@ class SelectControl extends SimpleControl
         $theWhiteListValue[$this->myName] = null;
         if ($value!=='' && $value!==' ')
         {
-          $theChangedInputs[$this->myName] = true;
+          $theChangedInputs[$this->myName] = $this;
         }
       }
       else
@@ -122,7 +122,7 @@ class SelectControl extends SimpleControl
               // If the original value differs from the submitted value then the form control has been changed.
               if ($value!==(string)$id)
               {
-                $theChangedInputs[$this->myName] = true;
+                $theChangedInputs[$this->myName] = $this;
               }
 
               // Set the white listed value.
@@ -142,7 +142,7 @@ class SelectControl extends SimpleControl
       $theWhiteListValue[$this->myName] = null;
       if ($value!=='' && $value!==' ')
       {
-        $theChangedInputs[$this->myName] = true;
+        $theChangedInputs[$this->myName] = $this;
       }
     }
 

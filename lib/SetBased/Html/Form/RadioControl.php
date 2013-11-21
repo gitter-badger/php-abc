@@ -51,7 +51,7 @@ class RadioControl extends SimpleControl
     {
       if (empty($this->myAttributes['checked']))
       {
-        $theChangedInputs[$this->myName] = true;
+        $theChangedInputs[$this->myName] = $this;
       }
       $this->myAttributes['checked']    = true;
       $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
@@ -63,7 +63,7 @@ class RadioControl extends SimpleControl
     {
       if (!empty($this->myAttributes['checked']))
       {
-        $theChangedInputs[$this->myName] = true;
+        $theChangedInputs[$this->myName] = $this;
       }
       $this->myAttributes['checked'] = false;
 

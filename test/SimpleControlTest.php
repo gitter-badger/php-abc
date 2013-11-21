@@ -3,8 +3,8 @@
 use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Abstract super class for test for @c SET_HtlmFormControlText, @c SET_HtlmFormControlHidden,
- * @c SET_HtlmFormControlPassword.
+/** @brief Abstract super class for test for @c \SetBased\Htlm\Form\TextControl, @c \SetBased\Htlm\Form\HiddenControl,
+ *  @c \SetBased\Htlm\Form\PasswordControl.
  */
 abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +41,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
-    $this->assertTrue( $changed['name'] );
+    $this->assertNotEmpty( $changed['name'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     $this->assertEmpty( $values['name'] );
-    $this->assertTrue( $changed['name'] );
+    $this->assertNotEmpty( $changed['name'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
-    $this->assertTrue( $changed['name'] );
+    $this->assertNotEmpty( $changed['name'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     $this->assertEquals( $name, $values['name'] );
-    $this->assertTrue( $changed['name'] );
+    $this->assertNotEmpty( $changed['name'] );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

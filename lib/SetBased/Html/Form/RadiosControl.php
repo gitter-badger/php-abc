@@ -126,7 +126,7 @@ class RadiosControl extends Control
             $this->myAttributes['set_value']!==$id
           )
           {
-            $theChangedInputs[$this->myName] = true;
+            $theChangedInputs[$this->myName] = $this;
           }
 
           // Set the white listed value.

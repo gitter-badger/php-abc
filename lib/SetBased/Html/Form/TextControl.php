@@ -83,7 +83,7 @@ class TextControl extends SimpleControl
 
     if ($old_value!==$new_value)
     {
-      $theChangedInputs[$this->myName] = true;
+      $theChangedInputs[$this->myName] = $this;
       $this->myAttributes['value']     = $new_value;
     }
 

@@ -53,7 +53,7 @@ class FileControl extends SimpleControl
 
     if ($_FILES[$submit_name]['error']===0)
     {
-      $theChangedInputs[$this->myName]  = true;
+      $theChangedInputs[$this->myName]  = $this;
       $theWhiteListValue[$this->myName] = $_FILES[$submit_name];
       $this->myAttributes['value']      = $_FILES[$submit_name];
     }

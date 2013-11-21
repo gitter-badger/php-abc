@@ -37,7 +37,7 @@ abstract class SimpleControl extends Control
     parent::__construct( $theName );
 
     // A simple form control must have a name.
-    if ($this->myName==='') Html::error( 'Name is emtpy' );
+    if ($this->myName==='')
     {
       Html::error( 'Name is empty' );
     }

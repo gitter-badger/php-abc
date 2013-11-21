@@ -227,10 +227,10 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   protected function generateBody()
   {
-    $ret = false;
+    $ret = '';
     foreach ($this->myFieldSets as $fieldSet)
     {
-      $ret .= $fieldSet->generate( false );
+      $ret .= $fieldSet->generate( '' );
     }
 
     return $ret;

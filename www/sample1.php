@@ -24,7 +24,7 @@ function Trailer()
 //----------------------------------------------------------------------------------------------------------------------
 function CreateForm()
 {
-  $form = new \SetBased\Html\Form();
+  $form = new \SetBased\Html\Form('hi1');
 
 
   $fieldset = $form->CreateFieldSet();

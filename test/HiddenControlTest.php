@@ -25,7 +25,7 @@ class HiddenControlTest extends SimpleControlTest
     $control->setAttribute('value', 'Hello World!');
 
     // Set cleaner for hidden field (default it off).
-    $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
+    $control->setAttribute('set_clean', '\SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::clean' );
 
     $form->loadSubmittedValues();
 
@@ -58,7 +58,7 @@ class HiddenControlTest extends SimpleControlTest
     $changed = $form->getChangedControls();
 
     // Value is change.
-    $this->assertTrue( $changed['test'] );
+    $this->assertNotEmpty( $changed['test'] );
 
   }
 

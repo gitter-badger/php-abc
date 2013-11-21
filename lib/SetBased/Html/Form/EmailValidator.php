@@ -53,7 +53,7 @@ class EmailValidator implements ControlValidator
     }
 
     // Test if the domain does exists.
-    $domain = strstr( '@', $value );
+    $domain = substr( strstr( $value, '@' ), 1 );
     if ($domain===false || $domain==='')
     {
       return false;
