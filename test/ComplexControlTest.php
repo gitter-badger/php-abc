@@ -27,7 +27,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function testFindFormControlByPath()
+  public function _testFindFormControlByPath()
   {
     $form = $this->setForm1();
 
@@ -94,7 +94,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   // for exception
-  public function testGetFormControlByName2()
+  public function _testGetFormControlByName2()
   {
     $form = $this->setForm1();
 
@@ -102,7 +102,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   // for exception
-  public function testGetFormControlByPath2()
+  public function _testGetFormControlByPath2()
   {
     $form = $this->setForm1();
 

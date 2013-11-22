@@ -19,7 +19,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
     $control->setAttribute( 'value', 'Hello World!' );
 
     // Set cleaner for textarea field (default it off).
-    $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
+   // $control->setAttribute('set_clean', '\SetBased\Html\Clean::pruneWhitespace' );
 
     $form->loadSubmittedValues();
 
