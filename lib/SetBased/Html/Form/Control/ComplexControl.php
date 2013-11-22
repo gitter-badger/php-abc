@@ -271,7 +271,7 @@ class ComplexControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
-   * exists the first found form control is returned. If no form control with @a $thePath exists @c null is
+   * exists the first found form control is returned. If not form control with @a $thePath exists @c null is
    * returned.
    *
    * @param  $thePath string The path of the searched form control.
@@ -288,27 +288,19 @@ class ComplexControl extends Control
     }
 
     $parts = preg_split( '/\/+/', $thePath );
+
     foreach ($this->myControls as $control)
     {
-      if ($control->myName===$parts[0])
+      if ($control->getLocalName()===$parts[0] && sizeof($parts)===1)
       {
-        if (sizeof( $parts )===1)
-        {
-          return $control;
-        }
-        else
-        {
-          array_shift( $parts );
-
-          return $control->findFormControlByPath( implode( '/', $parts ) );
-        }
+         return $control;
       }
       else
       {
-        $tmp = $control->findFormControlByPath( $thePath );
-        if ($tmp)
+        if(sizeof($parts)===1) array_shift( $parts );
+        if(is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
         {
-          return $tmp;
+          $control->findFormControlByPath( implode( '/', $parts ) );
         }
       }
     }
@@ -356,9 +348,9 @@ class ComplexControl extends Control
   {
     foreach ($this->myControls as $control)
     {
-      if ($control->myAttributes['name']===$theName) return $control;
+      if ($control->myName===$theName) return $control;
 
-      if (is_a( $control, 'ControlComplex' ))
+      if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
       {
         $tmp = $control->findFormControlByName( $theName );
         if ($tmp) return $tmp;

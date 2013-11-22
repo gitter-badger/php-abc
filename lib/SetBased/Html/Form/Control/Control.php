@@ -70,7 +70,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param $theValidator \SetBased\Html\Form\ControlValidator
+   * @param $theValidator SetBased\Html\FormControlValidator
    */
   public function addValidator( $theValidator )
   {
