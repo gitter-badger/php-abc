@@ -42,9 +42,6 @@ class ConstantControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theInvalidFormControls
-   */
   protected function validateBase( &$theInvalidFormControls )
   {
     // Nothing to do.

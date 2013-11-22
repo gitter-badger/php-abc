@@ -10,15 +10,19 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Validates if a form control has a value.
+/**
+ * @brief Validates if a form control has a value.
  * @note Can be applied on any form control object.
  */
 class MandatoryValidator implements ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Validates recursively if one of the leaves of @a $theArray has a non-empty value.
+  /**
+   * Validates recursively if one of the leaves of @a $theArray has a non-empty value.
    *
-   * @param $theArray A nested array.
+   * @param $theArray array
+   *
+   * @return bool
    */
   private function validateArray( $theArray )
   {
@@ -45,6 +49,15 @@ class MandatoryValidator implements ControlValidator
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   *  Returns @c true if
+   *  * Each child form control has a value.
+   *  Otherwise returns @c false.
+   *
+   * @param $theFormControl \SetBased\Html\Form\Control|\SetBased\Html\Form\ComplexControl
+   *
+   * @return bool
+   */
   public function validate( $theFormControl )
   {
     $value = $theFormControl->getSubmittedValue();

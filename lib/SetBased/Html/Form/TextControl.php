@@ -9,7 +9,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 /** @brief Class for form controls of type input:text.
  */
 class TextControl extends SimpleControl
@@ -48,7 +49,7 @@ class TextControl extends SimpleControl
 
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -103,7 +104,7 @@ class TextControl extends SimpleControl
       // The value of a input:text must be a scalar.
       if (!is_scalar( $value ))
       {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

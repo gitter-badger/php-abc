@@ -10,15 +10,22 @@
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Validates if the value of a form control (derived from FormControl) is a valid http URL.
+/**
+ * @brief Validates if the value of a form control (derived from FormControl) is a valid http URL.
  * @note Can only be applied on form controls which values are strings.
  */
 class HttpValidator implements ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns @a true if @a $theFormControl has no value.
-   *  Returns @a true if the value of @a $theFormControl is a valid http URL.
-   *  Otherwise returns @a false.
+  /**
+   *  Returns @c true if
+   *  * @a $theFormControl has no value.
+   *  * The value of @a $theFormControl is a valid http URL.
+   *  Otherwise returns @c false.
+   *
+   * @param $theFormControl \SetBased\Html\Form\Control
+   *
+   * @return bool
    */
   public function validate( $theFormControl )
   {
@@ -52,8 +59,8 @@ class HttpValidator implements ControlValidator
     }
 
     // Test that the page actually exits. We consider all HTTP 200-399 responses are valid.
-    $hdrs = get_headers( $url );
-    $ok   = (is_array( $hdrs ) && preg_match( '/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/', $hdrs[0] ));
+    $headers = get_headers( $url );
+    $ok   = (is_array( $headers ) && preg_match( '/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/', $headers[0] ));
 
     return $ok;
   }

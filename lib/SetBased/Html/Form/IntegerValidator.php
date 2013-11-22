@@ -34,9 +34,15 @@ class IntegerValidator implements ControlValidator
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns @c true if @a $theFormControl has no value.
-   *  Returns @c true if the value of @a $theFormControl is an integer.
+  /**
+   *  Returns @c true if
+   *  * @a $theFormControl has no value.
+   *  * The value of @a $theFormControl is an integer.
    *  Otherwise returns @c false.
+   *
+   * @param $theFormControl \SetBased\Html\Form\Control
+   *
+   * @return bool
    */
   public function validate( $theFormControl )
   {

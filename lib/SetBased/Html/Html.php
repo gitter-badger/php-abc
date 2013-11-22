@@ -22,7 +22,7 @@ class Html
   /**
    * Throws an exception with text @a $theMessage.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public static function error()
   {
@@ -37,7 +37,7 @@ class Html
       }
     }
 
-    throw new Exception(vsprintf( $format, $args ));
+    throw new \Exception(vsprintf( $format, $args ));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 class SelectControl extends SimpleControl
@@ -26,7 +26,7 @@ class SelectControl extends SimpleControl
     $ret .= '<select';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -65,7 +65,7 @@ class SelectControl extends SimpleControl
         }
 
         $ret .= ">";
-        $ret .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $ret .= Html::txt2Html( $option[$map_label] );
         $ret .= "</option>\n";
       }
     }

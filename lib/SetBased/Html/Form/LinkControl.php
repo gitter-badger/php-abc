@@ -9,9 +9,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
-//----------------------------------------------------------------------------------------------------------------------
 class LinkControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -22,7 +21,7 @@ class LinkControl extends SimpleControl
     $ret .= '<a';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '>';
     if (!empty($this->myAttributes['set_html']))

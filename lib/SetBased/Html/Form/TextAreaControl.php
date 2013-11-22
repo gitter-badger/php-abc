@@ -9,9 +9,9 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html;
-
 //----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 class TextAreaControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,13 +34,13 @@ class TextAreaControl extends SimpleControl
 
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">";
 
     if (!empty($this->myAttributes['set_text']))
     {
-      $ret .= \SetBased\Html\Html::txt2Html( $this->myAttributes['set_text'] );
+      $ret .= Html::txt2Html( $this->myAttributes['set_text'] );
     }
 
     $ret .= "</textarea>";
@@ -94,7 +94,7 @@ class TextAreaControl extends SimpleControl
       // The value of a input:hidden must be a scalar.
       if (!is_scalar( $value ))
       {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when false or ''? */

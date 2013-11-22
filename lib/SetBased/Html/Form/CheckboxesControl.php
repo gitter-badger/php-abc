@@ -8,6 +8,7 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
+use SetBased\Html\Html;
 
 /**
  * @todo Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
@@ -23,7 +24,7 @@ class CheckboxesControl extends Control
     parent::__construct( $theName );
 
     // A ControlCheckboxes must always have a name.
-    if ($this->myName===false) \SetBased\Html\Html::error( 'Name is empty' );
+    if ($this->myName===false) Html::error( 'Name is empty' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -73,12 +74,12 @@ class CheckboxesControl extends Control
 
           if ($map_checked && isset($option[$map_checked])) $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
           {
-            $input .= \SetBased\Html\Html::generateAttribute( 'checked', $option[$map_checked] );
+            $input .= Html::generateAttribute( 'checked', $option[$map_checked] );
           }
 
           if ($map_disabled) $input .= Html::generateAttribute( 'disabled', $option[$map_disabled] );
           {
-            $input .= \SetBased\Html\Html::generateAttribute( 'disabled', $option[$map_checked] );
+            $input .= Html::generateAttribute( 'disabled', $option[$map_checked] );
           }
 
           $input .= "/>";
@@ -115,7 +116,7 @@ class CheckboxesControl extends Control
   /**
    * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
    *
-   * @param $theValues
+   * @param $theValues array
    */
   public function setValuesBase( &$theValues )
   {
@@ -177,6 +178,7 @@ class CheckboxesControl extends Control
     if (isset($theSubmittedValue[$submit_name]))
     {
       foreach ($this->myAttributes['set_options'] as $i => $option)
+
       {
         // Get the (database) ID of the option.
         $id = (string)$option[$map_key];

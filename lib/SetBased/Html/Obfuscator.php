@@ -17,7 +17,8 @@ namespace SetBased\Html;
 interface Obfuscator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the obfuscated value of @a $theValue.
+  /**
+   * Returns the obfuscated value of @a $theValue.
    *
    * @param $theValue string|null
    *
@@ -26,7 +27,8 @@ interface Obfuscator
   public function encode( $theValue );
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the un-obfuscated value of @a $theCode.
+  /**
+   * Returns the un-obfuscated value of @a $theCode.
    *
    * @param $theCode string|null
    *

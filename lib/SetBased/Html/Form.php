@@ -8,7 +8,6 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html;
-use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -17,14 +16,16 @@ use SetBased\Html;
  */
 class Form
 {
-  /*
+  /**
    * The attributes of this form.
-   * @var array
+   *
+   * @var string[]
    */
   protected $myAttributes = array();
 
   /**
    * The field sets of this form.
+   *
    * @var \SetBased\Html\Form\FieldSet[]
    */
   protected $myFieldSets = array();
@@ -32,12 +33,14 @@ class Form
   /**
    * After a call to Form::loadSubmittedValues holds the names of the form controls of which the value has
    * changed.
+   *
    * @var array
    */
   protected $myChangedControls = array();
 
   /**
    * After a call to Form::loadSubmittedValues holds the white-listed submitted values.
+   *
    * @var array
    */
   protected $myValues = array();
@@ -45,6 +48,7 @@ class Form
   /**
    * After a call to Form::validate holds the names of the form controls which have valid one or more
    * validation tests.
+   *
    * @var array
    */
   protected $myInvalidControls = array();
@@ -84,7 +88,8 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Creates a fieldset of type @a $theType and with name @a $theName and appends this fieldset to the list of field
+  /**
+   * Creates a fieldset of @a $theType and with @a $theName and appends this fieldset to the list of field
    * sets of this form.
    *
    * @param  $theType string The class name of the fieldset which must be derived from class FieldSet. The following
@@ -113,27 +118,15 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Sets the value of attribute with name @a $theName of this form to @a $theValue. If @a $theValue is @c null,
-   * @c false, or @c '' the attribute is unset.
-   * @param $theName  The name of the attribute.
-   * @param $theValue The value for the attribute.
-   *                  Remarks:
-   *                  Attribute 'method' is set default to 'post'.
-   *                  Attribute 'action' is set default to the current URL.
-  public function setAttribute( $theName, $theValue )
-    if ($theValue==='' || $theValue===null || $theValue===false)
-      unset($this->myAttributes[$theName]);
-      if ($theName=='class' && isset($this->myAttributes[$theName]))
-   * @todo Document how attribute class is handled.
-   * @todo Document @a theExtendedFlag
   /**
-   * Helper function for Form::setAttribute. Sets the value of attribute with name @a $theName of this form to
-   * @a $theValue. If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+   * Sets the value of attribute @a $theName of this form to @a $theValue.
+   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
+   *   applies.)
    *
-   * @param $theName  string The name of the attribute.
-   * @param $theValue mixed The value for the attribute.
-   *
-   * @todo Document how attribute class is handled.
+   * @param $theName  string      The name of the attribute.
+   * @param $theValue string|null The value for the attribute.
+
    */
   protected function setAttributeBase( $theName, $theValue )
   {
@@ -254,12 +247,10 @@ class Form
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the submitted values of all form controls.
-   * @return mixed A nested array of form control names (keys are form control names and (for complex form controls) values
-   * are arrays or (for simple form controls) the submitted value).
+   *
    * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
-   * @return A nested array of form control names (keys are form control names and (for complex form controls) values
-   * are arrays or (for simple form controls) the submitted value).
-   * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
+   *
+   * @return array
    */
   public function getValues()
   {
@@ -314,16 +305,10 @@ class Form
     {
       case 'post':
         if (isset($_POST[$theName])) return true;
-        {
-          return true;
-        }
         break;
 
       case 'get':
         if (isset($_GET[$theName])) return true;
-        {
-          return true;
-        }
         break;
 
       default:
@@ -379,28 +364,25 @@ class Form
     }
 
     $parts = preg_split( '/\/+/', $thePath );
-    foreach ($this->myFieldSets as $control)
+    foreach ($this->myFieldSets as $field_set)
     {
-      if ($control->getLocalName()===$parts[0])
+      if ($field_set->getLocalName()===$parts[0])
       {
         if (sizeof( $parts )===1)
         {
-          return $control;
+          return $field_set;
         }
         else
         {
           array_shift( $parts );
 
-          return $control->findFormControlByPathBase( implode( '/', $parts ) );
+          return $field_set->findFormControlByPath( implode( '/', $parts ) );
         }
       }
       else
       {
-        $tmp = $control->findFormControlByPathBase( $thePath );
-        if ($tmp)
-        {
-          return $tmp;
-        }
+        $tmp = $field_set->findFormControlByPath( $thePath );
+        if ($tmp) return $tmp;
       }
     }
 
@@ -408,7 +390,8 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Searches for the form control with name @a $theName. If more than one form control with name @a $theName
+  /**
+   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
    * exists the first found form control is returned. If no form control with @a $theName exists an exception will
    * be thrown.
    *
@@ -422,16 +405,14 @@ class Form
   {
     $control = $this->findFormControlByName( $theName );
 
-    if ($control===null) Html::error( sprintf( "No form control with name '%s' found.", $theName ) );
-    {
-      Html::error( "No form control with path '%s' exists.", $thePath );
-    }
+    if ($control===null) Html::error( "No form control with path '%s' exists.", $theName );
 
     return $control;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Searches for the form control with name @a $theName. If more than one form control with name @a $theName
+  /**
+   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
    * exists the first found form control is returned. If no form control with @a $theName exists @c null is
    * returned.
    *
@@ -446,15 +427,9 @@ class Form
     foreach ($this->myFieldSets as $fieldSet)
     {
       if ($fieldSet->getLocalName()===$theName) return $fieldSet;
-      {
-        return $fieldSet;
-      }
 
       $control = $fieldSet->findFormControlByName( $theName );
-      if ($control)
-      {
-        return $control;
-      }
+      if ($control) return $control;
     }
 
     return null;

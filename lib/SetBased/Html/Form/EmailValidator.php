@@ -16,10 +16,16 @@ namespace SetBased\Html\Form;
 class EmailValidator implements ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns @a true if @a $theFormControl has no value.
-   *  Returns @a true if the value of @a $theFormControl is a valid email address. The format of the email address
-   *  is valided as well if the domain in the email address realy exists.
-   *  Otherwise returns @a false.
+  /**
+   *  Returns @c true if
+   *  * @a $theFormControl has no value.
+   *  * The value of @a $theFormControl is a valid email address. The format of the email address
+   *    is validated as well if the domain of the email address actually exists.
+   *  Otherwise returns @c false.
+   *
+   * @param $theFormControl \SetBased\Html\Form\Control
+   *
+   * @return bool
    */
   public function validate( $theFormControl )
   {
@@ -47,8 +53,8 @@ class EmailValidator implements ControlValidator
     }
 
     // Test if the domain does exists.
-    list ($local, $domain) = explode( '@', $value, 2 );
-    if ($domain===null)
+    $domain = strstr( '@', $value );
+    if ($domain===false || $domain==='')
     {
       return false;
     }

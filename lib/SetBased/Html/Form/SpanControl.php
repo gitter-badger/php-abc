@@ -24,7 +24,7 @@ class SpanControl extends Control
     {
       $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
     }
-    $ret .= ">";
+    $ret .= '>';
 
     if (!empty($this->myAttributes['set_html']))
     {

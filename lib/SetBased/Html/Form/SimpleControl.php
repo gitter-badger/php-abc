@@ -9,9 +9,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
-//----------------------------------------------------------------------------------------------------------------------
 /** Class for generating form control elements of type
  * \li text
  * \li password
@@ -38,9 +37,9 @@ abstract class SimpleControl extends Control
     parent::__construct( $theName );
 
     // A simple form control must have a name.
-    if ($this->myName==='') \SetBased\Html\Html::error( 'Name is emtpy' );
+    if ($this->myName==='') Html::error( 'Name is emtpy' );
     {
-      \SetBased\Html\Html::error( 'Name is empty' );
+      Html::error( 'Name is empty' );
     }
   }
 
@@ -78,7 +77,7 @@ abstract class SimpleControl extends Control
     {
       if (!isset($this->myAttributes['id']))
       {
-        $id                             = \SetBased\Html\Html::getAutoId();
+        $id                             = Html::getAutoId();
         $this->myAttributes['id']       = $id;
         $this->myLabelAttributes['for'] = $id;
       }
@@ -104,7 +103,7 @@ abstract class SimpleControl extends Control
 
     foreach ($this->myLabelAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '>';
 

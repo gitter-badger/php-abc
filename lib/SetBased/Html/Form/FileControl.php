@@ -9,7 +9,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 /** @brief Class for form controls of type file.
  */
 class FileControl extends SimpleControl
@@ -26,7 +27,7 @@ class FileControl extends SimpleControl
     $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -37,6 +38,12 @@ class FileControl extends SimpleControl
     }
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function setValuesBase( &$theValues )
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -57,12 +64,6 @@ class FileControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $theWhiteListValue;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

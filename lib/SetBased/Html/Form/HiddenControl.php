@@ -9,7 +9,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 /** @brief Class for form controls of type input:hidden.
  */
 class HiddenControl extends SimpleControl
@@ -26,7 +27,7 @@ class HiddenControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -37,6 +38,29 @@ class HiddenControl extends SimpleControl
     }
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  public function setValuesBase( &$theValues )
+  {
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      // The value of a input:hidden must be a scalar.
+      if (!is_scalar( $value ))
+      {
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+      }
+
+      /** @todo unset when false or ''? */
+      $this->myAttributes['value'] = (string)$value;
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['value']);
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -68,29 +92,6 @@ class HiddenControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $new_value;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:hidden must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['value'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['value']);
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
