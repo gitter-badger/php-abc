@@ -11,6 +11,7 @@ class SpanControl extends Control
   public function generate( $theParentName )
   {
     $ret  = $this->myPrefix;
+
     $ret .= '<span';
     foreach ($this->myAttributes as $name => $value)
     {

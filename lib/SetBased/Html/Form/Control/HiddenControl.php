@@ -15,7 +15,6 @@ class HiddenControl extends SimpleControl
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
     $ret  = $this->myPrefix;
-    $ret .= $this->generatePrefixLabel();
 
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
@@ -24,8 +23,7 @@ class HiddenControl extends SimpleControl
     }
     $ret .= '/>';
 
-    $ret .= $this->generatePostfixLabel();
-    $ret .= $this->myPostfix;
+     $ret .= $this->myPostfix;
 
     return $ret;
   }

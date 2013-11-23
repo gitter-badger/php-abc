@@ -25,17 +25,17 @@ class CheckboxControl extends SimpleControl
     $this->myAttributes['type'] = 'checkbox';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = $this->myPrefix;
-
+    $ret  = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
+
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
-    $ret .= $this->generatePostfixLabel();
 
+    $ret .= $this->generatePostfixLabel();
     $ret .= $this->myPostfix;
 
     return $ret;
