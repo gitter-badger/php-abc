@@ -31,7 +31,7 @@ class CheckboxesControl extends Control
   {
     $submit_name = $this->getSubmitName( $theParentName );
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = $this->myPrefix;
 
     $ret .= '<div';
     foreach ($this->myAttributes as $name => $value)
@@ -101,7 +101,7 @@ class CheckboxesControl extends Control
 
     $ret .= "</div>";
 
-    if (isset($this->myAttributes['set_postfix'])) $ret .= $this->myAttributes['set_postfix']."\n";
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

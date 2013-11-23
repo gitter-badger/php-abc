@@ -26,13 +26,33 @@ class Legend
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this legend.
+   * @return string
+   */
+  public function generate()
+  {
+
+    $ret = '<legend';
+    foreach ($this->myAttributes as $name => $value)
+    {
+      $ret .= Html::generateAttribute( $name, $value );
+    }
+    $ret .= '>';
+    $ret .= $this->myAttributes['set_inline'];
+    $ret .= "</legend>\n";
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the value of attribute @a $theName of this attribute to @a $theValue.
    * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
    * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
    *   applies.)
    *
-   * @param $theName  string      The name of the attribute.
-   * @param $theValue string|null The value for the attribute.
+   * @param string      $theName  The name of the attribute.
+   * @param string|null $theValue The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
@@ -52,26 +72,6 @@ class Legend
         $this->myAttributes[$theName] = $theValue;
       }
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns the HTML code for this legend.
-   * @return string
-   */
-  public function generate()
-  {
-
-    $ret = '<legend';
-    foreach ($this->myAttributes as $name => $value)
-    {
-      $ret .= Html::generateAttribute( $name, $value );
-    }
-    $ret .= '>';
-    $ret .= $this->myAttributes['set_inline'];
-    $ret .= "</legend>\n";
-
-    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

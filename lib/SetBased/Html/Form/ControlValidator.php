@@ -12,7 +12,7 @@ interface ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theFormControl
+   * @param Control\Control $theFormControl
    *
    * @return bool
    */

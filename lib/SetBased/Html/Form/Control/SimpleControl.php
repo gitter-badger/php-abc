@@ -91,8 +91,7 @@ abstract class SimpleControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   protected function generateLabel()
   {
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-    $ret .= '<label';
+    $ret = '<label';
 
     foreach ($this->myLabelAttributes as $name => $value)
     {
@@ -102,12 +101,6 @@ abstract class SimpleControl extends Control
 
     $ret .= $this->myLabelAttributes['set_label'];
     $ret .= '</label>';
-
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix'];
-    }
-    $ret .= "\n";
 
     return $ret;
   }

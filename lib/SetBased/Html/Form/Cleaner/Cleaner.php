@@ -21,7 +21,7 @@ interface Cleaner
   /**
    * Returns the cleaned value of @a $theValue.
    *
-   * @param $theValue mixed
+   * @param mixed $theValue
    */
   public function clean( $theValue );
 }

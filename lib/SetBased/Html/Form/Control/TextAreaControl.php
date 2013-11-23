@@ -21,10 +21,9 @@ class TextAreaControl extends SimpleControl
   {
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = $this->myPrefix;
 
     $ret .= '<textarea';
-
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -37,11 +36,7 @@ class TextAreaControl extends SimpleControl
     }
 
     $ret .= "</textarea>";
-
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix']."\n";
-    }
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

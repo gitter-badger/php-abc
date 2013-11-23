@@ -10,8 +10,7 @@ class SpanControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-
+    $ret  = $this->myPrefix;
     $ret .= '<span';
     foreach ($this->myAttributes as $name => $value)
     {
@@ -25,11 +24,7 @@ class SpanControl extends Control
     }
 
     $ret .= '</span>';
-
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix']."\n";
-    }
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

@@ -16,7 +16,7 @@ class HttpValidator implements ControlValidator
    *  * The value of @a $theFormControl is a valid http URL.
    *  Otherwise returns @c false.
    *
-   * @param $theFormControl \SetBased\Html\Form\Control\Control
+   * @param \SetBased\Html\Form\Control\Control $theFormControl
    *
    * @return bool
    */

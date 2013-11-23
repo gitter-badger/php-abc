@@ -25,7 +25,7 @@ class CheckboxControl extends SimpleControl
     $this->myAttributes['type'] = 'checkbox';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = $this->myPrefix;
 
     $ret .= $this->generatePrefixLabel();
     $ret .= "<input";
@@ -36,10 +36,7 @@ class CheckboxControl extends SimpleControl
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
 
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix'];
-    }
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

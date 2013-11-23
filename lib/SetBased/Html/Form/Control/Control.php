@@ -7,14 +7,12 @@ namespace SetBased\Html\Form\Control;
  * Class Control Abstract class for objects for generation HTML code for form control.
  * @package SetBased\Html\Form
  */
+/**
+ * Class Control
+ * @package SetBased\Html\Form\Control
+ */
 abstract class Control
 {
-  /**
-   * The (local) name of this form control.
-   * @var string
-   */
-  protected $myName;
-
   /**
    * The HTML attributes of this form control.
    * @var string[]
@@ -22,10 +20,16 @@ abstract class Control
   protected $myAttributes = array();
 
   /**
-   * The validators that will be used to validate this form control.
-   * @var \SetBased\Html\Form\ControlValidator[]
+   * The cleaner to clean and/or translate (to machine format) the submitted value.
+   * @var \SetBased\Html\Obfuscator
    */
-  protected $myValidators = array();
+  protected $myCleaner;
+
+  /**
+   * The (local) name of this form control.
+   * @var string
+   */
+  protected $myName;
 
   /**
    * The obfuscator to obfuscate the (submitted) name of this form control.
@@ -34,10 +38,22 @@ abstract class Control
   protected $myObfuscator;
 
   /**
-   * The cleaner to clean and/or translate (to machine format) the submitted value.
-   * @var \SetBased\Html\Obfuscator
+   * The HTML code that will be appended after the HTML code of this form control.
+   * @var string
    */
-  protected $myCleaner;
+  protected $myPostfix;
+
+  /**
+   * The HTML code that will be inserted before the HTML code of this form control.
+   * @var string
+   */
+  protected $myPrefix;
+
+  /**
+   * The validators that will be used to validate this form control.
+   * @var \SetBased\Html\Form\ControlValidator[]
+   */
+  protected $myValidators = array();
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
@@ -71,11 +87,64 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+  /**
+   * @param $theParentName
+   *
+   * @return mixed
+   */
+  abstract public function generate( $theParentName );
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the value of an attribute.
+   *
+   * @param $theName string The name of the requested attribute.
+   *
+   * @return string|null
+   */
+  public function getAttribute( $theName )
+  {
+    return (isset($this->myAttributes[$theName])) ? $this->myAttributes[$theName] : null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the the error messages of this form control.
+   *
+   * @param bool $theRecursiveFlag
+   *
+   * @return null|string
+   */
+  public function getErrorMessages( $theRecursiveFlag = false )
+  {
+    return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the local name of this form control
+   * @return string
+   */
+  public function getLocalName()
+  {
+    return $this->myName;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /** Returns the submitted value of this form control.
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myAttributes['set_submitted_value'];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
    * @c null, @c false, or @c '' the attribute is unset.
    *
-   * @param $theName  string The name of the attribute.
-   * @param $theValue mixed The value for the attribute.
+   * @param string $theName  The name of the attribute.
+   * @param mixed  $theValue The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
@@ -99,58 +168,6 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the value of an attribute.
-   *
-   * @param $theName string The name of the requested attribute.
-   *
-   * @return string|null
-   */
-  public function getAttribute( $theName )
-  {
-    return (isset($this->myAttributes[$theName])) ? $this->myAttributes[$theName] : null;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theParentName
-   *
-   * @return mixed
-   */
-  abstract public function generate( $theParentName );
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns the local name of this form control
-   * @return string
-   */
-  public function getLocalName()
-  {
-    return $this->myName;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns the the error messages of this form control.
-   *
-   * @param bool $theRecursiveFlag
-   *
-   * @return null|string
-   */
-  public function getErrorMessages( $theRecursiveFlag = false )
-  {
-    return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the submitted value of this form control.
-   */
-  public function getSubmittedValue()
-  {
-    return $this->myAttributes['set_submitted_value'];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * @param $theMessage
    */
   public function setErrorMessage( $theMessage )
@@ -162,11 +179,33 @@ abstract class Control
   /**
    * Set the obfuscator of the form control.
    *
-   * @param $theObfuscator \SetBased\Html\Obfuscator The obfuscator for the form control.
+   * @param \SetBased\Html\Obfuscator $theObfuscator The obfuscator for the form control.
    */
   public function setObfuscator( $theObfuscator )
   {
     $this->myObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is inserted before the HTML code of this form control to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setPostfix( $theHtmlSnippet )
+  {
+    $this->myPostfix = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is appended after the HTML code of this form control to @a $theHtmlSnippet.
+
+   * @param string $theHtmlSnippet
+   */
+  public function setPrefix( $theHtmlSnippet )
+  {
+    $this->myPrefix = $theHtmlSnippet;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -180,7 +219,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /** Returns the name this will be used for this form control when the form is submitted.
    *
-   * @param $theParentSubmitName string The submit name of the parent form control of this form control.
+   * @param string $theParentSubmitName The submit name of the parent form control of this form control.
    *
    * @return string
    */
@@ -203,19 +242,19 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theInvalidFormControls
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
+  abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
    *
    * @return bool
    */
   abstract protected function validateBase( &$theInvalidFormControls );
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theSubmittedValue array
-   * @param $theWhiteListValue array
-   * @param $theChangedInputs  array
-   */
-  abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
 
   //--------------------------------------------------------------------------------------------------------------------
 }

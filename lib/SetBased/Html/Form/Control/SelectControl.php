@@ -14,7 +14,7 @@ class SelectControl extends SimpleControl
   {
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = $this->myPrefix;
 
     $ret .= '<select';
     foreach ($this->myAttributes as $name => $value)
@@ -57,18 +57,14 @@ class SelectControl extends SimpleControl
           $ret .= " disabled='disabled'";
         }
 
-        $ret .= ">";
+        $ret .= '>';
         $ret .= Html::txt2Html( $option[$map_label] );
         $ret .= "</option>\n";
       }
     }
 
-    $ret .= "</select>";
-
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix']."\n";
-    }
+    $ret .= '</select>';
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

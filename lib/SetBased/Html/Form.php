@@ -56,7 +56,7 @@ class Form
   /**
    * Returns @c true if @a $theArray has one or more scalars. Otherwise, returns @c false.
    *
-   * @param $theArray array
+   * @param array $theArray
    *
    * @return bool
    */

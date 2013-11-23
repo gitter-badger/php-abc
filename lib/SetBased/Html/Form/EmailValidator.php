@@ -17,7 +17,7 @@ class EmailValidator implements ControlValidator
    *    is validated as well if the domain of the email address actually exists.
    *  Otherwise returns @c false.
    *
-   * @param $theFormControl \SetBased\Html\Form\Control\Control
+   * @param \SetBased\Html\Form\Control\Control $theFormControl
    *
    * @return bool
    */

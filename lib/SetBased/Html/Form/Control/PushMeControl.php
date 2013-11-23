@@ -30,22 +30,18 @@ class PushMeControl extends SimpleControl
     // are unique.
     $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-
-    // print_r( $this);
+    $ret  = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
+
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
-    $ret .= $this->generatePostfixLabel();
 
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix'];
-    }
+    $ret .= $this->generatePostfixLabel();
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

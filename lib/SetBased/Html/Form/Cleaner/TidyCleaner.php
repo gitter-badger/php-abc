@@ -29,7 +29,7 @@ class TidyCleaner implements Cleaner
   /**
    * Returns @a $theValue as a HTML snippet cleaned by tidy.
    *
-   * @param $theValue string
+   * @param string $theValue
    *
    * @return string
    */

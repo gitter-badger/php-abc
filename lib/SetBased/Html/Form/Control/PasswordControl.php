@@ -37,21 +37,18 @@ class PasswordControl extends SimpleControl
     }
 
 
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
-
+    $ret  = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
+
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
-    $ret .= $this->generatePostfixLabel();
 
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix'];
-    }
+    $ret .= $this->generatePostfixLabel();
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

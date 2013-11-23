@@ -76,8 +76,11 @@ class Html
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns an string that can be safely used an ID for an element. The format of the id is 'set_<n>' where n is
-   * incremented with call to @a GetAutoId.
+  /**
+   * Returns a string that can be safely used as an ID for an element. The format of the id is 'set_<n>' where n is
+   * incremented with call this method.
+   *
+   * @return string
    */
   public static function getAutoId()
   {

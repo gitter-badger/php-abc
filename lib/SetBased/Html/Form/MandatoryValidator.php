@@ -47,7 +47,7 @@ class MandatoryValidator implements ControlValidator
    *  * Each child form control has a value.
    *  Otherwise returns @c false.
    *
-   * @param $theFormControl \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl
+   * @param Control\Control|Control\ComplexControl $theFormControl
    *
    * @return bool
    */

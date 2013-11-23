@@ -30,7 +30,7 @@ class PruneWhitespaceCleaner implements Cleaner
    * Returns @a $theValue with leading and training whitespace removed. Intermediate whitespace and multiple
    * intermediate whitespace are replaces with a single space.
    *
-   * @param $theValue string
+   * @param string $theValue
    *
    * @return string
    */

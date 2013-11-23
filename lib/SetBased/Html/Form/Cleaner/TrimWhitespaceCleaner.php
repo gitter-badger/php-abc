@@ -29,7 +29,7 @@ class TrimWhitespaceCleaner implements Cleaner
   /**
    * Returns @a $theValue with leading and training whitespace removed.
    *
-   * @param $theValue string
+   * @param string $theValue
    *
    * @return string
    */

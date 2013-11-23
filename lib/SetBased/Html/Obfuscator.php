@@ -12,7 +12,7 @@ interface Obfuscator
   /**
    * Returns the obfuscated value of @a $theValue.
    *
-   * @param $theValue string|null
+   * @param string|null $theValue
    *
    * @return string|null
    */
@@ -22,7 +22,7 @@ interface Obfuscator
   /**
    * Returns the un-obfuscated value of @a $theCode.
    *
-   * @param $theCode string|null
+   * @param string|null $theCode
    *
    * @return string|null
    */

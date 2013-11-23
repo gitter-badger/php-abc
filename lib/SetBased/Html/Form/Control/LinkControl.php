@@ -9,7 +9,7 @@ class LinkControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function generate( $theParentName )
   {
-    $ret = (isset($this->myAttributes['set_prefix'])) ? $this->myAttributes['set_prefix'] : '';
+    $ret = $this->myPrefix;
 
     $ret .= '<a';
     foreach ($this->myAttributes as $name => $value)
@@ -23,10 +23,7 @@ class LinkControl extends SimpleControl
     }
     $ret .= '</a>';
 
-    if (isset($this->myAttributes['set_postfix']))
-    {
-      $ret .= $this->myAttributes['set_postfix']."\n";
-    }
+    $ret .= $this->myPostfix;
 
     return $ret;
   }

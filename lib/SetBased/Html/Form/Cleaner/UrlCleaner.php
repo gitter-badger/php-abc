@@ -29,7 +29,7 @@ class UrlCleaner implements Cleaner
   /**
    * Returns @a $theValue as a normalized URL.
    *
-   * @param $theValue string
+   * @param string $theValue
    *
    * @return string
    */
