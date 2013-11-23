@@ -1,12 +1,5 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -18,14 +11,12 @@ class Form
 {
   /**
    * The attributes of this form.
-   *
    * @var string[]
    */
   protected $myAttributes = array();
 
   /**
    * The field sets of this form.
-   *
    * @var \SetBased\Html\Form\Control\FieldSet[]
    */
   protected $myFieldSets = array();
@@ -33,14 +24,12 @@ class Form
   /**
    * After a call to Form::loadSubmittedValues holds the names of the form controls of which the value has
    * changed.
-   *
    * @var array
    */
   protected $myChangedControls = array();
 
   /**
    * After a call to Form::loadSubmittedValues holds the white-listed submitted values.
-   *
    * @var array
    */
   protected $myValues = array();
@@ -48,7 +37,6 @@ class Form
   /**
    * After a call to Form::validate holds the names of the form controls which have valid one or more
    * validation tests.
-   *
    * @var array
    */
   protected $myInvalidControls = array();
@@ -118,37 +106,6 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of attribute @a $theName of this form to @a $theValue.
-   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
-   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
-   *   applies.)
-   *
-   * @param $theName  string      The name of the attribute.
-   * @param $theValue string|null The value for the attribute.
-
-   */
-  protected function setAttributeBase( $theName, $theValue )
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function loadSubmittedValues()
   {
     $values = '';
@@ -190,7 +147,8 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
+  /**
+   * Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
    * @c    false.
    * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
    */
@@ -212,44 +170,9 @@ class Form
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function generateOpenTag()
-  {
-    $ret = '<form';
-    foreach ($this->myAttributes as $name => $value)
-    {
-      $ret .= Html::generateAttribute( $name, $value );
-    }
-    $ret .= ">\n";
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function generateBody()
-  {
-    $ret = '';
-    foreach ($this->myFieldSets as $fieldSet)
-    {
-      $ret .= $fieldSet->generate( '' );
-    }
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function generateCloseTag()
-  {
-    $ret = "</form>\n";
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the submitted values of all form controls.
-   *
    * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
-   *
    * @return array
    */
   public function getValues()
@@ -327,7 +250,6 @@ class Form
    * @param  $thePath string  The path of the searched form control.
    *
    * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl
-   *
    * @sa FindFormControlByPath.
    */
   public function getFormControlByPath( $thePath )
@@ -347,7 +269,6 @@ class Form
    * @param  $thePath string The path of the searched form control.
    *
    * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl|null
-   *
    * @sa GetFormControlByPath.
    */
   public function findFormControlByPath( $thePath )
@@ -398,7 +319,6 @@ class Form
    * @param  $theName string The name of the searched form control.
    *
    * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl
-   *
    * @sa findFormControlByName.
    */
   public function getFormControlByName( $theName )
@@ -419,7 +339,6 @@ class Form
    * @param  $theName string The name of the searched form control.
    *
    * @return \SetBased\Html\Form\Control\Control|\SetBased\Html\Form\Control\ComplexControl|null
-   *
    * @sa getFormControlByName.
    */
   public function findFormControlByName( $theName )
@@ -433,6 +352,69 @@ class Form
     }
 
     return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of attribute @a $theName of this form to @a $theValue.
+   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
+   *   applies.)
+   *
+   * @param $theName  string      The name of the attribute.
+   * @param $theValue string|null The value for the attribute.
+   */
+  protected function setAttributeBase( $theName, $theValue )
+  {
+    if ($theValue===null || $theValue===false || $theValue==='')
+    {
+      unset($this->myAttributes[$theName]);
+    }
+    else
+    {
+      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      {
+        $this->myAttributes[$theName] .= ' ';
+        $this->myAttributes[$theName] .= $theValue;
+      }
+      else
+      {
+        $this->myAttributes[$theName] = $theValue;
+      }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function generateOpenTag()
+  {
+    $ret = '<form';
+    foreach ($this->myAttributes as $name => $value)
+    {
+      $ret .= Html::generateAttribute( $name, $value );
+    }
+    $ret .= ">\n";
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function generateBody()
+  {
+    $ret = '';
+    foreach ($this->myFieldSets as $fieldSet)
+    {
+      $ret .= $fieldSet->generate( '' );
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function generateCloseTag()
+  {
+    $ret = "</form>\n";
+
+    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

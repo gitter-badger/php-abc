@@ -1,15 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Base class for form controls submit, reset, and button
@@ -44,7 +37,7 @@ class PushMeControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();

@@ -1,17 +1,11 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Validates if the value of a form control (derived from FormControl) is a valid email address.
- * @note Can only be applied on form controls which values are strings.
+/**
+ * @brief Validates if the value of a form control (derived from FormControl) is a valid email address.
+ * @note  Can only be applied on form controls which values are strings.
  */
 class IntegerValidator implements ControlValidator
 {

@@ -1,12 +1,5 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -46,7 +39,7 @@ abstract class Control
    */
   protected $myCleaner;
 
- //--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
    *
    * @param $theName string The (local) name of this form control.
@@ -70,7 +63,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param $theValidator SetBased\Html\FormControlValidator
+   * @param $theValidator \SetBased\Html\Form\ControlValidator
    */
   public function addValidator( $theValidator )
   {
@@ -128,7 +121,6 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the local name of this form control
-   *
    * @return string
    */
   public function getLocalName()
@@ -213,7 +205,7 @@ abstract class Control
   /**
    * @param $theInvalidFormControls
    *
-   * @return mixed
+   * @return bool
    */
   abstract protected function validateBase( &$theInvalidFormControls );
 
@@ -222,8 +214,6 @@ abstract class Control
    * @param $theSubmittedValue array
    * @param $theWhiteListValue array
    * @param $theChangedInputs  array
-   *
-   * @return mixed
    */
   abstract protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs );
 

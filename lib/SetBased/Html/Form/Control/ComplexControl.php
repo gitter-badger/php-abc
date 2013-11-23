@@ -8,7 +8,6 @@ class ComplexControl extends Control
 {
   /**
    * The child HTML form controls of this form control.
-
    * @var ComplexControl[]|Control[]
    */
   protected $myControls = array();
@@ -221,27 +220,9 @@ class ComplexControl extends Control
     else
     {
       // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
-      $theInvalidFormControls[] = $tmp; 
+      $theInvalidFormControls[] = $tmp;
 
       $valid = false;
-    }
-
-    return $valid;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function validateSelf( &$theInvalidFormControls )
-  {
-    $valid = true;
-
-    foreach ($this->myValidators as $validator)
-    {
-      $valid = $validator->validate( $this );
-      if ($valid!==true)
-      {
-        $theInvalidFormControls[] = $this;
-        break;
-      }
     }
 
     return $valid;
@@ -256,7 +237,6 @@ class ComplexControl extends Control
    * @param  $thePath string The path of the searched form control.
    *
    * @return ComplexControl|Control
-   *
    * @sa findFormControlByPath.
    */
   public function getFormControlByPath( $thePath )
@@ -277,7 +257,6 @@ class ComplexControl extends Control
    * @param  $thePath string The path of the searched form control.
    *
    * @return ComplexControl|Control
-   *
    * @sa getFormControlByPath.
    */
   public function findFormControlByPath( $thePath )
@@ -291,14 +270,14 @@ class ComplexControl extends Control
 
     foreach ($this->myControls as $control)
     {
-      if ($control->getLocalName()===$parts[0] && sizeof($parts)===1)
+      if ($control->getLocalName()===$parts[0] && sizeof( $parts )===1)
       {
-         return $control;
+        return $control;
       }
       else
       {
-        if(sizeof($parts)===1) array_shift( $parts );
-        if(is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
+        if (sizeof( $parts )===1) array_shift( $parts );
+        if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
         {
           $control->findFormControlByPath( implode( '/', $parts ) );
         }
@@ -317,7 +296,6 @@ class ComplexControl extends Control
    * @param  $theName string The name of the searched form control.
    *
    * @return  ComplexControl|Control
-   *
    * @sa findFormControlByName.
    */
   public function getFormControlByName( $theName )
@@ -341,7 +319,6 @@ class ComplexControl extends Control
    * @param  $theName string The name of the searched form control.
    *
    * @return ComplexControl|Control
-   *
    * @sa getFormControlByName.
    */
   public function findFormControlByName( $theName )
@@ -358,6 +335,24 @@ class ComplexControl extends Control
     }
 
     return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function validateSelf( &$theInvalidFormControls )
+  {
+    $valid = true;
+
+    foreach ($this->myValidators as $validator)
+    {
+      $valid = $validator->validate( $this );
+      if ($valid!==true)
+      {
+        $theInvalidFormControls[] = $this;
+        break;
+      }
+    }
+
+    return $valid;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

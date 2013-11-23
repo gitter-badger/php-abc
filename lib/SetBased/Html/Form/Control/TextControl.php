@@ -1,14 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 use SetBased\Html\Html;
 
 /** @brief Class for form controls of type input:text.
@@ -21,7 +15,7 @@ class TextControl extends SimpleControl
     parent::__construct( $theName );
 
     // By default whitespace is pruned from text form controls.
-    $this->myCleaner = \SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::get();
+    $this->myCleaner = PruneWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

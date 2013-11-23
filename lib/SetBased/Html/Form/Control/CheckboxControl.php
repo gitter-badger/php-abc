@@ -10,9 +10,9 @@
 namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-  /** @brief Class for form controls of type input:checkbox.
-   * @todo Add attribute for label.
-   */
+/** @brief Class for form controls of type input:checkbox.
+ * @todo Add attribute for label.
+ */
 use SetBased\Html\Html;
 
 /**

@@ -8,6 +8,7 @@
  */
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
+
 use SetBased\Html\Html;
 
 /**
@@ -64,7 +65,7 @@ class CheckboxesControl extends Control
         {
           $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
-          $id =  ($map_id && isset($option[$map_id]))?  $id = $option[$map_id] : Html::getAutoId();
+          $id = ($map_id && isset($option[$map_id])) ? $id = $option[$map_id] : Html::getAutoId();
 
           $input = "<input type='checkbox'";
 

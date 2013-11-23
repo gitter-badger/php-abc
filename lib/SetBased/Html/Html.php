@@ -1,12 +1,5 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2011/09/14 19:55:10 $
- * $Revision: 1.2 $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -21,7 +14,6 @@ class Html
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Throws an exception with text @a $theMessage.
-   *
    * @throws \Exception
    */
   public static function error()
@@ -62,10 +54,10 @@ class Html
       case 'ismap':
       case 'multiple':
       case 'readonly':
-      if (!empty($theValue))
-      {
-        $ret = " $theName='$theName'";
-      }
+        if (!empty($theValue))
+        {
+          $ret = " $theName='$theName'";
+        }
         break;
 
       default:

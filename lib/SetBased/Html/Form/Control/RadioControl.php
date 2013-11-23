@@ -1,15 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Class for form controls of type input:radio.
@@ -29,7 +22,7 @@ class RadioControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -84,7 +77,7 @@ class RadioControl extends SimpleControl
       // The value of a input:checkbox must be a scalar.
       if (!is_scalar( $value ))
       {
-        \SetBased\Html\Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
       }
 
       /** @todo unset when empty? */

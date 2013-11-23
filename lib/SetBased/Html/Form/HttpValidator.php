@@ -1,18 +1,11 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * @brief Validates if the value of a form control (derived from FormControl) is a valid http URL.
- * @note Can only be applied on form controls which values are strings.
+ * @note  Can only be applied on form controls which values are strings.
  */
 class HttpValidator implements ControlValidator
 {
@@ -60,7 +53,7 @@ class HttpValidator implements ControlValidator
 
     // Test that the page actually exits. We consider all HTTP 200-399 responses are valid.
     $headers = get_headers( $url );
-    $ok   = (is_array( $headers ) && preg_match( '/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/', $headers[0] ));
+    $ok      = (is_array( $headers ) && preg_match( '/^HTTP\\/\\d+\\.\\d+\\s+[23]\\d\\d\\s*.*$/', $headers[0] ));
 
     return $ok;
   }

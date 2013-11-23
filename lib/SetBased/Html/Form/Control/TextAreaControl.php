@@ -1,17 +1,10 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
 use SetBased\Html\Html;
 
+//----------------------------------------------------------------------------------------------------------------------
 class TextAreaControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -54,6 +47,29 @@ class TextAreaControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  public function setValuesBase( &$theValues )
+  {
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      // The value of a input:hidden must be a scalar.
+      if (!is_scalar( $value ))
+      {
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+      }
+
+      /** @todo unset when false or ''? */
+      $this->myAttributes['set_text'] = (string)$value;
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['set_text']);
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
@@ -82,29 +98,6 @@ class TextAreaControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $new_value;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:hidden must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['set_text'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['set_text']);
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

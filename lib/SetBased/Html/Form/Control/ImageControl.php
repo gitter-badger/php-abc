@@ -1,15 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 /** @brief Class for form controls of type image.
  */
 class ImageControl extends SimpleControl
@@ -26,7 +20,7 @@ class ImageControl extends SimpleControl
     $ret .= "<input";
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
     $ret .= $this->generatePostfixLabel();
@@ -42,7 +36,8 @@ class ImageControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
-    /** @todo Implement LoadSumittedValuesBase for control type image.
+    /**
+     * @todo Implement loadSubmittedValuesBase for control type image.
      */
   }
 

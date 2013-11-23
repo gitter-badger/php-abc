@@ -1,18 +1,11 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * @brief Validates if a form control has a value.
- * @note Can be applied on any form control object.
+ * @note  Can be applied on any form control object.
  */
 class MandatoryValidator implements ControlValidator
 {

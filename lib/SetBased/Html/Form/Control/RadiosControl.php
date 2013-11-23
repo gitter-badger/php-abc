@@ -1,15 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 class RadiosControl extends Control
@@ -22,7 +15,7 @@ class RadiosControl extends Control
     $ret .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 
@@ -38,7 +31,7 @@ class RadiosControl extends Control
       {
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
 
-        $for_id = \SetBased\Html\Html::getAutoId();
+        $for_id = Html::getAutoId();
 
         $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
 
@@ -56,7 +49,7 @@ class RadiosControl extends Control
 
         $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
         $label .= "<label for='$for_id'>";
-        $label .= \SetBased\Html\Html::txt2Html( $option[$map_label] );
+        $label .= Html::txt2Html( $option[$map_label] );
         $label .= "</label>";
         if (isset($this->myAttributes['set_label_postfix']))
         {
@@ -121,7 +114,7 @@ class RadiosControl extends Control
 
         if ($submitted_value===(string)$code)
         {
-          // If the orginal value differs from the submitted value then the form control has been changed.
+          // If the original value differs from the submitted value then the form control has been changed.
           if (!isset($this->myAttributes['set_value']) ||
             $this->myAttributes['set_value']!==$id
           )

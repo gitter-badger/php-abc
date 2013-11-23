@@ -1,12 +1,5 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/** @author Paul Water
- * @par Copyright:
- * Set Based IT Consultancy
- * $Date: 2013/03/04 19:02:37 $
- * $Revision:  $
- */
-//----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
@@ -53,7 +46,7 @@ class SelectControl extends SimpleControl
 
         //
         $ret .= "<option value='$code'";
-        
+
         if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
         {
           $ret .= " selected='selected'";
@@ -160,7 +153,7 @@ class SelectControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   public function setValuesBase( &$theValues )
   {
-     /** @todo check on type and value is in list of options. */
+    /** @todo check on type and value is in list of options. */
     $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
   }
 
