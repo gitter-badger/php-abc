@@ -56,9 +56,10 @@ class HiddenControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if (isset($this->myAttributes['set_clean']))
+    // Get the submitted value and clean it (if required).
+    if ($this->myCleaner)
     {
-      $new_value = call_user_func( $this->myAttributes['set_clean'], $theSubmittedValue[$submit_name] );
+      $new_value = $this->myCleaner->clean( $theSubmittedValue[$submit_name] );
     }
     else
     {
