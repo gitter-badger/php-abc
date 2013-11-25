@@ -166,21 +166,39 @@ class ComplexControl extends Control
       return null;
     }
 
-    $parts = preg_split( '/\/+/', $thePath );
+    // $thePath must start with a leading slash.
+    if (substr( $thePath, 0, 1 )!='/')
+    {
+      return null;
+    }
+
+    // Remove leading slash from the path.
+    $path = substr( $thePath, 1 );
 
     foreach ($this->myControls as $control)
     {
-      if ($control->getLocalName()===$parts[0] && sizeof( $parts )===1)
+      $parts = preg_split( '/\/+/', $path );
+
+      if ($control->myName==$parts[0])
       {
-        return $control;
-      }
-      else
-      {
-        if (sizeof( $parts )===1) array_shift( $parts );
-        if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
+        if (sizeof( $parts )==1)
         {
-          $control->findFormControlByPath( implode( '/', $parts ) );
+          return $control;
         }
+        else
+        {
+          if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
+          {
+            array_shift( $parts );
+            $tmp = $control->findFormControlByPath( '/'.implode( '/', $parts ) );
+            if ($tmp) return $tmp;
+          }
+        }
+      }
+      elseif ($control->myName==='' && is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
+      {
+        $tmp = $control->findFormControlByPath( $thePath );
+        if ($tmp) return $tmp;
       }
     }
 

@@ -154,14 +154,18 @@ class Form
     }
 
     // $thePath must start with a leading slash.
-    if (substr( $thePath, 0, 1 )!=='/')
+    if (substr( $thePath, 0, 1 )!='/')
     {
       return null;
     }
 
-    $parts = preg_split( '/\/+/', $thePath );
+    // Remove leading slash from the path.
+    $path = substr( $thePath, 1 );
+
     foreach ($this->myFieldSets as $field_set)
     {
+      $parts = preg_split( '/\/+/', $path );
+
       if ($field_set->getLocalName()===$parts[0])
       {
         if (sizeof( $parts )===1)
@@ -172,7 +176,7 @@ class Form
         {
           array_shift( $parts );
 
-          return $field_set->findFormControlByPath( implode( '/', $parts ) );
+          return $field_set->findFormControlByPath( '/'.implode( '/', $parts ) );
         }
       }
       else
