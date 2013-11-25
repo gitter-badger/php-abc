@@ -10,7 +10,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Option with index 0 (string or int) equals 0 (string or int) and not equals 0.0 (string or float).
+   *  Option with index 0 (string or int) equals 0 (string or int) and not equals 0.0 (string).
    */
   public function testEmptyValues1()
   {
@@ -64,7 +64,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Option with index 0 (string or int) equals 0 (string or int) and not equals '1' (string).
+   *  Option with index 0 (string or int) equals 0 (string or int) and not equals '1' (string or int).
    */
   public function testEmptyValues4()
   {
@@ -82,7 +82,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Option with index 0 (string or int) equals 0 (string or int) and not equals '1' (string).
+   *  Option with index 0 (string or int) equals 0 (string or int) and not equals '1' (string or int).
    */
   public function testEmptyValues5()
   {
@@ -212,7 +212,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm1();
     $values = $form->getValues();
 
-    // Test checkbox with index 3 has been checked.
+    // Test checkbox with index 2 has been checked.
     $this->assertTrue( $values['cnt_id']['2'] );
 
     // Test checkbox with index 1 has not been checked.
@@ -230,7 +230,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm1();
     $values = $form->getValues();
 
-    // Test checkbox with index 3 has been checked.
+    // Test checkbox with index 0.1 has been checked.
     $this->assertTrue( $values['cnt_id']['0.1'] );
 
     // Test checkbox with index 1 has not been checked.
@@ -266,7 +266,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm2();
     $values = $form->getValues();
 
-    // Test checkbox with index 3 has been checked.
+    // Test checkbox with index 0.1 has been checked.
     $this->assertTrue( $values['cnt_id']['0.1'] );
 
     // Test checkbox with index 1 has not been checked.
