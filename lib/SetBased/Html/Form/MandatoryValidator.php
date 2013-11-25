@@ -4,43 +4,14 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Validates if a form control has a value.
- * @note  Can be applied on any form control object.
+ * Class MandatoryValidator
+ * Validates if a form control has a value.
+ * Can be applied on any form control object.
+ *
+ * @package SetBased\Html\Form
  */
 class MandatoryValidator implements ControlValidator
 {
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Validates recursively if one of the leaves of @a $theArray has a non-empty value.
-   *
-   * @param $theArray array
-   *
-   * @return bool
-   */
-  private function validateArray( $theArray )
-  {
-    foreach ($theArray as $element)
-    {
-      if (is_scalar( $element ))
-      {
-        if ($element!==null && $element!==false && $element!=='')
-        {
-          return true;
-        }
-      }
-      else
-      {
-        $tmp = $this->validateArray( $element );
-        if ($tmp===true)
-        {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    *  Returns @c true if
@@ -66,6 +37,38 @@ class MandatoryValidator implements ControlValidator
     }
 
     return true;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Validates recursively if one of the leaves of @a $theArray has a non-empty value.
+   *
+   * @param array $theArray
+   *
+   * @return bool
+   */
+  private function validateArray( $theArray )
+  {
+    foreach ($theArray as $element)
+    {
+      if (is_scalar( $element ))
+      {
+        if ($element!==null && $element!==false && $element!=='')
+        {
+          return true;
+        }
+      }
+      else
+      {
+        $tmp = $this->validateArray( $element );
+        if ($tmp===true)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

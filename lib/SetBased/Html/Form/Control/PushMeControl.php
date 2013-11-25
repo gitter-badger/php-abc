@@ -5,7 +5,11 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Base class for form controls submit, reset, and button
+/**
+ * Class PushMeControl
+ * Base class for form controls submit, reset, and button
+ *
+ * @package SetBased\Html\Form\Control
  */
 class PushMeControl extends SimpleControl
 {
@@ -18,7 +22,7 @@ class PushMeControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theParentName
+   * @param string $theParentName
    *
    * @return string
    */
@@ -30,7 +34,7 @@ class PushMeControl extends SimpleControl
     // are unique.
     $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= "<input";
@@ -48,9 +52,18 @@ class PushMeControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theSubmittedValue array
-   * @param $theWhiteListValue array
-   * @param $theChangedInputs  array
+   * @param null $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    // We don't set the value of a button via Form::setValues() method. So, nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
@@ -66,17 +79,6 @@ class PushMeControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $this->myAttributes['value'];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theValues mixed
-   *
-   * @return mixed|void
-   */
-  public function setValuesBase( &$theValues )
-  {
-    // We don't set the value of a button via Form::setValues() method. So, nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

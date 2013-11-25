@@ -12,8 +12,10 @@ namespace SetBased\Html\Form\Cleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Interface for defining classes for cleaning submitted values and translated formatted values to
- *        machine values.
+ * Interface Cleaner
+ * Interface for defining classes for cleaning submitted values and translated formatted values to machine values.
+ *
+ * @package SetBased\Html\Form\Cleaner
  */
 interface Cleaner
 {

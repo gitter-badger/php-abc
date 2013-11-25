@@ -4,22 +4,28 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Validates if the value of a form control (derived from FormControl) is a valid email address.
- * @note  Can only be applied on form controls which values are strings.
+ * Class IntegerValidator
+ * Validates if the value of a form control (derived from FormControl) is a valid email address.
+ * Can only be applied on form controls which values are strings.
+ *
+ * @package SetBased\Html\Form
  */
 class IntegerValidator implements ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** The lower bound of the range of valid (integer) values.
-   */
-  private $myMinValue;
-
-  /** The upper bound of the range of valid (integer) values.
+  /**
+   * The upper bound of the range of valid (integer) values.
    */
   private $myMaxValue;
 
+  /**
+   * The lower bound of the range of valid (integer) values.
+   */
+  private $myMinValue;
+
   //--------------------------------------------------------------------------------------------------------------------
-  /** Object constructor.
+  /**
+   * Object constructor.
    */
   public function __construct( $theMinValue = null, $theMaxValue = PHP_INT_MAX )
   {

@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'test/SimpleControlTest.php' );
+require_once('test/SimpleControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
 class PasswordControlTest extends SimpleControlTest

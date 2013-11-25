@@ -30,7 +30,8 @@ function CreateForm()
   $legend = $fieldset->CreateLegend();
   $legend->SetAttribute( 'set_inline', 'Checkbox' );
 
-  $fieldset->createFormControl( 'checkbox', 'test' );
+  $control = $fieldset->createFormControl( 'checkbox', 'test' );
+  $control->setPrefix('Sample checkbox');
 
   $fieldset = $form->CreateFieldSet( 'fieldset', '' );
   $control = $fieldset->CreateFormControl( 'submit', 'submit' );

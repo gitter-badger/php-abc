@@ -6,20 +6,6 @@ use SetBased\Html\Form;
 class ConstantControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  private function setupForm1()
-  {
-    $form = new \SetBased\Html\Form();
-    $fieldset= $form->createFieldSet();
-
-    $control = $fieldset->createFormControl( 'constant', 'name' );
-    $control->setAttribute( 'set_value', '1' );
-
-    $form->loadSubmittedValues();
-
-    return $form;
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
   public function testForm1()
   {
     $_POST['name'] = '2';
@@ -33,6 +19,20 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
 
     // Assert "name" has not be recoded as a changed value.
     $this->assertArrayNotHasKey( 'name', $changed );
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  private function setupForm1()
+  {
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'constant', 'name' );
+    $control->setAttribute( 'set_value', '1' );
+
+    $form->loadSubmittedValues();
+
+    return $form;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -5,12 +5,22 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class SpanControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class SpanControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
 
     $ret .= '<span';
     foreach ($this->myAttributes as $name => $value)
@@ -31,19 +41,30 @@ class SpanControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param null $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
+   */
   protected function validateBase( &$theInvalidFormControls )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }

@@ -34,31 +34,23 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theValue string The type of the button to be tested.
-   *
-   * @return Form
-   */
-  private function setupForm1( $theValue )
+  public function testPrefixAndPostfix()
   {
-    $form = new \SetBased\Html\Form();
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
 
-    $fieldset = $form->CreateFieldSet();
-    $complex1 = $fieldset->CreateFormControl( 'complex', 'level1' );
-    $complex2 = $complex1->CreateFormControl( 'complex', 'level2' );
+    $control = $fieldset->createFormControl( $this->getControlType(), 'name' );
 
-    $button = $complex2->CreateFormControl( $this->getControlType(), 'absolute' );
-    if(isset($theValue)) $button->setAttribute( 'value', $theValue );
+    $control->setPrefix( 'Hello' );
+    $control->setPostfix( 'World' );
+    $html = $form->Generate();
 
-    return $form;
+    $pos = strpos( $html, 'Hello<input' );
+    $this->assertNotEquals( false, $pos );
+
+    $pos = strpos( $html, '/>World' );
+    $this->assertNotEquals( false, $pos );
   }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Return type of form control.
-   * @return string
-   */
-  abstract protected function getControlType();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -67,9 +59,9 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
   public function testSetValues()
   {
     // Create form.
-    $form = new \SetBased\Html\Form();
+    $form     = new \SetBased\Html\Form();
     $fieldset = $form->CreateFieldSet();
-    $button = $fieldset->CreateFormControl( $this->getControlType(), 'button' );
+    $button   = $fieldset->CreateFormControl( $this->getControlType(), 'button' );
     $button->setAttribute( 'value', "Do not push" );
 
     // Set the values for button.
@@ -86,6 +78,34 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
     // Names of buttons must be absolute setValue has no effect for buttons.
     $list = $xpath->query( "/form/fieldset/input[@name='button' and @value='Do not push' and @type='".$this->getControlType()."']" );
     $this->assertEquals( 1, $list->length );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Return type of form control.
+   *
+   * @return string
+   */
+  abstract protected function getControlType();
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theValue The type of the button to be tested.
+   *
+   * @return Form
+   */
+  private function setupForm1( $theValue )
+  {
+    $form = new \SetBased\Html\Form();
+
+    $fieldset = $form->CreateFieldSet();
+    $complex1 = $fieldset->CreateFormControl( 'complex', 'level1' );
+    $complex2 = $complex1->CreateFormControl( 'complex', 'level2' );
+
+    $button = $complex2->CreateFormControl( $this->getControlType(), 'absolute' );
+    if (isset($theValue)) $button->setAttribute( 'value', $theValue );
+
+    return $form;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

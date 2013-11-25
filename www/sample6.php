@@ -31,17 +31,15 @@ function CreateForm()
   $legend->SetAttribute( 'set_inline', 'Gender' );
 
   $control = $fieldset->CreateFormControl( 'radio', 'gender' );
-  $control->SetAttribute( 'set_prefix', 'male' );
- // $control->SetAttribute( 'checked', true );
+  $control->setPrefix( 'male' );
   $control->SetAttribute( 'value', '0.0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
-  $control->SetAttribute( 'set_prefix', 'female' );
-  //$control->SetAttribute( 'checked', true );
+  $control->setPrefix( 'female' );
   $control->SetAttribute( 'value', '0' );
 
   $control = $fieldset->CreateFormControl( 'radio' , 'gender' );
-  $control->SetAttribute( 'set_prefix', 'unknown' );
+  $control->setPrefix( 'unknown' );
   $control->SetAttribute( 'checked', true );
   $control->SetAttribute( 'value', 'unknown' );
 

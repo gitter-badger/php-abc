@@ -5,9 +5,19 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class RadiosControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class RadiosControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $ret = $this->myPrefix;
@@ -69,6 +79,11 @@ class RadiosControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
+   *
+   * @return bool
+   */
   protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;
@@ -87,6 +102,11 @@ class RadiosControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
@@ -146,6 +166,9 @@ class RadiosControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     $this->myAttributes['set_value'] = $theValues[$this->myName];

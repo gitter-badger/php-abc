@@ -1,28 +1,32 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form\Control;
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class SubmitControl
- * Class for form controls of type input:submit.
- *
- * @package SetBased\Html\Form\Control
- */
-class SubmitControl extends PushMeControl
+class FileControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param string $theName
-   */
-  public function __construct( $theName )
+  public function testPrefixAndPostfix()
   {
-    parent::__construct( $theName );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
 
-    $this->myButtonType = 'submit';
+    $control = $fieldset->createFormControl( 'file', 'name' );
+
+    $control->setPrefix( 'Hello' );
+    $control->setPostfix( 'World' );
+    $html = $form->Generate();
+
+    $pos = strpos( $html, 'Hello<input' );
+    $this->assertNotEquals( false, $pos );
+
+    $pos = strpos( $html, '/>World' );
+    $this->assertNotEquals( false, $pos );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+

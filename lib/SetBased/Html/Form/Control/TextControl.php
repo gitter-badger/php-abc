@@ -5,11 +5,19 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type input:text.
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class TextControl
+ * Class for form controls of type input:text.
+ *
+ * @package SetBased\Html\Form\Control
  */
 class TextControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theName
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
@@ -19,6 +27,11 @@ class TextControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'text';
@@ -36,7 +49,7 @@ class TextControl extends SimpleControl
       }
     }
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= '<input';
@@ -53,6 +66,37 @@ class TextControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      // The value of a input:text must be a scalar.
+      if (!is_scalar( $value ))
+      {
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+      }
+
+      /** @todo unset when false or ''? */
+      $this->myAttributes['value'] = (string)$value;
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['value']);
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
@@ -82,29 +126,6 @@ class TextControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $new_value;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:text must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['value'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['value']);
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

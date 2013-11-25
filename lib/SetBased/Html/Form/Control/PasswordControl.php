@@ -5,11 +5,18 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type input:password.
+/**
+ * Class PasswordControl
+ * Class for form controls of type input:password.
+ *
+ * @package SetBased\Html\Form\Control
  */
 class PasswordControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theName
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
@@ -19,6 +26,11 @@ class PasswordControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'password';
@@ -37,7 +49,7 @@ class PasswordControl extends SimpleControl
     }
 
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= "<input";
@@ -54,6 +66,9 @@ class PasswordControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))
@@ -77,6 +92,11 @@ class PasswordControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;

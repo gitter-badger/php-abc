@@ -1,14 +1,32 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once( 'test/SimpleControlTest.php' );
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
+
+require_once('test/SimpleControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
 class HiddenControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
+  /**
+   * Test change value.
+   */
+  public function testValue()
   {
-    return 'hidden';
+    $_POST['test'] = 'New value';
+
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'hidden', 'test' );
+    $control->setAttribute( 'value', 'Old value' );
+
+    $form->loadSubmittedValues();
+
+    $changed = $form->getChangedControls();
+
+    // Value is change.
+    $this->assertNotEmpty( $changed['test'] );
+
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -19,13 +37,13 @@ class HiddenControlTest extends SimpleControlTest
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form = new \SetBased\Html\Form();
+    $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl('hidden', 'test');
-    $control->setAttribute('value', 'Hello World!');
+    $control  = $fieldset->createFormControl( 'hidden', 'test' );
+    $control->setAttribute( 'value', 'Hello World!' );
 
     // Set cleaner for hidden field (default it off).
-    $control->setAttribute('set_clean', '\SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::clean' );
+    $control->setCleaner( PruneWhitespaceCleaner::get() );
 
     $form->loadSubmittedValues();
 
@@ -41,25 +59,9 @@ class HiddenControlTest extends SimpleControlTest
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Test change value.
-   */
-  public function testValue()
+  protected function getInputType()
   {
-    $_POST['test'] = 'New value';
-
-    $form = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl('hidden', 'test');
-    $control->setAttribute('value', 'Old value');
-
-    $form->loadSubmittedValues();
-
-    $changed = $form->getChangedControls();
-
-    // Value is change.
-    $this->assertNotEmpty( $changed['test'] );
-
+    return 'hidden';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

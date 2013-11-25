@@ -8,6 +8,7 @@ class ResetControlTest extends PushMeControlTest
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Return reset type for form control.
+   *
    * @return string
    */
   protected function getControlType()

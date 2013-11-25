@@ -5,6 +5,7 @@ namespace SetBased\Html\Form\Cleaner;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class TidyCleaner
+ *
  * @package SetBased\Html\Form\Cleaner
  */
 class TidyCleaner implements Cleaner

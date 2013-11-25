@@ -4,8 +4,11 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Validates if the value of a form control (derived from FormControl) is a valid http URL.
- * @note  Can only be applied on form controls which values are strings.
+ * Class HttpValidator
+ * Validates if the value of a form control (derived from FormControl) is a valid http URL.
+ * Can only be applied on form controls which values are strings.
+ *
+ * @package SetBased\Html\Form
  */
 class HttpValidator implements ControlValidator
 {

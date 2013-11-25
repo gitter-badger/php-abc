@@ -3,10 +3,16 @@
 namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
+  /**
+   * Class for form controls of type input:button.
+   * Class ButtonControl
+   *
+   * @package SetBased\Html\Form
+   */
 /**
- * Class for form controls of type input:button.
  * Class ButtonControl
- * @package SetBased\Html\Form
+ *
+ * @package SetBased\Html\Form\Control
  */
 class ButtonControl extends PushMeControl
 {

@@ -4,8 +4,9 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Interface for defining classes that validate form control elements derived from FormControl
  * Interface ControlValidator
+ * Interface for defining classes that validate form control elements derived from FormControl
+ *
  * @package SetBased\Html\Form
  */
 interface ControlValidator

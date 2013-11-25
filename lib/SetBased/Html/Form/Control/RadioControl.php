@@ -5,18 +5,27 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:radio.
- * @todo Add attribute for label.
+/**
+ * Class RadioControl
+ * Class for form controls of type input:radio.
+ *
+ * @todo    Add attribute for label.
+ * @package SetBased\Html\Form\Control
  */
 class RadioControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'radio';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= '<input';
@@ -33,6 +42,37 @@ class RadioControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    if (isset($theValues[$this->myName]))
+    {
+      $value = $theValues[$this->myName];
+
+      // The value of a input:checkbox must be a scalar.
+      if (!is_scalar( $value ))
+      {
+        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
+      }
+
+      /** @todo unset when empty? */
+      $this->myAttributes['checked'] = !empty($value);
+    }
+    else
+    {
+      // No value specified for this form control: unset the value of this form control.
+      unset($this->myAttributes['checked']);
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
@@ -61,29 +101,6 @@ class RadioControl extends SimpleControl
       {
         $theWhiteListValue[$this->myName] = null;
       }
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:checkbox must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when empty? */
-      $this->myAttributes['checked'] = !empty($value);
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['checked']);
     }
   }
 

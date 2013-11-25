@@ -7,9 +7,10 @@ class SubmitControlTest extends PushMeControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-  * Return submit type for form control.
-  * @return string
-  */
+   * Return submit type for form control.
+   *
+   * @return string
+   */
   protected function getControlType()
   {
     return 'submit';

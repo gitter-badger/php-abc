@@ -5,10 +5,19 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class SelectControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class SelectControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** @todo Implement 'multiple'.
+  /**
+   * @param string $theParentName
+   *
+   * @todo Implement 'multiple'.
+   * @return string
    */
   public function generate( $theParentName )
   {
@@ -70,6 +79,21 @@ class SelectControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    /** @todo check on type and value is in list of options. */
+    $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
@@ -144,13 +168,6 @@ class SelectControl extends SimpleControl
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    /** @todo check on type and value is in list of options. */
-    $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

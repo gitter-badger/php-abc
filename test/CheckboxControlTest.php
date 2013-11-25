@@ -12,6 +12,54 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   /**
    * Test submit value.
    * In form unchecked.
+   * In POST checked
+   */
+  public function _testSubmittedValue4()
+  {
+    $_POST['test4'] = 'on';
+
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'checkbox', 'test4' );
+    $control->setAttribute( 'checked', true );
+
+    $form->loadSubmittedValues();
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
+
+    // Value set from POST.
+    $this->assertTrue( $values['test4'] );
+
+    // Value has not changed.
+    $this->assertArrayNotHasKey( 'test4', $changed );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test prefix and postfix labels.
+   */
+  public function testPrefixAndPostfix()
+  {
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'checkbox', 'name' );
+
+    $control->setPrefix( 'Hello' );
+    $control->setPostfix( 'World' );
+    $html = $form->Generate();
+
+    $pos = strpos( $html, 'Hello<input' );
+    $this->assertNotEquals( false, $pos );
+
+    $pos = strpos( $html, '/>World' );
+    $this->assertNotEquals( false, $pos );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test submit value.
+   * In form unchecked.
    * In POST unchecked.
    */
   public function testSubmittedValue1()
@@ -66,8 +114,8 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   {
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl( 'checkbox', 'test3' );
-    $control->setAttribute('checked', true );
+    $control  = $fieldset->createFormControl( 'checkbox', 'test3' );
+    $control->setAttribute( 'checked', true );
 
     $form->loadSubmittedValues();
     $values  = $form->getValues();
@@ -78,32 +126,6 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
 
     // Value is change.
     $this->assertNotEmpty( $changed['test3'] );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Test submit value.
-   * In form unchecked.
-   * In POST checked
-   */
-  public function testSubmittedValue4()
-  {
-    $_POST['test4'] = 'on';
-
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control = $fieldset->createFormControl( 'checkbox', 'test4' );
-    $control->setAttribute('checked', true );
-
-    $form->loadSubmittedValues();
-    $values  = $form->getValues();
-    $changed = $form->getChangedControls();
-
-    // Value set from POST.
-    $this->assertTrue( $values['test4'] );
-
-    // Value has not changed.
-    $this->assertArrayNotHasKey( 'test4', $changed );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

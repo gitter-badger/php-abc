@@ -4,11 +4,20 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type image.
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class ImageControl
+ * Class for form controls of type image.
+ * @package SetBased\Html\Form\Control
  */
 class ImageControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'image';
@@ -31,6 +40,11 @@ class ImageControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     /**
@@ -39,6 +53,9 @@ class ImageControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param null $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     // Nothing to do.

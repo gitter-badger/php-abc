@@ -2,55 +2,52 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
-/**
- * Class Control Abstract class for objects for generation HTML code for form control.
- * @package SetBased\Html\Form
- */
+//---------------------------------------------------------------------------------------------------------------------
 /**
  * Class Control
+ *
  * @package SetBased\Html\Form\Control
  */
 abstract class Control
 {
   /**
    * The HTML attributes of this form control.
+   *
    * @var string[]
    */
   protected $myAttributes = array();
 
   /**
-   * The cleaner to clean and/or translate (to machine format) the submitted value.
-   * @var \SetBased\Html\Form\Cleaner\Cleaner
-   */
-  protected $myCleaner;
-
-  /**
    * The (local) name of this form control.
+   *
    * @var string
    */
   protected $myName;
 
   /**
    * The obfuscator to obfuscate the (submitted) name of this form control.
+   *
    * @var \SetBased\Html\Obfuscator
    */
   protected $myObfuscator;
 
   /**
    * The HTML code that will be appended after the HTML code of this form control.
+   *
    * @var string
    */
   protected $myPostfix;
 
   /**
    * The HTML code that will be inserted before the HTML code of this form control.
+   *
    * @var string
    */
   protected $myPrefix;
 
   /**
    * The validators that will be used to validate this form control.
+   *
    * @var \SetBased\Html\Form\ControlValidator[]
    */
   protected $myValidators = array();
@@ -58,7 +55,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
    *
-   * @param $theName string The (local) name of this form control.
+   * @param string $theName The (local) name of this form control.
    */
   public function __construct( $theName )
   {
@@ -79,7 +76,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param $theValidator \SetBased\Html\Form\ControlValidator
+   * @param \SetBased\Html\Form\ControlValidator $theValidator
    */
   public function addValidator( $theValidator )
   {
@@ -88,7 +85,7 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theParentName
+   * @param string $theParentName
    *
    * @return mixed
    */
@@ -123,6 +120,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the local name of this form control
+   *
    * @return string
    */
   public function getLocalName()
@@ -131,7 +129,8 @@ abstract class Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the submitted value of this form control.
+  /**
+   * Returns the submitted value of this form control.
    */
   public function getSubmittedValue()
   {
@@ -141,6 +140,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+   *
    * @c null, @c false, or @c '' the attribute is unset.
    *
    * @param string $theName  The name of the attribute.
@@ -168,7 +168,7 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theMessage
+   * @param string $theMessage
    */
   public function setErrorMessage( $theMessage )
   {
@@ -200,7 +200,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the HTML code that is appended after the HTML code of this form control to @a $theHtmlSnippet.
-
+   *
    * @param string $theHtmlSnippet
    */
   public function setPrefix( $theHtmlSnippet )
@@ -210,7 +210,7 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theValues
+   * @param mixed $theValues
    *
    * @return mixed
    */

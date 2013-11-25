@@ -4,17 +4,27 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type input:hidden.
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class HiddenControl
+ * Class for form controls of type input:hidden.
+ *
+ * @package SetBased\Html\Form\Control
  */
 class HiddenControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'hidden';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
 
     $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
@@ -23,12 +33,15 @@ class HiddenControl extends SimpleControl
     }
     $ret .= '/>';
 
-     $ret .= $this->myPostfix;
+    $ret .= $this->myPostfix;
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))
@@ -52,6 +65,11 @@ class HiddenControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;

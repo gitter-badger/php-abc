@@ -5,11 +5,19 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
+/**
+ * Class InvisibleControl
+ * Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
+ * @package SetBased\Html\Form\Control
  */
 class InvisibleControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'hidden';
@@ -30,6 +38,11 @@ class InvisibleControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Note: by definition the value of a input:invisible form control will not be changed, whatever is submitted.
@@ -42,6 +55,9 @@ class InvisibleControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     if (isset($theValues[$this->myName]))

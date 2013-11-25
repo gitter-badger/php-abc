@@ -5,9 +5,17 @@ namespace SetBased\Html\Form\Control;
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Class for form controls of type input:reset.
  */
+/**
+ * Class ResetControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class ResetControl extends PushMeControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theName
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );
