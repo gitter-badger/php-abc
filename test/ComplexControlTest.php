@@ -6,27 +6,6 @@
 class ComplexControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  public function testFindFormControlByName()
-  {
-    $form = $this->setForm1();
-
-    // Real name.
-    $control = $form->findFormControlByName( 'street' );
-    $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
-
-    // Name not exist.
-    $control = $form->findFormControlByName( 'notexists' );
-    $this->assertEquals( null, $control );
-
-    $control = $form->findFormControlByName( '/nopath/notexists' );
-    $this->assertEquals( null, $control );
-
-    $control = $form->findFormControlByName( '/vacationh/notexists' );
-    $this->assertEquals( null, $control );
-
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
   public function _testFindFormControlByPath()
   {
     $form = $this->setForm1();
@@ -71,6 +50,13 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  public function _testGetFormControlByName2()
+  {
+    $form = $this->setForm1();
+
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   public function _testGetFormControlByPath1()
   {
     $form = $this->setForm1();
@@ -94,7 +80,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   // for exception
-  public function _testGetFormControlByName2()
+  public function _testGetFormControlByPath2()
   {
     $form = $this->setForm1();
 
@@ -102,9 +88,23 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   // for exception
-  public function _testGetFormControlByPath2()
+  public function testFindFormControlByName()
   {
     $form = $this->setForm1();
+
+    // Real name.
+    $control = $form->findFormControlByName( 'street' );
+    $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
+
+    // Name not exist.
+    $control = $form->findFormControlByName( 'notexists' );
+    $this->assertEquals( null, $control );
+
+    $control = $form->findFormControlByName( '/nopath/notexists' );
+    $this->assertEquals( null, $control );
+
+    $control = $form->findFormControlByName( '/vacationh/notexists' );
+    $this->assertEquals( null, $control );
 
   }
 

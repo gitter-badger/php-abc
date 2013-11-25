@@ -1,17 +1,33 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once('test/SimpleControlTest.php');
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-class PasswordControlTest extends SimpleControlTest
+class LinkControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
+  public function testPrefixAndPostfix()
   {
-    return 'password';
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'a', 'name' );
+
+    $control->setPrefix( 'Hello' );
+    $control->setPostfix( 'World' );
+    $html = $form->Generate();
+
+    $pos = strpos( $html, 'Hello<a>' );
+    $this->assertNotEquals( false, $pos );
+
+    $pos = strpos( $html, '</a>World' );
+    $this->assertNotEquals( false, $pos );
+
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+

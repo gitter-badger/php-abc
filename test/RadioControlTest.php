@@ -6,83 +6,32 @@ use SetBased\Html\Form;
 class RadioControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test form for radio.
-   */
-  private function setForm1()
+  public function testPrefixAndPostfix()
   {
-    $form = new \SetBased\Html\Form();
+    $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '1' );
 
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '2' );
+    $control->setPrefix( 'Hello' );
+    $control->setPostfix( 'World' );
+    $html = $form->Generate();
 
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '3' );
+    $pos = strpos( $html, 'Hello<input' );
+    $this->assertNotEquals( false, $pos );
 
-    $form->loadSubmittedValues();
-
-    return $form;
+    $pos = strpos( $html, '/>World' );
+    $this->assertNotEquals( false, $pos );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  private function setForm2()
-  {
-    $form = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 1 );
-    $control->setAttribute( 'checked', true );
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 2 );
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 3 );
-
-    $form->loadSubmittedValues();
-
-    return $form;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  private function setForm3()
-  {
-    $form = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '0' );
-
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '0.0' );
-    $control->setAttribute( 'checked', true );
-
-    $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', ' ' );
-
-    $form->loadSubmittedValues();
-
-    return $form;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**@name ValidTests
-  Test for valid submitted values.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** A white list values must be valid.
    */
   public function testValid1()
   {
-    $_POST['name']= '2';
+    $_POST['name'] = '2';
 
-    $form = $this->setForm1();
+    $form   = $this->setForm1();
     $values = $form->getValues();
 
     $this->assertEquals( '2', $values['name'] );
@@ -93,9 +42,9 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
    */
   public function testValid2()
   {
-    $_POST['name']= '2';
+    $_POST['name'] = '2';
 
-    $form = $this->setForm2();
+    $form   = $this->setForm2();
     $values = $form->getValues();
 
     $this->assertEquals( 2, $values['name'] );
@@ -106,9 +55,9 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
    */
   public function testValid3()
   {
-    $_POST['name']= '3';
+    $_POST['name'] = '3';
 
-    $form = $this->setForm2();
+    $form   = $this->setForm2();
     $values = $form->getValues();
 
     $this->assertEquals( 3, $values['name'] );
@@ -119,20 +68,14 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
    */
   public function testValid4()
   {
-    $_POST['name']= '0.0';
+    $_POST['name'] = '0.0';
 
-    $form = $this->setForm3();
+    $form   = $this->setForm3();
     $values = $form->getValues();
 
     $this->assertEquals( '0.0', $values['name'] );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //@}
-  /** @name WhiteListTest
-  Test for white list valus.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** Only white list values must be value.
    */
@@ -141,7 +84,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['name'] = 'ten';
 
-    $form = $this->setForm1();
+    $form   = $this->setForm1();
     $values = $form->getValues();
 
     $this->assertArrayHasKey( 'name', $values );
@@ -169,7 +112,69 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
+  /** Test form for radio.
+   */
+  private function setForm1()
+  {
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '1' );
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '2' );
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '3' );
+
+    $form->loadSubmittedValues();
+
+    return $form;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  private function setForm2()
+  {
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 1 );
+    $control->setAttribute( 'checked', true );
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 2 );
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', 3 );
+
+    $form->loadSubmittedValues();
+
+    return $form;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  private function setForm3()
+  {
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '0' );
+
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', '0.0' );
+    $control->setAttribute( 'checked', true );
+
+    $control = $fieldset->createFormControl( 'radio', 'name' );
+    $control->setAttribute( 'value', ' ' );
+
+    $form->loadSubmittedValues();
+
+    return $form;
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
 

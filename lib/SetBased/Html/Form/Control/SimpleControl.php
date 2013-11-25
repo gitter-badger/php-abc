@@ -19,6 +19,13 @@ use SetBased\Html\Html;
 
 abstract class SimpleControl extends Control
 {
+  /**
+   * The cleaner to clean and/or translate (to machine format) the submitted value.
+   *
+   * @var \SetBased\Html\Form\Cleaner\Cleaner
+   */
+  protected $myCleaner;
+
   protected $myLabelAttributes = array();
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,6 +41,17 @@ abstract class SimpleControl extends Control
     {
       Html::error( 'Name is empty' );
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the cleaner for this form control.
+   *
+   * @param \SetBased\Html\Form\Cleaner\Cleaner $theCleaner The cleaner for this form control/
+   */
+  public function setCleaner( $theCleaner )
+  {
+    $this->myCleaner = $theCleaner;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

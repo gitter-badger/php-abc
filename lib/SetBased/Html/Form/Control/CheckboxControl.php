@@ -10,6 +10,7 @@ use SetBased\Html\Html;
 
 /**
  * Class CheckboxControl
+ *
  * @package SetBased\Html\Form
  */
 class CheckboxControl extends SimpleControl
@@ -25,7 +26,7 @@ class CheckboxControl extends SimpleControl
     $this->myAttributes['type'] = 'checkbox';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= "<input";
@@ -64,9 +65,9 @@ class CheckboxControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param  $theSubmittedValue array
-   * @param  $theWhiteListValue array
-   * @param  $theChangedInputs  array
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs  
    *
    * @return mixed|void
    */

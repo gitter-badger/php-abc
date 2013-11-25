@@ -8,6 +8,7 @@ class ButtonControlTest extends PushMeControlTest
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Return  button type for form control.
+   *
    * @return string
    */
   protected function getControlType()

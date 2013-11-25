@@ -31,13 +31,13 @@ function CreateForm()
   $legend->SetAttribute( 'set_inline', 'Gender' );
 
   $control = $fieldset->CreateFormControl( 'checkbox' , 'male' );
-  $control->SetAttribute( 'set_prefix', 'male' );
+  $control->setPrefix( 'male' );
 
   $control = $fieldset->CreateFormControl( 'checkbox' , 'female' );
-  $control->SetAttribute( 'set_prefix', 'female' );
+  $control->setPrefix( 'female' );
 
   $control = $fieldset->CreateFormControl( 'checkbox' , 'unknown' );
-  $control->SetAttribute( 'set_prefix', 'unknown' );
+  $control->setPrefix( 'unknown' );
   $control->SetAttribute( 'checked', true );
 
   $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );

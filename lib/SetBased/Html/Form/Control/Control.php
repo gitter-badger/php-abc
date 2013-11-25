@@ -2,11 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
-/**
- * Class Control Abstract class for objects for generation HTML code for form control.
- * @package SetBased\Html\Form
- */
+//---------------------------------------------------------------------------------------------------------------------
 /**
  * Class Control
  * @package SetBased\Html\Form\Control
@@ -18,12 +14,6 @@ abstract class Control
    * @var string[]
    */
   protected $myAttributes = array();
-
-  /**
-   * The cleaner to clean and/or translate (to machine format) the submitted value.
-   * @var \SetBased\Html\Obfuscator
-   */
-  protected $myCleaner;
 
   /**
    * The (local) name of this form control.
@@ -200,7 +190,7 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the HTML code that is appended after the HTML code of this form control to @a $theHtmlSnippet.
-
+   *
    * @param string $theHtmlSnippet
    */
   public function setPrefix( $theHtmlSnippet )
