@@ -2,22 +2,22 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:checkbox.
- * @todo Add attribute for label.
- */
 use SetBased\Html\Html;
+
+//----------------------------------------------------------------------------------------------------------------------
 
 /**
  * Class CheckboxControl
+ * Class for form controls of type input:checkbox.
  *
+ * @todo    Add attribute for label.
  * @package SetBased\Html\Form
  */
 class CheckboxControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theParentName
+   * @param string $theParentName
    *
    * @return string
    */
@@ -44,7 +44,7 @@ class CheckboxControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theValues mixed
+   * @param mixed $theValues
    *
    * @return mixed|void
    */
@@ -67,7 +67,7 @@ class CheckboxControl extends SimpleControl
   /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
-   * @param array $theChangedInputs  
+   * @param array $theChangedInputs
    *
    * @return mixed|void
    */

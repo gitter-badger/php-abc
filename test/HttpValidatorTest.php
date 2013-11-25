@@ -6,7 +6,8 @@ use SetBased\Html\Form;
 class HttpValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** An usual url address must be invalid.
+  /**
+   * An usual url address must be invalid.
    */
   public function testInvalidHttp1()
   {
@@ -17,12 +18,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** @name ValidTests
-  Tests for valid url addresses.
-   */
-  //@{
-  //--------------------------------------------------------------------------------------------------------------------
-  /**  An usual url address must be invalid.
+  /**
+   * An usual url address must be invalid.
    */
   public function testInvalidHttp2()
   {
@@ -33,7 +30,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A strange but valid url address must be valid.
+  /**
+   * A strange but valid url address must be valid.
    */
   public function testInvalidHttp3()
   {
@@ -44,7 +42,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid url address must be valid.
+  /**
+   * A valid url address must be valid.
    */
   public function testValidHttp()
   {
@@ -55,7 +54,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid url address must be valid.
+  /**
+   * A valid url address must be valid.
    */
   public function testValidHttp2()
   {
@@ -66,7 +66,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid url address must be valid.
+  /**
+   * A valid url address must be valid.
    */
   public function testValidHttp3()
   {
@@ -77,7 +78,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty url address is a valid url address.
+  /**
+   * An empty url address is a valid url address.
    */
   public function testValidHttpEmpty()
   {
@@ -86,15 +88,10 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
 
     $this->assertTrue( $form->validate() );
   }
-  //--------------------------------------------------------------------------------------------------------------------
-  //@}
 
-  /** @name InvalidTests
-  Test for invalid url addresses.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty url address is a valid url address.
+  /**
+   * An empty url address is a valid url address.
    */
   public function testValidHttpFalse()
   {
@@ -105,7 +102,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty url address is a valid url address.
+  /**
+   * An empty url address is a valid url address.
    */
   public function testValidHttpNull()
   {
@@ -116,7 +114,8 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a text form control (which must be a valid url address).
+  /**
+   * Setups a form with a text form control (which must be a valid url address).
    */
   private function setupForm1()
   {
@@ -133,10 +132,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  /**
-   * @}
-   */
-  //-------------------------------------------------------------------------------------------------------------------
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------

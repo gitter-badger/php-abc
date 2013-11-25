@@ -25,7 +25,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white list values must be valid.
+  /**
+   * A white list values must be valid.
    */
   public function testValid1()
   {
@@ -38,7 +39,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white list values must be valid.
+  /**
+   * A white list values must be valid.
    */
   public function testValid2()
   {
@@ -51,7 +53,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid (even whens tring and integers are mixed).
+  /**
+   * A white listed value must be valid (even whens tring and integers are mixed).
    */
   public function testValid3()
   {
@@ -64,7 +67,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid (even whens tring and integers are mixed).
+  /**
+   * A white listed value must be valid (even whens tring and integers are mixed).
    */
   public function testValid4()
   {
@@ -77,7 +81,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only white list values must be value.
+  /**
+   * Only white list values must be value.
    */
 
   public function testWhiteList1()
@@ -94,9 +99,9 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only white list values must be value.
+  /**
+   * Only white list values must be value.
    */
-
   public function testWhiteList2()
   {
     $_POST['name'] = '10';
@@ -112,7 +117,8 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test form for radio.
+  /**
+   * Test form for radio.
    */
   private function setForm1()
   {

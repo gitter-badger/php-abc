@@ -4,17 +4,20 @@ namespace SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Validates if the value of a form control (derived from FormControl) is a valid email address.
- * @note  Can only be applied on form controls which values are strings.
+ * Class EmailValidator
+ * Validates if the value of a form control (derived from FormControl) is a valid email address.
+ * Can only be applied on form controls which values are strings.
+ *
+ * @package SetBased\Html\Form
  */
 class EmailValidator implements ControlValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
    *  Returns @c true if
-   *  * @a $theFormControl has no value.
-   *  * The value of @a $theFormControl is a valid email address. The format of the email address
-   *    is validated as well if the domain of the email address actually exists.
+   * @a $theFormControl has no value.
+   *  The value of @a $theFormControl is a valid email address. The format of the email address
+   *  is validated as well if the domain of the email address actually exists.
    *  Otherwise returns @c false.
    *
    * @param \SetBased\Html\Form\Control\Control $theFormControl

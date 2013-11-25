@@ -6,7 +6,8 @@ use SetBased\Html\Form;
 class RadiosControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid.
+  /**
+   * A white listed value must be valid.
    */
   public function testValid1()
   {
@@ -19,7 +20,8 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid (even whens tring and integers are mixed).
+  /**
+   * A white listed value must be valid (even whens tring and integers are mixed).
    */
   public function testValid2()
   {
@@ -32,7 +34,8 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only white listed values must be loaded.
+  /**
+   * Only white listed values must be loaded.
    */
   public function testWhiteListed1()
   {
@@ -48,7 +51,8 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a select form control.
+  /**
+   * Setups a form with a select form control.
    */
   private function setupForm1()
   {
@@ -69,7 +73,8 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a select form control. Difference between this function
+  /**
+   * Setups a form with a select form control. Difference between this function
    * and SetupForm1 are the cnt_id are integers.
    */
   private function setupForm2()

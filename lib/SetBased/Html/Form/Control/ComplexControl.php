@@ -4,10 +4,16 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
+/**
+ * Class ComplexControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class ComplexControl extends Control
 {
   /**
    * The child HTML form controls of this form control.
+   *
    * @var ComplexControl[]|Control[]
    */
   protected $myControls = array();
@@ -16,8 +22,8 @@ class ComplexControl extends Control
   /**
    * A factory for creating form control objects.
    *
-   * @param  $theType string The class name of the form control which must be derived from class FormControl.
-   * @param  $theName string The name (which might be empty for complex form controls) of the form control.
+   * @param string $theType The class name of the form control which must be derived from class FormControl.
+   * @param string $theName The name (which might be empty for complex form controls) of the form control.
    *
    * @return ComplexControl|SimpleControl
    */
@@ -116,136 +122,30 @@ class ComplexControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function generate( $theParentName )
+  /**
+   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
+   * exists the first found form control is returned. If no form control with @a $theName exists @c null is
+   * returned.
+   *
+   * @param string $theName The name of the searched form control.
+   *
+   * @return ComplexControl|Control
+   * @sa getFormControlByName.
+   */
+  public function findFormControlByName( $theName )
   {
-    $submit_name = $this->getSubmitName( $theParentName );
-
-    $ret = '';
     foreach ($this->myControls as $control)
     {
-      $ret .= $control->generate( $submit_name );
-      $ret .= "\n";
-    }
+      if ($control->myName===$theName) return $control;
 
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getErrorMessages( $theRecursiveFlag = false )
-  {
-    $ret = array();
-    if ($theRecursiveFlag)
-    {
-      foreach ($this->myControls as $control)
+      if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
       {
-        $tmp = $control->getErrorMessages( true );
-        if (is_array( $tmp ))
-        {
-          $ret = array_merge( $ret, $tmp );
-        }
+        $tmp = $control->findFormControlByName( $theName );
+        if ($tmp) return $tmp;
       }
     }
 
-    if (isset($this->myAttributes['set_errmsg']))
-    {
-      $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
-    }
-
-    if (empty($ret)) $ret = false;
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
-  {
-    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
-
-    if ($this->myName==='')
-    {
-      $tmp1 = & $theSubmittedValue;
-      $tmp2 = & $theWhiteListValue;
-      $tmp3 = & $theChangedInputs;
-    }
-    else
-    {
-      $tmp1 = & $theSubmittedValue[$submit_name];
-      $tmp2 = & $theWhiteListValue[$this->myName];
-      $tmp3 = & $theChangedInputs[$this->myName];
-    }
-
-    foreach ($this->myControls as $control)
-    {
-      $control->loadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
-    }
-
-    if ($this->myName!=='')
-    {
-      if (empty($theWhiteListValue[$this->myName])) unset($theWhiteListValue[$this->myName]);
-      if (empty($theChangedInputs[$this->myName])) unset($theChangedInputs[$this->myName]);
-    }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $tmp2;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
-  {
-    if ($this->myName!=='') $values = & $theValues[$this->myName];
-    else                    $values = & $theValues;
-
-    foreach ($this->myControls as $control)
-    {
-      $control->SetValuesBase( $values );
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function validateBase( &$theInvalidFormControls )
-  {
-    $tmp = array();
-
-    // First, validate all child form controls.
-    foreach ($this->myControls as $control)
-    {
-      $control->validateBase( $tmp );
-    }
-
-    if (empty($tmp))
-    {
-      // All the individual child form controls are valid. Validate the child form controls as a whole.
-      $valid = $this->validateSelf( $theInvalidFormControls );
-    }
-    else
-    {
-      // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
-      $theInvalidFormControls[] = $tmp;
-
-      $valid = false;
-    }
-
-    return $valid;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
-   * exists the first found form control is returned. If no form control with @a $thePath exists an exception will
-   * be thrown.
-   *
-   * @param  $thePath string The path of the searched form control.
-   *
-   * @return ComplexControl|Control
-   * @sa findFormControlByPath.
-   */
-  public function getFormControlByPath( $thePath )
-  {
-    $control = $this->findFormControlByPath( $thePath );
-
-    if ($control===null) Html::error( "No form control with path '%s' exists.", $thePath );
-
-    return $control;
+    return null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -254,7 +154,7 @@ class ComplexControl extends Control
    * exists the first found form control is returned. If not form control with @a $thePath exists @c null is
    * returned.
    *
-   * @param  $thePath string The path of the searched form control.
+   * @param string $thePath The path of the searched form control.
    *
    * @return ComplexControl|Control
    * @sa getFormControlByPath.
@@ -289,11 +189,62 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
+  public function generate( $theParentName )
+  {
+    $submit_name = $this->getSubmitName( $theParentName );
+
+    $ret = '';
+    foreach ($this->myControls as $control)
+    {
+      $ret .= $control->generate( $submit_name );
+      $ret .= "\n";
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param bool $theRecursiveFlag
+   *
+   * @return array|bool
+   */
+  public function getErrorMessages( $theRecursiveFlag = false )
+  {
+    $ret = array();
+    if ($theRecursiveFlag)
+    {
+      foreach ($this->myControls as $control)
+      {
+        $tmp = $control->getErrorMessages( true );
+        if (is_array( $tmp ))
+        {
+          $ret = array_merge( $ret, $tmp );
+        }
+      }
+    }
+
+    if (isset($this->myAttributes['set_errmsg']))
+    {
+      $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
+    }
+
+    if (empty($ret)) $ret = false;
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
    * exists the first found form control is returned. If no form control with @a $theName exists an exception will
    * be thrown.
    *
-   * @param  $theName string The name of the searched form control.
+   * @param string $theName The name of the searched form control.
    *
    * @return  ComplexControl|Control
    * @sa findFormControlByName.
@@ -312,32 +263,115 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
-   * exists the first found form control is returned. If no form control with @a $theName exists @c null is
-   * returned.
+   * Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
+   * exists the first found form control is returned. If no form control with @a $thePath exists an exception will
+   * be thrown.
    *
-   * @param  $theName string The name of the searched form control.
+   * @param string $thePath The path of the searched form control.
    *
    * @return ComplexControl|Control
-   * @sa getFormControlByName.
+   * @sa findFormControlByPath.
    */
-  public function findFormControlByName( $theName )
+  public function getFormControlByPath( $thePath )
   {
-    foreach ($this->myControls as $control)
-    {
-      if ($control->myName===$theName) return $control;
+    $control = $this->findFormControlByPath( $thePath );
 
-      if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
-      {
-        $tmp = $control->findFormControlByName( $theName );
-        if ($tmp) return $tmp;
-      }
-    }
+    if ($control===null) Html::error( "No form control with path '%s' exists.", $thePath );
 
-    return null;
+    return $control;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
+  public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  {
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
+
+    if ($this->myName==='')
+    {
+      $tmp1 = & $theSubmittedValue;
+      $tmp2 = & $theWhiteListValue;
+      $tmp3 = & $theChangedInputs;
+    }
+    else
+    {
+      $tmp1 = & $theSubmittedValue[$submit_name];
+      $tmp2 = & $theWhiteListValue[$this->myName];
+      $tmp3 = & $theChangedInputs[$this->myName];
+    }
+
+    foreach ($this->myControls as $control)
+    {
+      $control->loadSubmittedValuesBase( $tmp1, $tmp2, $tmp3 );
+    }
+
+    if ($this->myName!=='')
+    {
+      if (empty($theWhiteListValue[$this->myName])) unset($theWhiteListValue[$this->myName]);
+      if (empty($theChangedInputs[$this->myName])) unset($theChangedInputs[$this->myName]);
+    }
+
+    // Set the submitted value to be used method GetSubmittedValue.
+    $this->myAttributes['set_submitted_value'] = $tmp2;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param mixed $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    if ($this->myName!=='') $values = & $theValues[$this->myName];
+    else                    $values = & $theValues;
+
+    foreach ($this->myControls as $control)
+    {
+      $control->SetValuesBase( $values );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
+   *
+   * @return bool
+   */
+  public function validateBase( &$theInvalidFormControls )
+  {
+    $tmp = array();
+
+    // First, validate all child form controls.
+    foreach ($this->myControls as $control)
+    {
+      $control->validateBase( $tmp );
+    }
+
+    if (empty($tmp))
+    {
+      // All the individual child form controls are valid. Validate the child form controls as a whole.
+      $valid = $this->validateSelf( $theInvalidFormControls );
+    }
+    else
+    {
+      // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
+      $theInvalidFormControls[] = $tmp;
+
+      $valid = false;
+    }
+
+    return $valid;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param  $theInvalidFormControls
+   *
+   * @return bool
+   */
   protected function validateSelf( &$theInvalidFormControls )
   {
     $valid = true;

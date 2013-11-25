@@ -4,7 +4,11 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
-/** Class for generating form control elements of type
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class SimpleControl
+ *
+ * Class for generating form control elements of type
  * \li text
  * \li password
  * \li hidden
@@ -15,8 +19,9 @@ use SetBased\Html\Html;
  * \li button
  * \li file
  * \li image
+ *
+ * @package SetBased\Html\Form\Control
  */
-
 abstract class SimpleControl extends Control
 {
   /**
@@ -26,11 +31,17 @@ abstract class SimpleControl extends Control
    */
   protected $myCleaner;
 
+  /**
+   * @var array
+   */
   protected $myLabelAttributes = array();
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Creates a SimpleControl object for generating a form control element of @a $theType with (local)
+  /**
+   * Creates a SimpleControl object for generating a form control element of @a $theType with (local)
    * name \a $theName.
+   *
+   * @param string $theName
    */
   public function __construct( $theName )
   {
@@ -80,6 +91,47 @@ abstract class SimpleControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @return string
+   */
+  protected function generateLabel()
+  {
+    $ret = '<label';
+
+    foreach ($this->myLabelAttributes as $name => $value)
+    {
+      $ret .= Html::generateAttribute( $name, $value );
+    }
+    $ret .= '>';
+
+    $ret .= $this->myLabelAttributes['set_label'];
+    $ret .= '</label>';
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @return string
+   */
+  protected function generatePostfixLabel()
+  {
+    if (isset($this->myLabelAttributes['set_position']) && $this->myLabelAttributes['set_position']=='postfix')
+    {
+      $ret = $this->generateLabel();
+    }
+    else
+    {
+      $ret = '';
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @return string
+   */
   protected function generatePrefixLabel()
   {
     $ret = '';
@@ -107,38 +159,11 @@ abstract class SimpleControl extends Control
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function generateLabel()
-  {
-    $ret = '<label';
-
-    foreach ($this->myLabelAttributes as $name => $value)
-    {
-      $ret .= Html::generateAttribute( $name, $value );
-    }
-    $ret .= '>';
-
-    $ret .= $this->myLabelAttributes['set_label'];
-    $ret .= '</label>';
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function generatePostfixLabel()
-  {
-    if (isset($this->myLabelAttributes['set_position']) && $this->myLabelAttributes['set_position']=='postfix')
-    {
-      $ret = $this->generateLabel();
-    }
-    else
-    {
-      $ret = '';
-    }
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
+   *
+   * @return bool
+   */
   protected function validateBase( &$theInvalidFormControls )
   {
     $valid = true;

@@ -3,11 +3,18 @@
 namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Class for form controls of type input:submit.
+/**
+ * Class SubmitControl
+ * Class for form controls of type input:submit.
+ *
+ * @package SetBased\Html\Form\Control
  */
 class SubmitControl extends PushMeControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theName
+   */
   public function __construct( $theName )
   {
     parent::__construct( $theName );

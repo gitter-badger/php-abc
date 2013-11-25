@@ -4,9 +4,19 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
+/**
+ * Class LinkControl
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class LinkControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $ret = $this->myPrefix;
@@ -29,19 +39,30 @@ class LinkControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theInvalidFormControls
+   */
   protected function validateBase( &$theInvalidFormControls )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }

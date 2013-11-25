@@ -3,17 +3,23 @@
 namespace SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Static class with helper functions for generating HTML code.
+/**
+ * Class Html
+ * Static class with helper functions for generating HTML code.
+ *
+ * @package SetBased\Html
  */
 class Html
 {
-  /** Counter for generating unique element ID's. See method @a getAutoId.
+  /**
+   * Counter for generating unique element ID's. See method @a getAutoId.
    */
   private static $ourAutoId = 0;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Throws an exception with text @a $theMessage.
+   *
    * @throws \Exception
    */
   public static function error()
@@ -33,14 +39,14 @@ class Html
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public static function txt2Html( $theText )
-  {
-    return htmlspecialchars( $theText, ENT_QUOTES, 'UTF-8' );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /** Returns a string with attribute @a $theName with value @a $theValue, e.g. type='text'. This function takes care
+  /**
+   *  Returns a string with attribute @a $theName with value @a $theValue, e.g. type='text'. This function takes care
    *  about proper escaping of @a $theValue.
+   *
+   * @param string $theName
+   * @param string $theValue
+   *
+   * @return string
    */
   public static function generateAttribute( $theName, $theValue )
   {
@@ -87,6 +93,17 @@ class Html
     self::$ourAutoId++;
 
     return 'set_'.self::$ourAutoId;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theText
+   *
+   * @return string
+   */
+  public static function txt2Html( $theText )
+  {
+    return htmlspecialchars( $theText, ENT_QUOTES, 'UTF-8' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

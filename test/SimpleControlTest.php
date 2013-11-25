@@ -4,12 +4,13 @@ use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /** @brief Abstract super class for test for @c \SetBased\Htlm\Form\TextControl, @c \SetBased\Htlm\Form\HiddenControl,
- * @c \SetBased\Htlm\Form\PasswordControl.
+ *  @c \SetBased\Htlm\Form\PasswordControl.
  */
 abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test a submitted value '0'.
+  /**
+   * Test a submitted value '0'.
    */
   public function test1Empty1()
   {
@@ -25,7 +26,8 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test a submitted value '0.0'.
+  /**
+   * Test a submitted value '0.0'.
    */
   public function test1Empty2()
   {
@@ -61,7 +63,8 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Test a submitted value.
+  /**
+   * Test a submitted value.
    */
   public function testValid101()
   {

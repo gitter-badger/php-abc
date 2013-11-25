@@ -5,6 +5,7 @@ namespace SetBased\Html\Form\Cleaner;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class PruneWhitespaceCleaner
+ *
  * @package SetBased\Html\Form\Cleaner
  */
 class TrimWhitespaceCleaner implements Cleaner

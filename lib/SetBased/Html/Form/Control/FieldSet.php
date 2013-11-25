@@ -5,6 +5,11 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class FieldSet
+ *
+ * @package SetBased\Html\Form\Control
+ */
 class FieldSet extends ComplexControl
 {
   /**
@@ -13,6 +18,11 @@ class FieldSet extends ComplexControl
   protected $myLegend;
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theType
+   *
+   * @return Html\Legend
+   */
   public function createLegend( $theType = 'legend' )
   {
     switch ($theType)
@@ -31,6 +41,11 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $ret = $this->generateOpenTag();
@@ -45,19 +60,20 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function generateOpenTag()
+  /**
+   * @return string
+   */
+  protected function generateCloseTag()
   {
-    $ret = '<fieldset';
-    foreach ($this->myAttributes as $name => $value)
-    {
-      $ret .= Html\Html::generateAttribute( $name, $value );
-    }
-    $ret .= ">\n";
+    $ret = "</fieldset>\n";
 
     return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @return string
+   */
   protected function generateLegend()
   {
     if ($this->myLegend)
@@ -73,9 +89,17 @@ class FieldSet extends ComplexControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  protected function generateCloseTag()
+  /**
+   * @return string
+   */
+  protected function generateOpenTag()
   {
-    $ret = "</fieldset>\n";
+    $ret = '<fieldset';
+    foreach ($this->myAttributes as $name => $value)
+    {
+      $ret .= Html\Html::generateAttribute( $name, $value );
+    }
+    $ret .= ">\n";
 
     return $ret;
   }

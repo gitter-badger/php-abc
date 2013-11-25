@@ -23,6 +23,7 @@ class FileControlTest extends PHPUnit_Framework_TestCase
     $pos = strpos( $html, '/>World' );
     $this->assertNotEquals( false, $pos );
   }
+
   //--------------------------------------------------------------------------------------------------------------------
 
 }

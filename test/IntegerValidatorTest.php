@@ -17,7 +17,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A float must be invalid.
+  /**
+   * A float must be invalid.
    */
   public function testInvalidInteger2()
   {
@@ -27,11 +28,6 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
     $this->assertFalse( $form->validate() );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  /** @name ValidTests
-  Tests for valid uses values integer.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** A mix aof numeric and alpha numeric must be invalid.
    */
@@ -44,7 +40,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer misses the specified range must be invalid.
+  /**
+   * An integer misses the specified range must be invalid.
    */
   public function testInvalidInteger4()
   {
@@ -55,7 +52,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer misses the specified range must be invalid.
+  /**
+   * An integer misses the specified range must be invalid.
    */
   public function testInvalidInteger5()
   {
@@ -66,7 +64,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer misses the specified range must be invalid.
+  /**
+   * An integer misses the specified range must be invalid.
    */
   public function testInvalidInteger6()
   {
@@ -77,7 +76,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer misses the specified range must be invalid.
+  /**
+   * An integer misses the specified range must be invalid.
    */
   public function testInvalidInteger7()
   {
@@ -88,10 +88,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** The test for valid range.
-   */
-  //--------------------------------------------------------------------------------------------------------------------
-  /** A zero must be valid.
+  /**
+   * A zero must be valid.
    */
   public function testValidInteger1()
   {
@@ -102,7 +100,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer (posted as string) must be valid.
+  /**
+   * An integer (posted as string) must be valid.
    */
   public function testValidInteger2()
   {
@@ -113,7 +112,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An integer (posted as integer) must be valid.
+  /**
+   * An integer (posted as integer) must be valid.
    */
   public function testValidInteger3()
   {
@@ -124,7 +124,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An neagtive integer (posted as string) must be valid.
+  /**
+   * An negative integer (posted as string) must be valid.
    */
   public function testValidInteger4()
   {
@@ -135,13 +136,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
-  /** @name InvalidTests
-  Test for invalid uses values non integer.
-   */
-  //@{
-  //--------------------------------------------------------------------------------------------------------------------
-  /** An neagtive integer (posted as integer) must be valid.
+  /**
+   * An negative integer (posted as integer) must be valid.
    */
   public function testValidInteger5()
   {
@@ -152,7 +148,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An minimal integer is within a predetermined range must be valid.
+  /**
+   * An minimal integer is within a predetermined range must be valid.
    */
   public function testValidInteger6()
   {
@@ -163,7 +160,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** If zero is within a predetermined range must be valid.
+  /**
+   * If zero is within a predetermined range must be valid.
    */
   public function testValidInteger7()
   {
@@ -173,9 +171,6 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
     $this->assertTrue( $form->validate() );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  /** The test for invalid range.
-   */
   //--------------------------------------------------------------------------------------------------------------------
   /** An integer is within a predetermined range must be valid.
    */
@@ -188,7 +183,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An maximum integer is within a predetermined range must be valid.
+  /**
+   * An maximum integer is within a predetermined range must be valid.
    */
   public function testValidInteger9()
   {
@@ -199,7 +195,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a text form control (which must be a valid inter) values.
+  /**
+   * Setups a form with a text form control (which must be a valid inter) values.
    */
   private function setupForm1()
   {
@@ -216,7 +213,8 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a text form control (which must be a valid inter) values.
+  /**
+   * Setups a form with a text form control (which must be a valid inter) values.
    */
   private function setupForm2()
   {
@@ -231,11 +229,9 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
 
     return $form;
   }
+
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
-  /**
-   */
-  //--------------------------------------------------------------------------------------------------------------------
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------

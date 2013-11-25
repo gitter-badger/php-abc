@@ -35,6 +35,9 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test prefix and postfix labels.
+   */
   public function testPrefixAndPostfix()
   {
     $form     = new \SetBased\Html\Form();

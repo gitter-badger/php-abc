@@ -6,7 +6,8 @@ use SetBased\Html\Form;
 class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory text, password, hidden or textarea form control with value @c null, @c false, or @c '', is invalid.
+  /**
+   * A mandatory text, password, hidden or textarea form control with value @c null, @c false, or @c '', is invalid.
    */
   public function testInvalidEmpty()
   {
@@ -28,7 +29,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory text, password, or textarea form control with whitespace is invalid.
+  /**
+   * A mandatory text, password, or textarea form control with whitespace is invalid.
    */
   public function testInvalidWhitespace()
   {
@@ -50,12 +52,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** @name ValidTests
-  Tests for valid value.
-   */
-  //@{
-  //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory checked checkd box is valid.
+  /**
+   * A mandatory checked checked box is valid.
    */
   public function testValidCheckedCheckbox()
   {
@@ -66,7 +64,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory non-empty text, password, hiddem, or textarea form control is valid.
+  /**
+   * A mandatory non-empty text, password, hidden, or textarea form control is valid.
    */
   public function testValidNoneEmptyText()
   {
@@ -88,13 +87,6 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   // @todo test with checkboxes
 
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
-
-  /** @name InvalidTests
-  Test for invalid values.
-   */
-  //@{
-  //--------------------------------------------------------------------------------------------------------------------
   /** A mandatory unchecked checkd box is invalid.
    */
   public function testinvalidUncheckedCheckbox()
@@ -106,7 +98,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a single form control of type $theType.
+  /**
+   * Setups a form with a single form control of type $theType.
    */
   private function setupForm1( $theType )
   {
@@ -123,7 +116,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a checkbox form control.
+  /**
+   * Setups a form with a checkbox form control.
    */
   private function setupForm2()
   {
@@ -145,8 +139,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   // @todo test with radios
   // @todo test with checkboxes
   //--------------------------------------------------------------------------------------------------------------------
-  //@}
-  //--------------------------------------------------------------------------------------------------------------------
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------

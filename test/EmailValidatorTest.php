@@ -6,7 +6,8 @@ use SetBased\Html\Form;
 class ValidatorEmailTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /** An unsual email address must be invalid.
+  /**
+   * An usual email address must be invalid.
    */
   public function testInvalidEmail1()
   {
@@ -17,12 +18,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** @name ValidTests
-  Tests for valid email addresses.
-   */
-  //@{
-  //--------------------------------------------------------------------------------------------------------------------
-  /**  An unsual email address must be invalid.
+  /**
+   * An usual email address must be invalid.
    */
   public function testInvalidEmail2()
   {
@@ -33,7 +30,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A strange but valid email address must be valid.
+  /**
+   * A strange but valid email address must be valid.
    */
   public function testInvalidEmail3()
   {
@@ -44,7 +42,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**  Localhost is not a valid domain part.
+  /**
+   * Localhost is not a valid domain part.
    */
   public function testInvalidEmail4()
   {
@@ -55,18 +54,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Top-level domains are valid host names. However, impractical they don't have MX records.
-   */
-  // public function testValidEmail4()
-  // {
-  //   $_POST['email'] = 'postbox@com';
-  //   $form = $this->setupForm1();
-  //
-  //   $this->assertTrue( $form->validate() );
-  // }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /** Only one @ is allowed outside quotation marks
+  /**
+   * Only one @ is allowed outside quotation marks
    */
   public function testInvalidEmailWith2Ats1()
   {
@@ -77,7 +66,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Only one @ is allowed outside quotation marks
+  /**
+   * Only one @ is allowed outside quotation marks
    */
   public function testInvalidEmailWith2Ats2()
   {
@@ -88,7 +78,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An email address without an existing A or MX record is invalid.
+  /**
+   * An email address without an existing A or MX record is invalid.
    */
   public function testInvalidEmailWithNoexitantDomain()
   {
@@ -99,7 +90,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An email address with a to long local part must be invalid. The maximum length of the local part is 64 characters,
+  /**
+   * An email address with a to long local part must be invalid. The maximum length of the local part is 64 characters,
    * see http://en.wikipedia.org/wiki/Email_address.
    */
   public function testInvalidEmailWithToLongLocalPart()
@@ -112,7 +104,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An @ character must separate local and domain part.
+  /**
+   * An @ character must separate local and domain part.
    */
   public function testInvalidEmailWithoutAt()
   {
@@ -122,13 +115,6 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $this->assertFalse( $form->validate() );
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //@}
-
-  /** @name InvalidTests
-  Test for invalid email addresses.
-   */
-  //@{
   //--------------------------------------------------------------------------------------------------------------------
   /** A valid email address must be valid.
    */
@@ -141,7 +127,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid email address must be valid.
+  /**
+   * A valid email address must be valid.
    */
   public function testValidEmail2()
   {
@@ -152,7 +139,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid email address must be valid.
+  /**
+   * A valid email address must be valid.
    */
   public function testValidEmail3()
   {
@@ -163,7 +151,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty email address is a valid email address.
+  /**
+   * An empty email address is a valid email address.
    */
   public function testValidEmailEmpty()
   {
@@ -174,7 +163,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty email address is a valid email address.
+  /**
+   * An empty email address is a valid email address.
    */
   public function testValidEmailFalse()
   {
@@ -185,7 +175,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An empty email address is a valid email address.
+  /**
+   * An empty email address is a valid email address.
    */
   public function testValidEmailNull()
   {
@@ -196,7 +187,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An email address with a long domain part must be valid. The maximum length of the domain part is 255 characters,
+  /**
+   * An email address with a long domain part must be valid. The maximum length of the domain part is 255 characters,
    * see http://en.wikipedia.org/wiki/Email_address.
    */
   public function testValidEmailWithLongDomain()
@@ -208,7 +200,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** An email address with a long local part must be valid. The maximum length of the local part is 64 characters,
+  /**
+   * An email address with a long local part must be valid. The maximum length of the local part is 64 characters,
    * see http://en.wikipedia.org/wiki/Email_address.
    */
   public function testValidEmailWithLongLocalPart()
@@ -221,7 +214,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Setups a form with a text form control (which must be a valid email address) values.
+  /**
+   * Setups a form with a text form control (which must be a valid email address) values.
    */
   private function setupForm1()
   {
@@ -237,10 +231,6 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     return $form;
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @}
-   */
   //--------------------------------------------------------------------------------------------------------------------
 }
 

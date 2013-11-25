@@ -5,12 +5,14 @@ namespace SetBased\Html;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class Legend
+ *
  * @package SetBased\Html
  */
 class Legend
 {
   /**
    * The attributes of this legend.
+   *
    * @var string[]
    */
   protected $myAttributes = array();
@@ -27,6 +29,7 @@ class Legend
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the HTML code for this legend.
+   *
    * @return string
    */
   public function generate()

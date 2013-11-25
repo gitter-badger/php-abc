@@ -5,7 +5,10 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 
 /**
- * @todo Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
+ * Class CheckboxesControl
+ *
+ * @todo    Implement disabled hard (can not be changed via javascript) and disabled sort (can be changed via javascript).
+ * @package SetBased\Html\Form\Control
  */
 class CheckboxesControl extends Control
 {
@@ -110,7 +113,7 @@ class CheckboxesControl extends Control
   /**
    * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
    *
-   * @param $theValues array
+   * @param array $theValues
    */
   public function setValuesBase( &$theValues )
   {
@@ -130,29 +133,6 @@ class CheckboxesControl extends Control
     {
       $this->myAttributes['set_options'][$id][$map_checked] = !empty($values[$option[$map_key]]);
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theInvalidFormControls
-   *
-   * @return bool
-   */
-  protected function validateBase( &$theInvalidFormControls )
-  {
-    $valid = true;
-
-    foreach ($this->myValidators as $validator)
-    {
-      $valid = $validator->validate( $this );
-      if ($valid!==true)
-      {
-        $theInvalidFormControls[$this->myName] = $this;
-        break;
-      }
-    }
-
-    return $valid;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -202,6 +182,29 @@ class CheckboxesControl extends Control
 
     // Set the submitted value to be used method GetSubmittedValue.
     $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theInvalidFormControls
+   *
+   * @return bool
+   */
+  protected function validateBase( &$theInvalidFormControls )
+  {
+    $valid = true;
+
+    foreach ($this->myValidators as $validator)
+    {
+      $valid = $validator->validate( $this );
+      if ($valid!==true)
+      {
+        $theInvalidFormControls[$this->myName] = $this;
+        break;
+      }
+    }
+
+    return $valid;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

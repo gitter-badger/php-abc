@@ -90,7 +90,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theValue string The type of the button to be tested.
+   * @param string $theValue The type of the button to be tested.
    *
    * @return Form
    */

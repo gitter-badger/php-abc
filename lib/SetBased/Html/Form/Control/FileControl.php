@@ -4,11 +4,20 @@ namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
 
-/** @brief Class for form controls of type file.
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Class FileControl
+ * Class for form controls of type file.
+ * @package SetBased\Html\Form\Control
  */
 class FileControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param $theParentName
+   *
+   * @return string
+   */
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'file';
@@ -31,12 +40,20 @@ class FileControl extends SimpleControl
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
   public function setValuesBase( &$theValues )
   {
     // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;

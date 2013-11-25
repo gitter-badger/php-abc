@@ -5,13 +5,14 @@ namespace SetBased\Html\Form\Control;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class ConstantControl
- * @package SetBased\Html\Form
+ *
+ * @package SetBased\Html\Form\Control
  */
 class ConstantControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theParentName
+   * @param string $theParentName
    *
    * @return string
    */
@@ -22,27 +23,7 @@ class ConstantControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
-   */
-  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
-  {
-    $theWhiteListValue[$this->myName] = $this->myAttributes['set_value'];
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $this->myAttributes['set_value'];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  protected function validateBase( &$theInvalidFormControls )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param $theValues mixed
+   * @param $mixed $theValues
    */
   public function setValuesBase( &$theValues )
   {
@@ -64,6 +45,29 @@ class ConstantControl extends SimpleControl
       // No value specified for this form control: unset the value of this form control.
       unset($this->myAttributes['set_value']);
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theSubmittedValue
+   * @param array $theWhiteListValue
+   * @param array $theChangedInputs
+   */
+  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  {
+    $theWhiteListValue[$this->myName] = $this->myAttributes['set_value'];
+
+    // Set the submitted value to be used method GetSubmittedValue.
+    $this->myAttributes['set_submitted_value'] = $this->myAttributes['set_value'];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param null $theInvalidFormControls
+   */
+  protected function validateBase( &$theInvalidFormControls )
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
