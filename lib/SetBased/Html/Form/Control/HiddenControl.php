@@ -16,7 +16,7 @@ class HiddenControl extends SimpleControl
 
     $ret  = $this->myPrefix;
 
-    $ret .= "<input";
+    $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );

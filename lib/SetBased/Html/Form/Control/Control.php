@@ -21,7 +21,7 @@ abstract class Control
 
   /**
    * The cleaner to clean and/or translate (to machine format) the submitted value.
-   * @var \SetBased\Html\Obfuscator
+   * @var \SetBased\Html\Form\Cleaner\Cleaner
    */
   protected $myCleaner;
 
