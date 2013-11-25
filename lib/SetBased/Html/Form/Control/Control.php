@@ -95,7 +95,7 @@ abstract class Control
   /**
    * Returns the value of an attribute.
    *
-   * @param $theName string The name of the requested attribute.
+   * @param string $theName The name of the requested attribute.
    *
    * @return string|null
    */
@@ -211,8 +211,6 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param mixed $theValues
-   *
-   * @return mixed
    */
   abstract public function setValuesBase( &$theValues );
 

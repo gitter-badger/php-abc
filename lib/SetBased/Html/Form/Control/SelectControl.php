@@ -16,7 +16,6 @@ class SelectControl extends SimpleControl
   /**
    * @param string $theParentName
    *
-   * @todo Implement 'multiple'.
    * @return string
    */
   public function generate( $theParentName )

@@ -63,10 +63,12 @@ class SpanControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theInvalidFormControls
+   *
+   * @return bool
    */
   protected function validateBase( &$theInvalidFormControls )
   {
-    // Nothing to do.
+    return true;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
