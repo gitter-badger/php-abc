@@ -25,7 +25,7 @@ class ComplexControl extends Control
    * @param string $theType The class name of the form control which must be derived from class FormControl.
    * @param string $theName The name (which might be empty for complex form controls) of the form control.
    *
-   * @return ComplexControl|SimpleControl
+   * @return ComplexControl|SimpleControl|SelectControl|CheckBoxesControl|RadiosControl
    */
   public function createFormControl( $theType, $theName )
   {

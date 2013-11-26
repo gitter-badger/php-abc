@@ -14,6 +14,27 @@ class RadiosControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * @var string The key in $myOptions holding the disabled flag for the radio buttons.
+   */
+  protected $myDisabledKey;
+
+  /**
+   * @var string The key in $myOptions holding the keys for the radio buttons.
+   */
+  protected $myKeyKey;
+
+  /**
+   * @var string The key in $myOptions holding the labels for the radio buttons.
+   */
+  protected $myLabelKey;
+
+  /**
+   * @var array[] The options of this select box.
+   */
+  protected $myOptions;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param string $theParentName
    *
    * @return string
@@ -29,28 +50,25 @@ class RadiosControl extends Control
     }
     $ret .= ">\n";
 
-    if (is_array( $this->myAttributes['set_options'] ))
+    if (is_array( $this->myOptions ))
     {
-      $map_key        = $this->myAttributes['set_map_key'];
-      $map_label      = $this->myAttributes['set_map_label'];
-      $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
       $submit_name = $this->getSubmitName( $theParentName );
-      foreach ($this->myAttributes['set_options'] as $option)
+      foreach ($this->myOptions as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$map_key] ) : $option[$map_key];
+        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
 
         $for_id = Html::getAutoId();
 
         $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$option[$map_key])
+        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$option[$this->myKeyKey])
         {
           $input .= " checked='checked'";
         }
 
-        if ($map_disabled && !empty($option[$map_disabled]))
+        if ($this->myDisabledKey && !empty($option[$this->myDisabledKey]))
         {
           $input .= " disabled='disabled'";
         }
@@ -59,7 +77,7 @@ class RadiosControl extends Control
 
         $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
         $label .= "<label for='$for_id'>";
-        $label .= Html::txt2Html( $option[$map_label] );
+        $label .= Html::txt2Html( $option[$this->myLabelKey] );
         $label .= "</label>";
         if (isset($this->myAttributes['set_label_postfix']))
         {
@@ -80,25 +98,29 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theInvalidFormControls
+   * Sets the options for this select box.
    *
-   * @return bool
+   * @param array[]     $theOptions      An array of arrays with the options.
+   * @param string      $theKeyKey       The key holding the keys of the radio buttons.
+   * @param string      $theLabelKey     The key holding the labels for the radio buttons..
+   * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
+   *                                     radio button is disabled.
    */
-  protected function validateBase( &$theInvalidFormControls )
+  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null )
   {
-    $valid = true;
+    $this->myOptions     = $theOptions;
+    $this->myKeyKey      = $theKeyKey;
+    $this->myLabelKey    = $theLabelKey;
+    $this->myDisabledKey = $theDisabledKey;
+  }
 
-    foreach ($this->myValidators as $validator)
-    {
-      $valid = $validator->validate( $this );
-      if ($valid!==true)
-      {
-        $theInvalidFormControls[] = $this;
-        break;
-      }
-    }
-
-    return $valid;
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    $this->myAttributes['set_value'] = $theValues[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -111,8 +133,6 @@ class RadiosControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_key        = $this->myAttributes['set_map_key'];
-    $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
     if (isset($theSubmittedValue[$submit_name]))
@@ -120,10 +140,10 @@ class RadiosControl extends Control
       // Normalize the submitted value as a string.
       $submitted_value = (string)$theSubmittedValue[$submit_name];
 
-      foreach ($this->myAttributes['set_options'] as $option)
+      foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
-        $id = $option[$map_key];
+        $id = $option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
@@ -131,9 +151,7 @@ class RadiosControl extends Control
         if ($submitted_value===(string)$code)
         {
           // If the original value differs from the submitted value then the form control has been changed.
-          if (!isset($this->myAttributes['set_value']) ||
-            $this->myAttributes['set_value']!==$id
-          )
+          if (!isset($this->myAttributes['set_value']) || $this->myAttributes['set_value']!==$id)
           {
             $theChangedInputs[$this->myName] = $this;
           }
@@ -167,11 +185,25 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
+   * @param array $theInvalidFormControls
+   *
+   * @return bool
    */
-  public function setValuesBase( &$theValues )
+  protected function validateBase( &$theInvalidFormControls )
   {
-    $this->myAttributes['set_value'] = $theValues[$this->myName];
+    $valid = true;
+
+    foreach ($this->myValidators as $validator)
+    {
+      $valid = $validator->validate( $this );
+      if ($valid!==true)
+      {
+        $theInvalidFormControls[] = $this;
+        break;
+      }
+    }
+
+    return $valid;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

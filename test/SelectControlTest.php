@@ -74,17 +74,15 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
-
     $countries[] = array('cnt_id' => '1', 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
     $control->setAttribute( 'set_empty_option', true );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
@@ -98,18 +96,16 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
-
     $countries[] = array('cnt_id' => 1, 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => 2, 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => 3, 'cnt_name' => 'LU');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
     $control->setAttribute( 'set_empty_option', true );
     $control->setAttribute( 'set_value', ' 1' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
