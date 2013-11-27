@@ -28,7 +28,7 @@ class DetailTable
    *
    * @return \SetBased\Html\TableRow\TableRow
    */
-  public function addColumn( $theRow )
+  public function addRow( $theRow )
   {
     // Add the column to our array of rows.
     $this->myRows[] = $theRow;
