@@ -4,6 +4,11 @@ namespace SetBased\Html\Table;
 
 use SetBased\Html\Html;
 
+/**
+ * Class DetailTable
+ *
+ * @package SetBased\Html\Table
+ */
 class DetailTable
 {
   /**
@@ -46,7 +51,9 @@ class DetailTable
    */
   public function getHtmlTable( &$theData )
   {
-    $ret = '<table';
+    $ret = $this->getHtmlPrefix();
+
+    $ret .= '<table';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -115,6 +122,28 @@ class DetailTable
    * @return string
    */
   protected function getHtmlHeader()
+  {
+    return '';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code inserted before the HTML code of the table.
+   *
+   * @return string
+   */
+  protected function getHtmlPost()
+  {
+    return '';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code appended after the HTML code of the table.
+   *
+   * @return string
+   */
+  protected function getHtmlPrefix()
   {
     return '';
   }
