@@ -91,7 +91,7 @@ class Form
    *                        - fieldset: class FieldSet
    * @param string $theName The name (which might be empty) of the fieldset.
    *
-   * @return  \SetBased\Html\Form\Control\FieldSet
+   * @return \SetBased\Html\Form\Control\FieldSet
    */
   public function createFieldSet( $theType = 'fieldset', $theName = '' )
   {

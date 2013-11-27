@@ -14,9 +14,29 @@ class SelectControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * @var string The key in $myOptions holding the disabled flag for the options in this select box.
+   */
+  protected $myDisabledKey;
+
+  /**
+   * @var string The key in $myOptions holding the keys for the options in this select box.
+   */
+  protected $myKeyKey;
+
+  /**
+   * @var string The key in $myOptions holding the labels for the options in this select box.
+   */
+  protected $myLabelKey;
+
+  /**
+   * @var array[] The options of this select box.
+   */
+  protected $myOptions;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param string $theParentName
    *
-   * @todo Implement 'multiple'.
    * @return string
    */
   public function generate( $theParentName )
@@ -38,17 +58,14 @@ class SelectControl extends SimpleControl
       $ret .= "<option value=' '></option>\n";
     }
 
-    if (is_array( $this->myAttributes['set_options'] ))
+    if (is_array( $this->myOptions ))
     {
-      $map_key        = $this->myAttributes['set_map_key'];
-      $map_label      = $this->myAttributes['set_map_label'];
-      $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
       $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
-      foreach ($this->myAttributes['set_options'] as $option)
+      foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
-        $id = (string)$option[$map_key];
+        $id = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
         $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
@@ -61,13 +78,13 @@ class SelectControl extends SimpleControl
           $ret .= " selected='selected'";
         }
 
-        if ($map_disabled && !empty($option[$map_disabled]))
+        if (isset($this->myDisabledKey) && !empty($option[$this->myDisabledKey]))
         {
           $ret .= " disabled='disabled'";
         }
 
         $ret .= '>';
-        $ret .= Html::txt2Html( $option[$map_label] );
+        $ret .= Html::txt2Html( $option[$this->myLabelKey] );
         $ret .= "</option>\n";
       }
     }
@@ -76,6 +93,24 @@ class SelectControl extends SimpleControl
     $ret .= $this->myPostfix;
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the options for this select box.
+   *
+   * @param array[]     $theOptions      An array of arrays with the options.
+   * @param string      $theKeyKey       The key holding the keys of the options.
+   * @param string      $theLabelKey     The key holding the labels for the options.
+   * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
+   *                                     option is disables.
+   */
+  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null )
+  {
+    $this->myOptions      = $theOptions;
+    $this->myKeyKey      = $theKeyKey;
+    $this->myLabelKey    = $theLabelKey;
+    $this->myDisabledKey = $theDisabledKey;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -98,8 +133,6 @@ class SelectControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_key        = $this->myAttributes['set_map_key'];
-    $map_disabled   = (isset($this->myAttributes['set_map_disabled'])) ? $this->myAttributes['set_map_disabled'] : null;
     $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
 
     // Normalize default value as a string.
@@ -120,12 +153,12 @@ class SelectControl extends SimpleControl
       }
       else
       {
-        if (is_array( $this->myAttributes['set_options'] ))
+        if (is_array( $this->myOptions ))
         {
-          foreach ($this->myAttributes['set_options'] as $option)
+          foreach ($this->myOptions as $option)
           {
-            // Get the (database) ID of the option.
-            $id = $option[$map_key];
+            // Get the key of the option.
+            $id = $option[$this->myKeyKey];
 
             // If an obfuscator is installed compute the obfuscated code of the (database) ID.
             $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;

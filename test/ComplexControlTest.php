@@ -6,34 +6,38 @@
 class ComplexControlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  // for exception
+  /**
+   * Test find FormControl by name.
+   */
   public function testFindFormControlByName()
   {
     $form = $this->setForm1();
 
-    // Real name.
+    // Find form control by name. Must return object.
     $control = $form->findFormControlByName( 'street' );
     $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
 
-    // Name not exist.
-    $control = $form->findFormControlByName( 'notexists' );
+    // Find form control by name what does not exist. Must return null.
+    $control = $form->findFormControlByName( 'not_exists' );
     $this->assertEquals( null, $control );
 
-    // Use path not name.
-    $control = $form->findFormControlByName( '/nopath/notexists' );
+    $control = $form->findFormControlByName( '/no_path/not_exists' );
     $this->assertEquals( null, $control );
 
-    $control = $form->findFormControlByName( '/vacationh/notexists' );
+    $control = $form->findFormControlByName( '/vacation/not_exists' );
     $this->assertEquals( null, $control );
 
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test find FormControl by path.
+   */
   public function testFindFormControlByPath()
   {
     $form = $this->setForm1();
 
-    // Real path.
+    // Find form control by path. Must return object.
     $control = $form->findFormControlByPath( '/street' );
     $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
 
@@ -53,40 +57,44 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
 
 
-    // Path not exist.
-    $control = $form->findFormControlByPath( '/notexists' );
+    // Find form control by path what does not exist. Must return null.
+    $control = $form->findFormControlByPath( '/not_exists' );
     $this->assertEquals( null, $control );
 
-    $control = $form->findFormControlByPath( '/nopath/notexists' );
+    $control = $form->findFormControlByPath( '/no_path/not_exists' );
     $this->assertEquals( null, $control );
 
-    $control = $form->findFormControlByPath( '/vacationh/notexists' );
+    $control = $form->findFormControlByPath( '/vacation/not_exists' );
     $this->assertEquals( null, $control );
 
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Use real name.
+   * Test get FormControl by name.
    */
   public function testGetFormControlByName()
   {
     $form = $this->setForm1();
 
-    // Real name.
-    $control = $form->getFormControlByName( 'street' );
+    // Get form control by name. Must return object.
+    $control = $form->getFormControlByName( 'vacation' );
     $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
-  }
 
+    $control = $control->getFormControlByName( 'city2' );
+    $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
+    $this->assertEquals( 'city2', $control->getLocalName() );
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Use real path.
+   * Test get FormControl by path.
    */
   public function testGetFormControlByPath()
   {
     $form = $this->setForm1();
 
+    // Get form control by path. Must return object.
     $control = $form->getFormControlByPath( '/street' );
     $this->assertInstanceOf( '\SetBased\Html\Form\Control\Control', $control );
 
@@ -105,55 +113,55 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use wrong name.
+   * Get form control by name what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByName1()
   {
     $form = $this->setForm1();
-    $form->getFormControlByName( 'notexists' );
+    $form->getFormControlByName( 'not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use path, not name.
+   * Get form control by name what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByName2()
   {
     $form = $this->setForm1();
-    $form->getFormControlByName( '/nopath/notexists' );
+    $form->getFormControlByName( '/no_path/not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use path, not name.
+   * Get form control by name what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByName3()
   {
     $form = $this->setForm1();
-    $form->getFormControlByName( '/vacationh/notexists' );
+    $form->getFormControlByName( '/vacation/not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use wrong path.
+   * Get form control by path what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByPath1()
   {
     $form = $this->setForm1();
-    $form->getFormControlByPath( '/notexists' );
+    $form->getFormControlByPath( '/not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use name, not path.
+   * Get form control by path what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
@@ -166,29 +174,32 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use wrong path.
+   * Get form control by path what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByPath3()
   {
     $form = $this->setForm1();
-    $form->getFormControlByPath( '/nopath/notexists' );
+    $form->getFormControlByPath( '/no_path/not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Use wrong path.
+   * Get form control by path what does not exist. Must trow exception.
    *
    * @expectedException Exception
    */
   public function testGetNotExistsFormControlByPath4()
   {
     $form = $this->setForm1();
-    $form->getFormControlByPath( '/vacationh/notexists' );
+    $form->getFormControlByPath( '/vacation/not_exists' );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Setups a form with a select form control.
+   */
   private function setForm1()
   {
     $form     = new SetBased\Html\Form();
@@ -213,6 +224,10 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
     $complex = $fieldset->createFormControl( 'complex', 'post' );
     $complex->createFormControl( 'text', 'street' );
     $complex->createFormControl( 'text', 'city' );
+
+    $complex2 = $complex->createFormControl( 'complex', '' );
+    $complex2->createFormControl( 'text', 'street2' );
+    $complex2->createFormControl( 'text', 'city2' );
 
     return $form;
   }

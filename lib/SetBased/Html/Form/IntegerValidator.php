@@ -15,17 +15,24 @@ class IntegerValidator implements ControlValidator
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * The upper bound of the range of valid (integer) values.
+   *
+   * @var int
    */
   private $myMaxValue;
 
   /**
    * The lower bound of the range of valid (integer) values.
+   *
+   * @var int
    */
   private $myMinValue;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Object constructor.
+   *
+   * @param null $theMinValue
+   * @param int  $theMaxValue
    */
   public function __construct( $theMinValue = null, $theMaxValue = PHP_INT_MAX )
   {

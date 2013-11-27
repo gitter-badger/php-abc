@@ -61,10 +61,12 @@ class LinkControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theInvalidFormControls
+   *
+   * @return bool
    */
   protected function validateBase( &$theInvalidFormControls )
   {
-    // Nothing to do.
+    return true;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

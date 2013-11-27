@@ -117,9 +117,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_map_label', 'cnt_name' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->LoadSubmittedValues();
 
@@ -163,10 +161,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_map_label', 'cnt_name' );
-    $control->setAttribute( 'set_map_checked', 'checked' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name', 'checked' );
 
     // Set the values of the checkboxes.
     $values['cnt_id'][0] = true;
@@ -296,18 +291,16 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-
     $countries[] = array('cnt_id' => '0', 'cnt_name' => '-');
     $countries[] = array('cnt_id' => '1', 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
     $countries[] = array('cnt_id' => '0.1', 'cnt_name' => 'UA');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
@@ -321,18 +314,15 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-
     $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => 2, 'cnt_name' => 'LU');
     $countries[] = array('cnt_id' => 0.1, 'cnt_name' => 'UA');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
-    $control->setAttribute( 'set_map_checked', '2' );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
@@ -345,15 +335,13 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm3()
   {
-    $form     = new \SetBased\Html\Form();
-    $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-
     $countries[] = array('cnt_id' => '0', 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => '0.0', 'cnt_name' => 'BE');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
@@ -373,8 +361,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE');
 
-    $control->setAttribute( 'set_map_key', 'cnt_id' );
-    $control->setAttribute( 'set_options', $countries );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 
