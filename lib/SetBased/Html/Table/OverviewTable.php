@@ -83,7 +83,9 @@ class OverviewTable
    */
   public function getHtmlTable( &$theRows )
   {
-    $ret = '<table';
+    $ret = $this->getHtmlPrefix();
+
+    $ret .= '<table';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -102,6 +104,8 @@ class OverviewTable
     $ret .= "</tbody>\n";
 
     $ret .= "</table>\n";
+
+    $ret .= $this->getHtmlPostfix();
 
     return $ret;
   }
@@ -170,6 +174,28 @@ class OverviewTable
     }
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code inserted before the HTML code of the table.
+   *
+   * @return string
+   */
+  protected function getHtmlPostfix()
+  {
+    return '';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code appended after the HTML code of the table.
+   *
+   * @return string
+   */
+  protected function getHtmlPrefix()
+  {
+    return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -78,6 +78,8 @@ class DetailTable
 
     $ret .= "</table>\n";
 
+    $ret .= $this->getHtmlPostfix();
+
     return $ret;
   }
 
@@ -132,7 +134,7 @@ class DetailTable
    *
    * @return string
    */
-  protected function getHtmlPost()
+  protected function getHtmlPostfix()
   {
     return '';
   }
