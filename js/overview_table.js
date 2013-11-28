@@ -67,7 +67,7 @@ function set_to_lower_case_no_accents(text) {
   }
 
   if (text) {
-    return text.toLowerCase().replace(/\w/g, remove_accent);
+    return text.toLowerCase().replace(/./g, remove_accent);
   }
   else {
     return text;
