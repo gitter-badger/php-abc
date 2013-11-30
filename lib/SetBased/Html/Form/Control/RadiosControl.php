@@ -47,7 +47,7 @@ class RadiosControl extends Control
   /**
    * @var Obfuscator The obfuscator for the names of the radio buttons.
    */
-  private $myOptionsObfuscator;
+  protected $myOptionsObfuscator;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

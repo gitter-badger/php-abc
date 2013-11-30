@@ -37,7 +37,7 @@ class SelectControl extends SimpleControl
   /**
    * @var Obfuscator The obfuscator for the names of the checkboxes.
    */
-  private $myOptionsObfuscator;
+  protected $myOptionsObfuscator;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -112,7 +112,7 @@ class SelectControl extends SimpleControl
    */
   public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null )
   {
-    $this->myOptions      = $theOptions;
+    $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
     $this->myLabelKey    = $theLabelKey;
     $this->myDisabledKey = $theDisabledKey;

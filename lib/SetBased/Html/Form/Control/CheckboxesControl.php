@@ -57,7 +57,7 @@ class CheckboxesControl extends Control
   /**
    * @var Obfuscator The obfuscator for the names of the checkboxes.
    */
-  private $myOptionsObfuscator;
+  protected $myOptionsObfuscator;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

@@ -12,6 +12,11 @@ use SetBased\Html\Html;
  */
 class SpanControl extends Control
 {
+  /**
+   * @var string The inner HTML code of this div element.
+   */
+  protected $myInnerHtml;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -20,24 +25,43 @@ class SpanControl extends Control
    */
   public function generate( $theParentName )
   {
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<span';
+    $html .= '<span';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= '>';
+    $html .= '>';
 
-    if (!empty($this->myAttributes['set_html']))
-    {
-      $ret .= $this->myAttributes['set_html'];
-    }
+    $html .= $this->myInnerHtml;
 
-    $ret .= '</span>';
-    $ret .= $this->myPostfix;
+    $html .= '</span>';
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner HTML of this span element.
+   *
+   * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
+   */
+  public function setInnerHtml( $theHtmlSnippet )
+  {
+    $this->myInnerHtml = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner text of this span element.
+   *
+   * @param string $theText The inner text. This text will be converted to valid HTML code.
+   */
+  public function setInnerText( $theText )
+  {
+    $this->myInnerHtml = HTML::txt2Html( $theText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

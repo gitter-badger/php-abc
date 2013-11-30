@@ -37,7 +37,7 @@ class Legend
    *
    * @param string $theHtmlSnippet The text of legend. It is the developer's responsibility that it is valid HTML code.
    */
-  public function SetLegendHtml( $theHtmlSnippet )
+  public function setLegendHtml( $theHtmlSnippet )
   {
     $this->myLegend = $theHtmlSnippet;
   }
@@ -48,7 +48,7 @@ class Legend
    *
    * @param string $theText The text of legend. This text will be converted to valid HTML code.
    */
-  public function SetLegendText( $theText )
+  public function setLegendText( $theText )
   {
     $this->myLegend = HTML::txt2Html( $theText );
   }
