@@ -272,9 +272,6 @@ class ComplexControl extends Control
     $control = $this->findFormControlByName( $theName );
 
     if ($control===null) Html::error( "No form control with name '%s' found.", $theName );
-    {
-      Html::error( "No form control with name '%s' found.", $theName );
-    }
 
     return $control;
   }

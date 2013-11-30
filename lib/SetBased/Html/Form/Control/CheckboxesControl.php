@@ -168,7 +168,7 @@ class CheckboxesControl extends Control
    *                                     checkbox is checked.
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
    *                                     checkbox is disabled.
-   * @param tring|null  $theIdKey        The key holding the HTML ID attribute of the checkboxes.
+   * @param string|null $theIdKey        The key holding the HTML ID attribute of the checkboxes.
    */
   public function setOptions( &$theOptions,
                               $theKeyKey,
@@ -213,7 +213,7 @@ class CheckboxesControl extends Control
     }
   }
 
-//--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
