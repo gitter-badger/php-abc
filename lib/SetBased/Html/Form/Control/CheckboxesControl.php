@@ -15,14 +15,19 @@ class CheckboxesControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @var string The key in $myOptions holding the checked flag for the checkboxes.
+   * @var string|null The key in $myOptions holding the checked flag for the checkboxes.
    */
   protected $myCheckedKey;
 
   /**
-   * @var string The key in $myOptions holding the disabled flag for the checkboxes.
+   * @var string|null The key in $myOptions holding the disabled flag for the checkboxes.
    */
   protected $myDisabledKey;
+
+  /**
+   * @var string|null The key in $myOptions holding the HTML ID attribute of the checkboxes.
+   */
+  protected $myIdKey;
 
   /**
    * @var string The key in $myOptions holding the keys for the checkboxes.
@@ -77,7 +82,7 @@ class CheckboxesControl extends Control
 
     if (is_array( $this->myOptions ))
     {
-      $map_id         = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
+      $map_id = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
 
       foreach ($this->myOptions as $option)
       {
@@ -133,14 +138,21 @@ class CheckboxesControl extends Control
    *                                     checkbox is checked.
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
    *                                     checkbox is disabled.
+   * @param tring|null  $theIdKey        The key holding the HTML ID attribute of the checkboxes.
    */
-  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theCheckedKey = 'set_map_checked', $theDisabledKey = null )
+  public function setOptions( &$theOptions,
+                              $theKeyKey,
+                              $theLabelKey,
+                              $theCheckedKey = 'set_map_checked',
+                              $theDisabledKey = null,
+                              $theIdKey = null )
   {
     $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
     $this->myLabelKey    = $theLabelKey;
     $this->myCheckedKey  = $theCheckedKey;
     $this->myDisabledKey = $theDisabledKey;
+    $this->myIdKey       = $theIdKey;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
