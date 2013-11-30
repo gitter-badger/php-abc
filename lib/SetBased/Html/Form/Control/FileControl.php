@@ -41,9 +41,9 @@ class FileControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
+   * @param string|bool $theValue The new value for the form control.
    */
-  public function setValuesBase( &$theValues )
+  public function setValue( $theValue )
   {
     // Nothing to do.
   }
@@ -62,15 +62,13 @@ class FileControl extends SimpleControl
     {
       $theChangedInputs[$this->myName]  = $this;
       $theWhiteListValue[$this->myName] = $_FILES[$submit_name];
-      $this->myAttributes['value']      = $_FILES[$submit_name];
+      $this->myValue                    = $_FILES[$submit_name];
     }
     else
     {
-      $theWhiteListValue[$this->myName] = false;
+      $this->myValue                    = null;
+      $theWhiteListValue[$this->myName] = null;
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

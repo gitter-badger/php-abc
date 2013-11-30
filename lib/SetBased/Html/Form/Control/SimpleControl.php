@@ -7,7 +7,6 @@ use SetBased\Html\Html;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class SimpleControl
- *
  * Class for generating form control elements of type
  * \li text
  * \li password
@@ -32,9 +31,32 @@ abstract class SimpleControl extends Control
   protected $myCleaner;
 
   /**
-   * @var array
+   * The label of this form control.
+   *
+   * @var string A HTML snippet.
+   */
+  protected $myLabel;
+
+  /**
+   * The attributes for the label of this form control.
+   *
+   * @var string[]
    */
   protected $myLabelAttributes = array();
+
+  /**
+   * The position of the label of this form control.
+   * * 'pre'  The label will be inserted before the HML code of this form control.
+   * * 'post' The label will be appended after the HML code of this form control.
+   *
+   * @var 'pre'|'post'|null
+   */
+  protected $myLabelPosition;
+
+  /**
+   * @var string The value of this form control.
+   */
+  protected $myValue;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -51,6 +73,37 @@ abstract class SimpleControl extends Control
     if ($this->myName==='')
     {
       Html::error( 'Name is empty' );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the submitted value of this form control.
+   * returns string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+   *
+   * @c null, @c false, or @c '' the attribute is unset.
+   *
+   * @param string $theName  The name of the attribute.
+   * @param mixed  $theValue The value for the attribute.
+   */
+  public function setAttribute( $theName, $theValue )
+  {
+    if ($theName=='value')
+    {
+      $this->setValue( $theValue );
+    }
+    else
+    {
+      parent::setAttribute( $theName, $theValue );
     }
   }
 
@@ -92,6 +145,64 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets label for this form control.
+   *
+   * @param string $theHtmlSnippet The (inner) label HTML snippet. It is the developer's responsibility that it is valid HTML code.
+   */
+  public function setLabelHtml( $theHtmlSnippet )
+  {
+    $this->myLabel = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   *  Sets the position of the label of this form control.
+   * * 'pre'  The label will be inserted before the HML code of this form control.
+   * * 'post' The label will be appended after the HML code of this form control.
+   * * 'null' No label will be generated for this form control.
+   *
+   * @param 'pre'|'post'|null $thePosition
+   */
+  public function setLabelPosition( $thePosition )
+  {
+    $this->myLabelPosition = $thePosition;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets label for this form control.
+   *
+   * @param string $theText The (inner) label text. This text will be converted to valid HTML code.
+   */
+  public function setLabelText( $theText )
+  {
+    $this->myLabel = HTML::txt2Html( $theText );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of this form control.
+   *
+   * @param string|bool $theValue The new value for the form control.
+   */
+  public function setValue( $theValue )
+  {
+    $this->myValue = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function setValuesBase( &$theValues )
+  {
+    $this->setValue( isset($theValues[$this->myName]) ? $theValues[$this->myName] : null );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Return  HTML code for a label for this form control.
+   *
    * @return string
    */
   protected function generateLabel()
@@ -104,7 +215,7 @@ abstract class SimpleControl extends Control
     }
     $ret .= '>';
 
-    $ret .= $this->myLabelAttributes['set_label'];
+    $ret .= $this->myLabel;
     $ret .= '</label>';
 
     return $ret;
@@ -112,11 +223,14 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code for a label for this form control to be appended after the HTML code of this form control.
+   *
    * @return string
    */
   protected function generatePostfixLabel()
   {
-    if (isset($this->myLabelAttributes['set_position']) && $this->myLabelAttributes['set_position']=='postfix')
+    // Generate a postfix label, if required.
+    if ($this->myLabelPosition=='post')
     {
       $ret = $this->generateLabel();
     }
@@ -130,13 +244,14 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code for a label for this form control te be inserted before the HTML code of this form control.
+   *
    * @return string
    */
   protected function generatePrefixLabel()
   {
-    $ret = '';
-
-    if (isset($this->myLabelAttributes['set_position']))
+    // If a label must be generated make sure the form control and the label have matching 'id' and 'for' attributes.
+    if (isset($this->myLabelPosition))
     {
       if (!isset($this->myAttributes['id']))
       {
@@ -148,11 +263,16 @@ abstract class SimpleControl extends Control
       {
         $this->myLabelAttributes['for'] = $this->myAttributes['id'];
       }
+    }
 
-      if ($this->myLabelAttributes['set_position']=='prefix')
-      {
-        $ret .= $this->generateLabel();
-      }
+    // Generate a prefix label, if required.
+    if ($this->myLabelPosition=='pre')
+    {
+      $ret = $this->generateLabel();
+    }
+    else
+    {
+      $ret = '';
     }
 
     return $ret;

@@ -30,17 +30,17 @@ class RadiosControl extends Control
   protected $myLabelKey;
 
   /**
-   * @var string The HTML snippet appended after each label for the checkboxes.
+   * @var string The HTML snippet appended after each label for the radio buttons.
    */
   protected $myLabelPostfix = '';
 
   /**
-   * @var string The HTML snippet inserted before each label for the checkboxes.
+   * @var string The HTML snippet inserted before each label for the radio buttons.
    */
   protected $myLabelPrefix = '';
 
   /**
-   * @var array[] The options of this select box.
+   * @var array[] The data for the radio buttons.
    */
   protected $myOptions;
 
@@ -48,6 +48,11 @@ class RadiosControl extends Control
    * @var Obfuscator The obfuscator for the names of the radio buttons.
    */
   protected $myOptionsObfuscator;
+
+  /**
+   * @var string The value of the checked radio button.
+   */
+  protected $myValue;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -83,7 +88,7 @@ class RadiosControl extends Control
 
         $html .= Html::generateAttribute( 'value', $code );
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$key)
+        if ((string)$this->myValue===(string)$key)
         {
           $html .= " checked='checked'";
         }
@@ -111,6 +116,16 @@ class RadiosControl extends Control
     $html .= $this->myPostfix;
 
     return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the value of the check radio button.
+   * returns string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -170,7 +185,7 @@ class RadiosControl extends Control
    */
   public function setValuesBase( &$theValues )
   {
-    $this->myAttributes['set_value'] = $theValues[$this->myName];
+    $this->myValue = (isset($theValues[$this->myName])) ? $theValues[$this->myName] : null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -199,14 +214,14 @@ class RadiosControl extends Control
         if ($submitted_value===(string)$code)
         {
           // If the original value differs from the submitted value then the form control has been changed.
-          if (!isset($this->myAttributes['set_value']) || $this->myAttributes['set_value']!==$id)
+          if ((string)$this->myValue!==$id)
           {
             $theChangedInputs[$this->myName] = $this;
           }
 
           // Set the white listed value.
           $theWhiteListValue[$this->myName] = $id;
-          $this->myAttributes['set_value']  = $id;
+          $this->myValue                    = $id;
 
           // Leave the loop.
           break;
@@ -217,18 +232,16 @@ class RadiosControl extends Control
     {
       // No radio button has been checked.
       $theWhiteListValue[$this->myName] = null;
-      $this->myAttributes['set_value']  = null;
+      $this->myValue                    = null;
     }
 
     if (!array_key_exists( $this->myName, $theWhiteListValue ))
     {
       // The white listed value has not been set. This can only happen when a none white listed value has been submitted.
       // In this case we ignore this and assume the default value has been submitted.
-      $theWhiteListValue[$this->myName] = (isset($this->myAttributes['set_value'])) ? $this->myAttributes['set_value'] : null;
+      /** @todo validate the default value is a white list value */
+      $theWhiteListValue[$this->myName] = $this->myValue;
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

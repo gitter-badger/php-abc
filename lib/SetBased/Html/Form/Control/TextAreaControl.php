@@ -2,6 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -21,7 +22,7 @@ class TextAreaControl extends SimpleControl
     parent::__construct( $theName );
 
     // By default whitespace is trimmed from textarea form controls.
-    $this->myCleaner = \SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner::get();
+    $this->myCleaner = PruneWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,53 +35,24 @@ class TextAreaControl extends SimpleControl
   {
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<textarea';
+    $html .= '<textarea';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">";
+    $html .= '>';
 
-    if (!empty($this->myAttributes['set_text']))
-    {
-      $ret .= Html::txt2Html( $this->myAttributes['set_text'] );
-    }
+    $html .= Html::txt2Html( $this->myValue );
 
-    $ret .= "</textarea>";
-    $ret .= $this->myPostfix;
+    $html .= "</textarea>";
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param array $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:hidden must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['set_text'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['set_text']);
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
@@ -101,19 +73,16 @@ class TextAreaControl extends SimpleControl
     }
 
     // Normalize old (original) value and new (submitted) value.
-    $old_value = (isset($this->myAttributes['value'])) ? (string)$this->myAttributes['value'] : '';
+    $old_value = (string)$this->myValue;
     $new_value = (string)$new_value;
 
     if ($old_value!==$new_value)
     {
       $theChangedInputs[$this->myName] = $this;
-      $this->myAttributes['set_text']  = $new_value;
+      $this->myValue                   = $new_value;
     }
 
     $theWhiteListValue[$this->myName] = $new_value;
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $new_value;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

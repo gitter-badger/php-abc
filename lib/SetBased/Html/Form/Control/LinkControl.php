@@ -9,7 +9,7 @@ use SetBased\Html\Html;
  *
  * @package SetBased\Html\Form\Control
  */
-class LinkControl extends SimpleControl
+class LinkControl extends Control
 {
   /**
    * @var string The inner HTML code of this div element.
@@ -44,6 +44,15 @@ class LinkControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns null;
+   */
+  public function getSubmittedValue()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Set the inner HTML of this a element.
    *
    * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
@@ -66,7 +75,7 @@ class LinkControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
+   * @param null $theValues
    */
   public function setValuesBase( &$theValues )
   {

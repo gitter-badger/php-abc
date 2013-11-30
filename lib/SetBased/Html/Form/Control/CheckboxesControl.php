@@ -59,6 +59,11 @@ class CheckboxesControl extends Control
    */
   protected $myOptionsObfuscator;
 
+  /**
+   * @var string The value of the checked radio button.
+   */
+  protected $myValue;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theName
@@ -133,6 +138,17 @@ class CheckboxesControl extends Control
     $html .= $this->myPostfix;
 
     return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the value of the check radio button.
+   *
+   * @return string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -254,7 +270,7 @@ class CheckboxesControl extends Control
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
+    $this->myValue = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

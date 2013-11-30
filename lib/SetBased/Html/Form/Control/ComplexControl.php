@@ -18,6 +18,13 @@ class ComplexControl extends Control
    */
   protected $myControls = array();
 
+  /**
+   * The value of this form control, i.e. a nested array of the values of the child form controls.
+   *
+   * @var mixed
+   */
+  protected $myValue;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * A factory for creating form control objects.
@@ -229,7 +236,7 @@ class ComplexControl extends Control
   /**
    * @param bool $theRecursiveFlag
    *
-   * @return array|bool
+   * @return array|null
    */
   public function getErrorMessages( $theRecursiveFlag = false )
   {
@@ -246,12 +253,12 @@ class ComplexControl extends Control
       }
     }
 
-    if (isset($this->myAttributes['set_errmsg']))
+    if (isset($this->myErrorMessages))
     {
-      $ret = array_merge( $ret, $this->myAttributes['set_errmsg'] );
+      $ret = array_merge( $ret, $this->myErrorMessages );
     }
 
-    if (empty($ret)) $ret = false;
+    if (empty($ret)) $ret = null;
 
     return $ret;
   }
@@ -330,8 +337,19 @@ class ComplexControl extends Control
       if (empty($theChangedInputs[$this->myName])) unset($theChangedInputs[$this->myName]);
     }
 
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $tmp2;
+    // Set the submitted values.
+    $this->myValue = $tmp2;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the submitted value of this form control.
+   *
+   * returns string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -345,7 +363,7 @@ class ComplexControl extends Control
 
     foreach ($this->myControls as $control)
     {
-      $control->SetValuesBase( $values );
+      $control->setValuesBase( $values );
     }
   }
 

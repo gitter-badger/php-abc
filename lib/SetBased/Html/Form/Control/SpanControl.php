@@ -44,6 +44,15 @@ class SpanControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns null;
+   */
+  public function getSubmittedValue()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Set the inner HTML of this span element.
    *
    * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
@@ -66,7 +75,7 @@ class SpanControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param null $theValues
+   * @param mixed $theValues
    */
   public function setValuesBase( &$theValues )
   {

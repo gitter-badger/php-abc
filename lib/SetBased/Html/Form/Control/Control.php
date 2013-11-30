@@ -2,8 +2,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html\Html;
-
 /**
  * Class Control
  *
@@ -17,6 +15,13 @@ abstract class Control
    * @var string[]
    */
   protected $myAttributes = array();
+
+  /**
+   * The list of error messages associated with this form control.
+   *
+   * @var string[]
+   */
+  protected $myErrorMessages;
 
   /**
    * The (local) name of this form control.
@@ -52,6 +57,9 @@ abstract class Control
    * @var \SetBased\Html\Form\ControlValidator[]
    */
   protected $myValidators = array();
+
+
+
 
   //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
@@ -115,7 +123,7 @@ abstract class Control
    */
   public function getErrorMessages( $theRecursiveFlag = false )
   {
-    return (isset($this->myAttributes['set_errmsg'])) ? $this->myAttributes['set_errmsg'] : null;
+    return $this->myErrorMessages;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -132,11 +140,10 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the submitted value of this form control.
+   *
+   * @return mixed
    */
-  public function getSubmittedValue()
-  {
-    return $this->myAttributes['set_submitted_value'];
-  }
+  abstract public function getSubmittedValue();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -149,6 +156,8 @@ abstract class Control
    */
   public function setAttribute( $theName, $theValue )
   {
+    if ($theName=='value') \SetBased\Html\Html::error( "Don't use attribute value." );
+
     if ($theValue===null || $theValue===false || $theValue==='')
     {
       unset($this->myAttributes[$theName]);
@@ -169,11 +178,13 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param string $theMessage
+   * Adds an error message to the list of error messages for this form control.
+   *
+   * @param string $theMessage The error message.
    */
   public function setErrorMessage( $theMessage )
   {
-    $this->myAttributes['set_errmsg'][] = $theMessage;
+    $this->myErrorMessages[] = $theMessage;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

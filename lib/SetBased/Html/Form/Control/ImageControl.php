@@ -8,6 +8,7 @@ use SetBased\Html\Html;
 /**
  * Class ImageControl
  * Class for form controls of type image.
+ *
  * @package SetBased\Html\Form\Control
  */
 class ImageControl extends SimpleControl
@@ -23,7 +24,7 @@ class ImageControl extends SimpleControl
     $this->myAttributes['type'] = 'image';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= "<input";
@@ -41,6 +42,15 @@ class ImageControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * @param string|bool $theValue.
+   */
+  public function setValue( $theValue )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
    * @param array $theChangedInputs
@@ -50,15 +60,6 @@ class ImageControl extends SimpleControl
     /**
      * @todo Implement loadSubmittedValuesBase for control type image.
      */
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param null $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

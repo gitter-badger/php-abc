@@ -39,6 +39,14 @@ class SelectControl extends SimpleControl
    */
   protected $myOptionsObfuscator;
 
+
+  /**
+   * If set the first option in the select box with be an option with an empty label with value $myOptionEmpty.
+   *
+   * @var string The value for the empty option.
+   * */
+  protected $myEmptyOption;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -49,19 +57,22 @@ class SelectControl extends SimpleControl
   {
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<select';
+    $html .= '<select';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
 
-    if (!empty($this->myAttributes['set_empty_option']))
+    // Add an empty option, if necessary.
+    if (!isset($this->myEmptyOption))
     {
-      $ret .= "<option value=' '></option>\n";
+      $html .= '<option';
+      $html .= Html::generateAttribute( 'value', $this->myEmptyOption );
+      $html .= "</option>\n";
     }
 
     if (is_array( $this->myOptions ))
@@ -75,29 +86,29 @@ class SelectControl extends SimpleControl
         $code = ($this->$myOptionsObfuscator) ? $this->$myOptionsObfuscator->encode( $id ) : $id;
 
         //
-        $ret .= '<option';
-        $ret .= Html::generateAttribute( 'value', $code );
+        $html .= '<option';
+        $html .= Html::generateAttribute( 'value', $code );
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
+        if ((string)$this->myValue===$id)
         {
-          $ret .= " selected='selected'";
+          $html .= " selected='selected'";
         }
 
         if (isset($this->myDisabledKey) && !empty($option[$this->myDisabledKey]))
         {
-          $ret .= " disabled='disabled'";
+          $html .= " disabled='disabled'";
         }
 
-        $ret .= '>';
-        $ret .= Html::txt2Html( $option[$this->myLabelKey] );
-        $ret .= "</option>\n";
+        $html .= '>';
+        $html .= Html::txt2Html( $option[$this->myLabelKey] );
+        $html .= "</option>\n";
       }
     }
 
-    $ret .= '</select>';
-    $ret .= $this->myPostfix;
+    $html .= '</select>';
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -120,14 +131,14 @@ class SelectControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
+   * Adds an option with empty label as first option to this select box.
+   *
+   * @param string $theEmptyOption The value for the empty option.
    */
-  public function setValuesBase( &$theValues )
+  public function setEmptyOption( $theEmptyOption )
   {
-    /** @todo check on type and value is in list of options. */
-    $this->myAttributes['set_value'] = (string)$theValues[$this->myName];
+    $this->myEmptyOption = $theEmptyOption;
   }
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theSubmittedValue
@@ -139,17 +150,19 @@ class SelectControl extends SimpleControl
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     // Normalize default value as a string.
-    $value = isset($this->myAttributes['set_value']) ? (string)$this->myAttributes['set_value'] : '';
+    $value = (string)$this->myValue;
 
     if (isset($theSubmittedValue[$submit_name]))
     {
       // Normalize the submitted value as a string.
       $submitted = (string)$theSubmittedValue[$submit_name];
 
-      if (empty($this->myAttributes['set_empty_option']) && $submitted===' ')
+      if (isset($this->myEmptyOption) && $submitted===(string)$this->myEmptyOption)
       {
+
+        $this->myValue                    = null;
         $theWhiteListValue[$this->myName] = null;
-        if ($value!=='' && $value!==' ')
+        if ($value!==(string)$this->myEmptyOption)
         {
           $theChangedInputs[$this->myName] = $this;
         }
@@ -175,7 +188,7 @@ class SelectControl extends SimpleControl
               }
 
               // Set the white listed value.
-              $this->myAttributes['set_value']  = $id;
+              $this->myValue                    = $id;
               $theWhiteListValue[$this->myName] = $id;
 
               // Leave the loop.
@@ -188,8 +201,9 @@ class SelectControl extends SimpleControl
     else
     {
       // No value has been submitted.
+      $this->myValue                    = null;
       $theWhiteListValue[$this->myName] = null;
-      if ($value!=='' && $value!==' ')
+      if ($value!==(string)$this->myEmptyOption)
       {
         $theChangedInputs[$this->myName] = $this;
       }
@@ -199,11 +213,9 @@ class SelectControl extends SimpleControl
     {
       // The white listed value has not been set. This can only happen when a none white listed value has been submitted.
       // In this case we ignore this and assume the default value has been submitted.
-      $theWhiteListValue[$this->myName] = isset($this->myAttributes['set_value']) ? $this->myAttributes['set_value'] : null;
+      /** @todo validate the default value is a white list value. */
+      $theWhiteListValue[$this->myName] = $this->myValue;
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

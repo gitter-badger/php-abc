@@ -43,32 +43,6 @@ class RadioControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $theValues[$this->myName];
-
-      // The value of a input:checkbox must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when empty? */
-      $this->myAttributes['checked'] = !empty($value);
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['checked']);
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
    * @param array $theChangedInputs
@@ -77,17 +51,14 @@ class RadioControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if ((string)$theSubmittedValue[$submit_name]===(string)$this->myAttributes['value'])
+    if ((string)$theSubmittedValue[$submit_name]===(string)$this->myValue)
     {
       if (empty($this->myAttributes['checked']))
       {
         $theChangedInputs[$this->myName] = $this;
       }
       $this->myAttributes['checked']    = true;
-      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
-
-      // Set the submitted value to be used method GetSubmittedValue.
-      $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
+      $theWhiteListValue[$this->myName] = $this->myValue;
     }
     else
     {
