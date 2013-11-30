@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
+use SetBased\Html\Obfuscator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -33,6 +34,11 @@ class RadiosControl extends Control
    */
   protected $myOptions;
 
+  /**
+   * @var Obfuscator The obfuscator for the names of the radio buttons.
+   */
+  private $myOptionsObfuscator;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -52,18 +58,22 @@ class RadiosControl extends Control
 
     if (is_array( $this->myOptions ))
     {
-      $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
       $submit_name = $this->getSubmitName( $theParentName );
       foreach ($this->myOptions as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
+        $id = (string)$option[$this->myKeyKey];
+
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         $for_id = Html::getAutoId();
 
-        $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
+        $input = "<input type='radio' id='$for_id'";
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$option[$this->myKeyKey])
+        $input .= Html::generateAttribute( 'name', $submit_name );
+
+        $input .= Html::generateAttribute( 'value', $code );
+
+        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
         {
           $input .= " checked='checked'";
         }
@@ -116,6 +126,17 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the obfuscator for the names (most likely the names are databases ID's) of the radio buttons.
+   *
+   * @param Obfuscator $theObfuscator The obfuscator for the radio buttons.
+   */
+  public function setOptionsObfuscator( $theObfuscator )
+  {
+    $this->myOptionsObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param array $theValues
    */
   public function setValuesBase( &$theValues )
@@ -133,8 +154,6 @@ class RadiosControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
     if (isset($theSubmittedValue[$submit_name]))
     {
       // Normalize the submitted value as a string.
@@ -143,10 +162,10 @@ class RadiosControl extends Control
       foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
-        $id = $option[$this->myKeyKey];
+        $id = (string)$option[$this->myKeyKey];
 
-        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+        // If an obfuscator is installed compute the obfuscated code of the radio button name.
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         if ($submitted_value===(string)$code)
         {

@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
+use SetBased\Html\Obfuscator;
 
 /**
  * Class CheckboxesControl
@@ -38,6 +39,11 @@ class CheckboxesControl extends Control
    */
   protected $myOptions;
 
+  /**
+   * @var Obfuscator The obfuscator for the names of the checkboxes.
+   */
+  private $myOptionsObfuscator;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theName
@@ -71,12 +77,11 @@ class CheckboxesControl extends Control
 
     if (is_array( $this->myOptions ))
     {
-      $map_id             = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
-      $map_obfuscator     = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
+      $map_id         = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
 
       foreach ($this->myOptions as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
 
         $id = ($map_id && isset($option[$map_id])) ? $id = $option[$map_id] : Html::getAutoId();
 
@@ -140,6 +145,17 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the obfuscator for the names (most likely the names are databases ID's) of the checkboxes.
+   *
+   * @param Obfuscator $theObfuscator The obfuscator for the checkboxes.
+   */
+  public function setOptionsObfuscator( $theObfuscator )
+  {
+    $this->myOptionsObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
    *
    * @param array $theValues
@@ -165,18 +181,15 @@ class CheckboxesControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
     if (isset($theSubmittedValue[$submit_name]))
     {
       foreach ($this->myOptions as $i => $option)
-
       {
         // Get the (database) ID of the option.
         $id = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         // Get the original value (i.e. the option is checked or not).
         $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;

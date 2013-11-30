@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
+use SetBased\Html\Obfuscator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -33,6 +34,11 @@ class SelectControl extends SimpleControl
    */
   protected $myOptions;
 
+  /**
+   * @var Obfuscator The obfuscator for the names of the checkboxes.
+   */
+  private $myOptionsObfuscator;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -60,18 +66,17 @@ class SelectControl extends SimpleControl
 
     if (is_array( $this->myOptions ))
     {
-      $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
       foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
         $id = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+        $code = ($this->$myOptionsObfuscator) ? $this->$myOptionsObfuscator->encode( $id ) : $id;
 
         //
-        $ret .= "<option value='$code'";
+        $ret .= '<option';
+        $ret .= Html::generateAttribute( 'value', $code );
 
         if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
         {
@@ -133,8 +138,6 @@ class SelectControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
     // Normalize default value as a string.
     $value = isset($this->myAttributes['set_value']) ? (string)$this->myAttributes['set_value'] : '';
 
@@ -158,15 +161,15 @@ class SelectControl extends SimpleControl
           foreach ($this->myOptions as $option)
           {
             // Get the key of the option.
-            $id = $option[$this->myKeyKey];
+            $id = (string)$option[$this->myKeyKey];
 
             // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-            $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+            $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
             if ($submitted===(string)$code)
             {
               // If the original value differs from the submitted value then the form control has been changed.
-              if ($value!==(string)$id)
+              if ($value!==$id)
               {
                 $theChangedInputs[$this->myName] = $this;
               }
