@@ -122,10 +122,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form->LoadSubmittedValues();
 
     // Generate HTML code for the form.
-    $form = $form->Generate();
+    $html = $form->Generate();
 
     $doc = new DOMDocument();
-    $doc->loadXML( $form );
+    $doc->loadXML( $html );
     $xpath = new DOMXpath($doc);
 
     // Asset that the checkboxes are set or unset according to the $values.

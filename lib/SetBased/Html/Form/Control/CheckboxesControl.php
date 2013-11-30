@@ -40,6 +40,16 @@ class CheckboxesControl extends Control
   protected $myLabelKey;
 
   /**
+   * @var string The HTML snippet appended after each label for the checkboxes.
+   */
+  protected $myLabelPostfix = '';
+
+  /**
+   * @var string The HTML snippet inserted before each label for the checkboxes.
+   */
+  protected $myLabelPrefix = '';
+
+  /**
    * @var array[] The options of this select box.
    */
   protected $myOptions;
@@ -71,60 +81,80 @@ class CheckboxesControl extends Control
   {
     $submit_name = $this->getSubmitName( $theParentName );
 
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<div';
+    $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
     if (is_array( $this->myOptions ))
     {
-      $map_id = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
-
       foreach ($this->myOptions as $option)
       {
         $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
 
-        $id = ($map_id && isset($option[$map_id])) ? $id = $option[$map_id] : Html::getAutoId();
+        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
 
-        $input = "<input type='checkbox'";
+        $html .= "<input type='checkbox'";
 
-        $input .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-        $input .= Html::generateAttribute( 'id', $id );
+        $html .= Html::generateAttribute( 'id', $id );
 
         if ($this->myCheckedKey && isset($option[$this->myCheckedKey]))
         {
-          $input .= Html::generateAttribute( 'checked', $option[$this->myCheckedKey] );
+          $html .= Html::generateAttribute( 'checked', $option[$this->myCheckedKey] );
         }
 
         if ($this->myDisabledKey && isset($option[$this->myDisabledKey]))
         {
-          $input .= Html::generateAttribute( 'disabled', $option[$this->myDisabledKey] );
+          $html .= Html::generateAttribute( 'disabled', $option[$this->myDisabledKey] );
         }
 
-        $input .= "/>";
+        $html .= "/>";
 
-        $label = isset($this->myAttributes['set_label_prefix']) ? $this->myAttributes['set_label_prefix'] : null; // optional
-        $label .= "<label for='$id'>";
-        $label .= Html::txt2Html( $option[$this->myLabelKey] );
-        $label .= "</label>";
-        $label .= isset($this->myAttributes['set_label_postfix']) ? $this->myAttributes['set_label_postfix'] : null; // optional
+        $html .= $this->myLabelPrefix;
+        $html .= '<label';
+        $html .= Html::generateAttribute( 'for', $id );
+        $html .= '>';
+        $html .= Html::txt2Html( $option[$this->myLabelKey] );
+        $html .= '</label>';
+        $html .= $this->myLabelPostfix;
 
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+        $html .= "\n";
       }
     }
 
-    $ret .= "</div>";
+    $html .= "</div>";
 
-    $ret .= $this->myPostfix;
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is inserted before the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPostfix( $theHtmlSnippet )
+  {
+    $this->myLabelPostfix = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is appended after the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPrefix( $theHtmlSnippet )
+  {
+    $this->myLabelPrefix = $theHtmlSnippet;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

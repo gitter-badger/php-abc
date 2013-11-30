@@ -30,6 +30,16 @@ class RadiosControl extends Control
   protected $myLabelKey;
 
   /**
+   * @var string The HTML snippet appended after each label for the checkboxes.
+   */
+  protected $myLabelPostfix = '';
+
+  /**
+   * @var string The HTML snippet inserted before each label for the checkboxes.
+   */
+  protected $myLabelPrefix = '';
+
+  /**
    * @var array[] The options of this select box.
    */
   protected $myOptions;
@@ -47,66 +57,85 @@ class RadiosControl extends Control
    */
   public function generate( $theParentName )
   {
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<div';
+    $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
     if (is_array( $this->myOptions ))
     {
       $submit_name = $this->getSubmitName( $theParentName );
       foreach ($this->myOptions as $option)
       {
-        $id = (string)$option[$this->myKeyKey];
+        $key = (string)$option[$this->myKeyKey];
 
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
-        $for_id = Html::getAutoId();
+        $id = Html::getAutoId();
 
-        $input = "<input type='radio' id='$for_id'";
+        $html .= "<input type='radio' id='$id'";
 
-        $input .= Html::generateAttribute( 'name', $submit_name );
+        $html .= Html::generateAttribute( 'name', $submit_name );
 
-        $input .= Html::generateAttribute( 'value', $code );
+        $html .= Html::generateAttribute( 'value', $code );
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$id)
+        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$key)
         {
-          $input .= " checked='checked'";
+          $html .= " checked='checked'";
         }
 
         if ($this->myDisabledKey && !empty($option[$this->myDisabledKey]))
         {
-          $input .= " disabled='disabled'";
+          $html .= " disabled='disabled'";
         }
 
-        $input .= "/>";
+        $html .= '/>';
 
-        $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
-        $label .= "<label for='$for_id'>";
-        $label .= Html::txt2Html( $option[$this->myLabelKey] );
-        $label .= "</label>";
-        if (isset($this->myAttributes['set_label_postfix']))
-        {
-          $label .= $this->myAttributes['set_label_postfix'];
-        }
+        $html .= $this->myLabelPrefix;
+        $html .= '<label';
+        $html .= Html::generateAttribute( 'for', $id );
+        $html .= '>';
+        $html .= Html::txt2Html( $option[$this->myLabelKey] );
+        $html .= '</label>';
+        $html .= $this->myLabelPostfix;
 
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+        $html .= "\n";
       }
     }
 
-    $ret .= "</div>";
-    $ret .= $this->myPostfix;
+    $html .= "</div>";
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is inserted before the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPostfix( $theHtmlSnippet )
+  {
+    $this->myLabelPostfix = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is appended after the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPrefix( $theHtmlSnippet )
+  {
+    $this->myLabelPrefix = $theHtmlSnippet;
+  }
+
+//--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the options for this select box.
    *
