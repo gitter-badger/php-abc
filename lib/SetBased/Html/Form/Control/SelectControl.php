@@ -83,7 +83,7 @@ class SelectControl extends SimpleControl
         $id = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($this->$myOptionsObfuscator) ? $this->$myOptionsObfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         //
         $html .= '<option';

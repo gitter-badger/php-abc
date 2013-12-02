@@ -3,7 +3,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 //----------------------------------------------------------------------------------------------------------------------
-function Leader()
+function leader()
 {
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
@@ -15,60 +15,60 @@ function Leader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Trailer()
+function trailer()
 {
   echo "</body>\n";
   echo "</html>\n";
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function CreateForm()
+function createForm()
 {
   $form = new \SetBased\Html\Form();
 
-  $complex1 = $form->CreateFieldSet();
-  $legend = $complex1->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Buttons' );
+  $complex1 = $form->createFieldSet();
+  $legend = $complex1->createLegend();
+  $legend->setLegendText( 'Buttons' );
 
-  $complex2 = $complex1->CreateFormControl( 'complex' , 'level1' );
-  $fieldset = $complex2->CreateFormControl( 'complex' , 'level2' );
-
-
-  $control = $fieldset->CreateFormControl( 'text' , 'text' );
-  $control->setAttribute('value', 'Sample text');
-
-  $control = $fieldset->CreateFormControl( 'button' , 'button' );
-  $control->setAttribute('value', 'Sample Button');
+  $complex2 = $complex1->createFormControl( 'complex' , 'level1' );
+  $fieldset = $complex2->createFormControl( 'complex' , 'level2' );
 
 
-  $control = $fieldset->CreateFormControl( 'reset' , 'reset' );
-  $control->setAttribute('value', 'Reset Button');
+  $control = $fieldset->createFormControl( 'text' , 'text' );
+  $control->setValue( 'Sample text' );
 
-  $control = $fieldset->CreateFormControl( 'submit', 'submit' );
-  $control->setAttribute('value', 'Submit Button');
+  $control = $fieldset->createFormControl( 'button' , 'button' );
+  $control->setValue( 'Sample Button' );
+
+
+  $control = $fieldset->createFormControl( 'reset' , 'reset' );
+  $control->setValue( 'Reset Button' );
+
+  $control = $fieldset->createFormControl( 'submit', 'submit' );
+  $control->setValue( 'Submit Button' );
 
   return $form;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Demo()
+function demo()
 {
-  $form = CreateForm();
+  $form = createForm();
 
-  if ($form->IsSubmitted( 'submit' ))
+  if ($form->isSubmitted( 'submit' ))
   {
     $form->LoadSubmittedValues();
 
-    $valid = $form->Validate();
+    $valid = $form->validate();
     if (!$valid && false)
     {
-      echo $form->Generate();
+      echo $form->generate();
     }
     else
     {
       echo "Html:";
       echo "<pre>";
-      echo htmlentities( $form->Generate() );
+      echo htmlentities( $form->generate() );
       echo "</pre>";
 
       echo "Post:";
@@ -78,29 +78,29 @@ function Demo()
 
       echo "Values:";
       echo "<pre>";
-      print_r( $form->GetValues() );
+      print_r( $form->getValues() );
       echo "</pre>";
 
       echo "Changed:";
       echo "<pre>";
-      print_r( $form->GetChangedControls() );
+      print_r( $form->getChangedControls() );
       echo "</pre>";
 
       echo "Invalid:";
       echo "<pre>";
-      print_r( $form->GetInvalidControls() );
+      print_r( $form->getInvalidControls() );
       echo "</pre>";
 
-      echo $form->Generate();
+      echo $form->generate();
     }
   }
   else
   {
-    echo $form->Generate();
+    echo $form->generate();
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-Leader();
-Demo();
-Trailer();
+leader();
+demo();
+trailer();

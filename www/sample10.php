@@ -3,7 +3,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 //----------------------------------------------------------------------------------------------------------------------
-function Leader()
+function leader()
 {
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
@@ -15,49 +15,53 @@ function Leader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Trailer()
+function trailer()
 {
   echo "</body>\n";
   echo "</html>\n";
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function CreateForm()
+function createForm()
 {
   $form = new \SetBased\Html\Form();
 
-  $fieldset = $form->CreateFieldSet();
-  $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Checkbox' );
+  $fieldset = $form->createFieldSet();
+  $legend = $fieldset->createLegend();
+  $legend->setLegendText( 'Checkbox' );
 
-  $control = $fieldset->createFormControl( 'checkbox', 'test' );
-  $control->setPrefix('Sample checkbox');
+  $control = $fieldset->createFormControl( 'checkbox', 'test1' );
+  $control->setPrefix('Sample checkbox 1');
 
-  $fieldset = $form->CreateFieldSet( 'fieldset', '' );
-  $control = $fieldset->CreateFormControl( 'submit', 'submit' );
-  $control->SetAttribute( 'value', 'OK' );
+  $control = $fieldset->createFormControl( 'checkbox', 'test2' );
+  $control->setAttribute( 'checked', true );
+  $control->setPrefix('Sample checkbox 2');
+
+  $fieldset = $form->createFieldSet( 'fieldset', '' );
+  $control = $fieldset->createFormControl( 'submit', 'submit' );
+  $control->setValue( 'OK' );
 
   return $form;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Demo()
+function demo()
 {
-  $form = CreateForm();
+  $form = createForm();
 
-  if ($form->IsSubmitted( 'submit' ))
+  if ($form->isSubmitted( 'submit' ))
   {
-    $form->LoadSubmittedValues();
-    $valid = $form->Validate();
+    $form->loadSubmittedValues();
+    $valid = $form->validate();
     if (!$valid && false)
     {
-      echo $form->Generate();
+      echo $form->generate();
     }
     else
     {
       echo "Html:";
       echo "<pre>";
-      echo htmlentities( $form->Generate() );
+      echo htmlentities( $form->generate() );
       echo "</pre>";
 
       echo "Post:";
@@ -67,29 +71,29 @@ function Demo()
 
       echo "Values:";
       echo "<pre>";
-      print_r( $form->GetValues() );
+      print_r( $form->getValues() );
       echo "</pre>";
 
       echo "Changed:";
       echo "<pre>";
-      print_r( $form->GetChangedControls() );
+      print_r( $form->getChangedControls() );
       echo "</pre>";
 
       echo "Invalid:";
       echo "<pre>";
-      print_r( $form->GetInvalidControls() );
+      print_r( $form->getInvalidControls() );
       echo "</pre>";
 
-      echo $form->Generate();
+      echo $form->generate();
     }
   }
   else
   {
-    echo $form->Generate();
+    echo $form->generate();
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-Leader();
-Demo();
-Trailer();
+leader();
+demo();
+trailer();

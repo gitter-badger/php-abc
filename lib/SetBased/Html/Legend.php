@@ -50,7 +50,7 @@ class Legend
    */
   public function setLegendText( $theText )
   {
-    $this->myLegend = HTML::txt2Html( $theText );
+    $this->myLegend = Html::txt2Html( $theText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 //----------------------------------------------------------------------------------------------------------------------
-function Leader()
+function leader()
 {
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
@@ -15,59 +15,52 @@ function Leader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Trailer()
+function trailer()
 {
   echo "</body>\n";
   echo "</html>\n";
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function CreateForm()
+function createForm()
 {
-
   $countries[] = array( 'cnt_id' =>   0,  'cnt_name' => 'NL' );
   $countries[] = array( 'cnt_id' =>   1,  'cnt_name' => 'BE' );
   $countries[] = array( 'cnt_id' => 0.1,  'cnt_name' => 'LU' );
 
-
   $form     = new \SetBased\Html\Form();
   $fieldset = $form->createFieldSet();
   $legend = $fieldset->createLegend();
-  $legend->SetAttribute( 'set_inline', 'Other' );
+  $legend->setLegendText( 'Other' );
 
   $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-  $control->setAttribute( 'set_map_key', 'cnt_id' );
-  $control->setAttribute( 'set_options', $countries );
-  $control->setAttribute( 'set_map_label',  'cnt_name' );
+  $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
-
-  $fieldset = $form->CreateFieldSet( 'fieldset', 'some_name' );
-  $control = $fieldset->CreateFormControl( 'submit', 'submit' );
-  $control->SetAttribute( 'value', 'OK' );
+  $fieldset = $form->createFieldSet( 'fieldset', 'some_name' );
+  $control = $fieldset->createFormControl( 'submit', 'submit' );
+  $control->setValue( 'OK' );
 
   return $form;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Demo()
+function demo()
 {
-  //$_POST['cnt_id']['99'] = 'on';
+  $form = createForm();
 
-  $form = CreateForm();
-
-  if ($form->IsSubmitted( 'submit' ))
+  if ($form->isSubmitted( 'submit' ))
   {
-    $form->LoadSubmittedValues();
-    $valid = $form->Validate();
+    $form->loadSubmittedValues();
+    $valid = $form->validate();
     if (!$valid && false)
     {
-      echo $form->Generate();
+      echo $form->generate();
     }
     else
     {
       echo "Html:";
       echo "<pre>";
-      echo htmlentities( $form->Generate() );
+      echo htmlentities( $form->generate() );
       echo "</pre>";
 
       echo "Post:";
@@ -77,30 +70,30 @@ function Demo()
 
       echo "Values:";
       echo "<pre>";
-      print_r( $form->GetValues() );
+      print_r( $form->getValues() );
       echo "</pre>";
 
       echo "Changed:";
       echo "<pre>";
-      print_r( $form->GetChangedControls() );
+      print_r( $form->getChangedControls() );
       echo "</pre>";
 
       echo "Invalid:";
       echo "<pre>";
-      print_r( $form->GetInvalidControls() );
+      print_r( $form->getInvalidControls() );
       echo "</pre>";
 
-      echo $form->Generate();
+      echo $form->generate();
     }
   }
   else
   {
-    echo $form->Generate();
+    echo $form->generate();
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-Leader();
-Demo();
-Trailer();
+leader();
+demo();
+trailer();
 

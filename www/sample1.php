@@ -1,9 +1,9 @@
-set<?php
+<?php
 //----------------------------------------------------------------------------------------------------------------------
 require __DIR__.'/../vendor/autoload.php';
 
 //----------------------------------------------------------------------------------------------------------------------
-function Leader()
+function leader()
 {
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
   echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n";
@@ -15,88 +15,85 @@ function Leader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Trailer()
+function trailer()
 {
   echo "</body>\n";
   echo "</html>\n";
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function CreateForm()
+function createForm()
 {
   $form = new \SetBased\Html\Form('hi1');
 
+  $fieldset = $form->createFieldSet();
+  $legend = $fieldset->createLegend();
+  $legend->setLegendText( 'Name' );
 
-  $fieldset = $form->CreateFieldSet();
-  $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Name' );
+  $control = $fieldset->createFormControl( 'text', 'first_name' );
+  $control->setPostfix( '<br/>' );
+  $control->setLabelText( 'first  name' );
+  $control->setLabelPosition( 'pre' );
 
-  $control = $fieldset->CreateFormControl( 'text', 'first_name' );
-  $control->SetAttribute( 'set_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'set_position', 'prefix' );
-  $control->SetLabelAttribute( 'set_label', 'first  name' );
+  $control = $fieldset->createFormControl( 'text', 'last_name' );
+  $control->setPostfix( '<br/>' );
+  $control->setLabelText( 'last name' );
+  $control->setLabelPosition( 'pre' );
 
-  $control = $fieldset->CreateFormControl( 'text', 'last_name' );
-  $control->SetAttribute( 'set_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'set_position', 'prefix' );
-  $control->SetLabelAttribute( 'set_label', 'last  name' );
+  $fieldset = $form->createFieldSet();
+  $legend = $fieldset->createLegend();
+  $legend->setLegendText( 'URI' );
 
+  $control = $fieldset->createFormControl( 'text', 'email' );
+  $control->setPostfix( '<br/>' );
+  $control->setLabelText( 'email' );
+  $control->setLabelPosition( 'pre' );
+  $control->addValidator( new \SetBased\Html\Form\EmailValidator() );
 
-  $fieldset = $form->CreateFieldSet();
-  $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'URI' );
+  $control = $fieldset->createFormControl( 'text', 'url' );
+  $control->setPostfix( '<br/>' );
+  $control->setLabelText( 'url' );
+  $control->setLabelPosition( 'pre' );
+  $control->addValidator( new \SetBased\Html\Form\HttpValidator() );
 
-  $control = $fieldset->CreateFormControl( 'text', 'email' );
-  $control->SetAttribute( 'set_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'set_position', 'prefix' );
-  $control->SetLabelAttribute( 'set_label', 'email' );
-  $control->AddValidator( new \SetBased\Html\Form\EmailValidator() );
-
-  $control = $fieldset->CreateFormControl( 'text', 'url' );
-  $control->SetAttribute( 'set_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'set_position', 'prefix' );
-  $control->SetLabelAttribute( 'set_label', 'url' );
-  $control->AddValidator( new \SetBased\Html\Form\HttpValidator() );
-
-  $fieldset = $form->CreateFieldSet();
-  $legend = $fieldset->CreateLegend();
-  $legend->SetAttribute( 'set_inline', 'Other' );
+  $fieldset = $form->createFieldSet();
+  $legend = $fieldset->createLegend();
+  $legend->setLegendText( 'Other' );
 
   $countries[] = array( 'cnt_id' => '1', 'cnt_name' => 'NL' );
   $countries[] = array( 'cnt_id' => '2', 'cnt_name' => 'BE' );
   $countries[] = array( 'cnt_id' => '3', 'cnt_name' => 'LU' );
 
-  $control = $fieldset->CreateFormControl( 'select', 'cnt_id' );
-  $control->SetAttribute( 'set_value',          '1' );
+  $control = $fieldset->createFormControl( 'select', 'cnt_id' );
+  $control->setValue( '1' );
   $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
-  $control->SetAttribute( 'set_empty_option',   true );
+  $control->setEmptyOption( true );
 
-  $control->SetAttribute( 'set_postfix', '<br/>' );
-  $control->SetLabelAttribute( 'set_position', 'prefix' );
-  $control->SetLabelAttribute( 'set_label', 'Country' );
+  $control->setPostfix( '<br/>' );
+  $control->setLabelText( 'Country' );
+  $control->setLabelPosition( 'pre' );
 
-
-  $fieldset = $form->CreateFieldSet( 'fieldset', 'somename' );
-  $control = $fieldset->CreateFormControl( 'submit', 'submit' );
-  $control->SetAttribute( 'value', 'OK' );
+  $fieldset = $form->createFieldSet( 'fieldset', 'somename' );
+  $control = $fieldset->createFormControl( 'submit', 'submit' );
+  $control->setValue( 'OK' );
 
   return $form;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function Demo()
+function demo()
 {
  // $_POST['cnt_id'] = 99;
 
-  $form = CreateForm();
+  $form = createForm();
 
-  if ($form->IsSubmitted( 'submit' ))
+  if ($form->isSubmitted( 'submit' ))
   {
-    $form->LoadSubmittedValues();
-    $valid = $form->Validate();
+    $form->loadSubmittedValues();
+    $valid = $form->validate();
     if (!$valid && false)
     {
-      echo $form->Generate();
+      echo $form->generate();
     }
     else
     {
@@ -107,30 +104,30 @@ function Demo()
 
       echo "Values:";
       echo "<pre>";
-      print_r( $form->GetValues() );
+      print_r( $form->getValues() );
       echo "</pre>";
 
       echo "Changed:";
       echo "<pre>";
-      print_r( $form->GetChangedControls() );
+      print_r( $form->getChangedControls() );
       echo "</pre>";
 
       echo "Invalid:";
       echo "<pre>";
-      print_r( $form->GetInvalidControls() );
+      print_r( $form->getInvalidControls() );
       echo "</pre>";
 
-      echo $form->Generate();
+      echo $form->generate();
     }
   }
   else
   {
-    echo $form->Generate();
+    echo $form->generate();
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-Leader();
-Demo();
-Trailer();
+leader();
+demo();
+trailer();
 
