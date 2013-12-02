@@ -120,18 +120,10 @@ class ComplexControl extends Control
         break;
 
       default:
-        if (class_exists($theType))
-        {
-          $control = $theType.( $theName );
-        }
-        else
-        {
-          Html::error('Class \'%s\' not found or not exist.', $theType );
-        }
+        $control = $theType.( $theName );
     }
 
     $this->myControls[] = $control;
-
     return $control;
   }
 
