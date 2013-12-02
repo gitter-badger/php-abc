@@ -36,96 +36,103 @@ class ComplexControl extends Control
    */
   public function createFormControl( $theType, $theName )
   {
+    $control = null;
     switch ($theType)
     {
       case 'text':
-        $type = '\SetBased\Html\Form\Control\TextControl';
+        $control = new \SetBased\Html\Form\Control\TextControl( $theName );
         break;
 
       case 'password':
-        $type = '\SetBased\Html\Form\Control\PasswordControl';
+        $control = new \SetBased\Html\Form\Control\PasswordControl( $theName );
         break;
 
       case 'checkbox':
-        $type = '\SetBased\Html\Form\Control\CheckboxControl';
+        $control = new \SetBased\Html\Form\Control\CheckboxControl( $theName );
         break;
 
       case 'radio':
-        $type = '\SetBased\Html\Form\Control\RadioControl';
+        $control = new \SetBased\Html\Form\Control\RadioControl( $theName );
         break;
 
       case 'submit':
-        $type = '\SetBased\Html\Form\Control\SubmitControl';
+        $control = new \SetBased\Html\Form\Control\SubmitControl( $theName );
         break;
 
       case 'image':
-        $type = '\SetBased\Html\Form\Control\ImageControl';
+        $control = new \SetBased\Html\Form\Control\ImageControl( $theName );
         break;
 
       case 'reset':
-        $type = '\SetBased\Html\Form\Control\ResetControl';
+        $control = new \SetBased\Html\Form\Control\ResetControl( $theName );
         break;
 
       case 'button':
-        $type = '\SetBased\Html\Form\Control\ButtonControl';
+        $control = new \SetBased\Html\Form\Control\ButtonControl( $theName );
         break;
 
       case 'hidden':
-        $type = '\SetBased\Html\Form\Control\HiddenControl';
+        $control = new \SetBased\Html\Form\Control\HiddenControl( $theName );
         break;
 
       case 'file':
-        $type = '\SetBased\Html\Form\Control\FileControl';
+        $control = new \SetBased\Html\Form\Control\FileControl( $theName );
         break;
 
       case 'invisible':
-        $type = '\SetBased\Html\Form\Control\InvisibleControl';
+        $control = new \SetBased\Html\Form\Control\InvisibleControl( $theName );
         break;
 
       case 'textarea':
-        $type = '\SetBased\Html\Form\Control\TextAreaControl';
+        $control = new \SetBased\Html\Form\Control\TextAreaControl( $theName );
         break;
 
       case 'complex':
-        $type = '\SetBased\Html\Form\Control\ComplexControl';
+        $control = new \SetBased\Html\Form\Control\ComplexControl( $theName );
         break;
 
       case 'select':
-        $type = '\SetBased\Html\Form\Control\SelectControl';
+        $control = new \SetBased\Html\Form\Control\SelectControl( $theName );
         break;
 
       case 'span':
-        $type = '\SetBased\Html\Form\Control\SpanControl';
+        $control = new \SetBased\Html\Form\Control\SpanControl( $theName );
         break;
 
       case 'div':
-        $type = '\SetBased\Html\Form\Control\DivControl';
+        $control = new \SetBased\Html\Form\Control\DivControl( $theName );
         break;
 
       case 'a':
-        $type = '\SetBased\Html\Form\Control\LinkControl';
+        $control = new \SetBased\Html\Form\Control\LinkControl( $theName );
         break;
 
       case 'constant':
-        $type = '\SetBased\Html\Form\Control\ConstantControl';
+        $control = new \SetBased\Html\Form\Control\ConstantControl( $theName );
         break;
 
       case 'radios':
-        $type = '\SetBased\Html\Form\Control\RadiosControl';
+        $control = new \SetBased\Html\Form\Control\RadiosControl( $theName );
         break;
 
       case 'checkboxes':
-        $type = '\SetBased\Html\Form\Control\CheckboxesControl';
+        $control = new \SetBased\Html\Form\Control\CheckboxesControl( $theName );
         break;
 
       default:
-        $type = $theType;
+        if (class_exists($theType))
+        {
+          $control = $theType.( $theName );
+        }
+        else
+        {
+          Html::error('Class \'%s\' not found or not exist.', $theType );
+        }
     }
 
-    $tmp                = new $type($theName);
-    $this->myControls[] = $tmp;
+    $this->myControls[] = $control;
 
-    return $tmp;
+    return $control;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
