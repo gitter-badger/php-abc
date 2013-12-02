@@ -67,11 +67,8 @@ function CreateForm()
   $countries[] = array( 'cnt_id' => '3', 'cnt_name' => 'LU' );
 
   $control = $fieldset->CreateFormControl( 'select', 'cnt_id' );
-
-  $control->SetAttribute( 'set_map_key',        'cnt_id' );
-  $control->SetAttribute( 'set_map_label',      'cnt_name' );
   $control->SetAttribute( 'set_value',          '1' );
-  $control->SetAttribute( 'set_options',        $countries );
+  $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
   $control->SetAttribute( 'set_empty_option',   true );
 
   $control->SetAttribute( 'set_postfix', '<br/>' );
