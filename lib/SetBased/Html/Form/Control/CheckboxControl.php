@@ -23,43 +23,65 @@ class CheckboxControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'checkbox';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type']    = 'checkbox';
+    $this->myAttributes['name']    = $this->getSubmitName( $theParentName );
+    $this->myAttributes['checked'] = $this->myValue;
 
-    $ret = $this->myPrefix;
-    $ret .= $this->generatePrefixLabel();
+    $html = $this->myPrefix;
+    $html .= $this->generatePrefixLabel();
 
-    $ret .= "<input";
+    $html .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= '/>';
+    $html .= '/>';
 
-    $ret .= $this->generatePostfixLabel();
-    $ret .= $this->myPostfix;
+    $html .= $this->generatePostfixLabel();
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param mixed $theValues
+   * Sets the value of the this checkbox. If @a $theValue is not empty then this checkbox is checked otherwise this
+   * checkbox is unchecked.
    *
-   * @return mixed|void
+   * @param mixed $theValue
    */
-  public function setValuesBase( &$theValues )
+  public function setValue( $theValue )
   {
-    if (isset($theValues[$this->myName]))
+    if (!empty($theValue))
     {
-      $value = $theValues[$this->myName];
-
-      $this->myAttributes['checked'] = !empty($value);
+      $this->myAttributes['checked'] = true;
+      $this->myValue                 = true;
     }
     else
     {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['checked']);
+      $this->myAttributes['checked'] = false;
+      $this->myValue                 = false;
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+   *
+   * @c null, @c false, or @c '' the attribute is unset.
+   *
+   * @param string $theName  The name of the attribute.
+   * @param mixed  $theValue The value for the attribute.
+   */
+  public function setAttribute( $theName, $theValue )
+  {
+    if ($theName=='checked')
+    {
+      $this->setValue( $theValue );
+    }
+    else
+    {
+      \SetBased\Html\Form\Control\Control::setAttribute( $theName, $theValue );
     }
   }
 
@@ -68,36 +90,32 @@ class CheckboxControl extends SimpleControl
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
    * @param array $theChangedInputs
-   *
-   * @return mixed|void
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if (empty($this->myAttributes['checked'])!==empty($theSubmittedValue[$submit_name]))
+    /** @todo Decide whether to test submitted value is white listed, i.e. $this->myAttributes['value'] (or 'on'
+     *  if $this->myAttributes['value'] is null) or null.
+     */
+
+    if (empty($this->myValue)!==empty($theSubmittedValue[$submit_name]))
     {
       $theChangedInputs[$this->myName] = $this;
     }
 
-    /** @todo Decide whether to test submited value is white listed, i.e. $this->myAttributes['value'] (or 'on'
-     *  if $this->myAttributes['value'] is null) or null.
-     */
     if (!empty($theSubmittedValue[$submit_name]))
     {
       $this->myAttributes['checked']    = true;
-      $this->myAttributes['value']      = $theSubmittedValue[$submit_name];
+      $this->myValue                    = true;
       $theWhiteListValue[$this->myName] = true;
     }
     else
     {
       $this->myAttributes['checked']    = false;
-      $this->myAttributes['value']      = '';
+      $this->myValue                    = false;
       $theWhiteListValue[$this->myName] = false;
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $this->myAttributes['checked'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

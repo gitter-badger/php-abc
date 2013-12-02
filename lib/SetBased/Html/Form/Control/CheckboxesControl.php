@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
+use SetBased\Html\Obfuscator;
 
 /**
  * Class CheckboxesControl
@@ -14,14 +15,19 @@ class CheckboxesControl extends Control
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @var string The key in $myOptions holding the checked flag for the checkboxes.
+   * @var string|null The key in $myOptions holding the checked flag for the checkboxes.
    */
   protected $myCheckedKey;
 
   /**
-   * @var string The key in $myOptions holding the disabled flag for the checkboxes.
+   * @var string|null The key in $myOptions holding the disabled flag for the checkboxes.
    */
   protected $myDisabledKey;
+
+  /**
+   * @var string|null The key in $myOptions holding the HTML ID attribute of the checkboxes.
+   */
+  protected $myIdKey;
 
   /**
    * @var string The key in $myOptions holding the keys for the checkboxes.
@@ -34,9 +40,29 @@ class CheckboxesControl extends Control
   protected $myLabelKey;
 
   /**
+   * @var string The HTML snippet appended after each label for the checkboxes.
+   */
+  protected $myLabelPostfix = '';
+
+  /**
+   * @var string The HTML snippet inserted before each label for the checkboxes.
+   */
+  protected $myLabelPrefix = '';
+
+  /**
    * @var array[] The options of this select box.
    */
   protected $myOptions;
+
+  /**
+   * @var Obfuscator The obfuscator for the names of the checkboxes.
+   */
+  protected $myOptionsObfuscator;
+
+  /**
+   * @var string The value of the checked radio button.
+   */
+  protected $myValue;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -60,61 +86,91 @@ class CheckboxesControl extends Control
   {
     $submit_name = $this->getSubmitName( $theParentName );
 
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<div';
+    $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
     if (is_array( $this->myOptions ))
     {
-      $map_id             = (isset($this->myAttributes['set_map_id'])) ? $this->myAttributes['set_map_id'] : null;
-      $map_obfuscator     = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
       foreach ($this->myOptions as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
 
-        $id = ($map_id && isset($option[$map_id])) ? $id = $option[$map_id] : Html::getAutoId();
+        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
 
-        $input = "<input type='checkbox'";
+        $html .= "<input type='checkbox'";
 
-        $input .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
-        $input .= Html::generateAttribute( 'id', $id );
+        $html .= Html::generateAttribute( 'id', $id );
 
         if ($this->myCheckedKey && isset($option[$this->myCheckedKey]))
         {
-          $input .= Html::generateAttribute( 'checked', $option[$this->myCheckedKey] );
+          $html .= Html::generateAttribute( 'checked', $option[$this->myCheckedKey] );
         }
 
         if ($this->myDisabledKey && isset($option[$this->myDisabledKey]))
         {
-          $input .= Html::generateAttribute( 'disabled', $option[$this->myDisabledKey] );
+          $html .= Html::generateAttribute( 'disabled', $option[$this->myDisabledKey] );
         }
 
-        $input .= "/>";
+        $html .= "/>";
 
-        $label = isset($this->myAttributes['set_label_prefix']) ? $this->myAttributes['set_label_prefix'] : null; // optional
-        $label .= "<label for='$id'>";
-        $label .= Html::txt2Html( $option[$this->myLabelKey] );
-        $label .= "</label>";
-        $label .= isset($this->myAttributes['set_label_postfix']) ? $this->myAttributes['set_label_postfix'] : null; // optional
+        $html .= $this->myLabelPrefix;
+        $html .= '<label';
+        $html .= Html::generateAttribute( 'for', $id );
+        $html .= '>';
+        $html .= Html::txt2Html( $option[$this->myLabelKey] );
+        $html .= '</label>';
+        $html .= $this->myLabelPostfix;
 
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+        $html .= "\n";
       }
     }
 
-    $ret .= "</div>";
+    $html .= "</div>";
 
-    $ret .= $this->myPostfix;
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the value of the check radio button.
+   *
+   * @return string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is inserted before the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPostfix( $theHtmlSnippet )
+  {
+    $this->myLabelPostfix = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is appended after the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPrefix( $theHtmlSnippet )
+  {
+    $this->myLabelPrefix = $theHtmlSnippet;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -128,14 +184,32 @@ class CheckboxesControl extends Control
    *                                     checkbox is checked.
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
    *                                     checkbox is disabled.
+   * @param string|null $theIdKey        The key holding the HTML ID attribute of the checkboxes.
    */
-  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theCheckedKey = 'set_map_checked', $theDisabledKey = null )
+  public function setOptions( &$theOptions,
+                              $theKeyKey,
+                              $theLabelKey,
+                              $theCheckedKey = 'set_map_checked',
+                              $theDisabledKey = null,
+                              $theIdKey = null )
   {
     $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
     $this->myLabelKey    = $theLabelKey;
     $this->myCheckedKey  = $theCheckedKey;
     $this->myDisabledKey = $theDisabledKey;
+    $this->myIdKey       = $theIdKey;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the obfuscator for the names (most likely the names are databases ID's) of the checkboxes.
+   *
+   * @param Obfuscator $theObfuscator The obfuscator for the checkboxes.
+   */
+  public function setOptionsObfuscator( $theObfuscator )
+  {
+    $this->myOptionsObfuscator = $theObfuscator;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -155,7 +229,7 @@ class CheckboxesControl extends Control
     }
   }
 
-//--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
@@ -165,18 +239,15 @@ class CheckboxesControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
     if (isset($theSubmittedValue[$submit_name]))
     {
       foreach ($this->myOptions as $i => $option)
-
       {
         // Get the (database) ID of the option.
         $id = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         // Get the original value (i.e. the option is checked or not).
         $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;
@@ -199,7 +270,7 @@ class CheckboxesControl extends Control
     }
 
     // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
+    $this->myValue = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

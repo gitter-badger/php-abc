@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\Control;
 
 use SetBased\Html\Html;
+use SetBased\Html\Obfuscator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -29,9 +30,29 @@ class RadiosControl extends Control
   protected $myLabelKey;
 
   /**
-   * @var array[] The options of this select box.
+   * @var string The HTML snippet appended after each label for the radio buttons.
+   */
+  protected $myLabelPostfix = '';
+
+  /**
+   * @var string The HTML snippet inserted before each label for the radio buttons.
+   */
+  protected $myLabelPrefix = '';
+
+  /**
+   * @var array[] The data for the radio buttons.
    */
   protected $myOptions;
+
+  /**
+   * @var Obfuscator The obfuscator for the names of the radio buttons.
+   */
+  protected $myOptionsObfuscator;
+
+  /**
+   * @var string The value of the checked radio button.
+   */
+  protected $myValue;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -41,62 +62,95 @@ class RadiosControl extends Control
    */
   public function generate( $theParentName )
   {
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<div';
+    $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
     if (is_array( $this->myOptions ))
     {
-      $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
       $submit_name = $this->getSubmitName( $theParentName );
       foreach ($this->myOptions as $option)
       {
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
+        $key = (string)$option[$this->myKeyKey];
 
-        $for_id = Html::getAutoId();
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
-        $input = "<input type='radio' name='$submit_name' value='$code' id='$for_id'";
+        $id = Html::getAutoId();
 
-        if (isset($this->myAttributes['set_value']) && $this->myAttributes['set_value']===$option[$this->myKeyKey])
+        $html .= "<input type='radio' id='$id'";
+
+        $html .= Html::generateAttribute( 'name', $submit_name );
+
+        $html .= Html::generateAttribute( 'value', $code );
+
+        if ((string)$this->myValue===(string)$key)
         {
-          $input .= " checked='checked'";
+          $html .= " checked='checked'";
         }
 
         if ($this->myDisabledKey && !empty($option[$this->myDisabledKey]))
         {
-          $input .= " disabled='disabled'";
+          $html .= " disabled='disabled'";
         }
 
-        $input .= "/>";
+        $html .= '/>';
 
-        $label = (isset($this->myAttributes['set_label_prefix'])) ? $this->myAttributes['set_label_prefix'] : '';
-        $label .= "<label for='$for_id'>";
-        $label .= Html::txt2Html( $option[$this->myLabelKey] );
-        $label .= "</label>";
-        if (isset($this->myAttributes['set_label_postfix']))
-        {
-          $label .= $this->myAttributes['set_label_postfix'];
-        }
+        $html .= $this->myLabelPrefix;
+        $html .= '<label';
+        $html .= Html::generateAttribute( 'for', $id );
+        $html .= '>';
+        $html .= Html::txt2Html( $option[$this->myLabelKey] );
+        $html .= '</label>';
+        $html .= $this->myLabelPostfix;
 
-        $ret .= $input;
-        $ret .= $label;
-        $ret .= "\n";
+        $html .= "\n";
       }
     }
 
-    $ret .= "</div>";
-    $ret .= $this->myPostfix;
+    $html .= "</div>";
+    $html .= $this->myPostfix;
 
-    return $ret;
+    return $html;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the value of the check radio button.
+   * returns string
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is inserted before the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPostfix( $theHtmlSnippet )
+  {
+    $this->myLabelPostfix = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the HTML code that is appended after the HTML code of each label of the checkboxes to @a $theHtmlSnippet.
+   *
+   * @param string $theHtmlSnippet
+   */
+  public function setLabelPrefix( $theHtmlSnippet )
+  {
+    $this->myLabelPrefix = $theHtmlSnippet;
+  }
+
+//--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the options for this select box.
    *
@@ -116,11 +170,22 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the obfuscator for the names (most likely the names are databases ID's) of the radio buttons.
+   *
+   * @param Obfuscator $theObfuscator The obfuscator for the radio buttons.
+   */
+  public function setOptionsObfuscator( $theObfuscator )
+  {
+    $this->myOptionsObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param array $theValues
    */
   public function setValuesBase( &$theValues )
   {
-    $this->myAttributes['set_value'] = $theValues[$this->myName];
+    $this->myValue = (isset($theValues[$this->myName])) ? $theValues[$this->myName] : null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -133,8 +198,6 @@ class RadiosControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    $map_obfuscator = (isset($this->myAttributes['set_map_obfuscator'])) ? $this->myAttributes['set_map_obfuscator'] : null;
-
     if (isset($theSubmittedValue[$submit_name]))
     {
       // Normalize the submitted value as a string.
@@ -143,22 +206,22 @@ class RadiosControl extends Control
       foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
-        $id = $option[$this->myKeyKey];
+        $id = (string)$option[$this->myKeyKey];
 
-        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($map_obfuscator) ? $map_obfuscator->encode( $id ) : $id;
+        // If an obfuscator is installed compute the obfuscated code of the radio button name.
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
         if ($submitted_value===(string)$code)
         {
           // If the original value differs from the submitted value then the form control has been changed.
-          if (!isset($this->myAttributes['set_value']) || $this->myAttributes['set_value']!==$id)
+          if ((string)$this->myValue!==$id)
           {
             $theChangedInputs[$this->myName] = $this;
           }
 
           // Set the white listed value.
           $theWhiteListValue[$this->myName] = $id;
-          $this->myAttributes['set_value']  = $id;
+          $this->myValue                    = $id;
 
           // Leave the loop.
           break;
@@ -169,18 +232,16 @@ class RadiosControl extends Control
     {
       // No radio button has been checked.
       $theWhiteListValue[$this->myName] = null;
-      $this->myAttributes['set_value']  = null;
+      $this->myValue                    = null;
     }
 
     if (!array_key_exists( $this->myName, $theWhiteListValue ))
     {
       // The white listed value has not been set. This can only happen when a none white listed value has been submitted.
       // In this case we ignore this and assume the default value has been submitted.
-      $theWhiteListValue[$this->myName] = (isset($this->myAttributes['set_value'])) ? $this->myAttributes['set_value'] : null;
+      /** @todo validate the default value is a white list value */
+      $theWhiteListValue[$this->myName] = $this->myValue;
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------

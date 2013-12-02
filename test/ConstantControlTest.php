@@ -28,7 +28,7 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'constant', 'name' );
-    $control->setAttribute( 'set_value', '1' );
+    $control->setValue( '1' );
 
     $form->loadSubmittedValues();
 

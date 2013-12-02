@@ -86,6 +86,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals( 'city2', $control->getLocalName() );
   }
 
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test get FormControl by path.
@@ -211,6 +212,10 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
     $complex = $fieldset->createFormControl( 'complex', 'post' );
     $complex->createFormControl( 'text', 'street' );
     $complex->createFormControl( 'text', 'city' );
+
+    $complex = $fieldset->createFormControl( 'complex', 'post' );
+    $complex->createFormControl( 'text', 'zip-code' );
+    $complex->createFormControl( 'text', 'state' );
 
     $complex = $fieldset->createFormControl( 'complex', 'post' );
     $complex->createFormControl( 'text', 'zip-code' );

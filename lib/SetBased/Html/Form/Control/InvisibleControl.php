@@ -7,7 +7,8 @@ use SetBased\Html\Html;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class InvisibleControl
- * Class for form controls of type input:hidden, hoever, the submitted value is never loaded.
+ * Class for form controls of type input:hidden, however, the submitted value is never loaded.
+ *
  * @package SetBased\Html\Form\Control
  */
 class InvisibleControl extends SimpleControl
@@ -20,12 +21,13 @@ class InvisibleControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'hidden';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type']  = 'hidden';
+    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
+    $this->myAttributes['value'] = $this->myValue;
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
 
-    $ret .= "<input";
+    $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );
@@ -46,38 +48,7 @@ class InvisibleControl extends SimpleControl
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
     // Note: by definition the value of a input:invisible form control will not be changed, whatever is submitted.
-    $value = $this->myAttributes['value'];
-
-    $theWhiteListValue[$this->myName] = $value;
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myAttributes['set_submitted_value'] = $value;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param array $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    if (isset($theValues[$this->myName]))
-    {
-      $value = $this->myAttributes[$this->myName];
-
-      // The value of a input:hidden must be a scalar.
-      if (!is_scalar( $value ))
-      {
-        Html::error( "Illegal value '%s' for form control '%s'.", $value, $this->myName );
-      }
-
-      /** @todo unset when false or ''? */
-      $this->myAttributes['value'] = (string)$value;
-    }
-    else
-    {
-      // No value specified for this form control: unset the value of this form control.
-      unset($this->myAttributes['value']);
-    }
+    $theWhiteListValue[$this->myName] = $this->myValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -2,7 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Html;
+
 /**
  * Class DivControl
  *
@@ -10,6 +11,11 @@ namespace SetBased\Html\Form\Control;
  */
 class DivControl extends Control
 {
+  /**
+   * @var string The inner HTML code of this div element.
+   */
+  protected $myInnerHtml;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -18,24 +24,53 @@ class DivControl extends Control
    */
   public function generate( $theParentName )
   {
-    $ret = $this->myPrefix;
+    $html = $this->myPrefix;
 
-    $ret .= '<div';
+    $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= \SetBased\Html\Html::generateAttribute( $name, $value );
+      $html .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $html .= ">\n";
 
-    if (!empty($this->myAttributes['set_html']))
-    {
-      $ret .= $this->myAttributes['set_html']."\n";
-    }
-    $ret .= "</div>";
+    $html .= $this->myInnerHtml;
 
-    $ret .= $this->myPostfix;
+    $html .= "</div>";
 
-    return $ret;
+    $html .= $this->myPostfix;
+
+    return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns null;
+   */
+  public function getSubmittedValue()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner HTML of this div element.
+   *
+   * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
+   */
+  public function setInnerHtml( $theHtmlSnippet )
+  {
+    $this->myInnerHtml = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner text of this div element.
+   *
+   * @param string $theText The inner text. This text will be converted to valid HTML code.
+   */
+  public function setInnerText( $theText )
+  {
+    $this->myInnerHtml = HTML::txt2Html( $theText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -61,10 +96,12 @@ class DivControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theInvalidFormControls
+   *
+   * @return bool
    */
   protected function validateBase( &$theInvalidFormControls )
   {
-    // Nothing to do.
+    return true;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

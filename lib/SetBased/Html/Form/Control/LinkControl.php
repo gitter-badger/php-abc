@@ -9,8 +9,13 @@ use SetBased\Html\Html;
  *
  * @package SetBased\Html\Form\Control
  */
-class LinkControl extends SimpleControl
+class LinkControl extends Control
 {
+  /**
+   * @var string The inner HTML code of this div element.
+   */
+  protected $myInnerHtml;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theParentName
@@ -27,10 +32,9 @@ class LinkControl extends SimpleControl
       $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '>';
-    if (!empty($this->myAttributes['set_html']))
-    {
-      $ret .= $this->myAttributes['set_html'];
-    }
+
+    $ret .= $this->myInnerHtml;
+
     $ret .= '</a>';
 
     $ret .= $this->myPostfix;
@@ -40,7 +44,38 @@ class LinkControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theValues
+   * Returns null;
+   */
+  public function getSubmittedValue()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner HTML of this a element.
+   *
+   * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
+   */
+  public function setInnerHtml( $theHtmlSnippet )
+  {
+    $this->myInnerHtml = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner text of this a element.
+   *
+   * @param string $theText The inner text. This text will be converted to valid HTML code.
+   */
+  public function setInnerText( $theText )
+  {
+    $this->myInnerHtml = HTML::txt2Html( $theText );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param null $theValues
    */
   public function setValuesBase( &$theValues )
   {

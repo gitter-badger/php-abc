@@ -21,7 +21,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkbox', 'test4' );
-    $control->setAttribute( 'checked', true );
+    $control->setValue( true );
 
     $form->loadSubmittedValues();
     $values  = $form->getValues();
