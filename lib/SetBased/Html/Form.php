@@ -102,7 +102,7 @@ class Form
         break;
 
       default:
-        $fieldset = $theType.($theName);
+        $fieldset = new $theType($theName);
     }
 
     $this->myFieldSets[] = $fieldset;
