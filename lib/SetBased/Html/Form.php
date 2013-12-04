@@ -98,17 +98,15 @@ class Form
     switch ($theType)
     {
       case 'fieldset':
-        $type = '\SetBased\Html\Form\Control\FieldSet';
+        $fieldset = new \SetBased\Html\Form\Control\FieldSet($theName);
         break;
 
       default:
-        $type = $theType;
+        $fieldset = $theType.($theName);
     }
 
-    $tmp                 = new $type($theName);
-    $this->myFieldSets[] = $tmp;
-
-    return $tmp;
+    $this->myFieldSets[] = $fieldset;
+    return $fieldset;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
