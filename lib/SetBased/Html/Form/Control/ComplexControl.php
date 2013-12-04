@@ -120,7 +120,7 @@ class ComplexControl extends Control
         break;
 
       default:
-        $control = $theType.( $theName );
+        $control = new $theType( $theName );
     }
 
     $this->myControls[] = $control;
