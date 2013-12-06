@@ -20,5 +20,12 @@
     "psr-0": {
       "SetBased\\Html\\": "lib/"
     }
+  },
+  "extra": {
+    "component": {
+      "scripts": [
+        "js/overview_table.js"
+      ]
+    }
   }
 }
