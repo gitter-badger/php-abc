@@ -31,6 +31,13 @@ abstract class SimpleControl extends Control
   protected $myCleaner;
 
   /**
+   * The formatter to format the value (from machine format) to the displayed value.
+   *
+   * @var \SetBased\Html\Form\Formatter\Formatter
+   */
+  protected $myFormatter;
+
+  /**
    * The label of this form control.
    *
    * @var string A HTML snippet.
