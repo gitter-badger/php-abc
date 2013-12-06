@@ -72,11 +72,7 @@ class TextAreaControl extends SimpleControl
       $new_value = $theSubmittedValue[$submit_name];
     }
 
-    // Normalize old (original) value and new (submitted) value.
-    $old_value = (string)$this->myValue;
-    $new_value = (string)$new_value;
-
-    if ($old_value!==$new_value)
+    if ((string)$this->myValue!==(string)$new_value)
     {
       $theChangedInputs[$this->myName] = $this;
       $this->myValue                   = $new_value;

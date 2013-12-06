@@ -52,7 +52,7 @@ class PasswordControl extends SimpleControl
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
-    $ret .= "<input";
+    $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );

@@ -112,7 +112,7 @@ class RadiosControl extends Control
       }
     }
 
-    $html .= "</div>";
+    $html .= '</div>';
     $html .= $this->myPostfix;
 
     return $html;

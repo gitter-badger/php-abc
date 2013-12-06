@@ -2,7 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Control\FieldSet;
+
 /**
  * Class Form
  *
@@ -28,7 +29,7 @@ class Form
   /**
    * The field sets of this form.
    *
-   * @var \SetBased\Html\Form\Control\FieldSet[]
+   * @var FieldSet[]
    */
   protected $myFieldSets = array();
 
@@ -91,14 +92,14 @@ class Form
    *                        - fieldset: class FieldSet
    * @param string $theName The name (which might be empty) of the fieldset.
    *
-   * @return \SetBased\Html\Form\Control\FieldSet
+   * @return FieldSet
    */
   public function createFieldSet( $theType = 'fieldset', $theName = '' )
   {
     switch ($theType)
     {
       case 'fieldset':
-        $fieldset = new \SetBased\Html\Form\Control\FieldSet($theName);
+        $fieldset = new FieldSet($theName);
         break;
 
       default:

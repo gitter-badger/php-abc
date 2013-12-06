@@ -35,7 +35,7 @@ class DivControl extends Control
 
     $html .= $this->myInnerHtml;
 
-    $html .= "</div>";
+    $html .= '</div>';
 
     $html .= $this->myPostfix;
 
