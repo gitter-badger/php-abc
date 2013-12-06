@@ -34,8 +34,9 @@ class TextControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'text';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type']  = 'text';
+    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
+    $this->myAttributes['value'] = $this->myValue;
 
     if (isset($this->myAttributes['maxlength']))
     {
