@@ -54,7 +54,7 @@ class UrlCleaner implements Cleaner
     }
 
     // Recompose the parts of the URL is a normalized URL.
-    if (sizeof( $parts )==1 && isset($parts['path']))
+    if (!isset($parts['scheme']) && !isset($parts['host']) && isset($parts['path']))
     {
       $i = strpos( $parts['path'], '/' );
       if ($i===false)
@@ -69,22 +69,35 @@ class UrlCleaner implements Cleaner
       }
     }
 
-    if (isset($parts['scheme']))
+    if (empty($parts['scheme']))
     {
-      $sep = (strtolower( $parts['scheme'] )=='mailto' ? ':' : '://');
-      $url = strtolower( $parts['scheme'] ).$sep;
+      // The default scheme is 'http'.
+      $parts['scheme'] = 'http';
     }
     else
     {
-      $url = 'http://';
+      // The schema must be in lowercase.
+      $parts['scheme'] = strtolower( $parts['scheme'] );
     }
 
-    if (!$parts['path'] && strtolower( $parts['scheme'] )!='mailto')
+    // We assume that all URLs must have a path except for 'mailto'.
+    if (!isset($parts['path']) && $parts['scheme']!='mailto')
     {
       $parts['path'] = '/';
     }
 
-    if (isset($parts['pass']))
+    // Recompose the URL starting with the scheme.
+    if ($parts['scheme']=='mailto')
+    {
+      $url = 'mailto:';
+    }
+    else
+    {
+      $url = $parts['scheme'];
+      $url .= '://';
+    }
+
+    if (isset($parts['pass']) && isset($parts['user']))
     {
       $url .= $parts['user'].':'.$parts['pass'].'@';
     }
@@ -94,9 +107,6 @@ class UrlCleaner implements Cleaner
     }
 
     if (isset($parts['host'])) $url .= $parts['host'];
-    if (isset($parts['port'])) $url .= ':'.$parts['port'];
-    if (isset($parts['path'])) $url .= $parts['path'];
-    if (isset($parts['query'])) $url .= '?'.$parts['query'];
     if (isset($parts['port'])) $url .= ':'.$parts['port'];
     if (isset($parts['path'])) $url .= $parts['path'];
     if (isset($parts['query'])) $url .= '?'.$parts['query'];
