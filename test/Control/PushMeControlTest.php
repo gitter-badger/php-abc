@@ -62,7 +62,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->CreateFieldSet();
     $button   = $fieldset->CreateFormControl( $this->getControlType(), 'button' );
-    $button->setAttribute( 'value', "Do not push" );
+    $button->setValue( "Do not push" );
 
     // Set the values for button.
     $values['button'] = 'Push';
@@ -103,7 +103,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
     $complex2 = $complex1->CreateFormControl( 'complex', 'level2' );
 
     $button = $complex2->CreateFormControl( $this->getControlType(), 'absolute' );
-    if (isset($theValue)) $button->setAttribute( 'value', $theValue );
+    if (isset($theValue)) $button->setValue( $theValue );
 
     return $form;
   }

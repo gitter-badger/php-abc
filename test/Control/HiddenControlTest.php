@@ -19,7 +19,7 @@ class HiddenControlTest extends SimpleControlTest
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'hidden', 'test' );
-    $control->setAttribute( 'value', 'Old value' );
+    $control->setValue( 'Old value' );
 
     $form->loadSubmittedValues();
 
@@ -41,7 +41,7 @@ class HiddenControlTest extends SimpleControlTest
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'hidden', 'test' );
-    $control->setAttribute( 'value', 'Hello World!' );
+    $control->setValue( 'Hello World!' );
 
     // Set cleaner for hidden field (default it off).
     $control->setCleaner( PruneWhitespaceCleaner::get() );

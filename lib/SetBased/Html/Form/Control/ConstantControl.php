@@ -12,6 +12,8 @@ class ConstantControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns an empty string.
+   *
    * @param string $theParentName
    *
    * @return string

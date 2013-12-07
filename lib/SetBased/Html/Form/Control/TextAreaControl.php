@@ -27,6 +27,11 @@ class TextAreaControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *       * name Will be replaced with the submit name of this form control.
+   *       
    * @param string $theParentName
    *
    * @return string

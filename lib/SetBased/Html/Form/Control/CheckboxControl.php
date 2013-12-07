@@ -17,6 +17,13 @@ class CheckboxControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *       * name    Will be replaced with the submit name of this form control.
+   *       * type    Will be replaced with 'checkbox'.
+   *       * checked Will be replaced with 'checked' if @a $myValue is not empty, otherwise will be empty.
+   *
    * @param string $theParentName
    *
    * @return string
@@ -45,48 +52,6 @@ class CheckboxControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of the this checkbox. If @a $theValue is not empty then this checkbox is checked otherwise this
-   * checkbox is unchecked.
-   *
-   * @param mixed $theValue
-   */
-  public function setValue( $theValue )
-  {
-    if (!empty($theValue))
-    {
-      $this->myAttributes['checked'] = true;
-      $this->myValue                 = true;
-    }
-    else
-    {
-      $this->myAttributes['checked'] = false;
-      $this->myValue                 = false;
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-   *
-   * @c null, @c false, or @c '' the attribute is unset.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param mixed  $theValue The value for the attribute.
-   */
-  public function setAttribute( $theName, $theValue )
-  {
-    if ($theName=='checked')
-    {
-      $this->setValue( $theValue );
-    }
-    else
-    {
-      Control::setAttribute( $theName, $theValue );
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
    * @param array $theChangedInputs
@@ -106,13 +71,11 @@ class CheckboxControl extends SimpleControl
 
     if (!empty($theSubmittedValue[$submit_name]))
     {
-      $this->myAttributes['checked']    = true;
       $this->myValue                    = true;
       $theWhiteListValue[$this->myName] = true;
     }
     else
     {
-      $this->myAttributes['checked']    = false;
       $this->myValue                    = false;
       $theWhiteListValue[$this->myName] = false;
     }

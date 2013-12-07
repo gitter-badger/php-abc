@@ -36,7 +36,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'textarea', 'test' );
-    $control->setAttribute( 'value', 'Hello World!' );
+    $control->setValue( 'Hello World!' );
 
     // Set cleaner for textarea field (default it off).
     $control->setCleaner( PruneWhitespaceCleaner::get() );

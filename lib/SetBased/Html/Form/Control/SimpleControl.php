@@ -95,27 +95,6 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-   *
-   * @c null, @c false, or @c '' the attribute is unset.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param mixed  $theValue The value for the attribute.
-   */
-  public function setAttribute( $theName, $theValue )
-  {
-    if ($theName=='value')
-    {
-      $this->setValue( $theValue );
-    }
-    else
-    {
-      parent::setAttribute( $theName, $theValue );
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Sets the cleaner for this form control.
    *
    * @param \SetBased\Html\Form\Cleaner\Cleaner|null $theCleaner The cleaner for this form control.
@@ -219,7 +198,7 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Return  HTML code for a label for this form control.
+   * Return the HTML code for the label for this form control.
    *
    * @return string
    */

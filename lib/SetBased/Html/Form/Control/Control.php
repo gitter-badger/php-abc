@@ -59,8 +59,6 @@ abstract class Control
   protected $myValidators = array();
 
 
-
-
   //--------------------------------------------------------------------------------------------------------------------
   /** Object creator.
    *
@@ -103,6 +101,14 @@ abstract class Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the value of an attribute.
+   *
+   * @note Depending on the child class the returned value might be different than in the actual generated HTML code
+   *       for the following attributes, @sa generate():
+   *       * type
+   *       * name
+   *       * value
+   *       * checked
+   *       * size
    *
    * @param string $theName The name of the requested attribute.
    *
@@ -147,17 +153,24 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-   *
-   * @c null, @c false, or @c '' the attribute is unset.
+   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. The attribute is unset if
+   * the value is:
+   * * @c null
+   * * @c false
+   * * @c ''
+   * If the @a theName is 'class' then @a is appended tot the space separated list of classes.
+   * Depending on the child class the following attributes might be overwritten upon a call to method
+   * generate()
+   * * type    Is automatically generated (for simple controls).
+   * * name    Is automatically generated (for simple controls)..
+   * * value   Use method setValue() instead.
+   * * checked Use method setValue() instead.
    *
    * @param string $theName  The name of the attribute.
    * @param mixed  $theValue The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
-    if ($theName=='value') \SetBased\Html\Html::error( "Don't use attribute value." );
-
     if ($theValue===null || $theValue===false || $theValue==='')
     {
       unset($this->myAttributes[$theName]);

@@ -84,7 +84,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'radios', 'cnt_id' );
-    $control->setAttribute( 'set_value', '1' );
+    $control->setValue( '1' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
