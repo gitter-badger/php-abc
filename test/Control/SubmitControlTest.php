@@ -1,14 +1,22 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-require_once('test/SimpleControlTest.php');
+require_once(__DIR__.'/PushMeControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
-class PasswordControlTest extends SimpleControlTest
+/**
+ * Class SubmitControlTest
+ */
+class SubmitControlTest extends PushMeControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
-  protected function getInputType()
+  /**
+   * Return submit type for form control.
+   *
+   * @return string
+   */
+  protected function getControlType()
   {
-    return 'password';
+    return 'submit';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

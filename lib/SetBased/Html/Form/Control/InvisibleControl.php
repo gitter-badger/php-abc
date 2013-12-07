@@ -21,9 +21,11 @@ class InvisibleControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type']  = 'hidden';
-    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
-    $this->myAttributes['value'] = $this->myValue;
+    $this->myAttributes['type'] = 'hidden';
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
+    if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format( $this->myValue );
+    else                    $this->myAttributes['value'] = $this->myValue;
 
     $ret = $this->myPrefix;
 

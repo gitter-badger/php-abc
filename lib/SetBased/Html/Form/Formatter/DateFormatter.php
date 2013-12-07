@@ -41,7 +41,15 @@ class DateFormatter implements Formatter
 
     $valid = (sizeof( $parts )==3 && checkdate( $parts[1], $parts[2], $parts[0] ));
 
-    return ($valid) ? date( $this->myFormat, $theValue ) : $theValue;
+    if ($valid)
+    {
+      $date = new \DateTime( $theValue );
+      return $date->format( $this->myFormat );
+    }
+    else
+    {
+      return $theValue;
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

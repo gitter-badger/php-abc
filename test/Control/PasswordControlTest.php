@@ -1,19 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class ButtonControlTest
- */
-class ButtonControlTest extends PushMeControlTest
+require_once(__DIR__.'/SimpleControlTest.php');
+
+//----------------------------------------------------------------------------------------------------------------------
+class PasswordControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Return  button type for form control.
-   *
-   * @return string
-   */
-  protected function getControlType()
+  protected function getInputType()
   {
-    return 'button';
+    return 'password';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

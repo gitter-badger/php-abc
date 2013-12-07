@@ -81,7 +81,7 @@ class CheckboxControl extends SimpleControl
     }
     else
     {
-      \SetBased\Html\Form\Control\Control::setAttribute( $theName, $theValue );
+      Control::setAttribute( $theName, $theValue );
     }
   }
 

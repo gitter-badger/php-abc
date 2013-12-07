@@ -23,7 +23,9 @@ class HiddenControl extends SimpleControl
   {
     $this->myAttributes['type']  = 'hidden';
     $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
-    $this->myAttributes['value'] = $this->myValue;
+
+    if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format( $this->myValue );
+    else                    $this->myAttributes['value'] = $this->myValue;
 
     $ret = $this->myPrefix;
 

@@ -1,19 +1,22 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+require_once(__DIR__.'/PushMeControlTest.php');
+
+//----------------------------------------------------------------------------------------------------------------------
 /**
- * Class SubmitControlTest
+ * Class ButtonControlTest
  */
-class SubmitControlTest extends PushMeControlTest
+class ButtonControlTest extends PushMeControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Return submit type for form control.
+   * Return  button type for form control.
    *
    * @return string
    */
   protected function getControlType()
   {
-    return 'submit';
+    return 'button';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

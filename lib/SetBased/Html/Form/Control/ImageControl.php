@@ -22,7 +22,10 @@ class ImageControl extends SimpleControl
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'image';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
+    // For images we use local names. It is the task of the developer to ensure the local names of buttons
+    // are unique.
+    $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();

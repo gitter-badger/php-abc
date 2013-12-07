@@ -1,8 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
+require_once(__DIR__.'/SimpleControlTest.php');
 
-require_once('test/SimpleControlTest.php');
+//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
 class HiddenControlTest extends SimpleControlTest

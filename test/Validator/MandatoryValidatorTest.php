@@ -14,9 +14,9 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
     $types  = array('text', 'password', 'hidden', 'textarea', 'checkbox');
     $values = array(null, false, '');
 
-    foreach ($types as $i => $type)
+    foreach ($types as $type)
     {
-      foreach ($values as $j => $value)
+      foreach ($values as $value)
       {
 
         $_POST['input'] = $value;
@@ -34,12 +34,12 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    */
   public function testInvalidWhitespace()
   {
-    $type   = array('text', 'password', 'textarea');
+    $types   = array('text', 'password', 'textarea');
     $values = array(' ', '  ', " \n  ");
 
-    foreach ($type as $i => $type)
+    foreach ($types as $type)
     {
-      foreach ($values as $j => $value)
+      foreach ($values as $value)
       {
 
         $_POST['input'] = $value;
@@ -71,7 +71,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   {
     $types = array('text', 'password', 'hidden', 'textarea');
 
-    foreach ($types as $i => $type)
+    foreach ($types as $type)
     {
       $_POST['input'] = 'Set Based IT Consultancy';
       $form           = $this->setupForm1( $type );
@@ -87,9 +87,9 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   // @todo test with checkboxes
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory unchecked checkd box is invalid.
+  /** A mandatory unchecked checked box is invalid.
    */
-  public function testinvalidUncheckedCheckbox()
+  public function testInvalidUncheckedCheckbox()
   {
     $_POST = array();
     $form  = $this->setupForm2();

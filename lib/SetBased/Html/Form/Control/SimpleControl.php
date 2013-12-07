@@ -116,13 +116,24 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Set the cleaner for this form control.
+   * Sets the cleaner for this form control.
    *
-   * @param \SetBased\Html\Form\Cleaner\Cleaner $theCleaner The cleaner for this form control/
+   * @param \SetBased\Html\Form\Cleaner\Cleaner|null $theCleaner The cleaner for this form control.
    */
   public function setCleaner( $theCleaner )
   {
     $this->myCleaner = $theCleaner;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the formatter for this form control.
+   *
+   * @param \SetBased\Html\Form\Formatter\Formatter|null $theFormatter The formatter for this form control.
+   */
+  public function setFormatter( $theFormatter )
+  {
+    $this->myFormatter = $theFormatter;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -29,11 +29,13 @@ class PushMeControl extends SimpleControl
   public function generate( $theParentName )
   {
     $this->myAttributes['type']  = $this->myButtonType;
-    $this->myAttributes['value'] = $this->myValue;
 
     // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
     // are unique.
     $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
+
+    if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format( $this->myValue );
+    else                    $this->myAttributes['value'] = $this->myValue;
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
