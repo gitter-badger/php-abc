@@ -429,7 +429,7 @@ class Form
    * @param string      $theName  The name of the attribute.
    * @param string|null $theValue The value for the attribute.
    */
-  protected function setAttributeBase( $theName, $theValue )
+  protected function setAttribute( $theName, $theValue )
   {
     if ($theValue===null || $theValue===false || $theValue==='')
     {
