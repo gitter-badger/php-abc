@@ -22,6 +22,8 @@ class PushMeControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   *
    * @param string $theParentName
    *
    * @return string
@@ -64,6 +66,8 @@ class PushMeControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   *
    * @param array $theSubmittedValue
    * @param array $theWhiteListValue
    * @param array $theChangedInputs

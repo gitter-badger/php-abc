@@ -3,12 +3,6 @@
 namespace SetBased\Html\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
-  /**
-   * Class for form controls of type input:button.
-   * Class ButtonControl
-   *
-   * @package SetBased\Html\Form
-   */
 /**
  * Class ButtonControl
  *
@@ -18,6 +12,8 @@ class ButtonControl extends PushMeControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   *
    * @param string $theName
    */
   public function __construct( $theName )

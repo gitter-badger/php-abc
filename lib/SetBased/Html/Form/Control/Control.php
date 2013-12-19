@@ -94,7 +94,7 @@ abstract class Control
   /**
    * @param string $theParentName
    *
-   * @return mixed
+   * @return string
    */
   abstract public function generate( $theParentName );
 
@@ -153,18 +153,21 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. The attribute is unset if
-   * the value is:
-   * * @c null
-   * * @c false
-   * * @c ''
-   * If the @a theName is 'class' then @a is appended tot the space separated list of classes.
+   * Sets the value of an attribute of this form control.
+   * The attribute is unset when $theValue is one of<ul>
+   * <li> null
+   * <li> false
+   * <li> ''.
+   * </ul>
+   * If $theName is 'class' then $theValue is appended tot the space separated list of classes.
+   * <br/>
    * Depending on the child class the following attributes might be overwritten upon a call to method
-   * generate()
-   * * type    Is automatically generated (for simple controls).
-   * * name    Is automatically generated (for simple controls)..
-   * * value   Use method setValue() instead.
-   * * checked Use method setValue() instead.
+   * generate()<ul>
+   * <li> type    Is automatically generated (for simple controls).
+   * <li> name    Is automatically generated (for simple controls)..
+   * <li> value   Use method setValue() instead.
+   * <li> checked Use method setValue() instead.
+   * </ul>
    *
    * @param string $theName  The name of the attribute.
    * @param mixed  $theValue The value for the attribute.
@@ -240,7 +243,8 @@ abstract class Control
   abstract public function setValuesBase( &$theValues );
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the name this will be used for this form control when the form is submitted.
+  /**
+   * Returns the name this will be used for this form control when the form is submitted.
    *
    * @param string $theParentSubmitName The submit name of the parent form control of this form control.
    *

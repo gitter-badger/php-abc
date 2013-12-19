@@ -86,7 +86,8 @@ abstract class SimpleControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the submitted value of this form control.
-   * returns string
+   *
+   * @return string
    */
   public function getSubmittedValue()
   {

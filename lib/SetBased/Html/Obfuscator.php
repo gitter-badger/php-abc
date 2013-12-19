@@ -6,7 +6,7 @@ namespace SetBased\Html;
 /**
  * Interface Obfuscator
  *
- * Interface for defining classes for obfuscating and un-obfuscating database ID.
+ * Interface for defining classes for obfuscating and un-obfuscating database IDs.
  *
  * @package SetBased\Html
  */

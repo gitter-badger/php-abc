@@ -344,7 +344,7 @@ class ComplexControl extends Control
   /**
    * Returns the submitted value of this form control.
    *
-   * returns string
+   * @returns array
    */
   public function getSubmittedValue()
   {
