@@ -49,7 +49,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
-    $control->setAttribute( 'value', '1' );
+    $control->setValue( '1' );
 
     $control->setPrefix( 'Hello' );
     $control->setPostfix( 'World' );
@@ -109,7 +109,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
-    if (isset($theValue)) $control->setAttribute( 'value', $theValue );
+    if (isset($theValue)) $control->setValue( $theValue );
 
     $form->loadSubmittedValues();
 

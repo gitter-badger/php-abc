@@ -126,13 +126,13 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '1' );
+    $control->setValue( '1' );
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '2' );
+    $control->setValue( '2' );
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '3' );
+    $control->setValue( '3' );
 
     $form->loadSubmittedValues();
 
@@ -146,14 +146,14 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 1 );
+    $control->setValue( 1 );
     $control->setAttribute( 'checked', true );
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 2 );
+    $control->setValue( 2 );
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', 3 );
+    $control->setValue( 3 );
 
     $form->loadSubmittedValues();
 
@@ -167,15 +167,15 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '0' );
+    $control->setValue( '0' );
 
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', '0.0' );
+    $control->setValue( '0.0' );
     $control->setAttribute( 'checked', true );
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
-    $control->setAttribute( 'value', ' ' );
+    $control->setValue( ' ' );
 
     $form->loadSubmittedValues();
 

@@ -47,7 +47,7 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'invisible', 'name' );
-    $control->setAttribute( 'value', '1' );
+    $control->setValue( '1' );
 
     $form->loadSubmittedValues();
 
