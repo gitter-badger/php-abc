@@ -14,7 +14,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    * In form unchecked.
    * In POST checked
    */
-  public function _testSubmittedValue4()
+  public function testSubmittedValue4()
   {
     $_POST['test4'] = 'on';
 

@@ -25,7 +25,8 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A white listed value must be valid.
+  /**
+   * A white listed value must be valid.
    */
   public function testValid1()
   {

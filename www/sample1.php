@@ -83,8 +83,6 @@ function createForm()
 //----------------------------------------------------------------------------------------------------------------------
 function demo()
 {
- // $_POST['cnt_id'] = 99;
-
   $form = createForm();
 
   if ($form->isSubmitted( 'submit' ))

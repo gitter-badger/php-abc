@@ -238,6 +238,47 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Only white listed values must be loaded.
+   */
+  public function testSubmitValues()
+  {
+    $_POST['field_1'] = 'value';
+    $_POST['field_3'] = 'value';
+    $_POST['complex_name']['field_2'] = 'value';
+    $_POST['complex_name2']['field_4'] = 'value';
+
+    $form     = new SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+
+    $complex  = $fieldset->createFormControl( 'complex', '' );
+    $complex->createFormControl( 'text', 'field_1' );
+
+    $complex = $fieldset->createFormControl( 'complex', 'complex_name' );
+    $complex->createFormControl( 'text', 'field_2' );
+
+
+    $complex2 = $complex->createFormControl( 'complex', '' );
+    $complex2->createFormControl( 'text', 'field_3' );
+
+    $complex2 = $complex->createFormControl( 'complex', 'complex_name2' );
+    $complex2->createFormControl( 'text', 'field_4' );
+
+    $form->loadSubmittedValues();
+
+    $values = $form->getValues();
+    $changed = $form->getChangedControls();
+
+    $this->assertArrayHasKey( 'field_1', $values );
+ //   $this->assertArrayHasKey( 'field_3', $values );
+
+    $this->assertArrayHasKey( 'field_2', $values['complex_name'] );
+    $this->assertArrayHasKey( 'field_4', $values['complex_name2'] );
+
+    $this->assertNotEmpty( $changed );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -53,6 +53,30 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
     $this->assertArrayNotHasKey( 'test', $changed );
   }
 
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test submit value.
+   */
+  public function testSubmittedValue()
+  {
+    $_POST['test'] = 'Hello World!';
+
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'textarea', 'test' );
+    $control->setValue( 'Hi World!' );
+
+    $form->loadSubmittedValues();
+
+    $values  = $form->getValues();
+    $changed = $form->getChangedControls();
+
+    $this->assertEquals( 'Hello World!', $values['test'] );
+
+    // Value is change.
+    $this->assertNotEmpty( $changed['test'] );
+  }
   //--------------------------------------------------------------------------------------------------------------------
 }
 

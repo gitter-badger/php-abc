@@ -22,7 +22,6 @@ class LinkControlTest extends PHPUnit_Framework_TestCase
 
     $pos = strpos( $html, '</a>World' );
     $this->assertNotEquals( false, $pos );
-
   }
 
   //--------------------------------------------------------------------------------------------------------------------
