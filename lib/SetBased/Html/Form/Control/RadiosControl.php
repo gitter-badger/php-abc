@@ -56,6 +56,8 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
    * @param string $theParentName
    *
    * @return string
@@ -112,7 +114,7 @@ class RadiosControl extends Control
       }
     }
 
-    $html .= "</div>";
+    $html .= '</div>';
     $html .= $this->myPostfix;
 
     return $html;
@@ -177,6 +179,17 @@ class RadiosControl extends Control
   public function setOptionsObfuscator( $theObfuscator )
   {
     $this->myOptionsObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of this form control.
+   *
+   * @param string $theValue The new value for the form control.
+   */
+  public function setValue( $theValue )
+  {
+    $this->myValue = $theValue;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -28,14 +28,25 @@ class TextControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *       * name    Will be replaced with the submit name of this form control.
+   *       * type    Will be replaced with 'test'.
+   *       * value   Will be replaced with (formatted) @c $myValue.
+   *       * size    Will be replaced with minimum of attribute 'size' (if set) and attribute 'maxlength' (if set).
+   *
    * @param string $theParentName
    *
    * @return string
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'text';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type']  = 'text';
+    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
+
+    if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format( $this->myValue );
+    else                    $this->myAttributes['value'] = $this->myValue;
 
     if (isset($this->myAttributes['maxlength']))
     {

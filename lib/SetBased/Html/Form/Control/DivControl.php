@@ -18,6 +18,10 @@ class DivControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *
    * @param string $theParentName
    *
    * @return string
@@ -35,7 +39,7 @@ class DivControl extends Control
 
     $html .= $this->myInnerHtml;
 
-    $html .= "</div>";
+    $html .= '</div>';
 
     $html .= $this->myPostfix;
 

@@ -1,6 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Validator;
+
+use SetBased\Html\Form\Control\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -10,7 +12,7 @@ namespace SetBased\Html\Form;
  *
  * @package SetBased\Html\Form
  */
-class HttpValidator implements ControlValidator
+class HttpValidator implements Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -19,7 +21,7 @@ class HttpValidator implements ControlValidator
    *  * The value of @a $theFormControl is a valid http URL.
    *  Otherwise returns @c false.
    *
-   * @param \SetBased\Html\Form\Control\Control $theFormControl
+   * @param Control $theFormControl
    *
    * @return bool
    */

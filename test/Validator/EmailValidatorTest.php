@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form;
+use SetBased\Html\Form\Validator\EmailValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 class ValidatorEmailTest extends PHPUnit_Framework_TestCase
@@ -224,7 +224,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'text', 'email' );
-    $control->addValidator( new \SetBased\Html\Form\EmailValidator() );
+    $control->addValidator( new EmailValidator() );
 
     $form->loadSubmittedValues();
 

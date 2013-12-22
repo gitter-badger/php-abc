@@ -42,6 +42,8 @@ class FieldSet extends ComplexControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this fieldset.
+   *
    * @param string $theParentName
    *
    * @return string

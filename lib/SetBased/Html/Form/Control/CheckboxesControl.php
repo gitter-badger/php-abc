@@ -78,6 +78,8 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
    * @param string $theParentName
    *
    * @return string
@@ -119,7 +121,7 @@ class CheckboxesControl extends Control
           $html .= Html::generateAttribute( 'disabled', $option[$this->myDisabledKey] );
         }
 
-        $html .= "/>";
+        $html .= '/>';
 
         $html .= $this->myLabelPrefix;
         $html .= '<label';
@@ -133,7 +135,7 @@ class CheckboxesControl extends Control
       }
     }
 
-    $html .= "</div>";
+    $html .= '</div>';
 
     $html .= $this->myPostfix;
 

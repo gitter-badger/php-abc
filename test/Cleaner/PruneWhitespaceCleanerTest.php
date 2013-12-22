@@ -1,25 +1,22 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Interface ControlValidator
- * Interface for defining classes that validate form control elements derived from FormControl
- *
- * @package SetBased\Html\Form
- */
-interface ControlValidator
+class PruneWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param Control\Control $theFormControl
-   *
-   * @return bool
-   */
-  public function validate( $theFormControl );
+  public function testClean()
+  {
+    $raw     = "  Hello  \n\n  World!   ";
+    $cleaner = PruneWhitespaceCleaner::get();
+    $value   = $cleaner->clean( $raw );
+
+    $this->assertEquals( 'Hello World!', $value );
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+

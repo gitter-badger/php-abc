@@ -1,29 +1,22 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form\Control;
+use SetBased\Html\Form\Cleaner\TrimWhitespaceCleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class ButtonControl
- *
- * @package SetBased\Html\Form\Control
- */
-class ButtonControl extends PushMeControl
+class TrimWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * {@inheritdoc}
-   *
-   * @param string $theName
-   */
-  public function __construct( $theName )
+  public function testClean()
   {
-    parent::__construct( $theName );
+    $raw     = "  Hello  World!   ";
+    $cleaner = TrimWhitespaceCleaner::get();
+    $value   = $cleaner->clean( $raw );
 
-    $this->myButtonType = 'button';
+    $this->assertEquals( 'Hello  World!', $value );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+

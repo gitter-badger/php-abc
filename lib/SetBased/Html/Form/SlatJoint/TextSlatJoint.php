@@ -1,36 +1,36 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html;
+namespace SetBased\Html\Form\SlatJoint;
 
-//----------------------------------------------------------------------------------------------------------------------
-/**
- * Interface Obfuscator
- *
- * Interface for defining classes for obfuscating and un-obfuscating database IDs.
- *
- * @package SetBased\Html
- */
-interface Obfuscator
+use SetBased\Html\Form\Control\TextControl;
+use SetBased\Html\Html;
+
+class TextSlatJoint extends SlatJoint
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the obfuscated value of @a $theValue.
+   * Object constructor.
    *
-   * @param string|null $theValue
-   *
-   * @return string|null
+   * @param string $theHeaderText The header text of this table column.
    */
-  public function encode( $theValue );
+  public function __construct( $theHeaderText )
+  {
+    $this->myDataType   = 'input_text';
+    $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the un-obfuscated value of @a $theCode.
+   * Creates and returns a text form control.
    *
-   * @param string|null $theCode
+   * @param string $theName The local name of the text form control.
    *
-   * @return string|null
+   * @return TextControl
    */
-  public function decode( $theCode );
+  public function createCell( $theName )
+  {
+    return new TextControl( $theName );
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
 }

@@ -18,6 +18,8 @@ class LinkControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
    * @param string $theParentName
    *
    * @return string

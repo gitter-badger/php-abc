@@ -2,25 +2,37 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
+use SetBased\Html;
+
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class ButtonControl
+ * Class SlatControl
  *
  * @package SetBased\Html\Form\Control
  */
-class ButtonControl extends PushMeControl
+class SlatControl extends ComplexControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Returns the inner HTML code of a tr element of this slat control.
    *
-   * @param string $theName
+   * @param string $theParentName
+   *
+   * @return string
    */
-  public function __construct( $theName )
+  public function generate( $theParentName )
   {
-    parent::__construct( $theName );
+    $submit_name = $this->getSubmitName( $theParentName );
 
-    $this->myButtonType = 'button';
+    $ret = '';
+    foreach ($this->myControls as $control)
+    {
+      $ret .= "<td>";
+      $ret .= $control->generate( $submit_name );
+      $ret .= "</td>\n";
+    }
+
+    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

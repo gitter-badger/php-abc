@@ -1,49 +1,49 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
-
-require_once('test/SimpleControlTest.php');
-
-//----------------------------------------------------------------------------------------------------------------------
-class HiddenControlTest extends SimpleControlTest
+class TextControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test change value.
+   * Test cleaning and formatting is done before testing value of the form control has changed.
+   * For text field whitespace cleaner set default.
    */
-  public function testValue()
+  public function testDateFormattingAndCleaning()
   {
-    $_POST['test'] = 'New value';
+    $_POST['birthday'] = '10.04.1966';
 
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'hidden', 'test' );
-    $control->setValue( 'Old value' );
+    $control  = $fieldset->createFormControl( 'text', 'birthday' );
+    $control->setValue( '1966-04-10' );
+    $control->setCleaner( new \SetBased\Html\Form\Cleaner\DateCleaner('d-m-Y', '-', '/-. ') );
+    $control->setFormatter( new \SetBased\Html\Form\Formatter\DateFormatter('d-m-Y') );
 
     $form->loadSubmittedValues();
 
+    $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    // Value is change.
-    $this->assertNotEmpty( $changed['test'] );
+    // After formatting and clean the date must be in ISO 8601 format.
+    $this->assertEquals( '1966-04-10', $values['birthday'] );
+
+    // Effectively the date is not changed.
+    $this->assertArrayNotHasKey( 'birthday', $changed );
 
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test cleaning is done before testing value of the form control has changed.
+   * For text field whitespace cleaner set default.
    */
-  public function testWhitespace()
+  public function testPruneWhitespaceNoChanged()
   {
     $_POST['test'] = '  Hello    World!   ';
 
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'hidden', 'test' );
+    $control  = $fieldset->createFormControl( 'text', 'test' );
     $control->setValue( 'Hello World!' );
-
-    // Set cleaner for hidden field (default it off).
-    $control->setCleaner( PruneWhitespaceCleaner::get() );
 
     $form->loadSubmittedValues();
 
@@ -53,7 +53,7 @@ class HiddenControlTest extends SimpleControlTest
     // After clean '  Hello    World!   ' must be equal 'Hello World!'.
     $this->assertEquals( 'Hello World!', $values['test'] );
 
-    // Value not change.
+    // Effectively the value is not changed.
     $this->assertArrayNotHasKey( 'test', $changed );
 
   }
@@ -61,7 +61,7 @@ class HiddenControlTest extends SimpleControlTest
   //--------------------------------------------------------------------------------------------------------------------
   protected function getInputType()
   {
-    return 'hidden';
+    return 'text';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

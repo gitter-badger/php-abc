@@ -47,12 +47,8 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
     $xpath = new DOMXpath($doc);
 
 
-    // Image doesn't use absolute name.
+    // An image control has an absolute name.
     $list = $xpath->query( "/form/fieldset/input[@name='absolute' and @type='image']" );
-    $this->assertEquals( 0, $list->length );
-
-    // It uses local name.
-    $list = $xpath->query( "/form/fieldset/input[@name='level1[level2][absolute]' and @type='image']" );
     $this->assertEquals( 1, $list->length );
   }
 

@@ -1,6 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
+use SetBased\Html\Form\Validator\Validator;
 
 /**
  * Class Control
@@ -54,11 +55,9 @@ abstract class Control
   /**
    * The validators that will be used to validate this form control.
    *
-   * @var \SetBased\Html\Form\ControlValidator[]
+   * @var Validator[]
    */
   protected $myValidators = array();
-
-
 
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -85,7 +84,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param \SetBased\Html\Form\ControlValidator $theValidator
+   * @param Validator $theValidator
    */
   public function addValidator( $theValidator )
   {
@@ -96,13 +95,21 @@ abstract class Control
   /**
    * @param string $theParentName
    *
-   * @return mixed
+   * @return string
    */
   abstract public function generate( $theParentName );
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the value of an attribute.
+   *
+   * @note Depending on the child class the returned value might be different than in the actual generated HTML code
+   *       for the following attributes, @sa generate():
+   *       * type
+   *       * name
+   *       * value
+   *       * checked
+   *       * size
    *
    * @param string $theName The name of the requested attribute.
    *
@@ -121,7 +128,7 @@ abstract class Control
    *
    * @return null|string
    */
-  public function getErrorMessages( $theRecursiveFlag = false )
+  public function getErrorMessages( /** @noinspection PhpUnusedParameterInspection */ $theRecursiveFlag = false )
   {
     return $this->myErrorMessages;
   }
@@ -147,17 +154,27 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
-   *
-   * @c null, @c false, or @c '' the attribute is unset.
+   * Sets the value of an attribute of this form control.
+   * The attribute is unset when $theValue is one of<ul>
+   * <li> null
+   * <li> false
+   * <li> ''.
+   * </ul>
+   * If $theName is 'class' then $theValue is appended tot the space separated list of classes.
+   * <br/>
+   * Depending on the child class the following attributes might be overwritten upon a call to method
+   * generate()<ul>
+   * <li> type    Is automatically generated (for simple controls).
+   * <li> name    Is automatically generated (for simple controls)..
+   * <li> value   Use method setValue() instead.
+   * <li> checked Use method setValue() instead.
+   * </ul>
    *
    * @param string $theName  The name of the attribute.
    * @param mixed  $theValue The value for the attribute.
    */
   public function setAttribute( $theName, $theValue )
   {
-    if ($theName=='value') \SetBased\Html\Html::error( "Don't use attribute value." );
-
     if ($theValue===null || $theValue===false || $theValue==='')
     {
       unset($this->myAttributes[$theName]);
@@ -227,7 +244,8 @@ abstract class Control
   abstract public function setValuesBase( &$theValues );
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** Returns the name this will be used for this form control when the form is submitted.
+  /**
+   * Returns the name this will be used for this form control when the form is submitted.
    *
    * @param string $theParentSubmitName The submit name of the parent form control of this form control.
    *

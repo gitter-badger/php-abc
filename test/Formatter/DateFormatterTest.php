@@ -1,51 +1,41 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form\Control;
+use SetBased\Html\Form\Formatter\DateFormatter;
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class ConstantControl
- *
- * @package SetBased\Html\Form\Control
- */
-class ConstantControl extends SimpleControl
+class DateFormatterTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns an empty string.
-   *
-   * @param string $theParentName
-   *
-   * @return string
-   */
-  public function generate( $theParentName )
+  public function testInvalidDate1()
   {
-    return '';
+    $text      = '1966-11-31';
+    $formatter = new DateFormatter('d-m-Y');
+    $value     = $formatter->format( $text );
+
+    $this->assertEquals( $text, $value );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
-   */
-  protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
+  public function testInvalidDate2()
   {
-    $theWhiteListValue[$this->myName] = $this->myValue;
+    $text      = 'This not a date.';
+    $formatter = new DateFormatter('d-m-Y');
+    $value     = $formatter->format( $text );
+
+    $this->assertEquals( $text, $value );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param null $theInvalidFormControls
-   *
-   * @return bool
-   */
-  protected function validateBase( &$theInvalidFormControls )
+  public function testValidDate()
   {
-    return true;
+    $formatter = new DateFormatter('d-m-Y');
+    $value     = $formatter->format( '1966-04-10' );
+
+    $this->assertEquals( '10-04-1966', $value );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+

@@ -15,6 +15,12 @@ class ImageControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *       * name    Will be replaced with the submit name of this form control.
+   *       * type    Will be replaced with 'image'.
+   *
    * @param string $theParentName
    *
    * @return string
@@ -22,12 +28,15 @@ class ImageControl extends SimpleControl
   public function generate( $theParentName )
   {
     $this->myAttributes['type'] = 'image';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+
+    // For images we use local names. It is the task of the developer to ensure the local names of buttons
+    // are unique.
+    $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
-    $ret .= "<input";
+    $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
       $ret .= Html::generateAttribute( $name, $value );

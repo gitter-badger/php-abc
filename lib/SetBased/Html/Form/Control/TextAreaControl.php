@@ -27,6 +27,11 @@ class TextAreaControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control.
+   *
+   * @note Before generation the following HTML attributes are overwritten:
+   *       * name Will be replaced with the submit name of this form control.
+   *       
    * @param string $theParentName
    *
    * @return string
@@ -72,11 +77,7 @@ class TextAreaControl extends SimpleControl
       $new_value = $theSubmittedValue[$submit_name];
     }
 
-    // Normalize old (original) value and new (submitted) value.
-    $old_value = (string)$this->myValue;
-    $new_value = (string)$new_value;
-
-    if ($old_value!==$new_value)
+    if ((string)$this->myValue!==(string)$new_value)
     {
       $theChangedInputs[$this->myName] = $this;
       $this->myValue                   = $new_value;

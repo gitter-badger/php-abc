@@ -34,7 +34,7 @@ function createForm()
   $control->setPrefix('Sample checkbox 1');
 
   $control = $fieldset->createFormControl( 'checkbox', 'test2' );
-  $control->setAttribute( 'checked', true );
+  $control->setValue( true );
   $control->setPrefix('Sample checkbox 2');
 
   $fieldset = $form->createFieldSet( 'fieldset', '' );

@@ -1,20 +1,50 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-class TextControlTest extends SimpleControlTest
+require_once(__DIR__.'/SimpleControlTest.php');
+
+//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
+
+//----------------------------------------------------------------------------------------------------------------------
+class HiddenControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test cleaning is done before testing value of the form control has changed.
-   * For text field whitespace cleaner set default.
+   * Test change value.
    */
-  public function testPruneWhitespaceNoChanged()
+  public function testValue()
+  {
+    $_POST['test'] = 'New value';
+
+    $form     = new \SetBased\Html\Form();
+    $fieldset = $form->createFieldSet();
+    $control  = $fieldset->createFormControl( 'hidden', 'test' );
+    $control->setValue( 'Old value' );
+
+    $form->loadSubmittedValues();
+
+    $changed = $form->getChangedControls();
+
+    // Value is change.
+    $this->assertNotEmpty( $changed['test'] );
+
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test cleaning is done before testing value of the form control has changed.
+   */
+  public function testWhitespace()
   {
     $_POST['test'] = '  Hello    World!   ';
 
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'text', 'test' );
+    $control  = $fieldset->createFormControl( 'hidden', 'test' );
     $control->setValue( 'Hello World!' );
+
+    // Set cleaner for hidden field (default it off).
+    $control->setCleaner( PruneWhitespaceCleaner::get() );
 
     $form->loadSubmittedValues();
 
@@ -32,7 +62,7 @@ class TextControlTest extends SimpleControlTest
   //--------------------------------------------------------------------------------------------------------------------
   protected function getInputType()
   {
-    return 'text';
+    return 'hidden';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

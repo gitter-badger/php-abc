@@ -1,20 +1,24 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Html\Form\Validator;
+
+use SetBased\Html\Form\Control\Control;
+
 /**
- * Class ResetControlTest
+ * Interface Validator
+ * Interface for defining classes that validate form control elements derived from FormControl
+ *
+ * @package SetBased\Html\Form
  */
-class ResetControlTest extends PushMeControlTest
+interface Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Return reset type for form control.
+   * @param Control $theFormControl
    *
-   * @return string
+   * @return bool
    */
-  protected function getControlType()
-  {
-    return 'reset';
-  }
+  public function validate( $theFormControl );
 
   //--------------------------------------------------------------------------------------------------------------------
 }

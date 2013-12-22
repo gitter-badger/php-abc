@@ -31,6 +31,13 @@ abstract class SimpleControl extends Control
   protected $myCleaner;
 
   /**
+   * The formatter to format the value (from machine format) to the displayed value.
+   *
+   * @var \SetBased\Html\Form\Formatter\Formatter
+   */
+  protected $myFormatter;
+
+  /**
    * The label of this form control.
    *
    * @var string A HTML snippet.
@@ -79,7 +86,8 @@ abstract class SimpleControl extends Control
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the submitted value of this form control.
-   * returns string
+   *
+   * @return string
    */
   public function getSubmittedValue()
   {
@@ -88,34 +96,24 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute with name @a $theName of this form control to @a $theValue. If @a $theValue is
+   * Sets the cleaner for this form control.
    *
-   * @c null, @c false, or @c '' the attribute is unset.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param mixed  $theValue The value for the attribute.
-   */
-  public function setAttribute( $theName, $theValue )
-  {
-    if ($theName=='value')
-    {
-      $this->setValue( $theValue );
-    }
-    else
-    {
-      parent::setAttribute( $theName, $theValue );
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Set the cleaner for this form control.
-   *
-   * @param \SetBased\Html\Form\Cleaner\Cleaner $theCleaner The cleaner for this form control/
+   * @param \SetBased\Html\Form\Cleaner\Cleaner|null $theCleaner The cleaner for this form control.
    */
   public function setCleaner( $theCleaner )
   {
     $this->myCleaner = $theCleaner;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the formatter for this form control.
+   *
+   * @param \SetBased\Html\Form\Formatter\Formatter|null $theFormatter The formatter for this form control.
+   */
+  public function setFormatter( $theFormatter )
+  {
+    $this->myFormatter = $theFormatter;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -201,7 +199,7 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Return  HTML code for a label for this form control.
+   * Return the HTML code for the label for this form control.
    *
    * @return string
    */

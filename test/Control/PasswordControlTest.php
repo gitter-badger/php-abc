@@ -1,26 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form\Control;
+require_once(__DIR__.'/SimpleControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
-/**
- * Class ButtonControl
- *
- * @package SetBased\Html\Form\Control
- */
-class ButtonControl extends PushMeControl
+class PasswordControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * {@inheritdoc}
-   *
-   * @param string $theName
-   */
-  public function __construct( $theName )
+  protected function getInputType()
   {
-    parent::__construct( $theName );
-
-    $this->myButtonType = 'button';
+    return 'password';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
