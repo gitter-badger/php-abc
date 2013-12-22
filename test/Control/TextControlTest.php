@@ -1,5 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form;
+use SetBased\Html\Form\Cleaner\DateCleaner;
+use SetBased\Html\Form\Formatter\DateFormatter;
+
 class TextControlTest extends SimpleControlTest
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -11,12 +15,12 @@ class TextControlTest extends SimpleControlTest
   {
     $_POST['birthday'] = '10.04.1966';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'text', 'birthday' );
     $control->setValue( '1966-04-10' );
-    $control->setCleaner( new \SetBased\Html\Form\Cleaner\DateCleaner('d-m-Y', '-', '/-. ') );
-    $control->setFormatter( new \SetBased\Html\Form\Formatter\DateFormatter('d-m-Y') );
+    $control->setCleaner( new DateCleaner('d-m-Y', '-', '/-. ') );
+    $control->setFormatter( new DateFormatter('d-m-Y') );
 
     $form->loadSubmittedValues();
 
@@ -40,7 +44,7 @@ class TextControlTest extends SimpleControlTest
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'text', 'test' );
     $control->setValue( 'Hello World!' );

@@ -18,7 +18,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test4'] = 'on';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkbox', 'test4' );
     $control->setValue( true );
@@ -40,7 +40,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'checkbox', 'name' );
@@ -64,7 +64,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSubmittedValue1()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $fieldset->createFormControl( 'checkbox', 'test1' );
 
@@ -88,7 +88,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test2'] = 'on';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $fieldset->createFormControl( 'checkbox', 'test2' );
 
@@ -112,7 +112,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSubmittedValue3()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkbox', 'test3' );
     $control->setValue( true );

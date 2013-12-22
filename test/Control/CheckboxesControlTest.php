@@ -114,7 +114,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 4, 'cnt_name' => 'GB');
 
     // Create a form with checkboxes.
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
@@ -158,7 +158,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 4, 'cnt_name' => 'GB');
 
     // Create a form with checkboxes.
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name', 'checked' );
@@ -297,7 +297,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
     $countries[] = array('cnt_id' => '0.1', 'cnt_name' => 'UA');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
@@ -319,7 +319,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 2, 'cnt_name' => 'LU');
     $countries[] = array('cnt_id' => 0.1, 'cnt_name' => 'UA');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
@@ -338,7 +338,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => '0', 'cnt_name' => 'NL');
     $countries[] = array('cnt_id' => '0.0', 'cnt_name' => 'BE');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
@@ -354,7 +354,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm4()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
 

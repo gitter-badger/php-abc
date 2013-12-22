@@ -60,7 +60,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'radios', 'cnt_id' );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
@@ -81,7 +81,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 2, 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => 3, 'cnt_name' => 'LU');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'radios', 'cnt_id' );
     $control->setValue( '1' );

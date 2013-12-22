@@ -4,6 +4,7 @@ require_once(__DIR__.'/SimpleControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
 use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
+use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 class HiddenControlTest extends SimpleControlTest
@@ -16,7 +17,7 @@ class HiddenControlTest extends SimpleControlTest
   {
     $_POST['test'] = 'New value';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'hidden', 'test' );
     $control->setValue( 'Old value' );
@@ -38,7 +39,7 @@ class HiddenControlTest extends SimpleControlTest
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'hidden', 'test' );
     $control->setValue( 'Hello World!' );

@@ -8,7 +8,7 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'image', 'name' );
@@ -30,7 +30,7 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
    */
   public function testAbsoluteName()
   {
-    $form = new \SetBased\Html\Form();
+    $form = new Form();
 
     $fieldset = $form->CreateFieldSet();
     $complex1 = $fieldset->CreateFormControl( 'complex', 'level1' );

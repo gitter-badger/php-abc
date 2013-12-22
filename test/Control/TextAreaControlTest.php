@@ -9,7 +9,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'checkbox', 'name' );
@@ -33,7 +33,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'textarea', 'test' );
     $control->setValue( 'Hello World!' );
@@ -62,7 +62,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test'] = 'Hello World!';
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'textarea', 'test' );
     $control->setValue( 'Hi World!' );

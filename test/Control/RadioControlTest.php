@@ -8,7 +8,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
@@ -122,7 +122,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
    */
   private function setForm1()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
@@ -142,7 +142,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   private function setForm2()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );
@@ -163,7 +163,7 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   private function setForm3()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'radio', 'name' );

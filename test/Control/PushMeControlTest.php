@@ -36,7 +36,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( $this->getControlType(), 'name' );
@@ -59,7 +59,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
   public function testSetValues()
   {
     // Create form.
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->CreateFieldSet();
     $button   = $fieldset->CreateFormControl( $this->getControlType(), 'button' );
     $button->setValue( "Do not push" );
@@ -96,7 +96,7 @@ abstract class PushMeControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1( $theValue )
   {
-    $form = new \SetBased\Html\Form();
+    $form = new Form();
 
     $fieldset = $form->CreateFieldSet();
     $complex1 = $fieldset->CreateFormControl( 'complex', 'level1' );

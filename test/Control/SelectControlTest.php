@@ -8,7 +8,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'checkbox', 'name' );
@@ -79,7 +79,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
     $control->setEmptyOption(  true );
@@ -101,7 +101,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $countries[] = array('cnt_id' => 2, 'cnt_name' => 'BE');
     $countries[] = array('cnt_id' => 3, 'cnt_name' => 'LU');
 
-    $form     = new \SetBased\Html\Form();
+    $form     = new Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
     $control->setEmptyOption( true );
