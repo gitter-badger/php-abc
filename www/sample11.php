@@ -62,7 +62,7 @@ function leader()
   echo "<meta content='text/html;charset=utf-8' http-equiv='Content-Type'/>\n";
   echo "<title>Sample Table Form</title>\n";
   echo "<script type='text/javascript' src='js/jquery/jquery.min.js'></script>\n";
-  echo "<script type='text/javascript' src='js/overview_table.js'></script>\n";
+  echo "<script type='text/javascript' src='js/table-sorter/table-sorter-built.js'></script>\n";
   echo "<script type='text/javascript' src='js/sample11.js'></script>\n";
   echo "</head>\n";
   echo "<body>\n";

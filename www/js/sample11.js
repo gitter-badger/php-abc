@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 $(window).load(function () {
   $('table').each(function () {
-    var table = new SET_OverviewTable($(this));
+    $(this).overview_table = new SET_OverviewTable($(this));
   });
 });
 
