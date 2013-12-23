@@ -136,6 +136,17 @@ class SelectControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Set the obfuscator for the names (most likely the names are databases ID's) of the radio buttons.
+   *
+   * @param Obfuscator $theObfuscator The obfuscator for the radio buttons.
+   */
+  public function setOptionsObfuscator( $theObfuscator )
+  {
+    $this->myOptionsObfuscator = $theObfuscator;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Adds an option with empty label as first option to this select box.
    *
    * @param string $theEmptyOption The value for the empty option.
