@@ -48,13 +48,13 @@ function createForm()
   $control->setPostfix( '<br/>' );
   $control->setLabelText( 'email' );
   $control->setLabelPosition( 'pre' );
-  $control->addValidator( new \SetBased\Html\Form\EmailValidator() );
+  $control->addValidator( new \SetBased\Html\Form\Validator\EmailValidator() );
 
   $control = $fieldset->createFormControl( 'text', 'url' );
   $control->setPostfix( '<br/>' );
   $control->setLabelText( 'url' );
   $control->setLabelPosition( 'pre' );
-  $control->addValidator( new \SetBased\Html\Form\HttpValidator() );
+  $control->addValidator( new \SetBased\Html\Form\Validator\HttpValidator() );
 
   $fieldset = $form->createFieldSet();
   $legend = $fieldset->createLegend();
