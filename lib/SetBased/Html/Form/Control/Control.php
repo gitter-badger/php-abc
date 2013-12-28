@@ -127,7 +127,7 @@ abstract class Control
    *
    * @return null|string
    */
-  public function getErrorMessages( $theRecursiveFlag = false )
+  public function getErrorMessages( /** @noinspection PhpUnusedParameterInspection */ $theRecursiveFlag = false )
   {
     return $this->myErrorMessages;
   }
