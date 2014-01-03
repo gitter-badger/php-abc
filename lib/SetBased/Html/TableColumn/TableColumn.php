@@ -25,9 +25,16 @@ abstract class TableColumn
   protected $myHeaderText;
 
   /**
+   * If set this column can be used for sorting the data in the table of this column.
+   *
+   * @var bool
+   */
+  protected $mySortable = true;
+
+  /**
    * If set this column can be used for sorting data of the table of this column.
    *
-   * @var string|null
+   * @var string
    */
   protected $mySortDirection;
 
@@ -88,8 +95,15 @@ abstract class TableColumn
       $class .= $this->myDataType;
     }
 
+    // Add class indicating this column can be used for sorting.
+    if ($this->mySortable)
+    {
+      if ($class) $class .= ' ';
+      $class .= 'sort';
+    }
+
     // Add class indicating the sort order of this column.
-    if ($this->mySortDirection)
+    if ($this->mySortable && $this->mySortDirection)
     {
       if ($class) $class .= ' ';
 
