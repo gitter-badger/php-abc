@@ -103,11 +103,17 @@ function SET_OverviewTable($table) {
         var column_type = classes[i].substr(10);
         if (SET_OverviewTable.ourColumnTypeHandlers[column_type]) {
           that.myColumnHandlers[column_index] = new SET_OverviewTable.ourColumnTypeHandlers[column_type]();
-
-          that.myColumnHandlers[column_index].initFilter(that, $table, header_index, column_index);
         }
       }
     }
+
+    // If no handle for the column type can be found use SET_NoneColumnTypeHandler.
+    if (!that.myColumnHandlers[column_index]) {
+      that.myColumnHandlers[column_index] = new SET_NoneColumnTypeHandler();
+    }
+
+    // Initialize the filter.
+    that.myColumnHandlers[column_index].initFilter(that, $table, header_index, column_index);
 
     // Take the colspan into account for computing the next column_index.
     span = $(this).attr('colspan');
@@ -329,7 +335,7 @@ SET_OverviewTable.prototype.sortSingleColumn = function (event, $header, column,
   var tbody = this.myTable.children('tbody')[0];
   for (var i = 0; i < rows.length; ++i) {
     rows[i].sortKey = null;
-    tbody.appendChild( rows[i] );
+    tbody.appendChild(rows[i]);
   }
 
   // Remove the asc and desc sort classes from all headers.
@@ -356,6 +362,30 @@ SET_OverviewTable.prototype.sortSingleColumn = function (event, $header, column,
       }
     }
   });
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+function SET_NoneColumnTypeHandler() {
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Returns false
+ *
+ * @returns {boolean}
+ */
+SET_NoneColumnTypeHandler.prototype.startFilter = function () {
+  return false;
+};
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+SET_NoneColumnTypeHandler.prototype.initFilter = function (overview_table, $table, header_index, column_index) {
+  var $cell;
+
+  $cell = $table.children('thead').find('tr.filter').find('td').eq(header_index);
+  $cell.html('');
+  $cell.width($cell.css('width'));
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -444,9 +474,9 @@ SET_TextColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Returns the text content of a table_cell.
+ * Returns the text content of a table cell.
  *
- * @param {jquery} $table_cell The table cell.
+ * @param {jquery} table_cell The table cell.
  *
  * @returns {string}
  */
@@ -464,6 +494,39 @@ SET_TextColumnTypeHandler.prototype.compareSortKeys = function (row1, row2) {
   }
 
   return 0;
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+function SET_NumericColumnTypeHandler() {
+}
+
+SET_NumericColumnTypeHandler.prototype = new SET_TextColumnTypeHandler();
+
+// ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Returns the numeric content of a table cell.
+ *
+ * @param {jquery} table_cell The table cell.
+ *
+ * @returns {Number}
+ */
+SET_NumericColumnTypeHandler.prototype.getSortKey = function (table_cell) {
+  return parseFloat($(table_cell).text().replace(/[^\-\+0-9,]/, '').replace(',', '.'));
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+SET_NumericColumnTypeHandler.prototype.compareSortKeys = function (row1, row2) {
+  if (row1.sortKey === row2.sortKey) {
+    return 0;
+  }
+  if (row1.sortKey === "" && !isNaN(row2.sortKey)) {
+    return -1;
+  }
+  if (row2.sortKey === "" && !isNaN(row1.sortKey)) {
+    return 1;
+  }
+
+  return row1.sortKey - row2.sortKey;
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -490,7 +553,14 @@ SET_InputTextColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Register column type handlers.
+ */
+SET_OverviewTable.registerColumnTypeHandler('none', SET_NoneColumnTypeHandler);
 SET_OverviewTable.registerColumnTypeHandler('text', SET_TextColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('email', SET_TextColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('email', SET_TextColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('numeric', SET_NumericColumnTypeHandler);
 
 SET_OverviewTable.registerColumnTypeHandler('input_text', SET_InputTextColumnTypeHandler);
 
