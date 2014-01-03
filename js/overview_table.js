@@ -351,15 +351,17 @@ SET_OverviewTable.prototype.sortSingleColumn = function (event, $header, column,
   }
 
   // Reapply zebra theme on visible rows.
-  // Note: Using attr('visibility') is faster than using children('tr:visible').
-  this.myTable.children('tbody').children('tr').each(function (index) {
-    if ($(this).attr('visibility') === 'visible') {
+  // Note: Using attr('display') is faster than using children('tr:visible').
+  var index = 0;
+  this.myTable.children('tbody').children('tr').each(function () {
+    if ($(this).css('display') !== 'none') {
       if (((index + 1) % 2) === 1) {
         $(this).removeClass('even').addClass('odd');
       }
       else {
         $(this).removeClass('odd').addClass('even');
       }
+      index = index + 1;
     }
   });
 };
