@@ -81,8 +81,8 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
+    $control->setEmptyOption(  true );
     $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
-    $control->setEmptyOption( ' ' );
 
     $form->loadSubmittedValues();
 
@@ -103,9 +103,9 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $form     = new \SetBased\Html\Form();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl( 'select', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
-    $control->setEmptyOption( ' ' );
+    $control->setEmptyOption( true );
     $control->setValue( '1' );
+    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
 
     $form->loadSubmittedValues();
 

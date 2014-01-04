@@ -26,7 +26,7 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test for absolute name for button.
+   * Test for absolute name for image.
    */
   public function testAbsoluteName()
   {
@@ -37,7 +37,7 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
     $complex2 = $complex1->CreateFormControl( 'complex', 'level2' );
 
     $button = $complex2->CreateFormControl( 'image', 'absolute' );
-    if (isset($theValue)) $button->setAttribute( 'value', $theValue );
+    if (isset($theValue)) $button->setValue( $theValue );
 
     // Generate HTML.
     $html = $form->generate();
@@ -46,13 +46,14 @@ class ImageControlTest extends PHPUnit_Framework_TestCase
     $doc->loadXML( $html );
     $xpath = new DOMXpath($doc);
 
-    // Names of buttons must be absolute.
-    $list = $xpath->query( "/form/fieldset/input[@name='absolute' and @type='image']" );
-    $this->assertEquals( 1, $list->length );
 
-    // Buttons doesn't use full name.
-    $list = $xpath->query( "/form/fieldset/input[@name='level1[level2][absolute]' and @type='image']" );
+    // Image doesn't use absolute name.
+    $list = $xpath->query( "/form/fieldset/input[@name='absolute' and @type='image']" );
     $this->assertEquals( 0, $list->length );
+
+    // It uses local name.
+    $list = $xpath->query( "/form/fieldset/input[@name='level1[level2][absolute]' and @type='image']" );
+    $this->assertEquals( 1, $list->length );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ function createForm()
   $countries[] = array( 'cnt_id' => '4', 'cnt_name' => 'UA' );
 
   $control = $fieldset->createFormControl( 'select', 'cnt_id' );
-  $control->setValue( '1' );
+  $control->setValue( '2' );
   $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
   $control->setEmptyOption( true );
 
