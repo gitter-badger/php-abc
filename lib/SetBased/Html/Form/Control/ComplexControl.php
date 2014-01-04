@@ -124,7 +124,23 @@ class ComplexControl extends Control
     }
 
     $this->myControls[] = $control;
+
     return $control;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a form control to this complex form control.
+   *
+   * @param string $theControl
+   *
+   * @return ComplexControl|SimpleControl|SelectControl|CheckBoxesControl|RadiosControl
+   */
+  public function addFormControl( $theControl )
+  {
+    $this->myControls[] = $theControl;
+
+    return $theControl;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
