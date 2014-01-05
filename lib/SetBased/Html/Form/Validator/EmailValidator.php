@@ -1,8 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Validator;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Control\Control;
+
 /**
  * Class EmailValidator
  * Validates if the value of a form control (derived from FormControl) is a valid email address.
@@ -10,7 +11,7 @@ namespace SetBased\Html\Form;
  *
  * @package SetBased\Html\Form
  */
-class EmailValidator implements ControlValidator
+class EmailValidator implements Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -20,7 +21,7 @@ class EmailValidator implements ControlValidator
    *  is validated as well if the domain of the email address actually exists.
    *  Otherwise returns @c false.
    *
-   * @param \SetBased\Html\Form\Control\Control $theFormControl
+   * @param Control $theFormControl
    *
    * @return bool
    */

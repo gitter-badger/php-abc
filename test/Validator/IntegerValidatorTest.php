@@ -1,8 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form;
+use SetBased\Html\Form\Validator\IntegerValidator;
 
-//----------------------------------------------------------------------------------------------------------------------
 class IntegerValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -205,7 +204,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'text', 'integer' );
-    $control->addValidator( new \SetBased\Html\Form\IntegerValidator() );
+    $control->addValidator( new IntegerValidator() );
 
     $form->loadSubmittedValues();
 
@@ -223,7 +222,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl( 'text', 'integer' );
-    $control->addValidator( new \SetBased\Html\Form\IntegerValidator(-1, 10) );
+    $control->addValidator( new IntegerValidator(-1, 10) );
 
     $form->loadSubmittedValues();
 

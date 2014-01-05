@@ -1,6 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Validator;
+
+use SetBased\Html\Form\Control\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -10,7 +12,7 @@ namespace SetBased\Html\Form;
  *
  * @package SetBased\Html\Form
  */
-class IntegerValidator implements ControlValidator
+class IntegerValidator implements Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -47,7 +49,7 @@ class IntegerValidator implements ControlValidator
    *  * The value of @a $theFormControl is an integer.
    *  Otherwise returns @c false.
    *
-   * @param Control\Control $theFormControl
+   * @param Control $theFormControl
    *
    * @return bool
    */

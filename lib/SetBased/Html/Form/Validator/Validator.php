@@ -1,19 +1,20 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Validator;
 
-//----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Control\Control;
+
 /**
- * Interface ControlValidator
+ * Interface Validator
  * Interface for defining classes that validate form control elements derived from FormControl
  *
  * @package SetBased\Html\Form
  */
-interface ControlValidator
+interface Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param Control\Control $theFormControl
+   * @param Control $theFormControl
    *
    * @return bool
    */

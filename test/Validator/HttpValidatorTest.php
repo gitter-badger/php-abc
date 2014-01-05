@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form;
+use SetBased\Html\Form\Validator\HttpValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 class HttpValidatorTest extends PHPUnit_Framework_TestCase
@@ -124,7 +124,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'text', 'url' );
-    $control->addValidator( new \SetBased\Html\Form\HttpValidator() );
+    $control->addValidator( new HttpValidator() );
 
     $form->loadSubmittedValues();
 

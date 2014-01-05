@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Html\Form;
+use SetBased\Html\Form\Validator\MandatoryValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
@@ -108,7 +108,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( $theType, 'input' );
-    $control->addValidator( new \SetBased\Html\Form\MandatoryValidator() );
+    $control->addValidator( new MandatoryValidator() );
 
     $form->loadSubmittedValues();
 
@@ -126,7 +126,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
     $fieldset = $form->createFieldSet( 'fieldset' );
 
     $control = $fieldset->createFormControl( 'checkbox', 'box' );
-    $control->addValidator( new \SetBased\Html\Form\MandatoryValidator() );
+    $control->addValidator( new MandatoryValidator() );
 
     $form->loadSubmittedValues();
 

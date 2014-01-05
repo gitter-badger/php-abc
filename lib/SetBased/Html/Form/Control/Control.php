@@ -1,6 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
+use SetBased\Html\Form\Validator\Validator;
 
 /**
  * Class Control
@@ -54,7 +55,7 @@ abstract class Control
   /**
    * The validators that will be used to validate this form control.
    *
-   * @var \SetBased\Html\Form\ControlValidator[]
+   * @var Validator[]
    */
   protected $myValidators = array();
 
@@ -83,7 +84,7 @@ abstract class Control
   /**
    * Adds a validator for this form control.
    *
-   * @param \SetBased\Html\Form\ControlValidator $theValidator
+   * @param Validator $theValidator
    */
   public function addValidator( $theValidator )
   {

@@ -1,6 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Html\Form;
+namespace SetBased\Html\Form\Validator;
+
+use SetBased\Html\Form\Control\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -10,7 +12,7 @@ namespace SetBased\Html\Form;
  *
  * @package SetBased\Html\Form
  */
-class MandatoryValidator implements ControlValidator
+class MandatoryValidator implements Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -18,7 +20,7 @@ class MandatoryValidator implements ControlValidator
    *  * Each child form control has a value.
    *  Otherwise returns @c false.
    *
-   * @param Control\Control|Control\ComplexControl $theFormControl
+   * @param Control $theFormControl
    *
    * @return bool
    */
