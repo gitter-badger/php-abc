@@ -3,6 +3,7 @@
 namespace SetBased\Html\Form\SlatJoint;
 
 use SetBased\Html\Form\Control\TextControl;
+use SetBased\Html\Html;
 
 class TextSlatJoint extends SlatJoint
 {
@@ -15,7 +16,7 @@ class TextSlatJoint extends SlatJoint
   public function __construct( $theHeaderText )
   {
     $this->myDataType   = 'input_text';
-    $this->myHeaderText = $theHeaderText;
+    $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

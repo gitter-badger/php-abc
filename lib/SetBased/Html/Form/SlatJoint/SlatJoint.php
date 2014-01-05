@@ -18,25 +18,18 @@ use SetBased\Html\Html;
 abstract class SlatJoint
 {
   /**
-   * The type of the data that this table row/column hol ds.
+   * The type of the data that the column of this slat joint holds.
    *
    * @var string
    */
   protected $myDataType;
 
   /**
-   * The header text of this row/column.
+   * The inner HTML code of the th element of the column header of this slat joint.
    *
    * @var string
    */
-  protected $myHeaderText;
-
-  /**
-   * If set this column can be used for sorting the data in the table of this column.
-   *
-   * @var bool
-   */
-  protected $mySortable = true;
+  protected $myHeaderHtml;
 
   /**
    * If set this column can be used for sorting data of the table of this column.
@@ -53,6 +46,13 @@ abstract class SlatJoint
    */
   protected $mySortOrder;
 
+  /**
+   * If set this column can be used for sorting the data in the table of this column.
+   *
+   * @var bool
+   */
+  protected $mySortable = true;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param string $theName The name of the form control in the table cell.
@@ -63,17 +63,6 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
-   *
-   * @return string
-   */
-  public function getHtmlColumnFilter()
-  {
-    return "<td><input type='text'/></td>\n";
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns the number of columns spanned by this object.
    *
    * @return int
@@ -81,6 +70,17 @@ abstract class SlatJoint
   public function getColSpan()
   {
     return 1;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code (including opening and closing th tags) for the table filter cell.
+   *
+   * @return string
+   */
+  public function getHtmlColumnFilter()
+  {
+    return "<td><input type='text'/></td>\n";
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -126,7 +126,29 @@ abstract class SlatJoint
       }
     }
 
-    return "<th class='$class'>".Html::txt2Html( $this->myHeaderText )."</th>\n";
+    return "<th class='$class'>".$this->myHeaderHtml."</th>\n";
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the inner HTML code of the th element of the column header of this slat joint.
+   *
+   * @param string $theHtml The HTML code.
+   */
+  public function setHeaderHtml( $theHtml )
+  {
+    $this->myHeaderHtml = $theHtml;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the header text for the column header of this slat joint.
+   *
+   * @param string $theText The header text (applicable characters will be converted to HTML entities).
+   */
+  public function setHeaderText( $theText )
+  {
+    $this->myHeaderHtml = Html::txt2Html( $theText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

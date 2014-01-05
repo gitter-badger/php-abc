@@ -14,46 +14,39 @@ class DeadPoetSlatControlFactory extends SlatControlFactory
   //--------------------------------------------------------------------------------------------------------------------
   public function __construct()
   {
-    $this->mySlatJoints['birthday']      = new TextSlatJoint('Birthday');
-    $this->mySlatJoints['date_of_death'] = new TextSlatJoint('Date of Death');
-    $this->mySlatJoints['sir_name']      = new TextSlatJoint('Sir Name');
-    $this->mySlatJoints['given_name']    = new TextSlatJoint('Given Name');
+    // Add a column with birthday of the poet.
+    $this->addSlatJoint( 'birthday', new TextSlatJoint('Birthday') );
+
+    // Add a column with date of death.
+    $this->addSlatJoint( 'date_of_death', new TextSlatJoint('Date of Death') );
+
+    // Add a column with the sir name.
+    $this->addSlatJoint( 'sir_name', new TextSlatJoint('Sir Name') );
+
+    // Add a column with the given name.
+    $this->addSlatJoint( 'given_name', new TextSlatJoint('Given Name') );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param LouverControl $theLouverControl
-   * @param array        $theData
-   */
   public function createRow( $theLouverControl, $theData )
   {
-    $row = new SlatControl($theData['id']);
+    $row = $theLouverControl->addFormControl( new SlatControl($theData['id']) );
 
-    $factory = $this->mySlatJoints['birthday'];
-    $control = $factory->createCell( 'birthday' );
+    $control = $this->createFormControl( $row, 'birthday' );
     $control->setAttribute( 'maxlength', 10 );
     $control->setValue( $theData['birthday'] );
-    $row->addFormControl( $control );
 
-    $factory = $this->mySlatJoints['date_of_death'];
-    $control = $factory->createCell( 'date_of_death' );
+    $control = $this->createFormControl( $row, 'date_of_death' );
     $control->setAttribute( 'maxlength', 10 );
     $control->setValue( $theData['date_of_death'] );
-    $row->addFormControl( $control );
 
-    $factory = $this->mySlatJoints['sir_name'];
-    $control = $factory->createCell( 'sir_name' );
+    $control = $this->createFormControl( $row, 'sir_name' );
     $control->setAttribute( 'maxlength', 40 );
     $control->setValue( $theData['sir_name'] );
-    $row->addFormControl( $control );
 
-    $factory = $this->mySlatJoints['given_name'];
-    $control = $factory->createCell( 'given_name' );
+    $control = $this->createFormControl( $row, 'given_name' );
     $control->setAttribute( 'maxlength', 25 );
     $control->setValue( $theData['given_name'] );
-    $row->addFormControl( $control );
-
-    $theLouverControl->addFormControl( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

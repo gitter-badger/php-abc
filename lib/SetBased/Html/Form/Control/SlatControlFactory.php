@@ -13,18 +13,18 @@ use SetBased\Html\Form\SlatJoint\SlatJoint;
 abstract class SlatControlFactory
 {
   /**
-   * The slat joints for the louver control of this slat control factory.
-   *
-   * @var SlatJoint[]
-   */
-  protected $mySlatJoints;
-
-  /**
    * If set to true the header will contain a row for filtering.
    *
    * @var bool
    */
   protected $myFilter = false;
+
+  /**
+   * The slat joints for the louver control of this slat control factory.
+   *
+   * @var SlatJoint[]
+   */
+  protected $mySlatJoints;
 
   /**
    * The index in $mySlatJoints of the next slat joint added to this slat control factory.
@@ -35,8 +35,47 @@ abstract class SlatControlFactory
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param LouverControl $theLouverControl
-   * @param array         $theData
+   * Adds a slat joint (i.e. a column to the form) to this slat control factory and returns this slat joint.
+   *
+   * @param string    $theSlatJointName The name of the slat joint.
+   * @param SlatJoint $theSlatJoint     The slat joint.
+   *
+   * @return SlatJoint
+   */
+  public function addSlatJoint( $theSlatJointName, $theSlatJoint )
+  {
+    $this->mySlatJoints[$theSlatJointName] = $theSlatJoint;
+
+    return $theSlatJoint;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Creates a form control using a slat joint and returns the created form control.
+   *
+   * @param ComplexControl $theParentControl The parent control
+   * @param string         $theSlatJointName The name of the slat joint.
+   * @param string|null    $theControlName   The name of the created form control. If null the form control will have
+   *                                         the same name as the slat joint. Use '' for an empty name (should only be
+   *                                         used if the created form control is a complex form control).
+   *
+   * @return ComplexControl|SimpleControl|SelectControl|CheckBoxesControl|RadiosControl
+   */
+  public function createFormControl( $theParentControl, $theSlatJointName, $theControlName = null )
+  {
+    $control = $this->mySlatJoints[$theSlatJointName]->createCell( isset($theControlName) ?
+                                                                     $theControlName : $theSlatJointName );
+    $theParentControl->addFormControl( $control );
+
+    return $control;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Creates the form controls of a slat in a louver control.
+   *
+   * @param LouverControl $theLouverControl The louver control.
+   * @param array         $theData An array from the nested arrays as set in LouverControl::setData.
    */
   abstract public function createRow( $theLouverControl, $theData );
 

@@ -1,1 +1,1 @@
-vendor/setbased/table/js/overview_table.js
+../../vendor/setbased/table/js/overview_table.js
