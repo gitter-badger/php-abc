@@ -27,11 +27,11 @@ abstract class SlatControlFactory
   protected $mySlatJoints;
 
   /**
-   * The index in $mySlatJoints of the next slat joint added to this slat control factory.
+   * The number of columns in the under lying table of the slat form control.
    *
    * @var int
    */
-  private $myColIndex = 1;
+  private $myNumberOfColumns = 1;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -46,6 +46,8 @@ abstract class SlatControlFactory
   {
     $this->mySlatJoints[$theSlatJointName] = $theSlatJoint;
 
+    $this->myNumberOfColumns += $theSlatJoint->getColSpan();
+
     return $theSlatJoint;
   }
 
@@ -53,7 +55,7 @@ abstract class SlatControlFactory
   /**
    * Creates a form control using a slat joint and returns the created form control.
    *
-   * @param ComplexControl $theParentControl The parent control
+   * @param ComplexControl $theParentControl The parent form control for the created form control.
    * @param string         $theSlatJointName The name of the slat joint.
    * @param string|null    $theControlName   The name of the created form control. If null the form control will have
    *                                         the same name as the slat joint. Use '' for an empty name (should only be
@@ -127,13 +129,13 @@ abstract class SlatControlFactory
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the total number of columns of the table form control.
+   * Returns the number of columns in the underlying table of the louver form control.
    *
    * @return int
    */
   public function getNumberOfColumns()
   {
-    return $this->myColIndex - 1;
+    return $this->myNumberOfColumns;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
