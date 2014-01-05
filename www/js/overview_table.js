@@ -1,1 +1,0 @@
-../../vendor/setbased/table/js/overview_table.js
