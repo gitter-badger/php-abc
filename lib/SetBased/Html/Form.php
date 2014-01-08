@@ -88,7 +88,7 @@ class Form
    * sets of this form.
    *
    * @param string $theType The class name of the fieldset which must be derived from class FieldSet. The following
-   *                        alias are implemented:
+   *                        aliases are implemented:
    *                        - fieldset: class FieldSet
    * @param string $theName The name (which might be empty) of the fieldset.
    *
@@ -107,7 +107,23 @@ class Form
     }
 
     $this->myFieldSets[] = $fieldset;
+
     return $fieldset;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a field set to the field sets of this form.
+   *
+   * @param FieldSet $theFieldSet
+   *
+   * @return FieldSet
+   */
+  public function addFieldSet( $theFieldSet )
+  {
+    $this->myFieldSets[] = $theFieldSet;
+
+    return $theFieldSet;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
