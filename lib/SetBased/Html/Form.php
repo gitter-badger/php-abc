@@ -84,6 +84,21 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds a field set to the field sets of this form.
+   *
+   * @param FieldSet $theFieldSet
+   *
+   * @return FieldSet
+   */
+  public function addFieldSet( $theFieldSet )
+  {
+    $this->myFieldSets[] = $theFieldSet;
+
+    return $theFieldSet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Creates a fieldset of @a $theType and with @a $theName and appends this fieldset to the list of field
    * sets of this form.
    *
@@ -109,21 +124,6 @@ class Form
     $this->myFieldSets[] = $fieldset;
 
     return $fieldset;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Adds a field set to the field sets of this form.
-   *
-   * @param FieldSet $theFieldSet
-   *
-   * @return FieldSet
-   */
-  public function addFieldSet( $theFieldSet )
-  {
-    $this->myFieldSets[] = $theFieldSet;
-
-    return $theFieldSet;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -365,6 +365,36 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the value of attribute @a $theName of this form to @a $theValue.
+   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
+   *   applies.)
+   *
+   * @param string      $theName  The name of the attribute.
+   * @param string|null $theValue The value for the attribute.
+   */
+  public function setAttribute( $theName, $theValue )
+  {
+    if ($theValue===null || $theValue===false || $theValue==='')
+    {
+      unset($this->myAttributes[$theName]);
+    }
+    else
+    {
+      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      {
+        $this->myAttributes[$theName] .= ' ';
+        $this->myAttributes[$theName] .= $theValue;
+      }
+      else
+      {
+        $this->myAttributes[$theName] = $theValue;
+      }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param mixed $theValues
    */
   public function setValues( $theValues )
@@ -433,36 +463,6 @@ class Form
     $ret .= ">\n";
 
     return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of attribute @a $theName of this form to @a $theValue.
-   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
-   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
-   *   applies.)
-   *
-   * @param string      $theName  The name of the attribute.
-   * @param string|null $theValue The value for the attribute.
-   */
-  protected function setAttribute( $theName, $theValue )
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
