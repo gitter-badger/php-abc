@@ -73,7 +73,7 @@ class SelectControl extends SimpleControl
 
 
     // Add an empty option, if necessary.
-    if (!isset($this->myEmptyOption))
+    if (isset($this->myEmptyOption))
     {
       $html .= '<option';
       $html .= Html::generateAttribute( 'value', $this->myEmptyOption );
@@ -149,12 +149,13 @@ class SelectControl extends SimpleControl
   /**
    * Adds an option with empty label as first option to this select box.
    *
-   * @param string $theEmptyOption The value for the empty option.
+   * @param string $theEmptyOption The value for the empty option. This value will not be obfuscated. 
    */
-  public function setEmptyOption( $theEmptyOption )
+  public function setEmptyOption( $theEmptyOption=' ' )
   {
     $this->myEmptyOption = $theEmptyOption;
   }
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * @param array $theSubmittedValue
