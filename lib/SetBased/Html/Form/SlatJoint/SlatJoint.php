@@ -78,10 +78,7 @@ abstract class SlatJoint
    *
    * @return string
    */
-  public function getHtmlColumnFilter()
-  {
-    return "<td><input type='text'/></td>\n";
-  }
+  abstract public function getHtmlColumnFilter();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

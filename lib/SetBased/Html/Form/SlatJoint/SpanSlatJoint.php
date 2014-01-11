@@ -2,10 +2,10 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\SlatJoint;
 
-use SetBased\Html\Form\Control\TextControl;
+use SetBased\Html\Form\Control\SpanControl;
 use SetBased\Html\Html;
 
-class TextSlatJoint extends SlatJoint
+class SpanSlatJoint extends SlatJoint
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -15,7 +15,7 @@ class TextSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_text';
+    $this->myDataType   = 'text';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
@@ -25,22 +25,11 @@ class TextSlatJoint extends SlatJoint
    *
    * @param string $theName The local name of the text form control.
    *
-   * @return TextControl
+   * @return SpanControl
    */
   public function createCell( $theName )
   {
-    return new TextControl($theName);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
-   *
-   * @return string
-   */
-  public function getHtmlColumnFilter()
-  {
-    return "<td><input type='text'/></td>\n";
+    return new SpanControl( $theName );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
