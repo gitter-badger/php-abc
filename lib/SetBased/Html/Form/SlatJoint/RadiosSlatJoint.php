@@ -2,10 +2,10 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\SlatJoint;
 
-use SetBased\Html\Form\Control\SpanControl;
+use SetBased\Html\Form\Control\RadiosControl;
 use SetBased\Html\Html;
 
-class SpanSlatJoint extends SlatJoint
+class RadiosSlatJoint extends SlatJoint
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -15,7 +15,7 @@ class SpanSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'text';
+    $this->myDataType   = 'input_radios';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
@@ -25,11 +25,11 @@ class SpanSlatJoint extends SlatJoint
    *
    * @param string $theName The local name of the text form control.
    *
-   * @return SpanControl
+   * @return RadiosControl
    */
   public function createCell( $theName )
   {
-    return new SpanControl( $theName );
+    return new RadiosControl($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
