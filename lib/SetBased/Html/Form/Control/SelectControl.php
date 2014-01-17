@@ -149,7 +149,7 @@ class SelectControl extends SimpleControl
   /**
    * Adds an option with empty label as first option to this select box.
    *
-   * @param string $theEmptyOption The value for the empty option. This value will not be obfuscated. 
+   * @param string $theEmptyOption The value for the empty option. This value will not be obfuscated.
    */
   public function setEmptyOption( $theEmptyOption=' ' )
   {
