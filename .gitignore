@@ -3,3 +3,6 @@ vendor
 composer.lock
 www/js/jquery
 www/js/require*
+www/js/table-sorter
+.idea
+doc
