@@ -21,9 +21,9 @@ class ButtonSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a button form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the button form control.
    *
    * @return ButtonControl
    */

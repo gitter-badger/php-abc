@@ -21,9 +21,9 @@ class InvisibleSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a invisible form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the invisible form control.
    *
    * @return InvisibleControl
    */

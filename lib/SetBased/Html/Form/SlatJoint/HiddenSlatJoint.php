@@ -21,9 +21,9 @@ class HiddenSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a hidden form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the hidden form control.
    *
    * @return HiddenControl
    */

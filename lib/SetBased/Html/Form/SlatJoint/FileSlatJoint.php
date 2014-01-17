@@ -21,9 +21,9 @@ class FileSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a file form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the file form control.
    *
    * @return FileControl
    */

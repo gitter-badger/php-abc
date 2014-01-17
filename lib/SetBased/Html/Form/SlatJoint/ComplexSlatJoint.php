@@ -21,9 +21,9 @@ class ComplexSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a complex form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the complex form control.
    *
    * @return ComplexControl
    */

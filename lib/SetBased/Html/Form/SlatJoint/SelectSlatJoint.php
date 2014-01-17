@@ -21,9 +21,9 @@ class SelectSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a select form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the select form control.
    *
    * @return SelectControl
    */
