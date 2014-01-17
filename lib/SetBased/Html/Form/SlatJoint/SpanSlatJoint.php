@@ -15,7 +15,7 @@ class SpanSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'text';
+    $this->myDataType   = 'span';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
@@ -40,6 +40,7 @@ class SpanSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return "<td><input type='text'/></td>\n";
   }
 
   //--------------------------------------------------------------------------------------------------------------------

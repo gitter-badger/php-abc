@@ -15,7 +15,7 @@ class RadiosSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_radios';
+    $this->myDataType   = 'radios';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

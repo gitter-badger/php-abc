@@ -15,7 +15,7 @@ class TextAreaSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_text_area';
+    $this->myDataType   = 'text_area';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
