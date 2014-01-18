@@ -38,8 +38,18 @@ SET_Form.ourForms = [];
  */
 SET_Form.registerForm = function (selector) {
   "use strict";
-  $(selector).find('form').each(function () {
-    SET_Form.ourForms[SET_Form.ourForms.length] = new SET_Form($(this));
+  $(selector).each(function () {
+    var $this = $(this);
+
+    if ($this.is('form')) {
+      // Selector is a form.
+      SET_Form.ourForms[SET_Form.ourForms.length] = new SET_Form($this);
+    } else {
+      // Selector is not a form. Find forms below the selector.
+      $this.find('form').each(function () {
+        SET_Form.ourForms[SET_Form.ourForms.length] = new SET_Form($(this));
+      });
+    }
   });
 };
 
