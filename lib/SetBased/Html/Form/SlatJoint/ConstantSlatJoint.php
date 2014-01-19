@@ -21,9 +21,9 @@ class ConstantSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a constant form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the constant form control.
    *
    * @return ConstantControl
    */

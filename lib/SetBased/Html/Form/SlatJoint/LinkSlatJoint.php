@@ -21,9 +21,9 @@ class LinkSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a link form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the link form control.
    *
    * @return LinkControl
    */

@@ -2,10 +2,10 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\SlatJoint;
 
-use SetBased\Html\Form\Control\ResetControl;
+use SetBased\Html\Form\Control\SubmitControl;
 use SetBased\Html\Html;
 
-class ResetSlatJoint extends SlatJoint
+class SubmitSlatJoint extends SlatJoint
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -21,15 +21,15 @@ class ResetSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a reset form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the submit form control.
    *
-   * @return ResetControl
+   * @return SubmitControl
    */
   public function createCell( $theName )
   {
-    return new ResetControl($theName);
+    return new SubmitControl($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -21,9 +21,9 @@ class DivSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a div form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the div form control.
    *
    * @return DivControl
    */

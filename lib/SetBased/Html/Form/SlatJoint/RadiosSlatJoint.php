@@ -21,9 +21,9 @@ class RadiosSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a radios form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the radios form control.
    *
    * @return RadiosControl
    */

@@ -24,7 +24,11 @@
       "SetBased\\Html\\": "lib/"
     }
   },
-  "config": {
-    "component-dir": "www/js"
+  "extra": {
+    "component": {
+      "scripts": [
+        "js/form.js"
+      ]
+    }
   }
 }

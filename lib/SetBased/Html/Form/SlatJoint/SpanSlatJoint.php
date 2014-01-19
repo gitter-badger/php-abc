@@ -21,9 +21,9 @@ class SpanSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a span form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the span form control.
    *
    * @return SpanControl
    */
