@@ -15,7 +15,7 @@ class ComplexSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'complex';
+    $this->myDataType   = 'control_complex';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

@@ -15,7 +15,7 @@ class InvisibleSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_invisible';
+    $this->myDataType   = 'control_invisible';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

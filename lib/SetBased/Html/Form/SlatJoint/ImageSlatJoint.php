@@ -15,7 +15,7 @@ class ImageSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_image';
+    $this->myDataType   = 'control_image';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

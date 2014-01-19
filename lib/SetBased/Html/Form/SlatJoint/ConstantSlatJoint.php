@@ -15,7 +15,7 @@ class ConstantSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'constant';
+    $this->myDataType   = 'control_constant';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

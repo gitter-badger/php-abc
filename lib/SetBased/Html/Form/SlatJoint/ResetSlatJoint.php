@@ -15,7 +15,7 @@ class ResetSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_reset';
+    $this->myDataType   = 'control_reset';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

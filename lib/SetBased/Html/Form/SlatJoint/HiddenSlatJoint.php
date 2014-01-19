@@ -15,7 +15,7 @@ class HiddenSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_hidden';
+    $this->myDataType   = 'control_hidden';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

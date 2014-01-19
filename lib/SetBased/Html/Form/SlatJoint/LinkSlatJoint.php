@@ -15,7 +15,7 @@ class LinkSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'link';
+    $this->myDataType   = 'control_link';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
