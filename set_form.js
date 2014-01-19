@@ -67,7 +67,8 @@ function SET_TextControlColumnTypeHandler() {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-SET_TextControlColumnTypeHandler.prototype = SET_TextColumnTypeHandler.prototype;
+SET_TextControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
+SET_TextControlColumnTypeHandler.constructor = SET_TextControlColumnTypeHandler;
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
