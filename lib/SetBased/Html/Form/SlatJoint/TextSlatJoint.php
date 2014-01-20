@@ -15,7 +15,7 @@ class TextSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'input_text';
+    $this->myDataType   = 'control_text';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

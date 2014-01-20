@@ -6,3 +6,6 @@ www/js/require*
 www/js/table-sorter
 .idea
 doc
+build
+bin
+www/js/form

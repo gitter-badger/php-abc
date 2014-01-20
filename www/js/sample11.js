@@ -1,11 +1,14 @@
-/*jslint browser: true, onevar: false, indent: 2 */
+/*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
+/*global window */
 /*global $ */
+/*global SET_Form */
+/*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
 $(window).load(function () {
-  $('table').each(function () {
-    $(this).overview_table = new SET_OverviewTable($(this));
-  });
+  "use strict";
+  SET_Form.registerForm('form');
+  SET_OverviewTable.registerTable('.louver-control');
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
