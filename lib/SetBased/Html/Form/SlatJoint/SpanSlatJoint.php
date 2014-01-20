@@ -15,7 +15,7 @@ class SpanSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'span';
+    $this->myDataType   = ' control_span';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

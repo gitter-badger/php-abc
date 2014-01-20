@@ -15,7 +15,7 @@ class DivSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'div';
+    $this->myDataType   = 'control_div';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 
