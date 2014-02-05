@@ -15,7 +15,7 @@ class FileSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'control_file';
+    $this->myDataType   = 'control-file';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

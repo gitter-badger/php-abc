@@ -15,7 +15,7 @@ class CheckboxSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'control_checkbox';
+    $this->myDataType   = 'control-checkbox';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

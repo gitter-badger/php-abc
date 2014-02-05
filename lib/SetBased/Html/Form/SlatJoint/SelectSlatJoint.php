@@ -15,7 +15,7 @@ class SelectSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'control_select';
+    $this->myDataType   = 'control-select';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

@@ -15,7 +15,7 @@ class ButtonSlatJoint extends SlatJoint
    */
   public function __construct( $theHeaderText )
   {
-    $this->myDataType   = 'control_button';
+    $this->myDataType   = 'control-button';
     $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
   }
 

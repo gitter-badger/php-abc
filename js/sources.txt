@@ -1,2 +1,3 @@
 SET_Form.js
 SET_TextControlColumnTypeHandler.js
+SET_HtmlControlColumnTypeHandler.js
