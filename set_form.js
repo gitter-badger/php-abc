@@ -105,13 +105,17 @@ SET_OverviewTable.registerColumnTypeHandler('control_submit', SET_TextControlCol
 /*global SET_TextColumnTypeHandler */
 
 // ---------------------------------------------------------------------------------------------------------------------
-function SET_SpanControlColumnTypeHandler() {
+/**
+ * Prototype for column handlers for columns with a spn, div,
+ * @constructor
+ */
+function SET_HtmlControlColumnTypeHandler() {
   "use strict";
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-SET_SpanControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
-SET_SpanControlColumnTypeHandler.constructor = SET_SpanControlColumnTypeHandler;
+SET_HtmlControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
+SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
@@ -121,7 +125,7 @@ SET_SpanControlColumnTypeHandler.constructor = SET_SpanControlColumnTypeHandler;
  *
  * @returns {Number}
  */
-SET_SpanControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
+SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
   return $(table_cell).text();
 };
@@ -130,6 +134,8 @@ SET_SpanControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 /**
  * Register column type handlers.
  */
-SET_OverviewTable.registerColumnTypeHandler('control-span', SET_SpanControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-div', SET_HtmlControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-span', SET_HtmlControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-link', SET_HtmlControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------
