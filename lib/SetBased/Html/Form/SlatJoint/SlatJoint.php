@@ -32,7 +32,7 @@ abstract class SlatJoint
   protected $myHeaderHtml;
 
   /**
-   * If set this column can be used for sorting data of the table of this column.
+   * The sort direction of the data in the column of this slat joint.
    *
    * @var string
    */
@@ -135,6 +135,30 @@ abstract class SlatJoint
   public function setHeaderHtml( $theHtml )
   {
     $this->myHeaderHtml = $theHtml;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the sort order of the data in the column of this slat join.
+   *
+   * @param int $theSortOrder The sort order.
+   */
+  public function setSortOrder( $theSortOrder )
+  {
+    $this->mySortOrder = $theSortOrder;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the sort direction of the data in the column of this slat join.
+   *
+   * @param int $theSortDirection The sort direction.
+   *                              * 'desc': Sort direction is descending.
+   *                              * Otherwise: Sort direction is ascending.
+   */
+  public function setSortDirection( $theSortDirection )
+  {
+    $this->mySortDirection = ($theSortDirection=='desc') ? 'desc' : null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
