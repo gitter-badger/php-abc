@@ -32,7 +32,7 @@ abstract class TableColumn
   protected $mySortable = true;
 
   /**
-   * If set this column can be used for sorting data of the table of this column.
+   * The sort direction of the data in this column.
    *
    * @var string
    */
@@ -100,24 +100,17 @@ abstract class TableColumn
     {
       if ($class) $class .= ' ';
       $class .= 'sort';
-    }
 
-    // Add class indicating the sort order of this column.
-    if ($this->mySortable && $this->mySortDirection)
-    {
-      if ($class) $class .= ' ';
-
-      // Add class indicating this column can be used for sorting.
-      $class .= 'sort sort-order-';
-      $class .= $this->mySortOrder;
-
-      if ($this->mySortDirection=='asc')
+      // Add class indicating the sort order of this column.
+      if ($this->mySortOrder)
       {
-        $class .= ' sorted-asc';
-      }
-      else
-      {
-        $class .= 'd sorted-desc';
+        if ($class) $class .= ' ';
+
+        // Add class indicating this column can be used for sorting.
+        $class .= 'sort-order-';
+        $class .= $this->mySortOrder;
+
+        $class .= ($this->mySortDirection=='desc') ? ' sorted-desc' : ' sorted-asc';
       }
     }
 
