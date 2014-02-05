@@ -96,10 +96,10 @@ abstract class DualTableColumn extends TableColumn
       if ($class) $class .= ' ';
 
       // Add class indicating this column can be used for sorting.
-      $class .= 'sort-order-';
+      $class .= 'sort-order-1-';
       $class .= $this->mySortOrder;
 
-      $class .= ($this->mySortDirection=='desc') ? ' sorted-desc' : ' sorted-asc';
+      $class .= ($this->mySortDirection=='desc') ? ' sorted-1-desc' : ' sorted-1-asc';
     }
 
     // Add class indicating the type of data of this column.
@@ -121,10 +121,10 @@ abstract class DualTableColumn extends TableColumn
         if ($class) $class .= ' ';
 
         // Add class indicating this column can be used for sorting.
-        $class .= 'sort-order-2';
+        $class .= 'sort-order-2-';
         $class .= $this->mySortOrder2;
 
-        $class .= ($this->mySortDirection2=='desc') ? ' sorted-desc' : ' sorted-asc';
+        $class .= ($this->mySortDirection2=='desc') ? ' sorted-2-desc' : ' sorted-2-asc';
       }
     }
 
