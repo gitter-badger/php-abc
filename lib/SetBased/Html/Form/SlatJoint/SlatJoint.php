@@ -105,12 +105,12 @@ abstract class SlatJoint
     }
 
     // Add class indicating the sort order of this column.
-    if ($this->mySortable && $this->mySortDirection)
+    if ($this->mySortable && $this->mySortOrder)
     {
       if ($class) $class .= ' ';
 
       // Add class indicating this column can be used for sorting.
-      $class .= 'sort sort-order-';
+      $class .= 'sort-order-';
       $class .= $this->mySortOrder;
 
       if ($this->mySortDirection=='asc')
