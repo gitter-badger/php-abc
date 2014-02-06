@@ -132,7 +132,7 @@ class OverviewTable
   protected function getHtmlBody( &$theRows )
   {
     $ret = '';
-    $i   = 1;
+    $i   = 0;
     foreach ($theRows as $row)
     {
       if ($i % 2==0) $ret .= "<tr class='even'>\n";
