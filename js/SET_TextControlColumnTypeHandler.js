@@ -37,8 +37,8 @@ SET_TextControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 /**
  * Register column type handler.
  */
-SET_OverviewTable.registerColumnTypeHandler('control_text', SET_TextControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control_button', SET_TextControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control_submit', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-text', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-button', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-submit', SET_TextControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------
