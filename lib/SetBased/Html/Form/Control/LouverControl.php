@@ -107,7 +107,7 @@ class LouverControl extends ComplexControl
     $submit_name = $this->getSubmitName( $theParentName );
 
     $ret = '';
-    $i   = 1;
+    $i   = 0;
     foreach ($this->myControls as $control)
     {
       if ($i % 2==0) $ret .= "<tr class='even'>\n";
