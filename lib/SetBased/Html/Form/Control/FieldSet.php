@@ -99,7 +99,8 @@ class FieldSet extends ComplexControl
     $ret = '<fieldset';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html\Html::generateAttribute( $name, $value );
+      // Ignore attributes starting with an underscore.
+      if ($name[0]!='_') $ret .= Html\Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
 

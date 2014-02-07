@@ -67,7 +67,7 @@ class SelectControl extends SimpleControl
     $html .= '<select';
     foreach ($this->myAttributes as $name => $value)
     {
-      $html .= Html::generateAttribute( $name, $value );
+      if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
     $html .= ">\n";
 
