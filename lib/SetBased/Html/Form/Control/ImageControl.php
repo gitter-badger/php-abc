@@ -39,7 +39,7 @@ class ImageControl extends SimpleControl
     $ret .= '<input';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '/>';
 

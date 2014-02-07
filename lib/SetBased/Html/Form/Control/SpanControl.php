@@ -32,7 +32,8 @@ class SpanControl extends Control
     $html .= '<span';
     foreach ($this->myAttributes as $name => $value)
     {
-      $html .= Html::generateAttribute( $name, $value );
+      // Ignore attributes starting with an underscore.
+      if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
     $html .= '>';
 

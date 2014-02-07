@@ -31,7 +31,8 @@ class LinkControl extends Control
     $ret .= '<a';
     foreach ($this->myAttributes as $name => $value)
     {
-      $ret .= Html::generateAttribute( $name, $value );
+      // Ignore attributes starting with an underscore.
+      if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= '>';
 

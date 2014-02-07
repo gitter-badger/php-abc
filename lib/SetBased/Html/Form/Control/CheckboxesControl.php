@@ -93,7 +93,8 @@ class CheckboxesControl extends Control
     $html .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
-      $html .= Html::generateAttribute( $name, $value );
+      // Ignore attributes starting with an underscore.
+      if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
     $html .= ">\n";
 
