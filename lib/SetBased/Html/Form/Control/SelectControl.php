@@ -75,7 +75,7 @@ class SelectControl extends SimpleControl
     // Add an empty option, if necessary.
     if (isset($this->myEmptyOption))
     {
-      $html .= '<option';
+      $html .= '<option>';
       $html .= Html::generateAttribute( 'value', $this->myEmptyOption );
       $html .= "</option>\n";
     }
