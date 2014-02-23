@@ -6,30 +6,23 @@ use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * @brief Abstract class for generation HTML code for tables either in a column or row context.
+ * @brief Abstract class for generation HTML code for tables either in a column context.
  */
 abstract class TableColumn
 {
   /**
-   * The type of the data that this table row/column hol ds.
+   * The type of the data that this table column holds.
    *
    * @var string
    */
   protected $myDataType;
 
   /**
-   * The header text of this row/column.
+   * The header text of this column.
    *
    * @var string
    */
   protected $myHeaderText;
-
-  /**
-   * If set this column can be used for sorting the data in the table of this column.
-   *
-   * @var bool
-   */
-  protected $mySortable = true;
 
   /**
    * The sort direction of the data in this column.
@@ -45,6 +38,13 @@ abstract class TableColumn
    * @var int
    */
   protected $mySortOrder;
+
+  /**
+   * If set this column can be used for sorting the data in the table of this column.
+   *
+   * @var bool
+   */
+  protected $mySortable = true;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -119,13 +119,12 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table header cell.
-   *
-   * @return string
+   * If this columns is sortable sets this column as not sortable (overriding the default behaviour a child class).
+   * Has no effect when this column is not sortable.
    */
-  public function getHtmlRowHeader()
+  public function notSortable()
   {
-    return "<th>".Html::txt2Html( $this->myHeaderText )."</th>\n";
+    $this->mySortable = false;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -139,7 +138,7 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Set the sorting order of this column to @a $theSortOrder. If @a $theDescendingFlag is set the data in this column
+   * Sets the sorting order of this column to @a $theSortOrder. If @a $theDescendingFlag is set the data in this column
    * is sorted descending, otherwise ascending.
    *
    * @param int  $theSortOrder
