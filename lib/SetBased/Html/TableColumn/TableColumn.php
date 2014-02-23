@@ -114,7 +114,23 @@ abstract class TableColumn
       }
     }
 
-    return "<th class='$class'>".Html::txt2Html( $this->myHeaderText )."</th>\n";
+    if ($this->myHeaderText===null)
+    {
+      $class .= 'empty';
+    }
+
+    return '<th'.Html::generateAttribute( 'class', $class ).'>'.Html::txt2Html( $this->myHeaderText )."</th>\n";
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns true if and only if this column has no header text.
+   *
+   * @return bool
+   */
+  public function hasEmptyHeader()
+  {
+    return !isset($this->myHeaderText);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -3,7 +3,9 @@
 namespace SetBased\Html\Table;
 
 use SetBased\Html\Html;
+use SetBased\Html\TableColumn\TableColumn;
 
+//----------------------------------------------------------------------------------------------------------------------
 class OverviewTable
 {
   /**
@@ -16,7 +18,7 @@ class OverviewTable
   /**
    * The objects for generating the columns of this table.
    *
-   * @var \SetBased\Html\TableColumn\TableColumn[]
+   * @var TableColumn[]
    */
   protected $myColumns = array();
 
@@ -26,6 +28,13 @@ class OverviewTable
    * @var bool
    */
   protected $myFilter = false;
+
+  /**
+   * The title of this table.
+   *
+   * @var string
+   */
+  protected $myTitle;
 
   /**
    * The index in $myColumns of the next column added to this table.
@@ -38,9 +47,9 @@ class OverviewTable
   /**
    * Adds @a $theColumn to this table and returns the column.
    *
-   * @param \SetBased\Html\TableColumn\TableColumn $theColumn
+   * @param TableColumn $theColumn
    *
-   * @return \SetBased\Html\TableColumn\TableColumn
+   * @return TableColumn
    */
   public function addColumn( $theColumn )
   {
@@ -103,6 +112,7 @@ class OverviewTable
     $ret .= $this->getHtmlBody( $theRows );
     $ret .= "</tbody>\n";
 
+
     $ret .= "</table>\n";
 
     $ret .= $this->getHtmlPostfix();
@@ -119,6 +129,26 @@ class OverviewTable
   public function getNumberOfColumns()
   {
     return $this->myColIndex - 1;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the title of this table.
+   */
+  public function getTitle()
+  {
+    return $this->myTitle;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the title of this table.
+   *
+   * @param string $theTitle The title.
+   */
+  public function setTitle( $theTitle )
+  {
+    $this->myTitle = $theTitle;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -156,7 +186,65 @@ class OverviewTable
    */
   protected function getHtmlHeader()
   {
-    $ret = "<tr class='header'>\n";
+    $ret = '';
+
+    if ($this->myTitle)
+    {
+      $mode    = 1;
+      $colspan = 0;
+
+      $ret .= "<tr class='title'>\n";
+      foreach ($this->myColumns as $column)
+      {
+        $empty = $column->hasEmptyHeader();
+
+        if ($mode==1)
+        {
+          if ($empty)
+          {
+            $ret .= "<th class='empty'></th>";
+          }
+          else
+          {
+            $mode = 2;
+          }
+        }
+
+        if ($mode==2)
+        {
+          if ($empty)
+          {
+            $mode = 3;
+          }
+          else
+          {
+            $colspan++;
+          }
+        }
+
+        if ($mode==3)
+        {
+          if ($colspan==1) $colspan = null;
+          $ret .= '<th'.Html::generateAttribute( 'colspan', $colspan ).'>'.Html::txt2Html( $this->myTitle ).'</th>';
+          $mode = 4;
+        }
+
+        if ($mode==4)
+        {
+          $ret .= "<th class='empty'></th>";
+        }
+      }
+
+      if ($mode==2)
+      {
+        if ($colspan==1) $colspan = null;
+        $ret .= '<th'.Html::generateAttribute( 'colspan', $colspan ).'>'.Html::txt2Html( $this->myTitle ).'</th>';
+      }
+
+      $ret .= "</tr>\n";
+    }
+
+    $ret .= "<tr class='header'>\n";
     foreach ($this->myColumns as $column)
     {
       $ret .= $column->getHtmlColumnHeader();
@@ -232,5 +320,3 @@ class OverviewTable
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-
