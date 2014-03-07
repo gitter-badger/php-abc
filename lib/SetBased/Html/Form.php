@@ -72,7 +72,7 @@ class Form
     $ret = false;
     foreach ($theArray as $tmp)
     {
-      if (is_scalar( $tmp ))
+      if (is_object( $tmp ))
       {
         $ret = true;
         break;
