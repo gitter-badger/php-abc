@@ -38,13 +38,14 @@ class LouverControl extends ComplexControl
   {
     $ret = $this->myPrefix;
 
-    $ret .= '<table';
+    $ret .= '<div';
     foreach ($this->myAttributes as $name => $value)
     {
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
     }
     $ret .= ">\n";
+    $ret .= "<table>\n";
 
     $ret .= "<thead>\n";
     $ret .= $this->getHtmlHeader();
@@ -55,6 +56,7 @@ class LouverControl extends ComplexControl
     $ret .= "</tbody>\n";
 
     $ret .= "</table>\n";
+    $ret .= "</div>\n";
 
     $ret .= $this->myPostfix;
 
