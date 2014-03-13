@@ -48,7 +48,7 @@ class FileControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param string|bool $theValue The new value for the form control.
+   * @param string $theValue The new value for the form control.
    */
   public function setValue( $theValue )
   {
