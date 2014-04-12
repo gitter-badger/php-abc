@@ -8,7 +8,7 @@
     <target name="prepare">
         <echo msg="Preparing files…"/>
         <if>
-            <available file="${BUILD_DIR}" type="dir"/>
+            <available property="test_build_directory_exists" file="${BUILD_DIR}" type="dir"/>
             <then>
                 <echo msg="Removing old files…"/>
                 <delete includeemptydirs="true" verbose="false" failonerror="true">
@@ -43,25 +43,32 @@
         <loadfile property="COMBINED_JS_FILE_NEW" file="${BUILD_DIR}/${COMBINED_JS_FILE}"/>
         <if>
             <not>
-                <equals arg1="${COMBINED_JS_FILE_OLD}" arg2="${COMBINED_JS_FILE_NEW}"></equals>
+                <equals arg1="${COMBINED_JS_FILE_OLD}" arg2="${COMBINED_JS_FILE_NEW}" />
             </not>
             <then>
                 <copy file="${BUILD_DIR}/${COMBINED_JS_FILE}" tofile="${COMBINED_JS_FILE}"/>
             </then>
         </if>
     </target>
+
+    <!-- Optimizes a JavaScript file. -->
+    <target name="js.compress" hidden="true">
+        <echo msg="${path_name}"/>
+        <exec command="java -jar bin/yuicompressor.jar ${path_name} -o '.js$:-min.js'" passthru="true"
+              checkreturn="true"/>
+    </target>
+
     <target name="minify_js">
-        <echo msg="Minifying JavaScript files…"/>
-        <jsMin targetDir="${BUILD_DIR}">
+        <foreach param="filename" absparam="path_name" target="js.compress">
             <fileset dir="${BUILD_DIR}">
                 <include name="${COMBINED_JS_FILE}"/>
             </fileset>
-        </jsMin>
+        </foreach>
         <loadfile property="COMBINED_JS_FILE_MIN_OLD" file="${COMBINED_JS_FILE_MIN}"/>
         <loadfile property="COMBINED_JS_FILE_MIN_NEW" file="${BUILD_DIR}/${COMBINED_JS_FILE_MIN}"/>
         <if>
             <not>
-                <equals arg1="${COMBINED_JS_FILE_MIN_OLD}" arg2="${COMBINED_JS_FILE_MIN_NEW}"></equals>
+                <equals arg1="${COMBINED_JS_FILE_MIN_OLD}" arg2="${COMBINED_JS_FILE_MIN_NEW}"/>
             </not>
             <then>
                 <copy file="${BUILD_DIR}/${COMBINED_JS_FILE_MIN}" tofile="${COMBINED_JS_FILE_MIN}"/>

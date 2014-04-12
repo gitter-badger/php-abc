@@ -16,7 +16,8 @@
     "setbased/table-sorter": "dev-master"
   },
   "require-dev": {
-    "phpunit/phpunit": "~3.7.0"
+    "phpunit/phpunit": "~3.7.0",
+    "packagist/yuicompressor-bin": "dev-master"
   },
   "autoload": {
     "psr-0": {

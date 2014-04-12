@@ -37,6 +37,6 @@ SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell
 /**
  * Register column type handler.
  */
-SET_OverviewTable.registerColumnTypeHandler('control_text_area', SET_TextAreaControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-text-area', SET_TextAreaControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -93,9 +93,9 @@ SET_TextControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 /**
  * Register column type handler.
  */
-SET_OverviewTable.registerColumnTypeHandler('control_text', SET_TextControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control_button', SET_TextControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control_submit', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-text', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-button', SET_TextControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-submit', SET_TextControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
@@ -185,6 +185,6 @@ SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell
 /**
  * Register column type handler.
  */
-SET_OverviewTable.registerColumnTypeHandler('control_text_area', SET_TextAreaControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control-text-area', SET_TextAreaControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------
