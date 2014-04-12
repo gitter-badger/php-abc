@@ -53,6 +53,9 @@ function demo()
 
   $form = createForm();
 
+  $values['cnt_name']['3'] = 'on';
+  $form->setValues($values);
+
   if ($form->isSubmitted( 'submit' ))
   {
     $form->loadSubmittedValues();

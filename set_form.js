@@ -101,8 +101,9 @@ SET_OverviewTable.registerColumnTypeHandler('control_submit', SET_TextControlCol
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global SET_OverviewTable */
+/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
+/*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
@@ -119,15 +120,21 @@ SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Returns the numeric content of a table cell.
+ * Returns the text content of the input box in a table_cell.
  *
- * @param {jquery} table_cell The table cell.
+ * @param table_cell
  *
- * @returns {Number}
+ * @returns string
  */
+SET_HtmlControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
+  "use strict";
+  return set_to_lower_case_no_accents($(table_cell).children().text());
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
 SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return $(table_cell).text();
+  return set_to_lower_case_no_accents($(table_cell).children().text());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -137,5 +144,47 @@ SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 SET_OverviewTable.registerColumnTypeHandler('control-div', SET_HtmlControlColumnTypeHandler);
 SET_OverviewTable.registerColumnTypeHandler('control-span', SET_HtmlControlColumnTypeHandler);
 SET_OverviewTable.registerColumnTypeHandler('control-link', SET_HtmlControlColumnTypeHandler);
+
+// ---------------------------------------------------------------------------------------------------------------------
+/*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
+/*global window */
+/*global $ */
+/*global set_to_lower_case_no_accents */
+/*global SET_TextColumnTypeHandler */
+/*global SET_OverviewTable */
+
+// ---------------------------------------------------------------------------------------------------------------------
+function SET_TextAreaControlColumnTypeHandler() {
+  "use strict";
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+SET_TextAreaControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
+SET_TextAreaControlColumnTypeHandler.constructor = SET_TextAreaControlColumnTypeHandler;
+
+// ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Returns the text content of the input box in a table_cell.
+ *
+ * @param table_cell
+ *
+ * @returns string
+ */
+SET_TextAreaControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
+  "use strict";
+  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
+  "use strict";
+  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+};
+
+// ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Register column type handler.
+ */
+SET_OverviewTable.registerColumnTypeHandler('control_text_area', SET_TextAreaControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------

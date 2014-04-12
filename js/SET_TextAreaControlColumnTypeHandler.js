@@ -6,17 +6,13 @@
 /*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
-/**
- * Prototype for column handlers for columns with a spn, div,
- * @constructor
- */
-function SET_HtmlControlColumnTypeHandler() {
+function SET_TextAreaControlColumnTypeHandler() {
   "use strict";
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-SET_HtmlControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
-SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
+SET_TextAreaControlColumnTypeHandler.prototype = Object.create(SET_TextColumnTypeHandler.prototype);
+SET_TextAreaControlColumnTypeHandler.constructor = SET_TextAreaControlColumnTypeHandler;
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
@@ -26,23 +22,21 @@ SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
  *
  * @returns string
  */
-SET_HtmlControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
+SET_TextAreaControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
-SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
+SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Register column type handlers.
+ * Register column type handler.
  */
-SET_OverviewTable.registerColumnTypeHandler('control-div', SET_HtmlControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control-span', SET_HtmlControlColumnTypeHandler);
-SET_OverviewTable.registerColumnTypeHandler('control-link', SET_HtmlControlColumnTypeHandler);
+SET_OverviewTable.registerColumnTypeHandler('control_text_area', SET_TextAreaControlColumnTypeHandler);
 
 // ---------------------------------------------------------------------------------------------------------------------

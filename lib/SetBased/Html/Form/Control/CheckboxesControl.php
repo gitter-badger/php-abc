@@ -242,34 +242,26 @@ class CheckboxesControl extends Control
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode( $this->myName ) : $this->myName;
 
-    if (isset($theSubmittedValue[$submit_name]))
+    foreach ($this->myOptions as $i => $option)
     {
-      foreach ($this->myOptions as $i => $option)
-      {
-        // Get the (database) ID of the option.
-        $id = (string)$option[$this->myKeyKey];
+      // Get the (database) ID of the option.
+      $id = (string)$option[$this->myKeyKey];
 
-        // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
+      // If an obfuscator is installed compute the obfuscated code of the (database) ID.
+      $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
 
-        // Get the original value (i.e. the option is checked or not).
-        $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;
+      // Get the original value (i.e. the option is checked or not).
+      $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;
 
-        // Get the submitted value (i.e. the option is checked or not).
-        $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
+      // Get the submitted value (i.e. the option is checked or not).
+      $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
-        // If the original value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
+      // If the original value differs from the submitted value then the form control has been changed.
+      if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
 
-        // Set the white listed value.
-        $theWhiteListValue[$this->myName][$id]    = !empty($submitted);
-        $this->myOptions[$i][$this->myCheckedKey] = !empty($submitted);
-      }
-    }
-    else
-    {
-      // No checkboxes have been checked.
-      $theWhiteListValue[$this->myName] = array();
+      // Set the white listed value.
+      $theWhiteListValue[$this->myName][$id]    = !empty($submitted);
+      $this->myOptions[$i][$this->myCheckedKey] = !empty($submitted);
     }
 
     // Set the submitted value to be used method GetSubmittedValue.

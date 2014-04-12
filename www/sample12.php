@@ -3,7 +3,9 @@
 use SetBased\Html\Form\Control\LouverControl;
 use SetBased\Html\Form\Control\SlatControl;
 use SetBased\Html\Form\Control\SlatControlFactory;
-use SetBased\Html\Form\SlatJoint\TextSlatJoint;
+use SetBased\Html\Form\SlatJoint\DivSlatJoint;
+use SetBased\Html\Form\SlatJoint\SpanSlatJoint;
+use SetBased\Html\Form\SlatJoint\TextAreaSlatJoint;
 
 //----------------------------------------------------------------------------------------------------------------------
 require __DIR__.'/../vendor/autoload.php';
@@ -15,16 +17,19 @@ class DeadPoetSlatControlFactory extends SlatControlFactory
   public function __construct()
   {
     // Add a column with birthday of the poet.
-    $this->addSlatJoint( 'birthday', new TextSlatJoint('Birthday') );
+    $this->addSlatJoint( 'birthday', new SpanSlatJoint('Birthday') );
 
     // Add a column with date of death.
-    $this->addSlatJoint( 'date_of_death', new TextSlatJoint('Date of Death') );
+    $this->addSlatJoint( 'date_of_death', new SpanSlatJoint('Date of Death') );
 
     // Add a column with the sir name.
-    $this->addSlatJoint( 'sir_name', new TextSlatJoint('Sir Name') );
+    $this->addSlatJoint( 'sir_name', new DivSlatJoint('Sir Name') );
 
     // Add a column with the given name.
-    $this->addSlatJoint( 'given_name', new TextSlatJoint('Given Name') );
+    $this->addSlatJoint( 'given_name', new DivSlatJoint('Given Name') );
+
+    // Add a column with the given name.
+    $this->addSlatJoint( 'bio', new TextAreaSlatJoint('Short Biography') );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,19 +39,22 @@ class DeadPoetSlatControlFactory extends SlatControlFactory
 
     $control = $this->createFormControl( $row, 'birthday' );
     $control->setAttribute( 'maxlength', 10 );
-    $control->setValue( $theData['birthday'] );
+    $control->setInnerHtml( $theData['birthday'] );
 
     $control = $this->createFormControl( $row, 'date_of_death' );
     $control->setAttribute( 'maxlength', 10 );
-    $control->setValue( $theData['date_of_death'] );
+    $control->setInnerHtml( $theData['date_of_death'] );
 
     $control = $this->createFormControl( $row, 'sir_name' );
     $control->setAttribute( 'maxlength', 40 );
-    $control->setValue( $theData['sir_name'] );
+    $control->setInnerHtml( $theData['sir_name'] );
 
     $control = $this->createFormControl( $row, 'given_name' );
     $control->setAttribute( 'maxlength', 25 );
-    $control->setValue( $theData['given_name'] );
+    $control->setInnerHtml( $theData['given_name'] );
+
+    $control = $this->createFormControl( $row, 'bio' );
+    $control->setValue($theData['bio']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -64,7 +72,8 @@ function leader()
   echo "<script type='text/javascript' src='js/jquery/jquery.min.js'></script>\n";
   echo "<script type='text/javascript' src='js/table-sorter/set_table_sorter_filter.js'></script>\n";
   echo "<script type='text/javascript' src='js/form/SET_Form.js'></script>\n";
-  echo "<script type='text/javascript' src='js/form/SET_TextControlColumnTypeHandler.js'></script>\n";
+  echo "<script type='text/javascript' src='js/form/SET_HtmlControlColumnTypeHandler.js'></script>\n";
+  echo "<script type='text/javascript' src='js/form/SET_TextAreaControlColumnTypeHandler.js'></script>\n";
   echo "<script type='text/javascript' src='js/sample11.js'></script>\n";
   echo "</head>\n";
   echo "<body>\n";
@@ -85,25 +94,29 @@ function createForm()
                    'date_of_death' => '1993-09-19',
                    'given_name'    => 'Helen',
                    'sir_name'      => 'Adam',
-                   'url'           => 'http://en.wikipedia.org/wiki/Helen_Adam');
+                   'url'           => 'http://en.wikipedia.org/wiki/Helen_Adam',
+                   'bio'           => 'ok' );
   $poets[] = array('id'            => 2,
                    'birthday'      => '1889-06-23',
                    'date_of_death' => '1966-03-05',
                    'given_name'    => 'Anna',
                    'sir_name'      => 'Andreevna',
-                   'url'           => 'http://en.wikipedia.org/wiki/Anna_Akhmatova');
+                   'url'           => 'http://en.wikipedia.org/wiki/Anna_Akhmatova',
+                   'bio'           => 'Try it.' );
   $poets[] = array('id'            => 3,
                    'birthday'      => '1914-02-04',
                    'date_of_death' => '1980-02-21',
                    'given_name'    => 'Alfred',
                    'sir_name'      => 'Andersch',
-                   'url'           => 'http://en.wikipedia.org/wiki/Alfred_Andersch');
+                   'url'           => 'http://en.wikipedia.org/wiki/Alfred_Andersch',
+                   'bio'           => 'Hello Word!' );
   $poets[] = array('id'            => 4,
                    'birthday'      => '1835-07-27',
                    'date_of_death' => '1907-02-16',
                    'given_name'    => 'Giosuè',
                    'sir_name'      => 'Carducci',
-                   'url'           => 'http://en.wikipedia.org/wiki/Giosu%C3%A8_Carducci');
+                   'url'           => 'http://en.wikipedia.org/wiki/Giosu%C3%A8_Carducci',
+                   'bio'           => '2331' );
 
 
   $form = new \SetBased\Html\Form();
