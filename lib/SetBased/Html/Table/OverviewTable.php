@@ -99,21 +99,21 @@ class OverviewTable
     {
       $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $ret .= '>';
 
     // Generate HTML code for the table header.
-    $ret .= "<thead>\n";
+    $ret .= '<thead>';
     $ret .= $this->getHtmlHeader();
-    $ret .= "</thead>\n";
+    $ret .= '</thead>';
 
 
     // Generate HTML code for the table body.
-    $ret .= "<tbody>\n";
+    $ret .= '<tbody>';
     $ret .= $this->getHtmlBody( $theRows );
-    $ret .= "</tbody>\n";
+    $ret .= '</tbody>';
 
 
-    $ret .= "</table>\n";
+    $ret .= '</table>';
 
     $ret .= $this->getHtmlPostfix();
 
@@ -165,13 +165,13 @@ class OverviewTable
     $i   = 0;
     foreach ($theRows as $row)
     {
-      if ($i % 2==0) $ret .= "<tr class='even'>\n";
-      else           $ret .= "<tr class='odd'>\n";
+      if ($i % 2==0) $ret .= '<tr class="even">';
+      else           $ret .= '<tr class="odd">';
       foreach ($this->myColumns as $column)
       {
         $ret .= $column->getHtmlCell( $row );
       }
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
       $i++;
     }
 
@@ -193,7 +193,7 @@ class OverviewTable
       $mode    = 1;
       $colspan = 0;
 
-      $ret .= "<tr class='title'>\n";
+      $ret .= '<tr class="title">';
       foreach ($this->myColumns as $column)
       {
         $empty = $column->hasEmptyHeader();
@@ -202,7 +202,7 @@ class OverviewTable
         {
           if ($empty)
           {
-            $ret .= "<th class='empty'></th>";
+            $ret .= '<th class="empty"></th>';
           }
           else
           {
@@ -231,7 +231,7 @@ class OverviewTable
 
         if ($mode==4)
         {
-          $ret .= "<th class='empty'></th>";
+          $ret .= '<th class="empty"></th>';
         }
       }
 
@@ -241,24 +241,24 @@ class OverviewTable
         $ret .= '<th'.Html::generateAttribute( 'colspan', $colspan ).'>'.Html::txt2Html( $this->myTitle ).'</th>';
       }
 
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
     }
 
-    $ret .= "<tr class='header'>\n";
+    $ret .= '<tr class="header">';
     foreach ($this->myColumns as $column)
     {
       $ret .= $column->getHtmlColumnHeader();
     }
-    $ret .= "</tr>\n";
+    $ret .= '</tr>';
 
     if ($this->myFilter)
     {
-      $ret .= "<tr class='filter'>\n";
+      $ret .= '<tr class="filter">';
       foreach ($this->myColumns as $column)
       {
         $ret .= $column->getHtmlColumnFilter();
       }
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
     }
 
     return $ret;

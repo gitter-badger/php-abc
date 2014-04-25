@@ -42,7 +42,7 @@ abstract class TableRow
    */
   public function getHtmlRowHeader()
   {
-    return "<th>".Html::txt2Html( $this->myHeaderText )."</th>\n";
+    return '<th>'.Html::txt2Html( $this->myHeaderText ).'</th>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

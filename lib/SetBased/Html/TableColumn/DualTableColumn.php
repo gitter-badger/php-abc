@@ -1,4 +1,4 @@
-<?php //----------------------------------------------------------------------------------------------------------------------
+<?php
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\TableColumn;
 
@@ -40,7 +40,6 @@ abstract class DualTableColumn extends TableColumn
    */
   protected $mySortable2 = true;
 
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the number of columns spanned, i.e. 2.
@@ -60,8 +59,8 @@ abstract class DualTableColumn extends TableColumn
    */
   public function getHtmlColumnFilter()
   {
-    $ret = "<td><input type='text'/></td>\n";
-    $ret .= "<td><input type='text'/></td>\n";
+    $ret = '<td><input type="text"/></td>';
+    $ret .= '<td><input type="text"/></td>';
 
     return $ret;
   }
@@ -128,7 +127,7 @@ abstract class DualTableColumn extends TableColumn
       }
     }
 
-    return "<th colspan='2' class='$class'><span>&nbsp;</span>".Html::txt2Html( $this->myHeaderText )."</th>\n";
+    return '<th colspan="2" class="'.$class.'"><span>&nbsp;</span>'.Html::txt2Html( $this->myHeaderText ).'</th>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -144,7 +143,6 @@ abstract class DualTableColumn extends TableColumn
     $this->mySortDirection = ($theDescendingFlag) ? 'desc' : 'asc';
     $this->mySortOrder     = $theSortOrder;
   }
-
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -164,4 +162,3 @@ abstract class DualTableColumn extends TableColumn
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-

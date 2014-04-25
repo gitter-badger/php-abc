@@ -75,7 +75,7 @@ abstract class TableColumn
    */
   public function getHtmlColumnFilter()
   {
-    return "<td><input type='text'/></td>\n";
+    return '<td><input type="text"/></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ abstract class TableColumn
       $class .= 'empty';
     }
 
-    return '<th'.Html::generateAttribute( 'class', $class ).'>'.Html::txt2Html( $this->myHeaderText )."</th>\n";
+    return '<th'.Html::generateAttribute( 'class', $class ).'>'.Html::txt2Html( $this->myHeaderText ).'</th>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

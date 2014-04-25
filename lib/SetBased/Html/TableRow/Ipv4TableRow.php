@@ -31,7 +31,7 @@ class Ipv4TableRow extends TableRow
   //--------------------------------------------------------------------------------------------------------------------
   public function getHtmlCell( &$theData )
   {
-    return "<td class='ipv4'>".Html::txt2Html( $theData[$this->myFieldName] )."</td>\n";
+    return '<td class="ipv4">'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

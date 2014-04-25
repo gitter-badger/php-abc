@@ -4,6 +4,7 @@ namespace SetBased\Html\Table;
 
 use SetBased\Html\Html;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
  * Class DetailTable
  *
@@ -58,25 +59,25 @@ class DetailTable
     {
       $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $ret .= '>';
 
     // Generate HTML code for the table header.
-    $ret .= "<thead>\n";
+    $ret .= '<thead>';
     $ret .= $this->getHtmlHeader();
-    $ret .= "</thead>\n";
+    $ret .= '</thead>';
 
 
     // Generate HTML code for the table header.
-    $ret .= "<tfoot>\n";
+    $ret .= '<tfoot>';
     $ret .= $this->getHtmlFooter();
-    $ret .= "</tfoot>\n";
+    $ret .= '</tfoot>';
 
     // Generate HTML code for the table body.
-    $ret .= "<tbody>\n";
+    $ret .= '<tbody>';
     $ret .= $this->getHtmlBody( $theData );
-    $ret .= "</tbody>\n";
+    $ret .= '</tbody>';
 
-    $ret .= "</table>\n";
+    $ret .= '</table>';
 
     $ret .= $this->getHtmlPostfix();
 
@@ -97,10 +98,10 @@ class DetailTable
 
     foreach ($this->myRows as $row)
     {
-      $ret .= "<tr>\n";
+      $ret .= '<tr>';
       $ret .= $row->getHtmlRowHeader();
       $ret .= $row->getHtmlCell( $theData );
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
     }
 
     return $ret;
@@ -184,5 +185,3 @@ class DetailTable
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-

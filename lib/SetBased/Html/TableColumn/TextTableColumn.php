@@ -31,7 +31,7 @@ class TextTableColumn extends TableColumn
   //--------------------------------------------------------------------------------------------------------------------
   public function getHtmlCell( &$theData )
   {
-    return '<td>'.Html::txt2Html( $theData[$this->myFieldName] )."</td>\n";
+    return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class NumericTableColumn extends TableColumn
    * @param string $theFieldName  The field name of the data row used for generating this table column.
    * @param string $theFormat     The format specifier for formatting the content of this table column. See sprintf.
    */
-  public function __construct( $theHeaderText, $theFieldName, $theFormat='%d' )
+  public function __construct( $theHeaderText, $theFieldName, $theFormat = '%d' )
   {
     $this->myDataType   = 'numeric';
     $this->myHeaderText = $theHeaderText;
@@ -44,11 +44,11 @@ class NumericTableColumn extends TableColumn
 
     if ($value===false || $value===null || $value==='')
     {
-      return "<td class='number'></td>\n";
+      return '<td class="number"></td>';
     }
     else
     {
-      return "<td class='number'>".Html::txt2Html( sprintf( $this->myFormat, $value ) )."</td>\n";
+      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
     }
   }
 

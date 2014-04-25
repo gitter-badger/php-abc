@@ -31,10 +31,8 @@ class EmailTableColumn extends TableColumn
   //--------------------------------------------------------------------------------------------------------------------
   public function getHtmlCell( &$theData )
   {
-    $text = Html::Txt2Html( $theData[$this->myFieldName] );
-    $url  = "mailto:$text";
-
-    return "<td><a href='$url'>$text</a></td>\n";
+    $address = Html::Txt2Html( $theData[$this->myFieldName] );
+    return '<td><a href="mailto:'.$address.'">'.$address.'</a></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -61,20 +61,20 @@ class DateTableRow extends TableRow
 
       if ($date)
       {
-        $class  = 'date data-';
+        $class = 'date data-';
         $class .= urlencode( $date->format( 'Y-m-d' ) );
 
-        return "<td class='$class'>".Html::txt2Html( $date->format( $this->myFormat ) )."</td>\n";
+        return '<td class="'.$class.'">'.Html::txt2Html( $date->format( $this->myFormat ) ).'</td>';
       }
       else
       {
         // The $theData[$this->myFieldName] is not a valid date.
-        return "<td>".Html::txt2Html( $theData[$this->myFieldName] )."</td>\n";
+        return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
       }
     }
     else
     {
-      return "<td class='date'></td>\n";
+      return '<td class="date"></td>';
     }
   }
 

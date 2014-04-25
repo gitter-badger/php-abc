@@ -44,11 +44,11 @@ class NumericTableRow extends TableRow
 
     if ($value===false || $value===null || $value==='')
     {
-      return "<td class='number'></td>\n";
+      return '<td class="number"></td>';
     }
     else
     {
-      return "<td class='number'>".Html::txt2Html( sprintf( $this->myFormat, $value ) )."</td>\n";
+      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
     }
   }
 
