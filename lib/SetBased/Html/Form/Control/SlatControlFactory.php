@@ -107,21 +107,21 @@ abstract class SlatControlFactory
    */
   public function getHtmlHeader()
   {
-    $ret = "<tr class='header'>\n";
+    $ret = '<tr class="header">';
     foreach ($this->mySlatJoints as $factory)
     {
       $ret .= $factory->getHtmlColumnHeader();
     }
-    $ret .= "</tr>\n";
+    $ret .= '</tr>';
 
     if ($this->myFilter)
     {
-      $ret .= "<tr class='filter'>\n";
+      $ret .= '<tr class="filter">';
       foreach ($this->mySlatJoints as $factory)
       {
         $ret .= $factory->getHtmlColumnFilter();
       }
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
     }
 
     return $ret;

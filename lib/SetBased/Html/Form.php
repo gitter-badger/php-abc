@@ -444,7 +444,7 @@ class Form
    */
   protected function generateCloseTag()
   {
-    $ret = "</form>\n";
+    $ret = '</form>';
 
     return $ret;
   }
@@ -461,7 +461,7 @@ class Form
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $ret .= '>';
 
     return $ret;
   }

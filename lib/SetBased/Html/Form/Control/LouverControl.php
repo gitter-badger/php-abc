@@ -44,19 +44,19 @@ class LouverControl extends ComplexControl
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
-    $ret .= "<table>\n";
+    $ret .= '>';
+    $ret .= '<table>';
 
-    $ret .= "<thead>\n";
+    $ret .= '<thead>';
     $ret .= $this->getHtmlHeader();
-    $ret .= "</thead>\n";
+    $ret .= '</thead>';
 
-    $ret .= "<tbody>\n";
+    $ret .= '<tbody>';
     $ret .= $this->getHtmlBody( $theParentName );
-    $ret .= "</tbody>\n";
+    $ret .= '</tbody>';
 
-    $ret .= "</table>\n";
-    $ret .= "</div>\n";
+    $ret .= '</table>';
+    $ret .= '</div>';
 
     $ret .= $this->myPostfix;
 
@@ -113,12 +113,12 @@ class LouverControl extends ComplexControl
     $i   = 0;
     foreach ($this->myControls as $control)
     {
-      if ($i % 2==0) $ret .= "<tr class='even'>\n";
-      else           $ret .= "<tr class='odd'>\n";
+      if ($i % 2==0) $ret .= '<tr class="even">';
+      else           $ret .= '<tr class="odd">';
 
       $ret .= $control->generate( $submit_name );
 
-      $ret .= "</tr>\n";
+      $ret .= '</tr>';
       $i++;
     }
 

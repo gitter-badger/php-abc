@@ -241,7 +241,6 @@ class ComplexControl extends Control
     foreach ($this->myControls as $control)
     {
       $ret .= $control->generate( $submit_name );
-      $ret .= "\n";
     }
 
     return $ret;

@@ -69,7 +69,7 @@ class SelectControl extends SimpleControl
     {
       if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
-    $html .= ">\n";
+    $html .= '>';
 
 
     // Add an empty option, if necessary.
@@ -77,7 +77,7 @@ class SelectControl extends SimpleControl
     {
       $html .= '<option ';
       $html .= Html::generateAttribute( 'value', $this->myEmptyOption );
-      $html .= "></option>\n";
+      $html .= '></option>';
     }
 
     if (is_array( $this->myOptions ))
@@ -96,17 +96,17 @@ class SelectControl extends SimpleControl
 
         if ((string)$this->myValue===$id)
         {
-          $html .= " selected='selected'";
+          $html .= ' selected="selected"';
         }
 
         if (isset($this->myDisabledKey) && !empty($option[$this->myDisabledKey]))
         {
-          $html .= " disabled='disabled'";
+          $html .= ' disabled="disabled"';
         }
 
         $html .= '>';
         $html .= Html::txt2Html( $option[$this->myLabelKey] );
-        $html .= "</option>\n";
+        $html .= '</option>';
       }
     }
 

@@ -67,7 +67,7 @@ class FieldSet extends ComplexControl
    */
   protected function generateCloseTag()
   {
-    $ret = "</fieldset>\n";
+    $ret = '</fieldset>';
 
     return $ret;
   }
@@ -102,7 +102,7 @@ class FieldSet extends ComplexControl
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $ret .= Html\Html::generateAttribute( $name, $value );
     }
-    $ret .= ">\n";
+    $ret .= '>';
 
     return $ret;
   }
