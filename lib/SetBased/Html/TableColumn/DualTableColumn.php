@@ -19,7 +19,7 @@ abstract class DualTableColumn extends TableColumn
   protected $myDataType2;
 
   /**
-   * If set the second column can be used for sorting data of the table of this column.
+   * The sort direction of the data in the second column.
    *
    * @var string|null
    */
@@ -32,6 +32,13 @@ abstract class DualTableColumn extends TableColumn
    * @var int
    */
   protected $mySortOrder2;
+
+  /**
+   * If set second column can be used for sorting the data in the table of this column.
+   *
+   * @var bool
+   */
+  protected $mySortable2 = true;
 
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -76,23 +83,23 @@ abstract class DualTableColumn extends TableColumn
       $class .= $this->myDataType;
     }
 
+    // Add class indicating this column can be used for sorting.
+    if ($this->mySortable)
+    {
+      if ($class) $class .= ' ';
+      $class .= 'sort-1';
+    }
+
     // Add class indicating the sort order of this column.
-    if ($this->mySortDirection)
+    if ($this->mySortable && $this->mySortDirection)
     {
       if ($class) $class .= ' ';
 
       // Add class indicating this column can be used for sorting.
-      $class .= 'sort-1 sort-order-';
+      $class .= 'sort-order-1-';
       $class .= $this->mySortOrder;
 
-      if ($this->mySortDirection=='asc')
-      {
-        $class .= ' sorted-asc';
-      }
-      else
-      {
-        $class .= 'd sorted-desc';
-      }
+      $class .= ($this->mySortDirection=='desc') ? ' sorted-1-desc' : ' sorted-1-asc';
     }
 
     // Add class indicating the type of data of this column.
@@ -102,22 +109,22 @@ abstract class DualTableColumn extends TableColumn
       $class .= $this->myDataType2;
     }
 
-    // Add class indicating the sort order of this column.
-    if ($this->mySortDirection2)
+    // Add class indicating this column can be used for sorting.
+    if ($this->mySortable2)
     {
       if ($class) $class .= ' ';
+      $class .= 'sort-2';
 
-      // Add class indicating this column can be used for sorting.
-      $class .= 'sort-2 sort-order-2';
-      $class .= $this->mySortOrder2;
+      // Add class indicating the sort order of this column.
+      if ($this->mySortOrder2)
+      {
+        if ($class) $class .= ' ';
 
-      if ($this->mySortDirection2=='asc')
-      {
-        $class .= ' sorted-asc';
-      }
-      else
-      {
-        $class .= 'd sorted-desc';
+        // Add class indicating this column can be used for sorting.
+        $class .= 'sort-order-2-';
+        $class .= $this->mySortOrder2;
+
+        $class .= ($this->mySortDirection2=='desc') ? ' sorted-2-desc' : ' sorted-2-asc';
       }
     }
 
