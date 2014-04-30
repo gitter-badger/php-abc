@@ -96,7 +96,7 @@ class CheckboxesControl extends Control
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
-    $html .= ">\n";
+    $html .= '>';
 
     if (is_array( $this->myOptions ))
     {
@@ -106,7 +106,7 @@ class CheckboxesControl extends Control
 
         $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
 
-        $html .= "<input type='checkbox'";
+        $html .= '<input type="checkbox"';
 
         $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
 
@@ -131,8 +131,6 @@ class CheckboxesControl extends Control
         $html .= Html::txt2Html( $option[$this->myLabelKey] );
         $html .= '</label>';
         $html .= $this->myLabelPostfix;
-
-        $html .= "\n";
       }
     }
 

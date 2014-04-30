@@ -116,7 +116,7 @@ abstract class SlatJoint
       $class .= ($this->mySortDirection=='desc') ? ' sorted-desc' : ' sorted-asc';
     }
 
-    return "<th class='$class'>".$this->myHeaderHtml."</th>\n";
+    return '<th class="'.$class.'">'.$this->myHeaderHtml.'</th>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

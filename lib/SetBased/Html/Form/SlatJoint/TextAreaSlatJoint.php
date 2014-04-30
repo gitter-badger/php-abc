@@ -40,7 +40,7 @@ class TextAreaSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
-    return "<td><input type='text'/></td>\n";
+    return '<td><input type="text"/></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

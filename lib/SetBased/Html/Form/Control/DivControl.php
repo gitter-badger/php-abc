@@ -36,7 +36,7 @@ class DivControl extends Control
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
-    $html .= ">\n";
+    $html .= '>';
 
     $html .= $this->myInnerHtml;
 

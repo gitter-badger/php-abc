@@ -72,7 +72,7 @@ class RadiosControl extends Control
       // Ignore attributes starting with an underscore.
       if ($name[0]!='_') $html .= Html::generateAttribute( $name, $value );
     }
-    $html .= ">\n";
+    $html .= '>';
 
     if (is_array( $this->myOptions ))
     {
@@ -85,7 +85,7 @@ class RadiosControl extends Control
 
         $id = Html::getAutoId();
 
-        $html .= "<input type='radio' id='$id'";
+        $html .= '<input type="radio" id="'.$id.'"';
 
         $html .= Html::generateAttribute( 'name', $submit_name );
 
@@ -93,12 +93,12 @@ class RadiosControl extends Control
 
         if ((string)$this->myValue===(string)$key)
         {
-          $html .= " checked='checked'";
+          $html .= ' checked="checked"';
         }
 
         if ($this->myDisabledKey && !empty($option[$this->myDisabledKey]))
         {
-          $html .= " disabled='disabled'";
+          $html .= ' disabled="disabled"';
         }
 
         $html .= '/>';
@@ -110,8 +110,6 @@ class RadiosControl extends Control
         $html .= Html::txt2Html( $option[$this->myLabelKey] );
         $html .= '</label>';
         $html .= $this->myLabelPostfix;
-
-        $html .= "\n";
       }
     }
 

@@ -52,7 +52,7 @@ class TextAreaControl extends SimpleControl
 
     $html .= Html::txt2Html( $this->myValue );
 
-    $html .= "</textarea>";
+    $html .= '</textarea>';
     $html .= $this->myPostfix;
 
     return $html;

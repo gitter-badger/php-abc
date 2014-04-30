@@ -27,9 +27,9 @@ class SlatControl extends ComplexControl
     $ret = '';
     foreach ($this->myControls as $control)
     {
-      $ret .= "<td>";
+      $ret .= '<td>';
       $ret .= $control->generate( $submit_name );
-      $ret .= "</td>\n";
+      $ret .= '</td>';
     }
 
     return $ret;

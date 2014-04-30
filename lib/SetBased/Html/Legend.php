@@ -69,7 +69,7 @@ class Legend
     }
     $html .= '>';
     $html .= $this->myLegend;
-    $html .= "</legend>\n";
+    $html .= '</legend>';
 
     return $html;
   }
