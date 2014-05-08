@@ -101,6 +101,15 @@ class OverviewTable
     }
     $ret .= '>';
 
+
+    // Generate HTML code for the column classes.
+    $ret .= '<colgroup>';
+    foreach ($this->myColumns as $column)
+    {
+      $ret .= $column->getHtmlColumn();
+    }
+    $ret .= '</colgroup>';
+
     // Generate HTML code for the table header.
     $ret .= '<thead>';
     $ret .= $this->getHtmlHeader();

@@ -80,6 +80,27 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code for col element for this table column.
+   *
+   * @return string
+   */
+  public function getHtmlColumn()
+  {
+    // Add class indicating the type of data of this column.
+    if ($this->myDataType)
+    {
+      $class = 'data-type-'.$this->myDataType;
+    }
+    else
+    {
+      $class = null;
+    }
+
+    return '<col'.Html::generateAttribute( 'class', $class ).'/>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns HTML code (including opening and closing th tags) for the table header cell.
    *
    * @return string
@@ -87,13 +108,6 @@ abstract class TableColumn
   public function getHtmlColumnHeader()
   {
     $class = '';
-
-    // Add class indicating the type of data of this column.
-    if ($this->myDataType)
-    {
-      $class .= 'data-type-';
-      $class .= $this->myDataType;
-    }
 
     // Add class indicating this column can be used for sorting.
     if ($this->mySortable)

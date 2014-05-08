@@ -67,6 +67,37 @@ abstract class DualTableColumn extends TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code for col element for this table columns.
+   *
+   * @return string
+   */
+  public function getHtmlColumn()
+  {
+    // Add class indicating the type of data of the first column.
+    if ($this->myDataType)
+    {
+      $class1  = 'data-type-1-'.$this->myDataType;
+    }
+    else
+    {
+      $class1 = null;
+    }
+
+    // Add class indicating the type of data of the second column.
+    if ($this->myDataType2)
+    {
+      $class2 = 'data-type-2-'.$this->myDataType2;
+    }
+    else
+    {
+      $class2 = null;
+    }
+
+    return '<col'.Html::generateAttribute( 'class', $class1 ).'/><col'.Html::generateAttribute( 'class', $class2 ).'/>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns HTML code (including opening and closing @a th tags) for the header of this table columns.
    *
    * @return string
@@ -74,13 +105,6 @@ abstract class DualTableColumn extends TableColumn
   public function getHtmlColumnHeader()
   {
     $class = '';
-
-    // Add class indicating the type of data of this column.
-    if ($this->myDataType)
-    {
-      $class .= 'data-type-1-';
-      $class .= $this->myDataType;
-    }
 
     // Add class indicating this column can be used for sorting.
     if ($this->mySortable)
@@ -99,13 +123,6 @@ abstract class DualTableColumn extends TableColumn
       $class .= $this->mySortOrder;
 
       $class .= ($this->mySortDirection=='desc') ? ' sorted-1-desc' : ' sorted-1-asc';
-    }
-
-    // Add class indicating the type of data of this column.
-    if ($this->myDataType2)
-    {
-      $class .= 'data-type-2-';
-      $class .= $this->myDataType2;
     }
 
     // Add class indicating this column can be used for sorting.
