@@ -86,17 +86,7 @@ abstract class TableColumn
    */
   public function getHtmlColumn()
   {
-    // Add class indicating the type of data of this column.
-    if ($this->myDataType)
-    {
-      $class = 'data-type-'.$this->myDataType;
-    }
-    else
-    {
-      $class = null;
-    }
-
-    return '<col'.Html::generateAttribute( 'class', $class ).'/>';
+    return '<col'.Html::generateAttribute( 'class', $this->myDataType ).'/>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

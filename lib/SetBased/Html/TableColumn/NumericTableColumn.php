@@ -44,11 +44,11 @@ class NumericTableColumn extends TableColumn
 
     if ($value===false || $value===null || $value==='')
     {
-      return '<td class="number"></td>';
+      return '<td></td>';
     }
     else
     {
-      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
+      return '<td>'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
     }
   }
 

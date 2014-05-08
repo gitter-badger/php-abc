@@ -51,8 +51,7 @@ class DateTimeTableColumn extends TableColumn
 
     if ($datetime)
     {
-      $class = 'datetime data-';
-      $class .= urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
+      $class = 'data-'.urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
 
       return '<td class="'.$class.'">'.Html::txt2Html( $datetime->format( $this->myFormat ) ).'</td>';
     }
