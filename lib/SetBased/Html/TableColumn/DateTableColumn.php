@@ -61,7 +61,7 @@ class DateTableColumn extends TableColumn
 
       if ($date)
       {
-        $class = 'data-'.urlencode( $date->format( 'Y-m-d' ) );
+        $class = 'date data-'.urlencode( $date->format( 'Y-m-d' ) );
 
         return '<td class="'.$class.'">'.Html::txt2Html( $date->format( $this->myFormat ) ).'</td>';
       }

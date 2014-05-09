@@ -48,7 +48,7 @@ class NumericTableColumn extends TableColumn
     }
     else
     {
-      return '<td>'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
+      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
     }
   }
 

@@ -38,7 +38,7 @@ class DateTimeTableColumn extends TableColumn
    */
   public function __construct( $theHeaderText, $theFieldName, $theFormat = null )
   {
-    $this->myDataType   = 'date-time';
+    $this->myDataType   = 'datetime';
     $this->myHeaderText = $theHeaderText;
     $this->myFieldName  = $theFieldName;
     $this->myFormat     = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
@@ -51,7 +51,7 @@ class DateTimeTableColumn extends TableColumn
 
     if ($datetime)
     {
-      $class = 'data-'.urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
+      $class = 'datetime data-'.urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
 
       return '<td class="'.$class.'">'.Html::txt2Html( $datetime->format( $this->myFormat ) ).'</td>';
     }

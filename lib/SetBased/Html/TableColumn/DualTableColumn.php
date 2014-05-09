@@ -76,7 +76,7 @@ abstract class DualTableColumn extends TableColumn
     // Add class indicating the type of data of the first column.
     if ($this->myDataType)
     {
-      $class1  = 'data-type-1-'.$this->myDataType;
+      $class1  = 'data-type-'.$this->myDataType;
     }
     else
     {
@@ -86,7 +86,7 @@ abstract class DualTableColumn extends TableColumn
     // Add class indicating the type of data of the second column.
     if ($this->myDataType2)
     {
-      $class2 = 'data-type-2-'.$this->myDataType2;
+      $class2 = 'data-type-'.$this->myDataType2;
     }
     else
     {
