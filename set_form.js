@@ -57,7 +57,6 @@ SET_Form.registerForm = function (selector) {
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
 /*global SET_OverviewTable */
 
@@ -80,13 +79,13 @@ SET_TextControlColumnTypeHandler.constructor = SET_TextControlColumnTypeHandler;
  */
 SET_TextControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('input').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('input').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 SET_TextControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('input').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('input').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -101,7 +100,6 @@ SET_OverviewTable.registerColumnTypeHandler('control-submit', SET_TextControlCol
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
 /*global SET_OverviewTable */
 
@@ -128,13 +126,13 @@ SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
  */
 SET_HtmlControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).children().text());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).children().text());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -149,7 +147,6 @@ SET_OverviewTable.registerColumnTypeHandler('control-link', SET_HtmlControlColum
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
 /*global SET_OverviewTable */
 
@@ -172,13 +169,13 @@ SET_TextAreaControlColumnTypeHandler.constructor = SET_TextAreaControlColumnType
  */
 SET_TextAreaControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

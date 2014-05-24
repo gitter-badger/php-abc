@@ -1,7 +1,6 @@
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
 /*global SET_OverviewTable */
 
@@ -24,13 +23,13 @@ SET_TextAreaControlColumnTypeHandler.constructor = SET_TextAreaControlColumnType
  */
 SET_TextAreaControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 SET_TextAreaControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).find('textarea').val());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('textarea').val());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 /*jslint browser: true, vars: true, indent: 2, maxlen: 120 */
 /*global window */
 /*global $ */
-/*global set_to_lower_case_no_accents */
 /*global SET_TextColumnTypeHandler */
 /*global SET_OverviewTable */
 
@@ -28,13 +27,13 @@ SET_HtmlControlColumnTypeHandler.constructor = SET_HtmlControlColumnTypeHandler;
  */
 SET_HtmlControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).children().text());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
 SET_HtmlControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
-  return set_to_lower_case_no_accents($(table_cell).children().text());
+  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).children().text());
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
