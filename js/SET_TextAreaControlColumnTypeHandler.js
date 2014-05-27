@@ -5,8 +5,15 @@
 /*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Prototype for column handlers for columns with a textarea form control.
+ * @constructor
+ */
 function SET_TextAreaControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

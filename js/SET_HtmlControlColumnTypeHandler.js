@@ -6,11 +6,14 @@
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Prototype for column handlers for columns with a spn, div,
+ * Prototype for column handlers for columns with a span, div, or a element.
  * @constructor
  */
 function SET_HtmlControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

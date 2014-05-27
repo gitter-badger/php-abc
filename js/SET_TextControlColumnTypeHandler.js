@@ -5,8 +5,15 @@
 /*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Prototype for column handlers for columns with a text input form control.
+ * @constructor
+ */
 function SET_TextControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
