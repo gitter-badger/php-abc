@@ -61,8 +61,15 @@ SET_Form.registerForm = function (selector) {
 /*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Prototype for column handlers for columns with a text input form control.
+ * @constructor
+ */
 function SET_TextControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -90,7 +97,7 @@ SET_TextControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Register column type handler.
+ * Register column type handlers.
  */
 SET_OverviewTable.registerColumnTypeHandler('control-text', SET_TextControlColumnTypeHandler);
 SET_OverviewTable.registerColumnTypeHandler('control-button', SET_TextControlColumnTypeHandler);
@@ -105,11 +112,14 @@ SET_OverviewTable.registerColumnTypeHandler('control-submit', SET_TextControlCol
 
 // ---------------------------------------------------------------------------------------------------------------------
 /**
- * Prototype for column handlers for columns with a spn, div,
+ * Prototype for column handlers for columns with a span, div, or a element.
  * @constructor
  */
 function SET_HtmlControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -151,8 +161,15 @@ SET_OverviewTable.registerColumnTypeHandler('control-link', SET_HtmlControlColum
 /*global SET_OverviewTable */
 
 // ---------------------------------------------------------------------------------------------------------------------
+/**
+ * Prototype for column handlers for columns with a textarea form control.
+ * @constructor
+ */
 function SET_TextAreaControlColumnTypeHandler() {
   "use strict";
+
+  // Use parent constructor.
+  SET_TextColumnTypeHandler.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
