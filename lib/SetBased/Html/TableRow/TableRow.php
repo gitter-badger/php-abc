@@ -32,7 +32,7 @@ abstract class TableRow
    *
    * @return string
    */
-  abstract public function getHtmlCell( &$theData );
+  abstract public function getHtmlCell( $theData );
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

@@ -65,7 +65,7 @@ abstract class TableColumn
    *
    * @return string
    */
-  abstract public function getHtmlCell( &$theData );
+  abstract public function getHtmlCell( $theData );
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

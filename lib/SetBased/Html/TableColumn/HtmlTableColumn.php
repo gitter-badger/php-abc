@@ -32,7 +32,7 @@ class HtmlTableColumn extends TableColumn
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     return '<td>'.$theData[$this->myFieldName].'</td>';
   }

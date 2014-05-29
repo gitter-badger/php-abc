@@ -32,7 +32,7 @@ class HtmlTableRow extends TableRow
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     return '<td>'.$theData[$this->myFieldName].'</td>';
   }

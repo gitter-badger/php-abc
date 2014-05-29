@@ -38,7 +38,7 @@ class NumericTableRow extends TableRow
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     $value = $theData[$this->myFieldName];
 

@@ -29,7 +29,7 @@ class EmailTableRow extends TableRow
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     $address = Html::Txt2Html( $theData[$this->myFieldName] );
     return '<td><a href="mailto:'.$address.'">'.$address.'</a></td>\n';

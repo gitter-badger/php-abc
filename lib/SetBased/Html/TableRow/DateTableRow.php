@@ -53,7 +53,7 @@ class DateTableRow extends TableRow
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     if ($theData[$this->myFieldName] && $theData[$this->myFieldName]!=self::$ourOpenDate)
     {

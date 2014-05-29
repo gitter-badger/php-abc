@@ -29,7 +29,7 @@ class TextTableRow extends TableRow
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( &$theData )
+  public function getHtmlCell( $theData )
   {
     return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
   }
