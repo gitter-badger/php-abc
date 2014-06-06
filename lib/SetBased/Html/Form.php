@@ -54,7 +54,7 @@ class Form
    *
    * @var FormValidator[]
    */
-  protected $myValidators = array();
+  protected $myFormValidators = array();
 
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -103,6 +103,21 @@ class Form
     $this->myFieldSets[] = $theFieldSet;
 
     return $theFieldSet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a form validator to list of form validators for this form.
+   *
+   * @param FormValidator $theFormValidator
+   *
+   * @return FormValidator
+   */
+  public function addFormValidator( $theFormValidator )
+  {
+    $this->myFormValidators[] = $theFormValidator;
+
+    return $theFormValidator;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -431,7 +446,7 @@ class Form
     // If the submitted values are valid for all field sets validate the submitted values at form level.
     if (!$this->myInvalidControls)
     {
-      foreach( $this->myValidators as $validator )
+      foreach ($this->myFormValidators as $validator)
       {
         $valid = $validator->validate( $this );
         if (!$valid)
