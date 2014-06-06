@@ -3,6 +3,7 @@
 namespace SetBased\Html;
 
 use SetBased\Html\Form\Control\FieldSet;
+use SetBased\Html\Form\FormValidator;
 
 /**
  * Class Form
@@ -47,6 +48,13 @@ class Form
    * @var array
    */
   protected $myValues = array();
+
+  /**
+   * The (form) validators for validating the submitted values for this form.
+   *
+   * @var FormValidator[]
+   */
+  protected $myValidators = array();
 
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -418,6 +426,21 @@ class Form
     foreach ($this->myFieldSets as $fieldSet)
     {
       $fieldSet->validateBase( $this->myInvalidControls );
+    }
+
+    // If the submitted values are valid for all field sets validate the submitted values at form level.
+    if (!$this->myInvalidControls)
+    {
+      foreach( $this->myValidators as $validator )
+      {
+        $valid = $validator->validate( $this );
+        if (!$valid)
+        {
+          // Stop immediately after the first valid validator (validators (may) depend on successful validations of
+          // their predecessors).
+          break;
+        }
+      }
     }
 
     return (empty($this->myInvalidControls));
