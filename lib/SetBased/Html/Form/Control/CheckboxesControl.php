@@ -66,18 +66,6 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param string $theName
-   */
-  public function __construct( $theName )
-  {
-    parent::__construct( $theName );
-
-    // A ControlCheckboxes must always have a name.
-    if ($this->myName==='') Html::error( 'Name is empty' );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns the HTML code for this form control.
    *
    * @param string $theParentName
@@ -108,7 +96,8 @@ class CheckboxesControl extends Control
 
         $html .= '<input type="checkbox"';
 
-        $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        if ($submit_name!=='') $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
+        else                   $html .= Html::generateAttribute( 'name', $code );
 
         $html .= Html::generateAttribute( 'id', $id );
 
@@ -251,19 +240,35 @@ class CheckboxesControl extends Control
       // Get the original value (i.e. the option is checked or not).
       $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;
 
-      // Get the submitted value (i.e. the option is checked or not).
-      $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
+      if ($submit_name!=='')
+      {
+        // Get the submitted value (i.e. the option is checked or not).
+        $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
-      // If the original value differs from the submitted value then the form control has been changed.
-      if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
+        // If the original value differs from the submitted value then the form control has been changed.
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
 
-      // Set the white listed value.
-      $theWhiteListValue[$this->myName][$id]    = !empty($submitted);
+        // Set the white listed value.
+        $theWhiteListValue[$this->myName][$id] = !empty($submitted);
+
+      }
+      else
+      {
+        // Get the submitted value (i.e. the option is checked or not).
+        $submitted = (isset($theSubmittedValue[$code])) ? $theSubmittedValue[$code] : false;
+
+        // If the original value differs from the submitted value then the form control has been changed.
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$id] = $this;
+
+        // Set the white listed value.
+        $theWhiteListValue[$id] = !empty($submitted);
+      }
+
+      // Set the submitted value to be used method getSubmittedValue.
+      $this->myValue[$id] = !empty($submitted);
+
       $this->myOptions[$i][$this->myCheckedKey] = !empty($submitted);
     }
-
-    // Set the submitted value to be used method GetSubmittedValue.
-    $this->myValue = $theWhiteListValue[$this->myName];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
