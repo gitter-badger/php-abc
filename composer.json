@@ -20,8 +20,8 @@
     "packagist/yuicompressor-bin": "dev-master"
   },
   "autoload": {
-    "psr-0": {
-      "SetBased\\Html\\": "lib/"
+    "psr-4": {
+      "SetBased\\Html\\": "lib/Html/"
     }
   },
   "config": {
