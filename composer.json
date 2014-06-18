@@ -21,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SetBased\\Html\\": "lib/Html/"
+      "SetBased\\Html\\": "lib/"
     }
   },
   "config": {
