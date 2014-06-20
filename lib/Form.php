@@ -430,11 +430,10 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Validates all form controls of this form against all their installed validation checks.
+   * Validates all form controls of this form against all their installed validation checks. After all form controls
+   * passed their validations validates the form itself against all its installed validation checks.
    *
-   * @return bool @c true if and only if all form controls fulfill all their validation checks. Otherwise, returns @c
-   * false.@note
-   * This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
+   * @return bool True of the submitted values are valid, false otherwise.
    */
   public function validate()
   {
@@ -443,8 +442,10 @@ class Form
       $fieldSet->validateBase( $this->myInvalidControls );
     }
 
+    $valid = empty($this->myInvalidControls);
+
     // If the submitted values are valid for all field sets validate the submitted values at form level.
-    if (!$this->myInvalidControls)
+    if ($valid)
     {
       foreach ($this->myFormValidators as $validator)
       {
@@ -458,7 +459,7 @@ class Form
       }
     }
 
-    return (empty($this->myInvalidControls));
+    return ($valid);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
