@@ -69,17 +69,6 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
-   *
-   * @return string
-   */
-  public function getHtmlColumnFilter()
-  {
-    return '<td><input type="text"/></td>';
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns HTML code for col element for this table column.
    *
    * @return string
@@ -101,36 +90,60 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code (including opening and closing th tags) for the table filter cell.
+   *
+   * @return string
+   */
+  public function getHtmlColumnFilter()
+  {
+    if ($this->myHeaderText===null)
+    {
+      // If the column header is empty there is no column filter by default. This behaviour can be overridden in a
+      // child class.
+      return '<td></td>';
+    }
+    else
+    {
+      // The default filter is a simple text filter.
+      return '<td><input type="text"/></td>';
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns HTML code (including opening and closing th tags) for the table header cell.
    *
    * @return string
    */
   public function getHtmlColumnHeader()
   {
-    $class = '';
-
-    // Add class indicating this column can be used for sorting.
-    if ($this->mySortable)
-    {
-      if ($class) $class .= ' ';
-      $class .= 'sort';
-
-      // Add class indicating the sort order of this column.
-      if ($this->mySortOrder)
-      {
-        if ($class) $class .= ' ';
-
-        // Add class indicating this column can be used for sorting.
-        $class .= 'sort-order-';
-        $class .= $this->mySortOrder;
-
-        $class .= ($this->mySortDirection=='desc') ? ' sorted-desc' : ' sorted-asc';
-      }
-    }
-
     if ($this->myHeaderText===null)
     {
-      $class .= 'empty';
+      $class = 'empty';
+    }
+    else
+    {
+      if ($this->mySortable)
+      {
+        // Add class indicating this column can be used for sorting.
+        $class = 'sort';
+
+        // Add class indicating the sort order of this column.
+        if ($this->mySortOrder)
+        {
+          if ($class) $class .= ' ';
+
+          // Add class indicating this column can be used for sorting.
+          $class .= 'sort-order-';
+          $class .= $this->mySortOrder;
+
+          $class .= ($this->mySortDirection=='desc') ? ' sorted-desc' : ' sorted-asc';
+        }
+      }
+      else
+      {
+        $class = null;
+      }
     }
 
     return '<th'.Html::generateAttribute( 'class', $class ).'>'.Html::txt2Html( $this->myHeaderText ).'</th>';
