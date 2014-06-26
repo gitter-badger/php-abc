@@ -3,6 +3,7 @@
 namespace SetBased\Html\Table;
 
 use SetBased\Html\Html;
+use SetBased\Html\TableColumn\DualTableColumn;
 use SetBased\Html\TableColumn\TableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ class OverviewTable
    *
    * @param TableColumn $theColumn
    *
-   * @return TableColumn
+   * @return TableColumn|DualTableColumn
    */
   public function addColumn( $theColumn )
   {
