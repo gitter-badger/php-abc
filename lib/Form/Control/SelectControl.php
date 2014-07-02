@@ -20,6 +20,11 @@ class SelectControl extends SimpleControl
   protected $myDisabledKey;
 
   /**
+   * @var string The key in $myOptions holding the HTML ID for the options in this select box.
+   */
+  protected $myIdKey;
+
+  /**
    * @var string The key in $myOptions holding the keys for the options in this select box.
    */
   protected $myKeyKey;
@@ -39,12 +44,11 @@ class SelectControl extends SimpleControl
    */
   protected $myOptionsObfuscator;
 
-
   /**
    * If set the first option in the select box with be an option with an empty label with value $myOptionEmpty.
    *
    * @var string The value for the empty option.
-   * */
+   */
   protected $myEmptyOption;
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -84,17 +88,17 @@ class SelectControl extends SimpleControl
     {
       foreach ($this->myOptions as $option)
       {
-        // Get the (database) ID of the option.
-        $id = (string)$option[$this->myKeyKey];
+        // Get the (database) key of the option.
+        $key = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
         //
         $html .= '<option';
         $html .= Html::generateAttribute( 'value', $code );
 
-        if ((string)$this->myValue===$id)
+        if ((string)$this->myValue===$key)
         {
           $html .= ' selected="selected"';
         }
@@ -102,6 +106,11 @@ class SelectControl extends SimpleControl
         if (isset($this->myDisabledKey) && !empty($option[$this->myDisabledKey]))
         {
           $html .= ' disabled="disabled"';
+        }
+
+        if (isset($this->myIdKey) && isset($option[$this->myIdKey]))
+        {
+          $html .= Html::generateAttribute( 'id', $option[$this->myIdKey] );
         }
 
         $html .= '>';
@@ -125,13 +134,15 @@ class SelectControl extends SimpleControl
    * @param string      $theLabelKey     The key holding the labels for the options.
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
    *                                     option is disables.
+   * @param string|null $theIdKey        The key holding the HTML ID attribute of the options.
    */
-  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null )
+  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null, $theIdKey = null )
   {
     $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
     $this->myLabelKey    = $theLabelKey;
     $this->myDisabledKey = $theDisabledKey;
+    $this->myIdKey       = $theIdKey;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

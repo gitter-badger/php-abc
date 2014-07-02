@@ -20,6 +20,11 @@ class RadiosControl extends Control
   protected $myDisabledKey;
 
   /**
+   * @var string|null The key in $myOptions holding the HTML ID attribute of the radios.
+   */
+  protected $myIdKey;
+
+  /**
    * @var string The key in $myOptions holding the keys for the radio buttons.
    */
   protected $myKeyKey;
@@ -81,9 +86,9 @@ class RadiosControl extends Control
       {
         $key = (string)$option[$this->myKeyKey];
 
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
+        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
 
-        $id = Html::getAutoId();
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
         $html .= '<input type="radio" id="'.$id.'"';
 
@@ -160,13 +165,15 @@ class RadiosControl extends Control
    * @param string      $theLabelKey     The key holding the labels for the radio buttons..
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
    *                                     radio button is disabled.
+   * @param string|null $theIdKey        The key holding the HTML ID attribute of the radios.
    */
-  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null )
+  public function setOptions( &$theOptions, $theKeyKey, $theLabelKey, $theDisabledKey = null, $theIdKey = null )
   {
     $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
     $this->myLabelKey    = $theLabelKey;
     $this->myDisabledKey = $theDisabledKey;
+    $this->myIdKey       = $theIdKey;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
