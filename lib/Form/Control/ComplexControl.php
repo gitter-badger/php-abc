@@ -319,9 +319,7 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
+   * {@inheritdoc}
    */
   public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {

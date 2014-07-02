@@ -79,9 +79,7 @@ class TextControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
+   * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {

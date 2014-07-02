@@ -68,10 +68,6 @@ class PushMeControl extends SimpleControl
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
-   *
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {

@@ -51,9 +51,11 @@ class InvisibleControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param array $theSubmittedValue
-   * @param array $theWhiteListValue
-   * @param array $theChangedInputs
+   * {@inheritdoc}
+   *
+   * Note:
+   * Always sets the white listed value to the value of this constant form control.
+   * Never uses $theSubmittedValue and never sets the $theChangedInputs.
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
   {
