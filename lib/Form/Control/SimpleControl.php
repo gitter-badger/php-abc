@@ -2,6 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
+use SetBased\Html\Form\Cleaner\Cleaner;
+use SetBased\Html\Form\Formatter\Formatter;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -26,14 +28,14 @@ abstract class SimpleControl extends Control
   /**
    * The cleaner to clean and/or translate (to machine format) the submitted value.
    *
-   * @var \SetBased\Html\Form\Cleaner\Cleaner
+   * @var Cleaner
    */
   protected $myCleaner;
 
   /**
    * The formatter to format the value (from machine format) to the displayed value.
    *
-   * @var \SetBased\Html\Form\Formatter\Formatter
+   * @var Formatter
    */
   protected $myFormatter;
 
@@ -98,7 +100,7 @@ abstract class SimpleControl extends Control
   /**
    * Sets the cleaner for this form control.
    *
-   * @param \SetBased\Html\Form\Cleaner\Cleaner|null $theCleaner The cleaner for this form control.
+   * @param Cleaner|null $theCleaner The cleaner for this form control.
    */
   public function setCleaner( $theCleaner )
   {
@@ -109,7 +111,7 @@ abstract class SimpleControl extends Control
   /**
    * Sets the formatter for this form control.
    *
-   * @param \SetBased\Html\Form\Formatter\Formatter|null $theFormatter The formatter for this form control.
+   * @param Formatter|null $theFormatter The formatter for this form control.
    */
   public function setFormatter( $theFormatter )
   {

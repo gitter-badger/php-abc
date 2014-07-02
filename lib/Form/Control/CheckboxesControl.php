@@ -90,16 +90,17 @@ class CheckboxesControl extends Control
     {
       foreach ($this->myOptions as $option)
       {
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
+        $code = ($this->myOptionsObfuscator) ?
+          $this->myOptionsObfuscator->encode( $option[$this->myKeyKey] ) : $option[$this->myKeyKey];
 
-        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
+        $key = ($this->myIdKey && isset($option[$this->myIdKey])) ? $key = $option[$this->myIdKey] : Html::getAutoId();
 
         $html .= '<input type="checkbox"';
 
         if ($submit_name!=='') $html .= Html::generateAttribute( 'name', "${submit_name}[$code]" );
         else                   $html .= Html::generateAttribute( 'name', $code );
 
-        $html .= Html::generateAttribute( 'id', $id );
+        $html .= Html::generateAttribute( 'id', $key );
 
         if ($this->myCheckedKey && isset($option[$this->myCheckedKey]))
         {
@@ -115,7 +116,7 @@ class CheckboxesControl extends Control
 
         $html .= $this->myLabelPrefix;
         $html .= '<label';
-        $html .= Html::generateAttribute( 'for', $id );
+        $html .= Html::generateAttribute( 'for', $key );
         $html .= '>';
         $html .= Html::txt2Html( $option[$this->myLabelKey] );
         $html .= '</label>';
@@ -230,10 +231,10 @@ class CheckboxesControl extends Control
     foreach ($this->myOptions as $i => $option)
     {
       // Get the (database) ID of the option.
-      $id = (string)$option[$this->myKeyKey];
+      $key = (string)$option[$this->myKeyKey];
 
       // If an obfuscator is installed compute the obfuscated code of the (database) ID.
-      $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
+      $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
       // Get the original value (i.e. the option is checked or not).
       $value = (isset($option[$this->myCheckedKey])) ? $option[$this->myCheckedKey] : false;
@@ -244,10 +245,10 @@ class CheckboxesControl extends Control
         $submitted = (isset($theSubmittedValue[$submit_name][$code])) ? $theSubmittedValue[$submit_name][$code] : false;
 
         // If the original value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$id] = $this;
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$this->myName][$key] = $this;
 
         // Set the white listed value.
-        $theWhiteListValue[$this->myName][$id] = !empty($submitted);
+        $theWhiteListValue[$this->myName][$key] = !empty($submitted);
 
       }
       else
@@ -256,14 +257,14 @@ class CheckboxesControl extends Control
         $submitted = (isset($theSubmittedValue[$code])) ? $theSubmittedValue[$code] : false;
 
         // If the original value differs from the submitted value then the form control has been changed.
-        if (empty($value)!==empty($submitted)) $theChangedInputs[$id] = $this;
+        if (empty($value)!==empty($submitted)) $theChangedInputs[$key] = $this;
 
         // Set the white listed value.
-        $theWhiteListValue[$id] = !empty($submitted);
+        $theWhiteListValue[$key] = !empty($submitted);
       }
 
       // Set the submitted value to be used method getSubmittedValue.
-      $this->myValue[$id] = !empty($submitted);
+      $this->myValue[$key] = !empty($submitted);
 
       $this->myOptions[$i][$this->myCheckedKey] = !empty($submitted);
     }

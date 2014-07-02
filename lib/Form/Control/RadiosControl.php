@@ -86,11 +86,13 @@ class RadiosControl extends Control
       {
         $key = (string)$option[$this->myKeyKey];
 
-        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $id = $option[$this->myIdKey] : Html::getAutoId();
+        $id = ($this->myIdKey && isset($option[$this->myIdKey])) ? $option[$this->myIdKey] : Html::getAutoId();
 
         $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
-        $html .= '<input type="radio" id="'.$id.'"';
+        $html .= '<input type="radio"';
+
+        $html .= Html::generateAttribute( 'id', $id );
 
         $html .= Html::generateAttribute( 'name', $submit_name );
 
@@ -223,22 +225,22 @@ class RadiosControl extends Control
       foreach ($this->myOptions as $option)
       {
         // Get the (database) ID of the option.
-        $id = (string)$option[$this->myKeyKey];
+        $key = (string)$option[$this->myKeyKey];
 
         // If an obfuscator is installed compute the obfuscated code of the radio button name.
-        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $id ) : $id;
+        $code = ($this->myOptionsObfuscator) ? $this->myOptionsObfuscator->encode( $key ) : $key;
 
         if ($submitted_value===(string)$code)
         {
           // If the original value differs from the submitted value then the form control has been changed.
-          if ((string)$this->myValue!==$id)
+          if ((string)$this->myValue!==$key)
           {
             $theChangedInputs[$this->myName] = $this;
           }
 
           // Set the white listed value.
-          $theWhiteListValue[$this->myName] = $id;
-          $this->myValue                    = $id;
+          $theWhiteListValue[$this->myName] = $key;
+          $this->myValue                    = $key;
 
           // Leave the loop.
           break;
