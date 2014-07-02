@@ -21,6 +21,7 @@ class RadioControl extends SimpleControl
    * @note Before generation the following HTML attributes are overwritten:
    *       * name    Will be replaced with the submit name of this form control.
    *       * type    Will be replaced with 'radio'.
+   *       * value   Will be replaced with the value of this form control.
    *
    * @param string $theParentName
    *
@@ -28,8 +29,9 @@ class RadioControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type'] = 'radio';
-    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type']  = 'radio';
+    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
+    $this->myAttributes['value'] = $this->myValue;
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
@@ -75,7 +77,10 @@ class RadioControl extends SimpleControl
       }
       $this->myAttributes['checked'] = false;
 
-      if (!array_key_exists( $this->myName, $theWhiteListValue ))
+      // If the white listed value is not set by a radio button with the same name as this radio button, set the white
+      // listed value of this radio button (and other radio buttons with the same name) to null. If another radio button
+      // with the same name is checked the white listed value will be overwritten.
+      if (!isset($theWhiteListValue[$this->myName]))
       {
         $theWhiteListValue[$this->myName] = null;
       }
