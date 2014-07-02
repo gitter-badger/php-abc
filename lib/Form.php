@@ -433,7 +433,7 @@ class Form
    * Validates all form controls of this form against all their installed validation checks. After all form controls
    * passed their validations validates the form itself against all its installed validation checks.
    *
-   * @return bool True of the submitted values are valid, false otherwise.
+   * @return bool True if the submitted values are valid, false otherwise.
    */
   public function validate()
   {
