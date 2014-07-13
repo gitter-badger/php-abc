@@ -2,7 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html;
+use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -29,6 +29,27 @@ class SlatControl extends ComplexControl
     {
       $ret .= '<td>';
       $ret .= $control->generate( $submit_name );
+      $ret .= '</td>';
+    }
+
+    $ret .= $this->generateErrorCell();
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function generateErrorCell()
+  {
+    $ret = '';
+
+    if ($this->myErrorMessages)
+    {
+      $ret .= '<td class="error">';
+      foreach( $this->myErrorMessages as $message )
+      {
+        $ret .= Html::txt2Html( $message );
+        $ret.= '<br/>';
+      }
       $ret .= '</td>';
     }
 
