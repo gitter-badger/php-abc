@@ -42,10 +42,12 @@ class SlatControl extends ComplexControl
   {
     $ret = '';
 
-    if ($this->myErrorMessages)
+    if (!$this->isValid())
     {
+      $error_messages = $this->getErrorMessages();
+
       $ret .= '<td class="error">';
-      foreach( $this->myErrorMessages as $message )
+      foreach( $error_messages as $message )
       {
         $ret .= Html::txt2Html( $message );
         $ret.= '<br/>';

@@ -19,11 +19,33 @@ class ComplexControl extends Control
   protected $myControls = array();
 
   /**
+   * The child form controls of this form control with invalid sumitted values.
+   *
+   * @var ComplexControl[]|Control[]
+   */
+  protected $myInvalidControls;
+
+  /**
    * The value of this form control, i.e. a nested array of the values of the child form controls.
    *
    * @var mixed
    */
   protected $myValue;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a form control to this complex form control.
+   *
+   * @param string $theControl
+   *
+   * @return ComplexControl|SimpleControl|SelectControl|CheckBoxesControl|RadiosControl
+   */
+  public function addFormControl( $theControl )
+  {
+    $this->myControls[] = $theControl;
+
+    return $theControl;
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -40,107 +62,92 @@ class ComplexControl extends Control
     switch ($theType)
     {
       case 'text':
-        $control = new TextControl( $theName );
+        $control = new TextControl($theName);
         break;
 
       case 'password':
-        $control = new PasswordControl( $theName );
+        $control = new PasswordControl($theName);
         break;
 
       case 'checkbox':
-        $control = new CheckboxControl( $theName );
+        $control = new CheckboxControl($theName);
         break;
 
       case 'radio':
-        $control = new RadioControl( $theName );
+        $control = new RadioControl($theName);
         break;
 
       case 'submit':
-        $control = new SubmitControl( $theName );
+        $control = new SubmitControl($theName);
         break;
 
       case 'image':
-        $control = new ImageControl( $theName );
+        $control = new ImageControl($theName);
         break;
 
       case 'reset':
-        $control = new ResetControl( $theName );
+        $control = new ResetControl($theName);
         break;
 
       case 'button':
-        $control = new ButtonControl( $theName );
+        $control = new ButtonControl($theName);
         break;
 
       case 'hidden':
-        $control = new HiddenControl( $theName );
+        $control = new HiddenControl($theName);
         break;
 
       case 'file':
-        $control = new FileControl( $theName );
+        $control = new FileControl($theName);
         break;
 
       case 'invisible':
-        $control = new InvisibleControl( $theName );
+        $control = new InvisibleControl($theName);
         break;
 
       case 'textarea':
-        $control = new TextAreaControl( $theName );
+        $control = new TextAreaControl($theName);
         break;
 
       case 'complex':
-        $control = new ComplexControl( $theName );
+        $control = new ComplexControl($theName);
         break;
 
       case 'select':
-        $control = new SelectControl( $theName );
+        $control = new SelectControl($theName);
         break;
 
       case 'span':
-        $control = new SpanControl( $theName );
+        $control = new SpanControl($theName);
         break;
 
       case 'div':
-        $control = new DivControl( $theName );
+        $control = new DivControl($theName);
         break;
 
       case 'a':
-        $control = new LinkControl( $theName );
+        $control = new LinkControl($theName);
         break;
 
       case 'constant':
-        $control = new ConstantControl( $theName );
+        $control = new ConstantControl($theName);
         break;
 
       case 'radios':
-        $control = new RadiosControl( $theName );
+        $control = new RadiosControl($theName);
         break;
 
       case 'checkboxes':
-        $control = new CheckboxesControl( $theName );
+        $control = new CheckboxesControl($theName);
         break;
 
       default:
-        $control = new $theType( $theName );
+        $control = new $theType($theName);
     }
 
     $this->myControls[] = $control;
 
     return $control;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Adds a form control to this complex form control.
-   *
-   * @param string $theControl
-   *
-   * @return ComplexControl|SimpleControl|SelectControl|CheckBoxesControl|RadiosControl
-   */
-  public function addFormControl( $theControl )
-  {
-    $this->myControls[] = $theControl;
-
-    return $theControl;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -319,6 +326,29 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the submitted value of this form control.
+   *
+   * @returns array
+   */
+  public function getSubmittedValue()
+  {
+    return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns true if the submitted values of this form control and this form control are valid. Otherwise, returns
+   * false.
+   *
+   * @return bool
+   */
+  public function isValid()
+  {
+    return (!$this->myInvalidControls && !$this->myErrorMessages);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   public function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
@@ -355,17 +385,6 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the submitted value of this form control.
-   *
-   * @returns array
-   */
-  public function getSubmittedValue()
-  {
-    return $this->myValue;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * @param mixed $theValues
    */
   public function setValuesBase( &$theValues )
@@ -392,7 +411,8 @@ class ComplexControl extends Control
     // First, validate all child form controls.
     foreach ($this->myControls as $control)
     {
-      $control->validateBase( $tmp );
+      $child_valid = $control->validateBase( $tmp );
+      if (!$child_valid) $this->myInvalidControls[] = $control;
     }
 
     if (empty($tmp))
