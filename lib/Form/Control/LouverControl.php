@@ -20,6 +20,13 @@ class LouverControl extends ComplexControl
   protected $myData;
 
   /**
+   * Form control for the footer of the table.
+   *
+   * @var control
+   */
+  protected $myFooterControl;
+
+  /**
    * Object for creating table row form controls.
    *
    * @var SlatControlFactory
@@ -36,6 +43,8 @@ class LouverControl extends ComplexControl
    */
   public function generate( $theParentName )
   {
+    $submit_name = $this->getSubmitName( $theParentName );
+
     $ret = $this->myPrefix;
 
     $ret .= '<div';
@@ -51,8 +60,19 @@ class LouverControl extends ComplexControl
     $ret .= $this->getHtmlHeader();
     $ret .= '</thead>';
 
+    if ($this->myFooterControl)
+    {
+      $ret .= '<tfoot>';
+      $ret .= '<tr>';
+      $ret .= '<td colspan="'.$this->myRowFactory->getNumberOfColumns().'">';
+      $ret .= $this->myFooterControl->generate( $submit_name );
+      $ret .= '</td>';
+      $ret .= '</tr>';
+      $ret .= '</tfoot>';
+    }
+
     $ret .= '<tbody>';
-    $ret .= $this->getHtmlBody( $theParentName );
+    $ret .= $this->getHtmlBody( $submit_name );
     $ret .= '</tbody>';
 
     $ret .= '</table>';
@@ -88,6 +108,17 @@ class LouverControl extends ComplexControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the footer form control of this table form control.
+   *
+   * @param Control $theControl
+   */
+  public function setFooterControl( $theControl )
+  {
+    $this->myFooterControl = $this->addFormControl( $theControl );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the row factory for this table form control.
    *
    * @param SlatControlFactory $theRowFactory
@@ -101,25 +132,26 @@ class LouverControl extends ComplexControl
   /**
    * Returns the inner HTML code of the tbody element of this table form control.
    *
-   * @param string $theParentName The name of the parent form control of this table form control.
+   * @param string $theSubmitParentName The submit name of the parent form control of this table form control.
    *
    * @return string
    */
-  protected function getHtmlBody( $theParentName )
+  protected function getHtmlBody( $theSubmitParentName )
   {
-    $submit_name = $this->getSubmitName( $theParentName );
-
     $ret = '';
     $i   = 0;
     foreach ($this->myControls as $control)
     {
-      if ($i % 2==0) $ret .= '<tr class="even">';
-      else           $ret .= '<tr class="odd">';
+      if ($control!==$this->myFooterControl)
+      {
+        if ($i % 2==0) $ret .= '<tr class="even">';
+        else           $ret .= '<tr class="odd">';
 
-      $ret .= $control->generate( $submit_name );
+        $ret .= $control->generate( $theSubmitParentName );
 
-      $ret .= '</tr>';
-      $i++;
+        $ret .= '</tr>';
+        $i++;
+      }
     }
 
     return $ret;

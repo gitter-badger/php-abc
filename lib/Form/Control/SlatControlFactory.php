@@ -31,7 +31,7 @@ abstract class SlatControlFactory
    *
    * @var int
    */
-  private $myNumberOfColumns = 1;
+  private $myNumberOfColumns = 0;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
