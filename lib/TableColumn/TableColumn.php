@@ -90,6 +90,17 @@ abstract class TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the data type of this table column.
+   *
+   * @return string
+   */
+  public function getDataType()
+  {
+    return $this->myDataType;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns HTML code (including opening and closing th tags) for the table filter cell.
    *
    * @return string
