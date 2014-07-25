@@ -1,6 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
+
 use SetBased\Html\Form\Validator\Validator;
 
 /**
@@ -93,7 +94,9 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param string $theParentName
+   * Returns the HTML code for this form control.
+   *
+   * @param string $theParentName The submit name of the parent form control.
    *
    * @return string
    */
@@ -128,9 +131,24 @@ abstract class Control
    *
    * @return null|string
    */
-  public function getErrorMessages( /** @noinspection PhpUnusedParameterInspection */ $theRecursiveFlag = false )
+  public function getErrorMessages( /** @noinspection PhpUnusedParameterInspection */
+    $theRecursiveFlag = false
+  )
   {
     return $this->myErrorMessages;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the HTML code for this form control in a table cell.
+   *
+   * @param string $theParentName The submit name of the parent form control.
+   *
+   * @return string
+   */
+  public function getHtmlTableCell( $theParentName )
+  {
+    return '<td>'.$this->generate( $theParentName ).'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

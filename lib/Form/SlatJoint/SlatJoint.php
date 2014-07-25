@@ -82,6 +82,27 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns HTML code for col element for this slat joint.
+   *
+   * @return string
+   */
+  public function getHtmlColumn()
+  {
+    // Add class indicating the type of data of this column.
+    if ($this->myDataType)
+    {
+      $class = 'data-type-'.$this->myDataType;
+    }
+    else
+    {
+      $class = null;
+    }
+
+    return '<col'.Html::generateAttribute( 'class', $class ).'/>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns HTML code (including opening and closing th tags) for the table header cell.
    *
    * @return string

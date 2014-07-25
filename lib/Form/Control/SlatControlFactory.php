@@ -77,7 +77,7 @@ abstract class SlatControlFactory
    * Creates the form controls of a slat in a louver control.
    *
    * @param LouverControl $theLouverControl The louver control.
-   * @param array         $theData An array from the nested arrays as set in LouverControl::setData.
+   * @param array         $theData          An array from the nested arrays as set in LouverControl::setData.
    */
   abstract public function createRow( $theLouverControl, $theData );
 
@@ -122,6 +122,23 @@ abstract class SlatControlFactory
         $ret .= $factory->getHtmlColumnFilter();
       }
       $ret .= '</tr>';
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the inner HTML code of the colgroup element of the table form control.
+   *
+   * @return string
+   */
+  public function getColumnGroup()
+  {
+    $ret = '';
+    foreach ($this->mySlatJoints as $factory)
+    {
+      $ret .= $factory->getHtmlColumn();
     }
 
     return $ret;
