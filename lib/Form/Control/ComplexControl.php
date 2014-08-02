@@ -141,6 +141,10 @@ class ComplexControl extends Control
         $control = new CheckboxesControl($theName);
         break;
 
+      case 'html':
+        $control = new HtmlControl($theName);
+        break;
+
       default:
         $control = new $theType($theName);
     }
