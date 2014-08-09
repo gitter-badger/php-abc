@@ -148,7 +148,7 @@ abstract class Control
    */
   public function getHtmlTableCell( $theParentName )
   {
-    return '<td>'.$this->generate( $theParentName ).'</td>';
+    return '<td class="control">'.$this->generate( $theParentName ).'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

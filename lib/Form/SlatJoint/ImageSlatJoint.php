@@ -40,6 +40,7 @@ class ImageSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return '<td></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

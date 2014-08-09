@@ -40,6 +40,7 @@ class CheckboxSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return '<td><input type="text"/></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

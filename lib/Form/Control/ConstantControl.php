@@ -25,8 +25,20 @@ class ConstantControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * A constant control must never be shown in a table.
    *
+   * @param string $theParentName Not used.
+   *
+   * @return string An empty string.
+   */
+  public function getHtmlTableCell( $theParentName )
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
    * Note:
    * Always sets the white listed value to the value of this constant form control.
    * Never uses $theSubmittedValue and never sets the $theChangedInputs.

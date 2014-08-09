@@ -28,8 +28,8 @@ class HiddenControl extends SimpleControl
    */
   public function generate( $theParentName )
   {
-    $this->myAttributes['type']  = 'hidden';
-    $this->myAttributes['name']  = $this->getSubmitName( $theParentName );
+    $this->myAttributes['type'] = 'hidden';
+    $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
     if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format( $this->myValue );
     else                    $this->myAttributes['value'] = $this->myValue;
@@ -47,6 +47,19 @@ class HiddenControl extends SimpleControl
     $ret .= $this->myPostfix;
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A hidden control must never be shown in a table.
+   *
+   * @param string $theParentName Not used.
+   *
+   * @return string An empty string.
+   */
+  public function getHtmlTableCell( $theParentName )
+  {
+    return null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

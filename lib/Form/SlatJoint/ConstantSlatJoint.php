@@ -3,22 +3,9 @@
 namespace SetBased\Html\Form\SlatJoint;
 
 use SetBased\Html\Form\Control\ConstantControl;
-use SetBased\Html\Html;
 
 class ConstantSlatJoint extends SlatJoint
 {
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Object constructor.
-   *
-   * @param string $theHeaderText The header text of this table column.
-   */
-  public function __construct( $theHeaderText )
-  {
-    $this->myDataType   = 'control-constant';
-    $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
-  }
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Creates and returns a constant form control.
@@ -29,17 +16,51 @@ class ConstantSlatJoint extends SlatJoint
    */
   public function createCell( $theName )
   {
-    return new ConstantControl( $theName );
+    return new ConstantControl($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
+   * A constant control must never be shown in a table. Hence it it has no column.
    *
-   * @return string
+   * @return string Always empty.
+   */
+  public function getHtmlColumn()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A constant control must never be shown in a table. Hence it spans 0 columns.
+   *
+   * @return int Always 0
+   */
+  public function getColSpan()
+  {
+    return 0;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A constant control must never be shown in a table. Hence filter must never be shown too.
+   *
+   * @return string Empty string
    */
   public function getHtmlColumnFilter()
   {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A constant control must never be shown in a table. Hence header must never be shown too.
+   *
+   * @return string Empty string
+   */
+  public function getHtmlColumnHeader()
+  {
+    return null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

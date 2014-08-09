@@ -40,6 +40,7 @@ class SubmitSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return '<td></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

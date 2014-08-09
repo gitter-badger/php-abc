@@ -40,6 +40,7 @@ class PasswordSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return '<td></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

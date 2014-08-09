@@ -3,22 +3,9 @@
 namespace SetBased\Html\Form\SlatJoint;
 
 use SetBased\Html\Form\Control\InvisibleControl;
-use SetBased\Html\Html;
 
 class InvisibleSlatJoint extends SlatJoint
 {
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Object constructor.
-   *
-   * @param string $theHeaderText The header text of this table column.
-   */
-  public function __construct( $theHeaderText )
-  {
-    $this->myDataType   = 'control-invisible';
-    $this->myHeaderHtml = Html::txt2Html( $theHeaderText );
-  }
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Creates and returns a invisible form control.
@@ -34,12 +21,46 @@ class InvisibleSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
+   * A invisible control must never be shown in a table. Hence it spans 0 columns.
    *
-   * @return string
+   * @return int Always 0
+   */
+  public function getColSpan()
+  {
+    return 0;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A invisible control must never be shown in a table. Hence it it has no column.
+   *
+   * @return string Always empty.
+   */
+  public function getHtmlColumn()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A invisible control must never be shown in a table. Hence filter must never be shown too.
+   *
+   * @return string Empty string
    */
   public function getHtmlColumnFilter()
   {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A invisible control must never be shown in a table. Hence header must never be shown too.
+   *
+   * @return string Empty string
+   */
+  public function getHtmlColumnHeader()
+  {
+    return null;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

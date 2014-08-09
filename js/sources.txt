@@ -1,4 +1,5 @@
 SET_Form.js
+SET_CheckboxControlColumnTypeHandler.js
 SET_TextControlColumnTypeHandler.js
 SET_HtmlControlColumnTypeHandler.js
 SET_TextAreaControlColumnTypeHandler.js

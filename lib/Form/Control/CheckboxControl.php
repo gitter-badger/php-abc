@@ -53,6 +53,19 @@ class CheckboxControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the HTML code for this form control in a table cell.
+   *
+   * @param string $theParentName The submit name of the parent form control.
+   *
+   * @return string
+   */
+  public function getHtmlTableCell( $theParentName )
+  {
+    return '<td class="control checkbox">'.$this->generate( $theParentName ).'</td>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )

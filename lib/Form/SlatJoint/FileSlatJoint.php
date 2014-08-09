@@ -40,6 +40,7 @@ class FileSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
+    return '<td></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
