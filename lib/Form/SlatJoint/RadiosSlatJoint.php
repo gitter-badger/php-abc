@@ -40,7 +40,7 @@ class RadiosSlatJoint extends SlatJoint
    */
   public function getHtmlColumnFilter()
   {
-    return '<td></td>';
+    return '<td><input type="text"/></td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
