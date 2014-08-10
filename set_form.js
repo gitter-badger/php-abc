@@ -244,8 +244,11 @@ SET_RadiosControlColumnTypeHandler.constructor = SET_RadiosControlColumnTypeHand
  */
 SET_RadiosControlColumnTypeHandler.prototype.extractForFilter = function (table_cell) {
   "use strict";
+  var id;
 
-  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('input:radio:checked'));
+  id = $(table_cell).find('input[type="radio"]:checked').prop('id');
+
+  return SET_OverviewTable.toLowerCaseNoAccents(($('label[for=' + id + ']').text()));
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -258,8 +261,11 @@ SET_RadiosControlColumnTypeHandler.prototype.extractForFilter = function (table_
  */
 SET_RadiosControlColumnTypeHandler.prototype.getSortKey = function (table_cell) {
   "use strict";
+  var id;
 
-  return SET_OverviewTable.toLowerCaseNoAccents($(table_cell).find('input:radio:checked'));
+  id = $(table_cell).find('input[type="radio"]:checked').prop('id');
+
+  return SET_OverviewTable.toLowerCaseNoAccents(($('label[for=' + id + ']').text()));
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
