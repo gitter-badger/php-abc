@@ -3,4 +3,5 @@ SET_CheckboxControlColumnTypeHandler.js
 SET_TextControlColumnTypeHandler.js
 SET_HtmlControlColumnTypeHandler.js
 SET_RadiosControlColumnTypeHandler.js
+SET_SelectControlColumnTypeHandler.js
 SET_TextAreaControlColumnTypeHandler.js
