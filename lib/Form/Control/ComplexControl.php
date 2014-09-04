@@ -167,13 +167,16 @@ class ComplexControl extends Control
    */
   public function findFormControlByName( $theName )
   {
+    // Name must be string. Convert name to the string.
+    $name = (string)$theName;
+
     foreach ($this->myControls as $control)
     {
-      if ($control->myName===$theName) return $control;
+      if ($control->myName===$name) return $control;
 
       if (is_a( $control, '\SetBased\Html\Form\Control\ComplexControl' ))
       {
-        $tmp = $control->findFormControlByName( $theName );
+        $tmp = $control->findFormControlByName( $name );
         if ($tmp) return $tmp;
       }
     }
