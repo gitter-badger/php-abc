@@ -162,11 +162,14 @@ class Form
    */
   public function findFormControlByName( $theName )
   {
+    // Name must be string. Convert name to the string.
+    $name = (string)$theName;
+
     foreach ($this->myFieldSets as $fieldSet)
     {
-      if ($fieldSet->getLocalName()===$theName) return $fieldSet;
+      if ($fieldSet->getLocalName()===$name) return $fieldSet;
 
-      $control = $fieldSet->findFormControlByName( $theName );
+      $control = $fieldSet->findFormControlByName( $name );
       if ($control) return $control;
     }
 

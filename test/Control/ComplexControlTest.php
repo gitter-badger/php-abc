@@ -1,5 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+use SetBased\Html\Form\Control\ComplexControl;
+use SetBased\Html\Form\Control\SimpleControl;
 use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -8,6 +10,17 @@ use SetBased\Html\Form;
  */
 class ComplexControlTest extends PHPUnit_Framework_TestCase
 {
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @var ComplexControl
+   */
+  private $myOriginComplexControl;
+
+  /**
+   * @var SimpleControl
+   */
+  private $myOriginControl;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test find FormControl by name.
@@ -249,7 +262,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $complex  = $fieldset->createFormControl( 'complex', '' );
+    $complex = $fieldset->createFormControl( 'complex', '' );
     $complex->createFormControl( 'text', 'field_1' );
 
     $complex = $fieldset->createFormControl( 'complex', 'complex_name' );
@@ -270,15 +283,15 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSubmitValues()
   {
-    $_POST['field_1'] = 'value';
-    $_POST['field_3'] = 'value';
-    $_POST['complex_name']['field_2'] = 'value';
+    $_POST['field_1']                                  = 'value';
+    $_POST['field_3']                                  = 'value';
+    $_POST['complex_name']['field_2']                  = 'value';
     $_POST['complex_name']['complex_name2']['field_4'] = 'value';
 
-    $form     = $this->setForm2();
+    $form = $this->setForm2();
     $form->loadSubmittedValues();
 
-    $values = $form->getValues();
+    $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
     $this->assertArrayHasKey( 'field_1', $values );
@@ -295,20 +308,70 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    */
   public function testWhiteList()
   {
-    $_POST['unknown_field'] = 'value';
+    $_POST['unknown_field']                    = 'value';
     $_POST['unknown_complex']['unknown_field'] = 'value';
 
-    $form     = $this->setForm2();
+    $form = $this->setForm2();
     $form->loadSubmittedValues();
 
-    $values = $form->getValues();
+    $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertArrayNotHasKey('unknown_field', $values);
-    $this->assertArrayNotHasKey('unknown_complex', $values);
+    $this->assertArrayNotHasKey( 'unknown_field', $values );
+    $this->assertArrayNotHasKey( 'unknown_complex', $values );
 
     $this->assertEmpty( $changed );
   }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test form with specific names of control.
+   */
+  private function setForm3( $theName )
+  {
+    $form     = new Form();
+    $fieldset = $form->createFieldSet();
+
+    $complex = $fieldset->createFormControl( 'complex', $theName );
+    $control = $complex->createFormControl( 'text', $theName );
+
+    $this->myOriginComplexControl = $complex;
+    $this->myOriginControl        = $control;
+
+    return $form;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Find a control test with alphanumeric name of the control in the complex control.
+   */
+  public function testValid4()
+  {
+    $names = array('test01', 10, 0, '0.0');
+
+    foreach ($names as $name)
+    {
+      // Create form with control inside of complex control.
+      $form = $this->setForm3( $name );
+
+      // Firs find complex control by name.
+      $complex_control = $form->findFormControlByName( $name );
+
+      // Test for complex control.
+      $this->assertNotEmpty( $complex_control );
+      $this->assertEquals( $this->myOriginComplexControl, $complex_control );
+      $this->assertEquals( $name, $complex_control->getLocalName() );
+
+      // Find control by name.
+      $control = $complex_control->findFormControlByName( $name );
+
+      // Test for control.
+      $this->assertNotEmpty( $control );
+      $this->assertEquals( $this->myOriginControl, $control );
+      $this->assertEquals( $name, $control->getLocalName() );
+    }
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
 }
 
