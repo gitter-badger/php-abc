@@ -10,11 +10,11 @@ class FormTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test for finding a complex control with alphanumeric name, numeric name, and name (int)0.
+   * Test for finding a complex control with different types of names.
    */
   public function testFindComplexControl()
   {
-    $names = array('hello', 10, 0);
+    $names = array('hello', 10, 0, '0', '0.0');
 
     foreach ($names as $name)
     {
@@ -28,11 +28,11 @@ class FormTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test for finding a fieldset with alphanumeric name, numeric name, and name (int)0.
+   * Test for finding a fieldset with different types of names.
    */
   public function testFindFieldSet()
   {
-    $names = array('hello', 10, 0);
+    $names = array('hello', 10, 0, '0', '0.0');
 
     foreach ($names as $name)
     {
@@ -46,11 +46,11 @@ class FormTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test for finding a complex with alphanumeric name, numeric name, and name (int)0.
+   * Test for finding a complex with with different types of names.
    */
   public function testFindSimpleControl()
   {
-    $names = array('hello', 10, 0);
+    $names = array('hello', 10, 0, '0', '0.0');
 
     foreach ($names as $name)
     {
