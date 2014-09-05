@@ -10,6 +10,60 @@ class FormTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Test for finding a complex control with alphanumeric name, numeric name, and name (int)0.
+   */
+  public function testFindComplexControl()
+  {
+    $names = array('hello', 10, 0);
+
+    foreach ($names as $name)
+    {
+      $form = $this->setupForm2( '', $name );
+
+      $control = $form->findFormControlByName( $name );
+      $this->assertNotEmpty( $control );
+      $this->assertEquals( $name, $control->getLocalName() );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test for finding a fieldset with alphanumeric name, numeric name, and name (int)0.
+   */
+  public function testFindFieldSet()
+  {
+    $names = array('hello', 10, 0);
+
+    foreach ($names as $name)
+    {
+      $form = $this->setupForm2( $name );
+
+      $control = $form->findFormControlByName( $name );
+      $this->assertNotEmpty( $control );
+      $this->assertEquals( $name, $control->getLocalName() );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test for finding a complex with alphanumeric name, numeric name, and name (int)0.
+   */
+  public function testFindSimpleControl()
+  {
+    $names = array('hello', 10, 0);
+
+    foreach ($names as $name)
+    {
+      $form = $this->setupForm2( '', 'post', $name );
+
+      $control = $form->findFormControlByName( $name );
+      $this->assertNotEmpty( $control );
+      $this->assertEquals( $name, $control->getLocalName() );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    *  Test method hasScalars
    */
   public function testHasScalars1()
@@ -95,6 +149,53 @@ class FormTest extends PHPUnit_Framework_TestCase
 
     $control = $fieldset->createFormControl( 'checkboxes', 'options' );
     $control->setOptions( $options, 'id', 'label' );
+
+    return $form;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param string $theFieldSetName
+   * @param string $theComplexControlName
+   * @param string $theTextControlName
+   *
+   * @return Form
+   */
+  private function setupForm2( $theFieldSetName = 'vacation',
+                               $theComplexControlName = 'post',
+                               $theTextControlName = 'city'
+  )
+  {
+    $form     = new Form();
+    $fieldset = $form->createFieldSet( 'fieldset', $theFieldSetName );
+    $complex  = $fieldset->createFormControl( 'complex', '' );
+    $complex->createFormControl( 'text', 'street' );
+    $complex->createFormControl( 'text', 'city' );
+
+    $complex = $fieldset->createFormControl( 'complex', 'post' );
+    $complex->createFormControl( 'text', 'street' );
+    $complex->createFormControl( 'text', 'city' );
+
+    $complex = $fieldset->createFormControl( 'complex', 'post' );
+    $complex->createFormControl( 'text', 'zip-code' );
+    $complex->createFormControl( 'text', 'state' );
+
+    $complex = $fieldset->createFormControl( 'complex', 'post' );
+    $complex->createFormControl( 'text', 'zip-code' );
+    $complex->createFormControl( 'text', 'state' );
+
+    $fieldset = $form->createFieldSet( 'fieldset', 'vacation' );
+    $complex  = $fieldset->createFormControl( 'complex', '' );
+    $complex->createFormControl( 'text', 'street' );
+    $complex->createFormControl( 'text', 'city' );
+
+    $complex = $fieldset->createFormControl( 'complex', $theComplexControlName );
+    $complex->createFormControl( 'text', 'street' );
+    $complex->createFormControl( 'text', $theTextControlName );
+
+    $complex2 = $complex->createFormControl( 'complex', '' );
+    $complex2->createFormControl( 'text', 'street2' );
+    $complex2->createFormControl( 'text', 'city2' );
 
     return $form;
   }
