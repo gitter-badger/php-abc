@@ -413,26 +413,18 @@ class ComplexControl extends Control
    */
   public function validateBase( &$theInvalidFormControls )
   {
-    $tmp = array();
+    $valid = true;
 
     // First, validate all child form controls.
     foreach ($this->myControls as $control)
     {
-      $child_valid = $control->validateBase( $tmp );
-      if (!$child_valid) $this->myInvalidControls[] = $control;
+      $valid = $valid && $control->validateBase( $theInvalidFormControls );
     }
 
-    if (empty($tmp))
+    if ($valid)
     {
-      // All the individual child form controls are valid. Validate the child form controls as a whole.
+      // All the child form controls are valid. Validate this form control and its child form controls as a whole.
       $valid = $this->validateSelf( $theInvalidFormControls );
-    }
-    else
-    {
-      // One or more input values are invalid. Append the invalid form controls to $theInvalidFormControls.
-      $theInvalidFormControls[] = $tmp;
-
-      $valid = false;
     }
 
     return $valid;
