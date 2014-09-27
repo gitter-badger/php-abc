@@ -418,7 +418,7 @@ class ComplexControl extends Control
     // First, validate all child form controls.
     foreach ($this->myControls as $control)
     {
-      $valid = $valid && $control->validateBase( $theInvalidFormControls );
+      $valid = $control->validateBase( $theInvalidFormControls ) && $valid;
     }
 
     if ($valid)

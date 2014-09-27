@@ -3,6 +3,7 @@
 use SetBased\Html\Form\Control\ComplexControl;
 use SetBased\Html\Form\Control\SimpleControl;
 use SetBased\Html\Form;
+use SetBased\Html\Form\Validator\MandatoryValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -370,6 +371,36 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
       $this->assertEquals( $this->myOriginControl, $control );
       $this->assertEquals( $name, $control->getLocalName() );
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Each form controls in form must validate and add to invalid controls if it not valid.
+   */
+  public function testValidate()
+  {
+    $form = new Form();
+
+    $field_set = $form->createFieldSet( 'fieldset' );
+
+    // Create mandatory control.
+    $control = $field_set->createFormControl( 'checkbox', 'input_1' );
+    $control->addValidator( new MandatoryValidator() );
+
+    // Create optional control.
+    $field_set->createFormControl( 'checkbox', 'input_2' );
+
+    // Create mandatory control.
+    $control = $field_set->createFormControl( 'checkbox', 'input_3' );
+    $control->addValidator( new MandatoryValidator() );
+
+    // Simulate a post without any values.
+    $form->loadSubmittedValues();
+    $form->validate();
+    $invalid = $form->getInvalidControls();
+
+    // We expect 2 invalid controls.
+    $this->assertCount( 2, $invalid );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
