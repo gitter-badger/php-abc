@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="php-form" default="build" basedir=".">
+    <taskdef name="readSemanticVersion" classname="vendor.setbased.phing.lib.Task.readSemanticVersionTask"/>
     <property name="BUILD_DIR" value="build"/>
     <property name="COMBINED_JS_FILE" value="set_form.js"/>
     <property name="COMBINED_JS_FILE_MIN" value="set_form-min.js"/>
-    <target name="build" depends="prepare, copy_files, combine_js, minify_js">
-    </target>
+    <property name ="VERSION" value="0.0.0"/>
+
+    <target name="build" depends="prepare, copy_files, combine_js, minify_js"/>
+
     <target name="prepare">
         <echo msg="Preparing files…"/>
         <if>
@@ -105,5 +108,16 @@
         <gitcheckout repository="." branchname="${BRANCH}"/>
         <gitmerge repository="." remote="temp"/>
         <gitbranch branchname="temp" repository="." delete="true"/>
+    </target>
+
+    <!-- Makes a new version/release.  -->
+    <target name="version" depends="build">
+        <readSemanticVersion file=".version"
+                             versionProperty="VERSION"
+                             haltOnError="true"/>
+        <gitcommit repository="." message="Release: ${VERSION}" allFiles="true"/>
+        <gitpush repository="."/>
+        <gittag repository="." name="${VERSION}"/>
+        <gitpush repository="." refspec="${VERSION}" quiet="false"/>
     </target>
 </project>
