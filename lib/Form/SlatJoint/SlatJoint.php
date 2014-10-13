@@ -17,6 +17,7 @@ use SetBased\Html\Html;
  */
 abstract class SlatJoint
 {
+
   /**
    * The type of the data that the column of this slat joint holds.
    *
@@ -74,14 +75,6 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing th tags) for the table filter cell.
-   *
-   * @return string
-   */
-  abstract public function getHtmlColumnFilter();
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns HTML code for col element for this slat joint.
    *
    * @return string
@@ -100,6 +93,14 @@ abstract class SlatJoint
 
     return '<col'.Html::generateAttribute( 'class', $class ).'/>';
   }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code (including opening and closing th tags) for the table filter cell.
+   *
+   * @return string
+   */
+  abstract public function getHtmlColumnFilter();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -142,6 +143,16 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * If this columns is sortable sets this column as not sortable (overriding the default behaviour a child class).
+   * Has no effect when this column is not sortable.
+   */
+  public function notSortable()
+  {
+    $this->mySortable = false;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the inner HTML code of the th element of the column header of this slat joint.
    *
    * @param string $theHtml The HTML code.
@@ -153,13 +164,13 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the sort order of the data in the column of this slat join.
+   * Sets the header text for the column header of this slat joint.
    *
-   * @param int $theSortOrder The sort order.
+   * @param string $theText The header text (applicable characters will be converted to HTML entities).
    */
-  public function setSortOrder( $theSortOrder )
+  public function setHeaderText( $theText )
   {
-    $this->mySortOrder = $theSortOrder;
+    $this->myHeaderHtml = Html::txt2Html( $theText );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -177,13 +188,13 @@ abstract class SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the header text for the column header of this slat joint.
+   * Sets the sort order of the data in the column of this slat join.
    *
-   * @param string $theText The header text (applicable characters will be converted to HTML entities).
+   * @param int $theSortOrder The sort order.
    */
-  public function setHeaderText( $theText )
+  public function setSortOrder( $theSortOrder )
   {
-    $this->myHeaderHtml = Html::txt2Html( $theText );
+    $this->mySortOrder = $theSortOrder;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
