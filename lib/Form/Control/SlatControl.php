@@ -24,13 +24,26 @@ class SlatControl extends ComplexControl
   {
     $submit_name = $this->getSubmitName( $theParentName );
 
-    $ret = '';
+    // Create opening tag of table row.
+    $ret = '<tr';
+    foreach ($this->myAttributes as $name => $value)
+    {
+      // Ignore attributes starting with an underscore.
+      if ($name[0]!='_') $ret .= Html::generateAttribute( $name, $value );
+    }
+    $ret .= '>';
+
+    // Create table cells.
     foreach ($this->myControls as $control)
     {
       $ret .= $control->getHtmlTableCell( $submit_name );
     }
 
+    // Create table cell with error message, if any.
     $ret .= $this->generateErrorCell();
+
+    // Create closing tag of table row.
+    $ret .= '</tr>';
 
     return $ret;
   }

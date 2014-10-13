@@ -12,6 +12,7 @@ use SetBased\Html\Html;
  */
 class LouverControl extends ComplexControl
 {
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * The data on which the table row form controls must be created.
    *
@@ -149,12 +150,12 @@ class LouverControl extends ComplexControl
     {
       if ($control!==$this->myFooterControl)
       {
-        if ($i % 2==0) $ret .= '<tr class="even">';
-        else           $ret .= '<tr class="odd">';
+        // Add class for zebra theme.
+        $control->setAttribute( 'class', ($i % 2==0) ? 'even' : 'odd' );
 
+        // Generate the table row.
         $ret .= $control->generate( $theSubmitParentName );
 
-        $ret .= '</tr>';
         $i++;
       }
     }
