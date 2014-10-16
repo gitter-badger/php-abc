@@ -9,6 +9,7 @@ use SetBased\Html\TableColumn\TableColumn;
 //----------------------------------------------------------------------------------------------------------------------
 class OverviewTable
 {
+
   /**
    * The attributes of the table tag of this table.
    *
@@ -43,6 +44,24 @@ class OverviewTable
    * @var int
    */
   private $myColIndex = 1;
+
+
+  /**
+   * If set to true the table is not sortable.
+   *
+   * @var bool
+   */
+  private $myNotSortable = false;
+
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Disables sorting for all columns in table.
+   */
+  public function disableSorting()
+  {
+    $this->myNotSortable = false;
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -107,6 +126,9 @@ class OverviewTable
     $ret .= '<colgroup>';
     foreach ($this->myColumns as $column)
     {
+      // Disable sorting for each column if flag is set.
+      if ($this->myNotSortable) $column->notSortable();
+
       $ret .= $column->getHtmlColumn();
     }
     $ret .= '</colgroup>';
