@@ -393,6 +393,25 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the current values of the form controls of this form. This method can be invoked be for
+   * loadSubmittedValues has been invoked. The values returned are the values set with Form::setValues,
+   * Form::mergeValues, and SimpleControl::setValue. These values might not be white listed.
+   *
+   * After loadSubmittedValues has been invoked use getValues.
+   */
+  public function getSetValues()
+  {
+    $ret = array();
+    foreach ($this->myFieldSets as $fieldSet)
+    {
+      $fieldSet->getSetValuesBase( $ret );
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the value of attribute @a $theName of this form to @a $theValue.
    * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
    * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule

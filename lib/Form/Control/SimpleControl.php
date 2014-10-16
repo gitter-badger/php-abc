@@ -88,6 +88,17 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of this form control to the values.
+   *
+   * @param array $theValues
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    $theValues[$this->myName] = $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the submitted value of this form control.
    *
    * @return string

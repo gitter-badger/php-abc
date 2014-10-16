@@ -393,6 +393,28 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    if ($this->myName==='')
+    {
+      $tmp = &$theValues;
+    }
+    else
+    {
+      $theValues[$this->myName] = array();
+      $tmp = &$theValues[$this->myName];
+    }
+
+    foreach ($this->myControls as $control)
+    {
+      $control->getSetValuesBase( $tmp );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the values of the form controls of this complex control. The value of form controls for which no explicit
    * value is set is left unchanged
    *

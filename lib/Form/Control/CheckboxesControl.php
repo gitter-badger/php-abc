@@ -134,6 +134,34 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of check radio button the values with the name of this form control as key.
+   *
+   * @param array $theValues The values.
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    if ($this->myName==='')
+    {
+      $tmp = &$theValues;
+    }
+    else
+    {
+      $theValues[$this->myName] = array();
+      $tmp                      = &$theValues[$this->myName];
+    }
+
+    foreach ($this->myOptions as $i => $option)
+    {
+      // Get the (database) ID of the option.
+      $key = (string)$option[$this->myKeyKey];
+
+      // Get the original value (i.e. the option is checked or not).
+      $tmp[$key] = (!empty($option[$this->myCheckedKey]));
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the value of the check radio button.
    *
    * @return string

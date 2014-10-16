@@ -11,6 +11,7 @@ use SetBased\Html\Form\Validator\Validator;
  */
 abstract class Control
 {
+
   /**
    * The HTML attributes of this form control.
    *
@@ -125,6 +126,17 @@ abstract class Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of this form control to the values.
+   *
+   * @param array $theValues
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the the error messages of this form control.
    *
    * @param bool $theRecursiveFlag
@@ -169,6 +181,15 @@ abstract class Control
    * @return mixed
    */
   abstract public function getSubmittedValue();
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param mixed $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    // Nothing to do.
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -260,15 +281,6 @@ abstract class Control
    * @param mixed $theValues
    */
   public function setValuesBase( $theValues )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * @param mixed $theValues
-   */
-  public function mergeValuesBase( $theValues )
   {
     // Nothing to do.
   }
