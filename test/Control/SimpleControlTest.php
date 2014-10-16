@@ -3,8 +3,8 @@
 use SetBased\Html\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
-/** @brief Abstract super class for test for @c \SetBased\Htlm\Form\TextControl, @c \SetBased\Htlm\Form\HiddenControl,
- *  @c \SetBased\Htlm\Form\PasswordControl.
+/**
+ * @brief Abstract super class for test for TextControl, HiddenControl, and PasswordControl.
  */
 abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 {
@@ -102,6 +102,10 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Setups a form with a text form control.
+   *
+   * @param string $theValue The value of the form control
+   *
+   * @return \SetBased\Html\Form
    */
   private function setupForm1( $theValue )
   {

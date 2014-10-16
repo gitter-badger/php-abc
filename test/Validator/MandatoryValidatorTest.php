@@ -100,7 +100,11 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Setups a form with a single form control of type $theType.
+   * Setups a form with a single form control of certain type.
+   *
+   * @param string $theType The form control type.
+   *
+   * @return \SetBased\Html\Form
    */
   private function setupForm1( $theType )
   {

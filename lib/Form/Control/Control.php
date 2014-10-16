@@ -259,7 +259,19 @@ abstract class Control
   /**
    * @param mixed $theValues
    */
-  abstract public function setValuesBase( &$theValues );
+  public function setValuesBase( $theValues )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param mixed $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    // Nothing to do.
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

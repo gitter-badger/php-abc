@@ -11,6 +11,7 @@ use SetBased\Html\Html;
  */
 class ComplexControl extends Control
 {
+
   /**
    * The child HTML form controls of this form control.
    *
@@ -19,7 +20,7 @@ class ComplexControl extends Control
   protected $myControls = array();
 
   /**
-   * The child form controls of this form control with invalid sumitted values.
+   * The child form controls of this form control with invalid submitted values.
    *
    * @var ComplexControl[]|Control[]
    */
@@ -62,91 +63,91 @@ class ComplexControl extends Control
     switch ($theType)
     {
       case 'text':
-        $control = new TextControl($theName);
+        $control = new TextControl( $theName );
         break;
 
       case 'password':
-        $control = new PasswordControl($theName);
+        $control = new PasswordControl( $theName );
         break;
 
       case 'checkbox':
-        $control = new CheckboxControl($theName);
+        $control = new CheckboxControl( $theName );
         break;
 
       case 'radio':
-        $control = new RadioControl($theName);
+        $control = new RadioControl( $theName );
         break;
 
       case 'submit':
-        $control = new SubmitControl($theName);
+        $control = new SubmitControl( $theName );
         break;
 
       case 'image':
-        $control = new ImageControl($theName);
+        $control = new ImageControl( $theName );
         break;
 
       case 'reset':
-        $control = new ResetControl($theName);
+        $control = new ResetControl( $theName );
         break;
 
       case 'button':
-        $control = new ButtonControl($theName);
+        $control = new ButtonControl( $theName );
         break;
 
       case 'hidden':
-        $control = new HiddenControl($theName);
+        $control = new HiddenControl( $theName );
         break;
 
       case 'file':
-        $control = new FileControl($theName);
+        $control = new FileControl( $theName );
         break;
 
       case 'invisible':
-        $control = new InvisibleControl($theName);
+        $control = new InvisibleControl( $theName );
         break;
 
       case 'textarea':
-        $control = new TextAreaControl($theName);
+        $control = new TextAreaControl( $theName );
         break;
 
       case 'complex':
-        $control = new ComplexControl($theName);
+        $control = new ComplexControl( $theName );
         break;
 
       case 'select':
-        $control = new SelectControl($theName);
+        $control = new SelectControl( $theName );
         break;
 
       case 'span':
-        $control = new SpanControl($theName);
+        $control = new SpanControl( $theName );
         break;
 
       case 'div':
-        $control = new DivControl($theName);
+        $control = new DivControl( $theName );
         break;
 
       case 'a':
-        $control = new LinkControl($theName);
+        $control = new LinkControl( $theName );
         break;
 
       case 'constant':
-        $control = new ConstantControl($theName);
+        $control = new ConstantControl( $theName );
         break;
 
       case 'radios':
-        $control = new RadiosControl($theName);
+        $control = new RadiosControl( $theName );
         break;
 
       case 'checkboxes':
-        $control = new CheckboxesControl($theName);
+        $control = new CheckboxesControl( $theName );
         break;
 
       case 'html':
-        $control = new HtmlControl($theName);
+        $control = new HtmlControl( $theName );
         break;
 
       default:
-        $control = new $theType($theName);
+        $control = new $theType( $theName );
     }
 
     $this->myControls[] = $control;
@@ -364,15 +365,15 @@ class ComplexControl extends Control
 
     if ($this->myName==='')
     {
-      $tmp1 = & $theSubmittedValue;
-      $tmp2 = & $theWhiteListValue;
-      $tmp3 = & $theChangedInputs;
+      $tmp1 = &$theSubmittedValue;
+      $tmp2 = &$theWhiteListValue;
+      $tmp3 = &$theChangedInputs;
     }
     else
     {
-      $tmp1 = & $theSubmittedValue[$submit_name];
-      $tmp2 = & $theWhiteListValue[$this->myName];
-      $tmp3 = & $theChangedInputs[$this->myName];
+      $tmp1 = &$theSubmittedValue[$submit_name];
+      $tmp2 = &$theWhiteListValue[$this->myName];
+      $tmp3 = &$theChangedInputs[$this->myName];
     }
 
     foreach ($this->myControls as $control)
@@ -392,12 +393,56 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param mixed $theValues
+   * Sets the values of the form controls of this complex control. The value of form controls for which no explicit
+   * value is set is left unchanged
+   *
+   * @param mixed $theValues The values as a nested array.
    */
-  public function setValuesBase( &$theValues )
+  public function mergeValuesBase( $theValues )
   {
-    if ($this->myName!=='') $values = & $theValues[$this->myName];
-    else                    $values = & $theValues;
+    if ($this->myName==='')
+    {
+      $values = &$theValues;
+    }
+    elseif (isset($theValues[$this->myName]))
+    {
+      $values = &$theValues[$this->myName];
+    }
+    else
+    {
+      $values = null;
+    }
+
+    if ($values!==null)
+    {
+      foreach ($this->myControls as $control)
+      {
+        $control->mergeValuesBase( $values );
+      }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the values of the form controls of this complex control. The value of form controls for which no explicit
+   * value is set is set to null.
+   *
+   * @param mixed $theValues The values as a nested array.
+   */
+  public function setValuesBase( $theValues )
+  {
+    if ($this->myName==='')
+    {
+      $values = &$theValues;
+    }
+    elseif (isset($theValues[$this->myName]))
+    {
+      $values = &$theValues[$this->myName];
+    }
+    else
+    {
+      $values = null;
+    }
 
     foreach ($this->myControls as $control)
     {

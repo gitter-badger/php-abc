@@ -5,6 +5,7 @@ namespace SetBased\Html;
 use SetBased\Html\Form\Control\FieldSet;
 use SetBased\Html\Form\FormValidator;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
  * Class Form
  *
@@ -12,6 +13,7 @@ use SetBased\Html\Form\FormValidator;
  */
 class Form
 {
+
   /**
    * The attributes of this form.
    *
@@ -35,6 +37,13 @@ class Form
   protected $myFieldSets = array();
 
   /**
+   * The (form) validators for validating the submitted values for this form.
+   *
+   * @var FormValidator[]
+   */
+  protected $myFormValidators = array();
+
+  /**
    * After a call to Form::validate holds the names of the form controls which have valid one or more
    * validation tests.
    *
@@ -48,13 +57,6 @@ class Form
    * @var array
    */
   protected $myValues = array();
-
-  /**
-   * The (form) validators for validating the submitted values for this form.
-   *
-   * @var FormValidator[]
-   */
-  protected $myFormValidators = array();
 
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -137,11 +139,11 @@ class Form
     switch ($theType)
     {
       case 'fieldset':
-        $fieldset = new FieldSet($theName);
+        $fieldset = new FieldSet( $theName );
         break;
 
       default:
-        $fieldset = new $theType($theName);
+        $fieldset = new $theType( $theName );
     }
 
     $this->myFieldSets[] = $fieldset;
@@ -372,11 +374,11 @@ class Form
     switch ($this->myAttributes['method'])
     {
       case 'post':
-        $values = & $_POST;
+        $values = &$_POST;
         break;
 
       case 'get':
-        $values = & $_GET;
+        $values = &$_GET;
         break;
 
       default:
@@ -421,13 +423,31 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param mixed $theValues
+   * Sets the values of the form controls of this form. The values of form controls for which no explicit value is set
+   * are set to null.
+   *
+   * @param mixed $theValues The values as a nested array.
    */
   public function setValues( $theValues )
   {
     foreach ($this->myFieldSets as $fieldSet)
     {
       $fieldSet->setValuesBase( $theValues );
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the values of the form controls of this form. The values of form controls for which no explicit value is set
+   * are left on changed
+   *
+   * @param mixed $theValues The values as a nested array.
+   */
+  public function mergeValues( $theValues )
+  {
+    foreach ($this->myFieldSets as $fieldSet)
+    {
+      $fieldSet->mergeValuesBase( $theValues );
     }
   }
 

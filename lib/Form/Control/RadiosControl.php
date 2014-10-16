@@ -204,9 +204,23 @@ class RadiosControl extends Control
   /**
    * @param array $theValues
    */
-  public function setValuesBase( &$theValues )
+  public function setValuesBase( $theValues )
   {
     $this->myValue = (isset($theValues[$this->myName])) ? $theValues[$this->myName] : null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of the checked radio button.
+   *
+   * @param array $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    if (array_key_exists( $this->myName, $theValues ))
+    {
+      $this->setValuesBase( $theValues );
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

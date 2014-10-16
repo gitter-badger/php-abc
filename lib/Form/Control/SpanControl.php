@@ -78,15 +78,6 @@ class SpanControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param mixed $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )

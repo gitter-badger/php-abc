@@ -78,15 +78,6 @@ class LinkControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param null $theValues
-   */
-  public function setValuesBase( &$theValues )
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase( &$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs )
