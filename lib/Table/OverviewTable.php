@@ -60,7 +60,7 @@ class OverviewTable
    */
   public function disableSorting()
   {
-    $this->myNotSortable = false;
+    $this->myNotSortable = true;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
