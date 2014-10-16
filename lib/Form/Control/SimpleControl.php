@@ -25,6 +25,7 @@ use SetBased\Html\Html;
  */
 abstract class SimpleControl extends Control
 {
+
   /**
    * The cleaner to clean and/or translate (to machine format) the submitted value.
    *
@@ -87,6 +88,17 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of this form control to the values.
+   *
+   * @param array $theValues
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    $theValues[$this->myName] = $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the submitted value of this form control.
    *
    * @return string
@@ -94,6 +106,18 @@ abstract class SimpleControl extends Control
   public function getSubmittedValue()
   {
     return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @param array $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    if (array_key_exists( $this->myName, $theValues ))
+    {
+      $this->setValuesBase( $theValues );
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -194,7 +218,7 @@ abstract class SimpleControl extends Control
   /**
    * @param array $theValues
    */
-  public function setValuesBase( &$theValues )
+  public function setValuesBase( $theValues )
   {
     $this->setValue( isset($theValues[$this->myName]) ? $theValues[$this->myName] : null );
   }

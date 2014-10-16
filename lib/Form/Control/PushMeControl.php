@@ -58,11 +58,35 @@ class PushMeControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param null $theValues
+   * Has no effect. The value of a button is not set by this method.
+   *
+   * @param array $theValues
    */
-  public function setValuesBase( &$theValues )
+  public function setValuesBase( $theValues )
   {
-    // We don't set the value of a button via Form::setValues() method. So, nothing to do.
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Has no effect. The value of a button is not set by this method.
+   *
+   * @param array $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Has no effect. The value of a button is not retrieved by this method.
+   *
+   * @param array $theValues
+   */
+  public function getCurrentValues( &$theValues )
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

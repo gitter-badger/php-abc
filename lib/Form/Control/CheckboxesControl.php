@@ -5,6 +5,7 @@ namespace SetBased\Html\Form\Control;
 use SetBased\Html\Html;
 use SetBased\Html\Obfuscator;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
  * Class CheckboxesControl
  *
@@ -133,6 +134,34 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of check radio button the values with the name of this form control as key.
+   *
+   * @param array $theValues The values.
+   */
+  public function getSetValuesBase( &$theValues )
+  {
+    if ($this->myName==='')
+    {
+      $tmp = &$theValues;
+    }
+    else
+    {
+      $theValues[$this->myName] = array();
+      $tmp                      = &$theValues[$this->myName];
+    }
+
+    foreach ($this->myOptions as $i => $option)
+    {
+      // Get the (database) ID of the option.
+      $key = (string)$option[$this->myKeyKey];
+
+      // Get the original value (i.e. the option is checked or not).
+      $tmp[$key] = (!empty($option[$this->myCheckedKey]));
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the value of the check radio button.
    *
    * @return string
@@ -140,6 +169,39 @@ class CheckboxesControl extends Control
   public function getSubmittedValue()
   {
     return $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the values (i.e. checked or not checked) of the checkboxes of this form control according to @a $theValues.
+   *
+   * @param array $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    if ($this->myName==='')
+    {
+      $values = &$theValues;
+    }
+    elseif (isset($theValues[$this->myName]))
+    {
+      $values = &$theValues[$this->myName];
+    }
+    else
+    {
+      $values = null;
+    }
+
+    if ($values!==null)
+    {
+      foreach ($this->myOptions as $id => $option)
+      {
+        if (array_key_exists( $option[$this->myKeyKey], $values ))
+        {
+          $this->myOptions[$id][$this->myCheckedKey] = !empty($values[$option[$this->myKeyKey]]);
+        }
+      }
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -182,7 +244,8 @@ class CheckboxesControl extends Control
                               $theLabelKey,
                               $theCheckedKey = 'set_map_checked',
                               $theDisabledKey = null,
-                              $theIdKey = null )
+                              $theIdKey = null
+  )
   {
     $this->myOptions     = $theOptions;
     $this->myKeyKey      = $theKeyKey;
@@ -209,10 +272,20 @@ class CheckboxesControl extends Control
    *
    * @param array $theValues
    */
-  public function setValuesBase( &$theValues )
+  public function setValuesBase( $theValues )
   {
-    if ($this->myName!=='') $values = & $theValues[$this->myName];
-    else                    $values = & $theValues;
+    if ($this->myName==='')
+    {
+      $values = &$theValues;
+    }
+    elseif (isset($theValues[$this->myName]))
+    {
+      $values = &$theValues[$this->myName];
+    }
+    else
+    {
+      $values = null;
+    }
 
     foreach ($this->myOptions as $id => $option)
     {
@@ -272,9 +345,7 @@ class CheckboxesControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @param $theInvalidFormControls
-   *
-   * @return bool
+   * {@inheritdoc}
    */
   protected function validateBase( &$theInvalidFormControls )
   {

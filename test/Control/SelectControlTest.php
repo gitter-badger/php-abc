@@ -40,7 +40,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * A white listed value must be valid (even whens tring and integers are mixed).
+   * A white listed value must be valid (even whens string and integers are mixed).
    */
   public function testValid2()
   {

@@ -82,7 +82,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   /**
    * An email address without an existing A or MX record is invalid.
    */
-  public function testInvalidEmailWithNoexitantDomain()
+  public function testInvalidEmailWithNoExistantDomain()
   {
     $_POST['email'] = 'info@xsetbased.nl';
     $form           = $this->setupForm1();

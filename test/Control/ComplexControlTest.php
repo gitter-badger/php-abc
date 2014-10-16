@@ -326,7 +326,11 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test form with specific names of control.
+   * Test form with specific name of control.
+   *
+   * @param string $theName The name of the form control.
+   *
+   * @return \SetBased\Html\Form
    */
   private function setForm3( $theName )
   {

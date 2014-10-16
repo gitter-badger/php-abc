@@ -202,11 +202,36 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Adds the value of check radio button the values with the name of this form control as key.
+   *
+   * @param array $theValues The values.
+   */
+  public function getCurrentValues( &$theValues )
+  {
+    $theValues[$this->myName] = $this->myValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * @param array $theValues
    */
-  public function setValuesBase( &$theValues )
+  public function setValuesBase( $theValues )
   {
     $this->myValue = (isset($theValues[$this->myName])) ? $theValues[$this->myName] : null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of the checked radio button.
+   *
+   * @param array $theValues
+   */
+  public function mergeValuesBase( $theValues )
+  {
+    if (array_key_exists( $this->myName, $theValues ))
+    {
+      $this->setValuesBase( $theValues );
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

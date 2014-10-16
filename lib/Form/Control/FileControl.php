@@ -8,6 +8,7 @@ use SetBased\Html\Html;
 /**
  * Class FileControl
  * Class for form controls of type file.
+ *
  * @package SetBased\Html\Form\Control
  */
 class FileControl extends SimpleControl
@@ -29,7 +30,7 @@ class FileControl extends SimpleControl
     $this->myAttributes['type'] = 'file';
     $this->myAttributes['name'] = $this->getSubmitName( $theParentName );
 
-    $ret  = $this->myPrefix;
+    $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
 
     $ret .= '<input';
