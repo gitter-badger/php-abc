@@ -206,7 +206,7 @@ class RadiosControl extends Control
    *
    * @param array $theValues The values.
    */
-  public function getCurrentValues( &$theValues )
+  public function getSetValuesBase( &$theValues )
   {
     $theValues[$this->myName] = $this->myValue;
   }
