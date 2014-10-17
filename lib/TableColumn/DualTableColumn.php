@@ -11,6 +11,7 @@ use SetBased\Html\Html;
  */
 abstract class DualTableColumn extends TableColumn
 {
+
   /**
    * The type of the data that second column holds.
    *
@@ -53,20 +54,6 @@ abstract class DualTableColumn extends TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns HTML code (including opening and closing @a th tags) for filtering this table columns.
-   *
-   * @return string
-   */
-  public function getHtmlColumnFilter()
-  {
-    $ret = '<td><input type="text"/></td>';
-    $ret .= '<td><input type="text"/></td>';
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns HTML code for col element for this table columns.
    *
    * @return string
@@ -76,7 +63,7 @@ abstract class DualTableColumn extends TableColumn
     // Add class indicating the type of data of the first column.
     if ($this->myDataType)
     {
-      $class1  = 'data-type-'.$this->myDataType;
+      $class1 = 'data-type-'.$this->myDataType;
     }
     else
     {
@@ -94,6 +81,20 @@ abstract class DualTableColumn extends TableColumn
     }
 
     return '<col'.Html::generateAttribute( 'class', $class1 ).'/><col'.Html::generateAttribute( 'class', $class2 ).'/>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns HTML code (including opening and closing @a th tags) for filtering this table columns.
+   *
+   * @return string
+   */
+  public function getHtmlColumnFilter()
+  {
+    $ret = '<td><input type="text"/></td>';
+    $ret .= '<td><input type="text"/></td>';
+
+    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -145,6 +146,34 @@ abstract class DualTableColumn extends TableColumn
     }
 
     return '<th colspan="2" class="'.$class.'"><span>&nbsp;</span>'.Html::txt2Html( $this->myHeaderText ).'</th>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the first and the second column as not sortable (overriding the default behaviour a child class).
+   */
+  public function notSortable()
+  {
+    $this->mySortable  = false;
+    $this->mySortable2 = false;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the first column as not sortable (overriding the default behaviour a child class).
+   */
+  public function notSortable1()
+  {
+    $this->mySortable = false;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the second column as not sortable (overriding the default behaviour a child class).
+   */
+  public function notSortable2()
+  {
+    $this->mySortable2 = false;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
