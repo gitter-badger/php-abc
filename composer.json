@@ -12,6 +12,8 @@
   "require": {
     "php": ">=5.3.0",
     "setbased/html": "0.9.*",
+    "setbased/phing": "0.9.*",
+    "setbased/php-coding-standards": "0.*",
     "setbased/table-sorter": "0.9.*"
   },
   "require-dev": {

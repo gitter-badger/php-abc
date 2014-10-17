@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="php-table" default="build"  basedir=".">
+    <taskdef name="readSemanticVersion" classname="vendor.setbased.phing.lib.Task.readSemanticVersionTask"/>
+    <property name ="VERSION" value="0.0.0"/>
     <target name="build"/>
 
     <!-- Merges the current branch with a remote branch -->
@@ -22,5 +24,16 @@
         <gitbranch branchname="temp" repository="."/>
         <gitcheckout repository="." branchname="temp"/>
         <gitpull repository="." refspec="${BRANCH}" quiet="false"/>
+    </target>
+
+    <!-- Creates a new version/release. -->
+    <target name="version">
+        <readSemanticVersion file=".version"
+                             versionProperty="VERSION"
+                             haltOnError="true"/>
+        <gitcommit repository="." message="Release: ${VERSION}" allFiles="true"/>
+        <gitpush repository="."/>
+        <gittag repository="." name="${VERSION}"/>
+        <gitpush repository="." refspec="${VERSION}" quiet="false"/>
     </target>
 </project>
