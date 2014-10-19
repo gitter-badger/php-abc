@@ -45,23 +45,13 @@ class OverviewTable
    */
   private $myColIndex = 1;
 
-
   /**
-   * If set to true the table is not sortable.
+   * If set to true the table is sortable.
    *
    * @var bool
    */
-  private $myNotSortable = false;
+  private $mySortable = true;
 
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Disables sorting for all columns in table.
-   */
-  public function disableSorting()
-  {
-    $this->myNotSortable = true;
-  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -91,6 +81,15 @@ class OverviewTable
   public function disableFilter()
   {
     $this->myFilter = false;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Disables sorting for all columns in table.
+   */
+  public function disableSorting()
+  {
+    $this->mySortable = false;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -126,12 +125,14 @@ class OverviewTable
     $ret .= '<colgroup>';
     foreach ($this->myColumns as $column)
     {
-      // Disable sorting for each column if flag is set.
-      if ($this->myNotSortable) $column->notSortable();
+      // If required disable sorting of this column.
+      if (!$this->mySortable) $column->notSortable();
 
+      // Generate column element.
       $ret .= $column->getHtmlColumn();
     }
     $ret .= '</colgroup>';
+
 
     // Generate HTML code for the table header.
     $ret .= '<thead>';
@@ -170,6 +171,36 @@ class OverviewTable
   public function getTitle()
   {
     return $this->myTitle;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the value of attribute @a $theName of this table to @a $theValue.
+   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
+   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
+   *   applies.)
+   *
+   * @param $theName  string      The name of the attribute.
+   * @param $theValue string|null The value for the attribute.
+   */
+  public function setAttribute( $theName, $theValue )
+  {
+    if ($theValue===null || $theValue===false || $theValue==='')
+    {
+      unset($this->myAttributes[$theName]);
+    }
+    else
+    {
+      if ($theName==='class' && isset($this->myAttributes[$theName]))
+      {
+        $this->myAttributes[$theName] .= ' ';
+        $this->myAttributes[$theName] .= $theValue;
+      }
+      else
+      {
+        $this->myAttributes[$theName] = $theValue;
+      }
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -316,36 +347,6 @@ class OverviewTable
   protected function getHtmlPrefix()
   {
     return '';
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of attribute @a $theName of this table to @a $theValue.
-   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
-   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
-   *   applies.)
-   *
-   * @param $theName  string      The name of the attribute.
-   * @param $theValue string|null The value for the attribute.
-   */
-  public function setAttribute( $theName, $theValue )
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
