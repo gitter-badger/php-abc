@@ -81,7 +81,7 @@ class SelectControl extends SimpleControl
     {
       $html .= '<option ';
       $html .= Html::generateAttribute( 'value', $this->myEmptyOption );
-      $html .= '></option>';
+      $html .= '> </option>';
     }
 
     if (is_array( $this->myOptions ))
