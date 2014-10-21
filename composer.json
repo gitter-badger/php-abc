@@ -30,5 +30,8 @@
         "js/overview_table.js"
       ]
     }
+  },
+  "config": {
+    "bin-dir": "bin"
   }
 }
