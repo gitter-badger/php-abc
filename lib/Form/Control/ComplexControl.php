@@ -218,7 +218,7 @@ class ComplexControl extends Control
 
       if ($control->myName==$parts[0])
       {
-        if (sizeof( $parts )==1)
+        if (count( $parts )==1)
         {
           return $control;
         }

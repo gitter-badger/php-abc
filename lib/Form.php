@@ -77,7 +77,7 @@ class Form
    *
    * @return bool
    */
-  static public function hasScalars( $theArray )
+  public static function hasScalars( $theArray )
   {
     $ret = false;
     foreach ($theArray as $tmp)
@@ -211,7 +211,7 @@ class Form
 
       if ($field_set->getLocalName()===$parts[0])
       {
-        if (sizeof( $parts )===1)
+        if (count( $parts )===1)
         {
           return $field_set;
         }

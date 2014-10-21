@@ -39,7 +39,7 @@ class DateFormatter implements Formatter
   {
     $parts = explode( '-', $theValue );
 
-    $valid = (sizeof( $parts )==3 && checkdate( $parts[1], $parts[2], $parts[0] ));
+    $valid = (count( $parts )==3 && checkdate( $parts[1], $parts[2], $parts[0] ));
 
     if ($valid)
     {
