@@ -63,7 +63,7 @@ class DateCleaner implements Cleaner
 
     // First validate against ISO 8601.
     $parts = explode( '-', $theValue );
-    $valid = (sizeof( $parts )==3 && checkdate( $parts[1], $parts[2], $parts[0] ));
+    $valid = (count( $parts )==3 && checkdate( $parts[1], $parts[2], $parts[0] ));
     if ($valid)
     {
       $date = new \DateTime($theValue);
