@@ -3,35 +3,28 @@
 namespace SetBased\Html\TableRow;
 
 use SetBased\Html\Html;
+use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class Ipv4TableRow extends TableRow
+class Ipv4TableRow
 {
-  /**
-   * The field name of the data row used for generating this table row.
-   *
-   * @var string
-   */
-  protected $myFieldName;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Adds a row with a IPv4 value to a detail table.
    *
-   * @param string $theHeaderText The header text of this table row.
-   * @param string $theFieldName  The field name of the data row used for generating this table row.
+   * @param DetailTable $theTable      The (detail) table.
+   * @param string      $theHeader     The row header text.
+   * @param string      $theIp4Address The IPv4 address.
    */
-  public function __construct( $theHeaderText, $theFieldName )
+  public static function addRow( $theTable, $theHeader, $theIp4Address )
   {
-    $this->myDataType   = 'ipv4';
-    $this->myHeaderText = $theHeaderText;
-    $this->myFieldName  = $theFieldName;
-  }
+    $row = '<tr><th>';
+    $row .= Html::txt2Html( $theHeader );
+    $row .= '</th><td class="ipv4">';
+    $row .= Html::txt2Html( $theIp4Address );
+    $row .= '</td></tr>';
 
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( $theData )
-  {
-    return '<td class="ipv4">'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
+    $theTable->addRow( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

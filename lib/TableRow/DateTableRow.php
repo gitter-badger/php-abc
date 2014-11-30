@@ -3,10 +3,12 @@
 namespace SetBased\Html\TableRow;
 
 use SetBased\Html\Html;
+use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class DateTableRow extends TableRow
+class DateTableRow
 {
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * The default format of the date if the format specifier is omitted in the constructor.
    *
@@ -22,60 +24,51 @@ class DateTableRow extends TableRow
    */
   public static $ourOpenDate = '9999-12-31';
 
-  /**
-   * The field name of the data row used for generating this table row.
-   *
-   * @var string
-   */
-  protected $myFieldName;
-
-  /**
-   * The format specifier for formatting the content of this table row.
-   *
-   * @var string
-   */
-  protected $myFormat;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Adds a row with a date value to a detail table.
    *
-   * @param string $theHeaderText The header text for this row.
-   * @param string $theFieldName  The field name of the data row used for generating this table row.
-   * @param string $theFormat     The format specifier for formatting the content of this table row.
+   * @param DetailTable $theTable  The (detail) table.
+   * @param string      $theHeader The row header text.
+   * @param string      $theValue  The date.
+   * @param string      $theFormat The formatting string (see DateTime::format).
    */
-  public function __construct( $theHeaderText, $theFieldName, $theFormat = null )
+  public static function addRow( $theTable, $theHeader, $theValue, $theFormat=null )
   {
-    $this->myDataType   = 'date';
-    $this->myHeaderText = $theHeaderText;
-    $this->myFieldName  = $theFieldName;
-    $this->myFormat     = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
-  }
+    $row = '<tr>';
 
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( $theData )
-  {
-    if ($theData[$this->myFieldName] && $theData[$this->myFieldName]!=self::$ourOpenDate)
+    $row .= '<th>';
+    $row .= Html::txt2Html( $theHeader );
+    $row .= '</th>';
+
+    if ($theValue && $theValue!=self::$ourOpenDate)
     {
-      $date = \DateTime::createFromFormat( 'Y-m-d', $theData[$this->myFieldName] );
+      $date = \DateTime::createFromFormat( 'Y-m-d', $theValue );
 
       if ($date)
       {
-        $class = 'date data-';
-        $class .= urlencode( $date->format( 'Y-m-d' ) );
+        // The $theValue is a valid date.
 
-        return '<td class="'.$class.'">'.Html::txt2Html( $date->format( $this->myFormat ) ).'</td>';
+        $format = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
+        $row .= '<td class="date" data-value="'.$date->format( 'Y-m-d' ).'">'.
+          Html::txt2Html( $date->format( $format ) ).
+          '</td>';
       }
       else
       {
-        // The $theData[$this->myFieldName] is not a valid date.
-        return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
+        // The $theValue is not a valid date.
+        $row .= '<td>'.Html::txt2Html( $theValue ).'</td>';
       }
     }
     else
     {
-      return '<td class="date"></td>';
+      // The $theValue is empty.
+      $row .= '<td class="date"></td>';
     }
+
+    $row .= '</tr>';
+
+    $theTable->addRow( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

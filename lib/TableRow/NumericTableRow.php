@@ -3,53 +3,32 @@
 namespace SetBased\Html\TableRow;
 
 use SetBased\Html\Html;
+use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class NumericTableRow extends TableRow
+class NumericTableRow
 {
-  /**
-   * The field name of the data row used for generating this table row.
-   *
-   * @var string
-   */
-  protected $myFieldName;
-
-  /**
-   * The format specifier for formatting the content of this table row.
-   *
-   * @var string
-   */
-  protected $myFormat;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Adds a row with a numeric value to a detail table.
    *
-   * @param string $theHeaderText The header text of this table row.
-   * @param string $theFieldName  The field name of the data row used for generating this table row.
-   * @param string $theFormat     The format specifier for formatting the content of this table row. See sprintf.
+   * @param DetailTable $theTable  The (detail) table.
+   * @param string      $theHeader The row header text.
+   * @param string      $theValue  The text.
+   * @param string      $theFormat The formatting string (see sprintf).
    */
-  public function __construct( $theHeaderText, $theFieldName, $theFormat='%d' )
+  public static function addRow( $theTable, $theHeader, $theValue, $theFormat )
   {
-    $this->myDataType   = 'numeric';
-    $this->myHeaderText = $theHeaderText;
-    $this->myFieldName  = $theFieldName;
-    $this->myFormat     = $theFormat;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( $theData )
-  {
-    $value = $theData[$this->myFieldName];
-
-    if ($value===false || $value===null || $value==='')
+    $row = '<tr><th>';
+    $row .= Html::txt2Html( $theHeader );
+    $row .= '</th><td class="number">';
+    if ($theValue!==null && $theValue!==false && $theValue!=='')
     {
-      return '<td class="number"></td>';
+      $row .= Html::txt2Html( sprintf( $theFormat, $theValue ) );
     }
-    else
-    {
-      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
-    }
+    $row .= '</td></tr>';
+
+    $theTable->addRow( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

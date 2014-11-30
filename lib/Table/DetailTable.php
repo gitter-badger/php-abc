@@ -12,6 +12,7 @@ use SetBased\Html\Html;
  */
 class DetailTable
 {
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * The attributes of the table tag of this table.
    *
@@ -20,37 +21,30 @@ class DetailTable
   protected $myAttributes = array();
 
   /**
-   * The objects for generating the rows of this table.
+   * The HTML snippet with all rows of this table.
    *
-   * @var \SetBased\Html\TableRow\TableRow[]
+   * @var string
    */
-  protected $myRows = array();
+  protected $myRows;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds @a $theRow to this table and returns the row.
+   * Adds a row to this table.
    *
-   * @param \SetBased\Html\TableRow\TableRow $theRow
-   *
-   * @return \SetBased\Html\TableRow\TableRow
+   * @param string $theRow An HTML snippet with a table row.
    */
   public function addRow( $theRow )
   {
-    // Add the column to our array of rows.
-    $this->myRows[] = $theRow;
-
-    return $theRow;
+    $this->myRows .= $theRow;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the HTML code of this table displaying @a $theData.
-   *
-   * @param array $theData
+   * Returns the HTML code of this table.
    *
    * @return string
    */
-  public function getHtmlTable( &$theData )
+  public function getHtmlTable()
   {
     $ret = $this->getHtmlPrefix();
 
@@ -74,35 +68,12 @@ class DetailTable
 
     // Generate HTML code for the table body.
     $ret .= '<tbody>';
-    $ret .= $this->getHtmlBody( $theData );
+    $ret .= $this->myRows;
     $ret .= '</tbody>';
 
     $ret .= '</table>';
 
     $ret .= $this->getHtmlPostfix();
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Returns the inner HTML code of the body for this table holding @a $theData as data.
-   *
-   * @param array $theData The data to be shown in this detail table.
-   *
-   * @return string
-   */
-  protected function getHtmlBody( &$theData )
-  {
-    $ret = '';
-
-    foreach ($this->myRows as $row)
-    {
-      $ret .= '<tr>';
-      $ret .= $row->getHtmlRowHeader();
-      $ret .= $row->getHtmlCell( $theData );
-      $ret .= '</tr>';
-    }
 
     return $ret;
   }

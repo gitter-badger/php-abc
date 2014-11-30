@@ -3,35 +3,28 @@
 namespace SetBased\Html\TableRow;
 
 use SetBased\Html\Html;
+use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class TextTableRow extends TableRow
+class TextTableRow
 {
-  /**
-   * The field name of the data row used for generating this table row.
-   *
-   * @var string
-   */
-  protected $myFieldName;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Adds a row with a text value to a detail table.
    *
-   * @param string $theHeaderText The header text this table row.
-   * @param string $theFieldName  The field name of the data row used for generating this table row.
+   * @param DetailTable $theTable  The (detail) table.
+   * @param string      $theHeader The row header text.
+   * @param string      $theText   The text.
    */
-  public function __construct( $theHeaderText, $theFieldName )
+  public static function addRow( $theTable, $theHeader, $theText )
   {
-    $this->myDataType   = 'text';
-    $this->myHeaderText = $theHeaderText;
-    $this->myFieldName  = $theFieldName;
-  }
+    $row = '<tr><th>';
+    $row .= Html::txt2Html( $theHeader );
+    $row .= '</th><td class="text">';
+    $row .= Html::txt2Html( $theText );
+    $row .= '</td></tr>';
 
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( $theData )
-  {
-    return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
+    $theTable->addRow( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -3,10 +3,12 @@
 namespace SetBased\Html\TableRow;
 
 use SetBased\Html\Html;
+use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class DateTimeTableRow extends TableRow
+class DateTimeTableRow
 {
+  //--------------------------------------------------------------------------------------------------------------------
   /**
    * The default format of the date-time if the format specifier is omitted in the constructor.
    *
@@ -14,52 +16,42 @@ class DateTimeTableRow extends TableRow
    */
   public static $ourDefaultFormat = 'd-m-Y H:i:s';
 
-  /**
-   * The field name of the data row used for generating this table row.
-   *
-   * @var string
-   */
-  protected $myFieldName;
-
-  /**
-   * The format specifier for formatting the content of this table row.
-   *
-   * @var string
-   */
-  protected $myFormat;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
+   * Adds a row with a datetime value to a detail table.
    *
-   * @param string $theHeaderText The header text of this table row.
-   * @param string $theFieldName  The field name of the data row used for generating this table row.
-   * @param string $theFormat     The format specifier for formatting the content of this table row.
+   * @param DetailTable $theTable  The (detail) table.
+   * @param string      $theHeader The row header text.
+   * @param string      $theValue  The datetime.
+   * @param string      $theFormat The formatting string (see DateTime::format).
    */
-  public function __construct( $theHeaderText, $theFieldName, $theFormat = null )
+  public static function addRow( $theTable, $theHeader, $theValue, $theFormat = null )
   {
-    $this->myDataType   = 'date-time';
-    $this->myHeaderText = $theHeaderText;
-    $this->myFieldName  = $theFieldName;
-    $this->myFormat     = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
-  }
+    $row = '<tr>';
 
-  //--------------------------------------------------------------------------------------------------------------------
-  public function getHtmlCell( $theData )
-  {
-    $datetime = \DateTime::createFromFormat( 'Y-m-d H:i:s', $theData[$this->myFieldName] );
+    $row .= '<th>';
+    $row .= Html::txt2Html( $theHeader );
+    $row .= '</th>';
 
-    if ($datetime)
+    $date = \DateTime::createFromFormat( 'Y-m-d', $theValue );
+
+    if ($date)
     {
-      $class = 'datetime data-';
-      $class .= urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
-
-      return '<td class="'.$class.'">'.Html::txt2Html( $datetime->format( $this->myFormat ) ).'</td>';
+      // The $theValue is a valid date.
+      $format = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
+      $row .= '<td class="date" data-value="'.$date->format( 'Y-m-d' ).'">'.
+        Html::txt2Html( $date->format( $format ) ).
+        '</td>';
     }
     else
     {
-      return '<td class="datetime"></td>';
+      // The $theValue is not a valid datetime.
+      $row .= '<td>'.Html::txt2Html( $theValue ).'</td>';
     }
+
+    $row .= '</tr>';
+
+    $theTable->addRow( $row );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
