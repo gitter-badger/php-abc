@@ -2,7 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Html\Form\Control;
 
-use SetBased\Html\Form\Cleaner\PruneWhitespaceCleaner;
+use SetBased\Html\Form\Cleaner\TrimWhitespaceCleaner;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ class TextAreaControl extends SimpleControl
     parent::__construct( $theName );
 
     // By default whitespace is trimmed from textarea form controls.
-    $this->myCleaner = PruneWhitespaceCleaner::get();
+    $this->myCleaner = TrimWhitespaceCleaner::get();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
