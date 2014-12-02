@@ -12,6 +12,7 @@ use SetBased\Html\Form\SlatJoint\SlatJoint;
  */
 abstract class SlatControlFactory
 {
+
   /**
    * If set to true the header will contain a row for filtering.
    *
@@ -101,6 +102,23 @@ abstract class SlatControlFactory
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the inner HTML code of the colgroup element of the table form control.
+   *
+   * @return string
+   */
+  public function getColumnGroup()
+  {
+    $ret = '';
+    foreach ($this->mySlatJoints as $factory)
+    {
+      $ret .= $factory->getHtmlColumn();
+    }
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the inner HTML code of the thead element of the table form control.
    *
    * @return string
@@ -129,23 +147,6 @@ abstract class SlatControlFactory
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the inner HTML code of the colgroup element of the table form control.
-   *
-   * @return string
-   */
-  public function getColumnGroup()
-  {
-    $ret = '';
-    foreach ($this->mySlatJoints as $factory)
-    {
-      $ret .= $factory->getHtmlColumn();
-    }
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns the number of columns in the underlying table of the louver form control.
    *
    * @return int
@@ -153,6 +154,34 @@ abstract class SlatControlFactory
   public function getNumberOfColumns()
   {
     return $this->myNumberOfColumns;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the o-indexed ordinal of a slat joint in the underlying table of the louver form control.
+   *
+   * @param string $theSlatJointName The name of the slat joint.
+   *
+   * @return int
+   * @throws \Exception
+   */
+  public function getOrdinal( $theSlatJointName )
+  {
+    $ordinal = 0;
+    $key     = null;
+    foreach ($this->mySlatJoints as $key => $slat_joint)
+    {
+      if ($key==$theSlatJointName) break;
+
+      $ordinal += $slat_joint->getColSpan();
+    }
+
+    if ($key!=$theSlatJointName)
+    {
+      throw new \Exception( sprintf( "SlatJoint '%s' not found.", $theSlatJointName ) );
+    }
+
+    return $ordinal;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
