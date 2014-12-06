@@ -6,7 +6,7 @@ use SetBased\Html\Html;
 use SetBased\Html\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
-class HyperTableRow
+class HyperLinkTableRow
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -24,7 +24,9 @@ class HyperTableRow
     if ($theValue!==null && $theValue!==false && $theValue!=='')
     {
       $url = Html::Txt2Html( $theValue );
-      $row .= '<a href="'.$url.'">'.$url.'</a>';
+      $row .= '<a href="'.$url.'">';
+      $row .= $url;
+      $row .= '</a>';
     }
     $row .= '</td></tr>';
 
