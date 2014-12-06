@@ -132,7 +132,7 @@ class DetailTable
    * @param $theName  string      The name of the attribute.
    * @param $theValue string|null The value for the attribute.
    */
-  protected function setAttribute( $theName, $theValue )
+  public function setAttribute( $theName, $theValue )
   {
     if ($theValue===null || $theValue===false || $theValue==='')
     {
