@@ -30,7 +30,7 @@ class DateTableRow
    *
    * @param DetailTable $theTable  The (detail) table.
    * @param string      $theHeader The row header text.
-   * @param string      $theValue  The date.
+   * @param string      $theValue  The date in YYYY-MM-DD format.
    * @param string      $theFormat The formatting string (see DateTime::format).
    */
   public static function addRow( $theTable, $theHeader, $theValue, $theFormat=null )

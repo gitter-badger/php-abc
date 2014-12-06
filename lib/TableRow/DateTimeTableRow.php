@@ -22,7 +22,7 @@ class DateTimeTableRow
    *
    * @param DetailTable $theTable  The (detail) table.
    * @param string      $theHeader The row header text.
-   * @param string      $theValue  The datetime.
+   * @param string      $theValue  The datetime in Y-m-d H:i:s format.
    * @param string      $theFormat The formatting string (see DateTime::format).
    */
   public static function addRow( $theTable, $theHeader, $theValue, $theFormat = null )

@@ -19,7 +19,7 @@ class HtmlTableRow
    *
    * @param DetailTable $theTable       The (detail) table.
    * @param string      $theHeader      The row header text.
-   * @param string      $theHtmlSnippet The IPv4 address.
+   * @param string      $theHtmlSnippet The HTML snippet.
    */
   public static function addRow( $theTable, $theHeader, $theHtmlSnippet )
   {
