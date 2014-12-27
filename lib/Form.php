@@ -153,6 +153,17 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Override this method in each child class for protection against CSRF attacks. This method is called at the end of
+   * method loadSubmittedValues.
+   * This method is a stub.
+   */
+  public function csrfCheck()
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
    * exists the first found form control is returned. If no form control with @a $theName exists @c null is
    * returned.
@@ -251,8 +262,8 @@ class Form
   /**
    * Returns all form control names of which the value has been changed.
    *
-   * @return array A nested array of form control names (keys are form control names and (for complex form controls) values
-   * are arrays or (for simple form controls) @c true).
+   * @return array A nested array of form control names (keys are form control names and (for complex form controls)
+   *               values are arrays or (for simple form controls) @c true).
    * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
    */
   public function getChangedControls()
@@ -303,13 +314,31 @@ class Form
   /**
    * Returns all form controls which failed one or more validation tests.
    *
-   * @return array A nested array of form control names (keys are form control names and (for complex form controls) values
-   * are arrays or (for simple form controls) @c true).
+   * @return array A nested array of form control names (keys are form control names and (for complex form controls)
+   *               values are arrays or (for simple form controls) @c true).
    * @note This method should only be invoked after method Form::validate() has been invoked.
    */
   public function getInvalidControls()
   {
     return $this->myInvalidControls;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the current values of the form controls of this form. This method can be invoked be for
+   * loadSubmittedValues has been invoked. The values returned are the values set with Form::setValues,
+   * Form::mergeValues, and SimpleControl::setValue. These values might not be white listed.
+   * After loadSubmittedValues has been invoked use getValues.
+   */
+  public function getSetValues()
+  {
+    $ret = array();
+    foreach ($this->myFieldSets as $fieldSet)
+    {
+      $fieldSet->getSetValuesBase( $ret );
+    }
+
+    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -366,11 +395,11 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *
+   * Loads the submitted values.
+   * The white listed values can be obtained with method getValues.
    */
   public function loadSubmittedValues()
   {
-    $values = '';
     switch ($this->myAttributes['method'])
     {
       case 'post':
@@ -383,31 +412,32 @@ class Form
 
       default:
         Html::error( "Unknown method '%s'.", $this->myAttributes['method'] );
+        $values = ''; // Keep our IDE happy.
     }
 
+    // For all field sets load all submitted values.
     foreach ($this->myFieldSets as $fieldSet)
     {
       $fieldSet->loadSubmittedValuesBase( $values, $this->myValues, $this->myChangedControls );
     }
+
+    // Defend against CSRF attacks.
+    $this->csrfCheck();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the current values of the form controls of this form. This method can be invoked be for
-   * loadSubmittedValues has been invoked. The values returned are the values set with Form::setValues,
-   * Form::mergeValues, and SimpleControl::setValue. These values might not be white listed.
+   * Sets the values of the form controls of this form. The values of form controls for which no explicit value is set
+   * are left on changed
    *
-   * After loadSubmittedValues has been invoked use getValues.
+   * @param mixed $theValues The values as a nested array.
    */
-  public function getSetValues()
+  public function mergeValues( $theValues )
   {
-    $ret = array();
     foreach ($this->myFieldSets as $fieldSet)
     {
-      $fieldSet->getSetValuesBase( $ret );
+      $fieldSet->mergeValuesBase( $theValues );
     }
-
-    return $ret;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -452,21 +482,6 @@ class Form
     foreach ($this->myFieldSets as $fieldSet)
     {
       $fieldSet->setValuesBase( $theValues );
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the values of the form controls of this form. The values of form controls for which no explicit value is set
-   * are left on changed
-   *
-   * @param mixed $theValues The values as a nested array.
-   */
-  public function mergeValues( $theValues )
-  {
-    foreach ($this->myFieldSets as $fieldSet)
-    {
-      $fieldSet->mergeValuesBase( $theValues );
     }
   }
 
