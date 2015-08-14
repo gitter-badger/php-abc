@@ -65,9 +65,3 @@ define(
 );
 
 //----------------------------------------------------------------------------------------------------------------------
-require(['SetBased/Form/ColumnTypeHandler/CheckboxControl']);
-require(['SetBased/Form/ColumnTypeHandler/HtmlControl']);
-require(['SetBased/Form/ColumnTypeHandler/RadiosControl']);
-require(['SetBased/Form/ColumnTypeHandler/SelectControl']);
-require(['SetBased/Form/ColumnTypeHandler/TextAreaControl']);
-require(['SetBased/Form/ColumnTypeHandler/TextControl']);
