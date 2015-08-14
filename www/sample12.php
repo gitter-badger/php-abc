@@ -71,7 +71,7 @@ function leader()
   echo "<title>Sample Table Form</title>\n";
   echo "<script type='text/javascript' src='js/jquery/jquery.min.js'></script>\n";
   echo "<script type='text/javascript' src='js/table-sorter/set_table_sorter_filter.js'></script>\n";
-  echo "<script type='text/javascript' src='js/form/SET_Form.js'></script>\n";
+  echo "<script type='text/javascript' src='js/form/Form.js'></script>\n";
   echo "<script type='text/javascript' src='js/form/SET_HtmlControlColumnTypeHandler.js'></script>\n";
   echo "<script type='text/javascript' src='js/form/SET_TextAreaControlColumnTypeHandler.js'></script>\n";
   echo "<script type='text/javascript' src='js/sample11.js'></script>\n";
