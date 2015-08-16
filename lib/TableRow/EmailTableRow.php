@@ -23,8 +23,12 @@ class EmailTableRow
     $row .= '</th><td class="email">';
     if ($theValue!==null && $theValue!==false && $theValue!=='')
     {
-      $address = Html::Txt2Html( $theValue );
-      $row .= '<a href="mailto:'.$address.'">'.$address.'</a>';
+      $address = Html::txt2Html( $theValue );
+      $row .= '<a href="mailto:';
+      $row .= $address;
+      $row .= '">';
+      $row .= $address;
+      $row .= '</a>';
     }
     $row .= '</td></tr>';
 

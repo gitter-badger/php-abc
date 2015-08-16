@@ -55,15 +55,21 @@ class DateTableColumn extends TableColumn
   //--------------------------------------------------------------------------------------------------------------------
   public function getHtmlCell( $theData )
   {
-    if ($theData[$this->myFieldName] && $theData[$this->myFieldName]!=self::$ourOpenDate)
+    $value = $theData[$this->myFieldName];
+
+    if ($value!==false && $value!==null && $value!=='' && $theData[$this->myFieldName]!=self::$ourOpenDate)
     {
       $date = \DateTime::createFromFormat( 'Y-m-d', $theData[$this->myFieldName] );
 
       if ($date)
       {
-        $class = 'date data-'.urlencode( $date->format( 'Y-m-d' ) );
+        $cell = '<td class="date" data-value="';
+        $cell .= $date->format( 'Y-m-d' );
+        $cell .= '">';
+        $cell .= Html::txt2Html( $date->format( $this->myFormat ) );
+        $cell .= '</td>';
 
-        return '<td class="'.$class.'">'.Html::txt2Html( $date->format( $this->myFormat ) ).'</td>';
+        return $cell;
       }
       else
       {
@@ -73,6 +79,7 @@ class DateTableColumn extends TableColumn
     }
     else
     {
+      // The value is an empty date.
       return '<td class="date"></td>';
     }
   }

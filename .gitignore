@@ -1,5 +1,4 @@
-.idea
+.idea/
+bin/
 composer.lock
-vendor
-*~
-components
+vendor/

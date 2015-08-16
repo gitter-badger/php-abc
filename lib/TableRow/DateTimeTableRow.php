@@ -39,14 +39,18 @@ class DateTimeTableRow
     {
       // The $theValue is a valid date.
       $format = ($theFormat) ? $theFormat : self::$ourDefaultFormat;
-      $row .= '<td class="date" data-value="'.$date->format( 'Y-m-d' ).'">'.
-        Html::txt2Html( $date->format( $format ) ).
-        '</td>';
+      $row .= '<td class="date" data-value="';
+      $row .= $date->format( 'Y-m-d' );
+      $row .= '">';
+      $row .= Html::txt2Html( $date->format( $format ) );
+      $row .= '</td>';
     }
     else
     {
       // The $theValue is not a valid datetime.
-      $row .= '<td>'.Html::txt2Html( $theValue ).'</td>';
+      $row .= '<td>';
+      $row .= Html::txt2Html( $theValue );
+      $row .= '</td>';
     }
 
     $row .= '</tr>';
