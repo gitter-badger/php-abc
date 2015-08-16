@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="php-table" default="build"  basedir=".">
-    <taskdef name="readSemanticVersion" classname="vendor.setbased.phing.lib.Task.readSemanticVersionTask"/>
-    <property name ="VERSION" value="0.0.0"/>
+<project name="php-table" default="build" basedir=".">
+    <taskdef name="readSemanticVersion" classname="vendor.setbased.phing-extensions.lib.Task.readSemanticVersionTask"/>
+    <property name="VERSION" value="0.0.0"/>
     <target name="build"/>
 
     <!-- Merges the current branch with a remote branch -->
@@ -33,6 +33,17 @@
         <gitcheckout repository="." branchname="${BRANCH}"/>
         <gitmerge repository="." remote="temp"/>
         <gitbranch branchname="temp" repository="." delete="true"/>
+    </target>
+
+    <!-- Runs PHP_CodeSniffer with our coding standards on our code -->
+    <target name="code-sniffer">
+        <exec command="./bin/phpcs -p --standard=vendor/setbased/php-coding-standards/ruleset.xml lib"
+              passthru="true" checkreturn="true"/>
+    </target>
+
+    <!-- Runs all unit tests -->
+    <target name="unit">
+        <exec command="bin/phpunit --bootstrap=test/bootstrap.php test" passthru="true" checkreturn="true"/>
     </target>
 
     <!-- Creates a new version/release. -->

@@ -42,13 +42,14 @@ class NumericTableColumn extends TableColumn
   {
     $value = $theData[$this->myFieldName];
 
-    if ($value===false || $value===null || $value==='')
+    if ($value!==false || $value!==null || $value!=='')
     {
-      return '<td></td>';
+      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
     }
     else
     {
-      return '<td class="number">'.Html::txt2Html( sprintf( $this->myFormat, $value ) ).'</td>';
+      // The value is empty.
+      return '<td></td>';
     }
   }
 

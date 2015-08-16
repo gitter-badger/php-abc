@@ -47,16 +47,31 @@ class DateTimeTableColumn extends TableColumn
   //--------------------------------------------------------------------------------------------------------------------
   public function getHtmlCell( $theData )
   {
-    $datetime = \DateTime::createFromFormat( 'Y-m-d H:i:s', $theData[$this->myFieldName] );
+    $value = $theData[$this->myFieldName];
 
-    if ($datetime)
+    if ($value!==false && $value!==null && $value!=='')
     {
-      $class = 'datetime data-'.urlencode( $datetime->format( 'Y-m-d H:i:s' ) );
+      $datetime = \DateTime::createFromFormat( 'Y-m-d H:i:s', $theData[$this->myFieldName] );
 
-      return '<td class="'.$class.'">'.Html::txt2Html( $datetime->format( $this->myFormat ) ).'</td>';
+      if ($datetime)
+      {
+        $cell = '<td class="datetime" data-value="';
+        $cell .= $datetime->format( 'Y-m-d H:i:s' );
+        $cell .= '">';
+        $cell .= Html::txt2Html( $datetime->format( $this->myFormat ) );
+        $cell .= '</td>';
+
+        return $cell;
+      }
+      else
+      {
+        // The value is not a valid datetime.
+        return '<td>'.Html::txt2Html( $theData[$this->myFieldName] ).'</td>';
+      }
     }
     else
     {
+      // The value is an empty datetime.
       return '<td class="datetime"></td>';
     }
   }
