@@ -5,6 +5,9 @@ namespace SetBased\Html\TableColumn;
 use SetBased\Html\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Table column for cells with an email address.
+ */
 class EmailTableColumn extends TableColumn
 {
   /**
@@ -29,15 +32,19 @@ class EmailTableColumn extends TableColumn
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
   public function getHtmlCell( $theData )
   {
     $value = $theData[$this->myFieldName];
 
     if ($value!==false && $value!==null && $value!=='')
     {
+      // The value holds an email address.
       $address = Html::txt2Html( $value );
 
-      return '<td><a href="mailto:'.$address.'">'.$address.'</a></td>';
+      return '<a '.Html::generateAttribute( 'href', 'mailto:'.$address ).'>'.Html::txt2Html( $address ).'</a>';
     }
     else
     {
