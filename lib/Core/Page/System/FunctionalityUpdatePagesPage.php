@@ -1,0 +1,190 @@
+<?php
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Abc\Core\Page\System;
+
+use SetBased\Abc\Abc;
+use SetBased\Abc\Babel;
+use SetBased\Abc\C;
+use SetBased\Abc\Core\Form\Control\CoreButtonControl;
+use SetBased\Abc\Core\Form\CoreForm;
+use SetBased\Abc\Core\Form\SlatControlFactory\SystemFunctionalityUpdatePagesSlatControlFactory;
+use SetBased\Abc\Core\Page\CorePage;
+use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Helper\Http;
+use SetBased\Html\Form\Control\LouverControl;
+use SetBased\Html\TableRow\NumericTableRow;
+use SetBased\Html\TableRow\TextTableRow;
+
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Page for setting the pages that a functionality grants access.
+ */
+class FunctionalityUpdatePagesPage extends CorePage
+{
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The form shown on this page.
+   *
+   * @var CoreForm
+   */
+  private $myForm;
+
+  /**
+   * The ID of the functionality of which the pages that belong to it will be modified.
+   *
+   * @var int
+   */
+  private $myFunId;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Object constructor.
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myFunId = self::getCgiVar('fun', 'fun');
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the relative URL to this page.
+   *
+   * @param int $theFunId
+   *
+   * @return string
+   */
+  public static function getUrl($theFunId)
+  {
+    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_FUNCTIONALITY_UPDATE_PAGES, 'pag');
+    $url .= '/fun/'.Abc::obfuscate($theFunId, 'fun');
+
+    return $url;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  protected function echoTabContent()
+  {
+    $this->createForm();
+
+    if ($this->myForm->isSubmitted('submit'))
+    {
+      $this->myForm->loadSubmittedValues();
+      $valid = $this->myForm->Validate();
+      if (!$valid)
+      {
+        $this->echoForm();
+      }
+      else
+      {
+        $this->dataBaseAction();
+
+        Http::redirect(FunctionalityDetailsPage::getUrl($this->myFunId));
+      }
+    }
+    else
+    {
+      $this->echoForm();
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Creates the form shown on this page.
+   */
+  private function createForm()
+  {
+    // Get all available pages.
+    $pages = Abc::$DL->systemFunctionalityGetAvailablePages($this->myFunId);
+
+    // Create form.
+    $this->myForm = new CoreForm();
+    $this->myForm->setAttribute('class', 'input_table');
+
+    // Add field set.
+    $field_set = $this->myForm->createFieldSet();
+
+    // Create factory.
+    $factory = new SystemFunctionalityUpdatePagesSlatControlFactory($this->myLanId);
+    $factory->enableFilter();
+
+    // Add submit button.
+    $button = new CoreButtonControl('');
+    $submit = $button->createFormControl('submit', 'submit');
+    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
+
+    // Put everything together in a LouverControl.
+    $louver = new LouverControl('data');
+    $louver->setAttribute('class', 'overview_table');
+    $louver->setRowFactory($factory);
+    $louver->setFooterControl($button);
+    $louver->setData($pages);
+    $louver->populate();
+
+    // Add the lover control to the form.
+    $field_set->addFormControl($louver);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Handles the form submit, i.e. add or removes pages to the functionality.
+   */
+  private function dataBaseAction()
+  {
+    $changes = $this->myForm->getChangedControls();
+    $values  = $this->myForm->getValues();
+
+    foreach ($changes['data'] as $pag_id => $dummy)
+    {
+      if ($values['data'][$pag_id]['pag_enabled'])
+      {
+        Abc::$DL->systemFunctionalityInsertPage($this->myFunId, $pag_id);
+      }
+      else
+      {
+        Abc::$DL->systemFunctionalityDeletePage($this->myFunId, $pag_id);
+      }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos the form shown on this page.
+   */
+  private function echoForm()
+  {
+    $this->showFunctionality();
+
+    echo $this->myForm->generate();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos brief info about the functionality.
+   */
+  private function showFunctionality()
+  {
+    $details = Abc::$DL->systemFunctionalityGetDetails($this->myFunId, $this->myLanId);
+
+    $table = new DetailTable();
+
+    // Add row for the ID of the function.
+    NumericTableRow::addRow($table, 'ID', $details['fun_id'], '%d');
+
+    // Add row for the module name to which the function belongs.
+    TextTableRow::addRow($table, 'Module', $details['mdl_name']);
+
+    // Add row for the name of the function.
+    TextTableRow::addRow($table, 'Functionality', $details['fun_name']);
+
+    echo $table->getHtmlTable();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+}
+
+//----------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,12 @@
+.idea/
+bin/phing
+bin/phpcbf
+bin/phpcs
+bin/phpunit
+bin/stratum
+bin/yuicompressor.jar
+build/
+components/
+composer.lock
+lib/C.php
+vendor/

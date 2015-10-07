@@ -1,0 +1,152 @@
+<?php
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Abc\Core\Page\System;
+
+use SetBased\Abc\Abc;
+use SetBased\Abc\C;
+use SetBased\Abc\Core\Page\CorePage;
+use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\TableAction\System\PageUpdateFunctionalitiesTableAction;
+use SetBased\Abc\Core\TableAction\System\PageUpdateTableAction;
+use SetBased\Abc\Core\TableRow\System\PageDetailsTableRow;
+use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Html\TableRow\NumericTableRow;
+use SetBased\Html\TableRow\TextTableRow;
+
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Page with information about a (target) page.
+ */
+class PageDetailsPage extends CorePage
+{
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @var int The ID of the target page shown on this page.
+   */
+  protected $myTargetPagId;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Object constructor.
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myTargetPagId = self::getCgiVar('tar_pag', 'pag');
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the relative URL for this page.
+   *
+   * @param int $thePagId The Company shown on this page.
+   *
+   * @return string
+   */
+  public static function getUrl($thePagId)
+  {
+    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_PAGE_DETAILS, 'pag');
+    $url .= '/tar_pag/'.Abc::obfuscate($thePagId, 'pag');
+
+    return $url;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  protected function echoTabContent()
+  {
+    $this->showDetails();
+
+    $this->showFunctionalities();
+
+    $this->showGrantedRoles();
+
+    // XXX Show all child pages (if page is a master page).
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos the details of a page.
+   */
+  private function showDetails()
+  {
+    $details = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
+    $table   = new DetailTable();
+
+    // Add table action for updating the page details.
+    $table->addTableAction('default', new PageUpdateTableAction($this->myTargetPagId));
+
+    // Add row with the ID of the page.
+    NumericTableRow::addRow($table, 'ID', $details['pag_id'], '%d');
+
+    // Add row with the title of the page.
+    TextTableRow::addRow($table, 'Title', $details['pag_title']);
+
+    // Add row with the tab name of the page.
+    TextTableRow::addRow($table, 'Tab', $details['ptb_name']);
+
+    // Add row with the ID of the parent page of the page.
+    PageDetailsTableRow::addRow($table, 'Original Page', $details);
+
+    // Add row with the menu item of the page.
+    TextTableRow::addRow($table, 'Menu', $details['mnu_name']);
+
+    // Add row with the class name of the page.
+    TextTableRow::addRow($table, 'Class', $details['pag_class']);
+
+    // Add row with the label of the page.
+    TextTableRow::addRow($table, 'Label', $details['pag_label']);
+
+    echo $table->getHtmlTable();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos functionalities that grant access to the page shown on this page.
+   */
+  private function showFunctionalities()
+  {
+    $roles = Abc::$DL->systemPageGetGrantedFunctionalities($this->myTargetPagId, $this->myLanId);
+
+    $table = new OverviewTable();
+
+    // Table action for modify the functionalities that grant access to the page whow on this page.
+    $table->addTableAction('default', new PageUpdateFunctionalitiesTableAction($this->myTargetPagId));
+
+    // Show module name.
+    $table->addColumn(new TextTableColumn('Module', 'mdl_name'));
+
+    // Show functionality name.
+    $table->addColumn(new TextTableColumn('Functionality', 'fun_name'));
+
+    echo $table->getHtmlTable($roles);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Echos roles that are granted access to the page shown on this page.
+   */
+  private function showGrantedRoles()
+  {
+    $roles = Abc::$DL->systemPageGetGrantedRoles($this->myTargetPagId, $this->myLanId);
+
+    $table = new OverviewTable();
+
+    // Show Company abbreviation.
+    $table->addColumn(new TextTableColumn('Company', 'cmp_abbr'));
+
+    // Show role name.
+    $table->addColumn(new TextTableColumn('Role', 'rol_name'));
+
+    echo $table->getHtmlTable($roles);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+

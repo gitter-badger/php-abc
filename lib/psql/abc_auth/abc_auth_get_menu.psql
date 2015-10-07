@@ -1,0 +1,38 @@
+/**
+ * Selects the menu for a user.
+ *
+ * @param p_cmp_id The ID of the company (safeguard).
+ * @param p_usr_id The ID of the user.
+ * @param p_lan_id The ID of the language for linguistic entities.
+ */
+create procedure abc_auth_get_menu( in p_cmp_id @aut_company.cmp_id%type@
+,                                   in p_usr_id @aut_user.usr_id%type@
+,                                   in p_lan_id @bbl_language.lan_id%type@ )
+reads sql data
+-- type: rows
+begin
+  declare l_date date;
+
+  set l_date = curdate();
+
+  select distinct mnu.mnu_id        mnu_id
+  ,               mnu.pag_id        pag_id
+  ,               mnu_level         mnu_level
+  ,               mnu_group         mnu_group
+  ,               wd1.wdt_text      mnu_text
+  ,               mnu.mnu_link      mnu_link
+  from       AUT_MENU          mnu
+  inner join AUT_PAG_FUN       apf  on  apf.pag_id = mnu.pag_id
+  inner join AUT_ROL_FUN       arl  on  arl.fun_id = apf.fun_id and
+                                        arl.cmp_id = p_cmp_id
+  inner join AUT_USR_ROL       aur  on  aur.rol_id = arl.rol_id and
+                                        aur.cmp_id = p_cmp_id   and
+                                        l_date between aur.aur_date_start and
+                                                       aur.aur_date_stop
+  inner join BBL_WORD_TEXT     wd1  on  wd1.wrd_id = mnu.wrd_id and
+                                        wd1.lan_id = p_lan_id
+  where aur.usr_id = p_usr_id
+  order by mnu_group
+  ,        mnu_weight
+  ;
+end

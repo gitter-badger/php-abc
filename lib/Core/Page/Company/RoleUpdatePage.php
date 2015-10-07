@@ -1,0 +1,74 @@
+<?php
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Abc\Core\Page\Company;
+
+use SetBased\Abc\Abc;
+use SetBased\Abc\C;
+
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * Page for updating the details of a role.
+ */
+class RoleUpdatePage extends RoleBasePage
+{
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myActCmpId = self::getCgiVar('cmp', 'cmp');
+    $this->myRolId    = self::getCgiVar('rol', 'rol');
+
+    $this->myDetails = Abc::$DL->companyRoleGetDetails($this->myActCmpId, $this->myRolId);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the relative URL for this page.
+   *
+   * @param int $theCmpId The ID of the target company.
+   * @param int $theRolId The ID of role to be modified.
+   *
+   * @return string
+   */
+  public static function getUrl($theCmpId, $theRolId)
+  {
+    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_ROLE_UPDATE, 'pag');
+    $url .= '/cmp/'.Abc::obfuscate($theCmpId, 'cmp');
+    $url .= '/rol/'.Abc::obfuscate($theRolId, 'rol');
+
+    return $url;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Update the details of the role.
+   */
+  protected function databaseAction()
+  {
+    $changes = $this->myForm->getChangedControls();
+    $values  = $this->myForm->getValues();
+
+    // Return immediately if no changes are submitted.
+    if (!$changes) return;
+
+    Abc::$DL->companyRoleUpdate($this->myActCmpId, $this->myRolId, $values['rol_name'], $values['rol_weight']);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  protected function loadValues()
+  {
+    $this->myForm->setValues($this->myDetails);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,31 @@
+/**
+ * Selects non-zero if a user has the proper authorization for page. Otherwise, selects 0.
+ *
+ * @param p_cmp_id The ID of the company of the user (safe guard).
+ * @param p_usr_id The ID of the user.
+ * @param p_pag_id The ID of the page.
+ */
+create procedure abc_auth_get_page_auth( in p_cmp_id @aut_company.cmp_id%type@,
+                                         in p_usr_id @aut_user.usr_id%type@
+,                                        in p_pag_id @aut_page.pag_id%type@ )
+reads sql data
+-- type: singleton1
+begin
+  declare l_date date;
+
+  set l_date = curdate();
+
+  select count(*) n
+  from            AUT_MODULE_COMPANY amc
+  inner join      AUT_FUNCTIONALITY  fun  on  fun.mdl_id = amc.mdl_id
+  inner join      AUT_PAG_FUN        apf  on  apf.fun_id = fun.fun_id
+  inner join      AUT_PAGE           pag  on  apf.pag_id = pag.pag_id
+  inner join      AUT_ROL_FUN        arl  on  arl.fun_id = apf.fun_id
+  inner join      AUT_USR_ROL        aur  on  aur.rol_id = arl.rol_id
+  where amc.cmp_id = p_cmp_id
+  and   pag.pag_id = p_pag_id
+  and   aur.usr_id = p_usr_id
+  and   l_date between aur.aur_date_start and
+                       aur.aur_date_stop
+  ;
+end
