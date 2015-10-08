@@ -17,8 +17,8 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
     // Test ISO 8601.
     $cleaner = new DateCleaner('d-m-Y');
     $raw     = '1966-04-10';
-    $value   = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value   = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -31,13 +31,13 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
 
     // Test against ISO 8601.
     $raw   = '1966-04-10';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '10-04-1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -50,18 +50,18 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
 
     // Test against ISO 8601.
     $raw   = '1966-04-10';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '04/10/1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '4/10/1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -74,33 +74,33 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
 
     // Test against ISO 8601.
     $raw   = '1966-04-10';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '04-10-1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '4-10-1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '04.10-1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '4 10 1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
 
     // Test against format.
     $raw   = '4 10.1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '1966-04-10', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('1966-04-10', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -113,8 +113,8 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
 
     // Test against format.
     $raw   = '31/11.1966 ';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '31-11-1966', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('31-11-1966', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -127,8 +127,8 @@ class DateCleanerTest extends PHPUnit_Framework_TestCase
 
     // Test against format.
     $raw   = '11/31/1966';
-    $value = $cleaner->clean( $raw );
-    $this->assertEquals( '11/31/1966', $value );
+    $value = $cleaner->clean($raw);
+    $this->assertEquals('11/31/1966', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

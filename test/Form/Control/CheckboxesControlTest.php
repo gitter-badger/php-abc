@@ -20,10 +20,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index '0' has been checked.
-    $this->assertTrue( $values['cnt_id']['0'] );
+    $this->assertTrue($values['cnt_id']['0']);
 
     // Test checkbox with index '0.0' has not been checked.
-    $this->assertFalse( $values['cnt_id']['0.0'] );
+    $this->assertFalse($values['cnt_id']['0.0']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -38,10 +38,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index '0' has been checked.
-    $this->assertTrue( $values['cnt_id']['0'] );
+    $this->assertTrue($values['cnt_id']['0']);
 
     // Test checkbox with index '0.0' has not been checked.
-    $this->assertFalse( $values['cnt_id']['0.0'] );
+    $this->assertFalse($values['cnt_id']['0.0']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -56,10 +56,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index '0' has not been checked.
-    $this->assertFalse( $values['cnt_id']['0'] );
+    $this->assertFalse($values['cnt_id']['0']);
 
     // Test checkbox with index '0.0' has been checked.
-    $this->assertTrue( $values['cnt_id']['0.0'] );
+    $this->assertTrue($values['cnt_id']['0.0']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -74,10 +74,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index '0' has been checked.
-    $this->assertTrue( $values['cnt_id']['0'] );
+    $this->assertTrue($values['cnt_id']['0']);
 
     // Test checkbox with index '1' has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -92,10 +92,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index '0' has been checked.
-    $this->assertTrue( $values['cnt_id']['0'] );
+    $this->assertTrue($values['cnt_id']['0']);
 
     // Test checkbox with index '0.0' has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -105,19 +105,19 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
   public function testPreserveSubmitValues()
   {
     // Simulate submitted values.
-    $_POST['cnt_id'] = array('0' => 'on', '2' => 'on', '3' => 'on');
+    $_POST['cnt_id'] = ['0' => 'on', '2' => 'on', '3' => 'on'];
 
-    $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE');
-    $countries[] = array('cnt_id' => 2, 'cnt_name' => 'LU');
-    $countries[] = array('cnt_id' => 3, 'cnt_name' => 'DE');
-    $countries[] = array('cnt_id' => 4, 'cnt_name' => 'GB');
+    $countries[] = ['cnt_id' => 0, 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => 1, 'cnt_name' => 'BE'];
+    $countries[] = ['cnt_id' => 2, 'cnt_name' => 'LU'];
+    $countries[] = ['cnt_id' => 3, 'cnt_name' => 'DE'];
+    $countries[] = ['cnt_id' => 4, 'cnt_name' => 'GB'];
 
     // Create a form with checkboxes.
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->LoadSubmittedValues();
 
@@ -125,24 +125,24 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $html = $form->Generate();
 
     $doc = new DOMDocument();
-    $doc->loadXML( $html );
+    $doc->loadXML($html);
     $xpath = new DOMXpath($doc);
 
     // Asset that the checkboxes are set or unset according to the $values.
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[0]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[0]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[1]' and @type='checkbox' and not(@checked)]" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[1]' and @type='checkbox' and not(@checked)]");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[2]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[2]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[3]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[3]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[4]' and @type='checkbox' and not(@checked)]" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[4]' and @type='checkbox' and not(@checked)]");
+    $this->assertEquals(1, $list->length);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -151,17 +151,17 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSetValues2()
   {
-    $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL', 'checked' => true);
-    $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE', 'checked' => true);
-    $countries[] = array('cnt_id' => 2, 'cnt_name' => 'LU');
-    $countries[] = array('cnt_id' => 3, 'cnt_name' => 'DE');
-    $countries[] = array('cnt_id' => 4, 'cnt_name' => 'GB');
+    $countries[] = ['cnt_id' => 0, 'cnt_name' => 'NL', 'checked' => true];
+    $countries[] = ['cnt_id' => 1, 'cnt_name' => 'BE', 'checked' => true];
+    $countries[] = ['cnt_id' => 2, 'cnt_name' => 'LU'];
+    $countries[] = ['cnt_id' => 3, 'cnt_name' => 'DE'];
+    $countries[] = ['cnt_id' => 4, 'cnt_name' => 'GB'];
 
     // Create a form with checkboxes.
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name', 'checked' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name', 'checked');
 
     // Set the values of the checkboxes.
     $values['cnt_id'][0] = true;
@@ -170,30 +170,30 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values['cnt_id'][3] = true;
     $values['cnt_id'][4] = false;
 
-    $form->setValues( $values );
+    $form->setValues($values);
 
     // Generate HTML code for the form.
     $form = $form->Generate();
 
     $doc = new DOMDocument();
-    $doc->loadXML( $form );
+    $doc->loadXML($form);
     $xpath = new DOMXpath($doc);
 
     // Asset that the checkboxes are set or unset according to the $values.
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[0]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[0]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[1]' and @type='checkbox' and not(@checked)]" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[1]' and @type='checkbox' and not(@checked)]");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[2]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[2]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[3]' and @type='checkbox' and @checked='checked']" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[3]' and @type='checkbox' and @checked='checked']");
+    $this->assertEquals(1, $list->length);
 
-    $list = $xpath->query( "/form/fieldset/span/input[@name='cnt_id[4]' and @type='checkbox' and not(@checked)]" );
-    $this->assertEquals( 1, $list->length );
+    $list = $xpath->query("/form/fieldset/span/input[@name='cnt_id[4]' and @type='checkbox' and not(@checked)]");
+    $this->assertEquals(1, $list->length);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -208,10 +208,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index 2 has been checked.
-    $this->assertTrue( $values['cnt_id']['2'] );
+    $this->assertTrue($values['cnt_id']['2']);
 
     // Test checkbox with index 1 has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -226,10 +226,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index 0.1 has been checked.
-    $this->assertTrue( $values['cnt_id']['0.1'] );
+    $this->assertTrue($values['cnt_id']['0.1']);
 
     // Test checkbox with index 1 has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -244,10 +244,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index 2 has been checked.
-    $this->assertTrue( $values['cnt_id']['2'] );
+    $this->assertTrue($values['cnt_id']['2']);
 
     // Test checkbox with index 1 has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -262,10 +262,10 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values = $form->getValues();
 
     // Test checkbox with index 0.1 has been checked.
-    $this->assertTrue( $values['cnt_id']['0.1'] );
+    $this->assertTrue($values['cnt_id']['0.1']);
 
     // Test checkbox with index 1 has not been checked.
-    $this->assertFalse( $values['cnt_id']['1'] );
+    $this->assertFalse($values['cnt_id']['1']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -281,8 +281,8 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertArrayNotHasKey( 'cnt_id', $changed );
-    $this->assertArrayNotHasKey( '99', $values['cnt_id'] );
+    $this->assertArrayNotHasKey('cnt_id', $changed);
+    $this->assertArrayNotHasKey('99', $values['cnt_id']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -291,16 +291,16 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $countries[] = array('cnt_id' => '0', 'cnt_name' => '-');
-    $countries[] = array('cnt_id' => '1', 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
-    $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
-    $countries[] = array('cnt_id' => '0.1', 'cnt_name' => 'UA');
+    $countries[] = ['cnt_id' => '0', 'cnt_name' => '-'];
+    $countries[] = ['cnt_id' => '1', 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => '2', 'cnt_name' => 'BE'];
+    $countries[] = ['cnt_id' => '3', 'cnt_name' => 'LU'];
+    $countries[] = ['cnt_id' => '0.1', 'cnt_name' => 'UA'];
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 
@@ -314,15 +314,15 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE');
-    $countries[] = array('cnt_id' => 2, 'cnt_name' => 'LU');
-    $countries[] = array('cnt_id' => 0.1, 'cnt_name' => 'UA');
+    $countries[] = ['cnt_id' => 0, 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => 1, 'cnt_name' => 'BE'];
+    $countries[] = ['cnt_id' => 2, 'cnt_name' => 'LU'];
+    $countries[] = ['cnt_id' => 0.1, 'cnt_name' => 'UA'];
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 
@@ -335,13 +335,13 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm3()
   {
-    $countries[] = array('cnt_id' => '0', 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => '0.0', 'cnt_name' => 'BE');
+    $countries[] = ['cnt_id' => '0', 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => '0.0', 'cnt_name' => 'BE'];
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 
@@ -356,12 +356,12 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
   {
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'checkboxes', 'cnt_id' );
+    $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
 
-    $countries[] = array('cnt_id' => 0, 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => 1, 'cnt_name' => 'BE');
+    $countries[] = ['cnt_id' => 0, 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => 1, 'cnt_name' => 'BE'];
 
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 

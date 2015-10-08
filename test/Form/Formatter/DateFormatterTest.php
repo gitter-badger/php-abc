@@ -10,9 +10,9 @@ class DateFormatterTest extends PHPUnit_Framework_TestCase
   {
     $text      = '1966-11-31';
     $formatter = new DateFormatter('d-m-Y');
-    $value     = $formatter->format( $text );
+    $value     = $formatter->format($text);
 
-    $this->assertEquals( $text, $value );
+    $this->assertEquals($text, $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -20,18 +20,18 @@ class DateFormatterTest extends PHPUnit_Framework_TestCase
   {
     $text      = 'This not a date.';
     $formatter = new DateFormatter('d-m-Y');
-    $value     = $formatter->format( $text );
+    $value     = $formatter->format($text);
 
-    $this->assertEquals( $text, $value );
+    $this->assertEquals($text, $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   public function testValidDate()
   {
     $formatter = new DateFormatter('d-m-Y');
-    $value     = $formatter->format( '1966-04-10' );
+    $value     = $formatter->format('1966-04-10');
 
-    $this->assertEquals( '10-04-1966', $value );
+    $this->assertEquals('10-04-1966', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm1();
     $values = $form->getValues();
 
-    $this->assertEquals( '3', $values['cnt_id'] );
+    $this->assertEquals('3', $values['cnt_id']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm2();
     $values = $form->getValues();
 
-    $this->assertEquals( '3', $values['cnt_id'] );
+    $this->assertEquals('3', $values['cnt_id']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -45,9 +45,9 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
     $form   = $this->setupForm1();
     $values = $form->getValues();
 
-    $this->assertArrayHasKey( 'cnt_id', $values );
-    $this->assertNull( $values['cnt_id'] );
-    $this->assertEmpty( $form->getChangedControls() );
+    $this->assertArrayHasKey('cnt_id', $values);
+    $this->assertNull($values['cnt_id']);
+    $this->assertEmpty($form->getChangedControls());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -56,14 +56,14 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $countries[] = array('cnt_id' => '1', 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => '2', 'cnt_name' => 'BE');
-    $countries[] = array('cnt_id' => '3', 'cnt_name' => 'LU');
+    $countries[] = ['cnt_id' => '1', 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => '2', 'cnt_name' => 'BE'];
+    $countries[] = ['cnt_id' => '3', 'cnt_name' => 'LU'];
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'radios', 'cnt_id' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('radios', 'cnt_id');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 
@@ -77,15 +77,15 @@ class RadiosControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $countries[] = array('cnt_id' => 1, 'cnt_name' => 'NL');
-    $countries[] = array('cnt_id' => 2, 'cnt_name' => 'BE');
-    $countries[] = array('cnt_id' => 3, 'cnt_name' => 'LU');
+    $countries[] = ['cnt_id' => 1, 'cnt_name' => 'NL'];
+    $countries[] = ['cnt_id' => 2, 'cnt_name' => 'BE'];
+    $countries[] = ['cnt_id' => 3, 'cnt_name' => 'LU'];
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'radios', 'cnt_id' );
-    $control->setValue( '1' );
-    $control->setOptions( $countries, 'cnt_id', 'cnt_name' );
+    $control  = $fieldset->createFormControl('radios', 'cnt_id');
+    $control->setValue('1');
+    $control->setOptions($countries, 'cnt_id', 'cnt_name');
 
     $form->loadSubmittedValues();
 

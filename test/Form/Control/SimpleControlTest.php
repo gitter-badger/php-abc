@@ -17,12 +17,12 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $name          = 0;
     $_POST['name'] = $name;
 
-    $form    = $this->setupForm1( null );
+    $form    = $this->setupForm1(null);
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertEquals( $name, $values['name'] );
-    $this->assertNotEmpty( $changed['name'] );
+    $this->assertEquals($name, $values['name']);
+    $this->assertNotEmpty($changed['name']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,12 +34,12 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $name          = '0.0';
     $_POST['name'] = $name;
 
-    $form    = $this->setupForm1( '' );
+    $form    = $this->setupForm1('');
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertEquals( $name, $values['name'] );
-    $this->assertNotEmpty( $changed['name'] );
+    $this->assertEquals($name, $values['name']);
+    $this->assertNotEmpty($changed['name']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -48,18 +48,18 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
-    $control->setValue( '1' );
+    $control = $fieldset->createFormControl($this->getInputType(), 'name');
+    $control->setValue('1');
 
-    $control->setPrefix( 'Hello' );
-    $control->setPostfix( 'World' );
+    $control->setPrefix('Hello');
+    $control->setPostfix('World');
     $html = $form->Generate();
 
-    $pos = strpos( $html, 'Hello<input' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, 'Hello<input');
+    $this->assertNotEquals(false, $pos);
 
-    $pos = strpos( $html, '/>World' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, '/>World');
+    $this->assertNotEquals(false, $pos);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -71,12 +71,12 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $name          = 'Set Based IT Consultancy';
     $_POST['name'] = $name;
 
-    $form    = $this->setupForm1( null );
+    $form    = $this->setupForm1(null);
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertEquals( $name, $values['name'] );
-    $this->assertNotEmpty( $changed['name'] );
+    $this->assertEquals($name, $values['name']);
+    $this->assertNotEmpty($changed['name']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -88,12 +88,12 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
     $name          = 'Set Based IT Consultancy';
     $_POST['name'] = '';
 
-    $form    = $this->setupForm1( $name );
+    $form    = $this->setupForm1($name);
     $values  = $form->getValues();
     $changed = $form->getChangedControls();
 
-    $this->assertEmpty( $values['name'] );
-    $this->assertNotEmpty( $changed['name'] );
+    $this->assertEmpty($values['name']);
+    $this->assertNotEmpty($changed['name']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -107,13 +107,13 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
    *
    * @return Form
    */
-  private function setupForm1( $theValue )
+  private function setupForm1($theValue)
   {
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( $this->getInputType(), 'name' );
-    if (isset($theValue)) $control->setValue( $theValue );
+    $control = $fieldset->createFormControl($this->getInputType(), 'name');
+    if (isset($theValue)) $control->setValue($theValue);
 
     $form->loadSubmittedValues();
 

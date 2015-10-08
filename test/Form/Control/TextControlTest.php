@@ -1,7 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
 use SetBased\Abc\Form\Cleaner\DateCleaner;
+use SetBased\Abc\Form\Form;
 use SetBased\Abc\Form\Formatter\DateFormatter;
 
 class TextControlTest extends SimpleControlTest
@@ -17,10 +17,10 @@ class TextControlTest extends SimpleControlTest
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'text', 'birthday' );
-    $control->setValue( '1966-04-10' );
-    $control->setCleaner( new DateCleaner('d-m-Y', '-', '/-. ') );
-    $control->setFormatter( new DateFormatter('d-m-Y') );
+    $control  = $fieldset->createFormControl('text', 'birthday');
+    $control->setValue('1966-04-10');
+    $control->setCleaner(new DateCleaner('d-m-Y', '-', '/-. '));
+    $control->setFormatter(new DateFormatter('d-m-Y'));
 
     $form->loadSubmittedValues();
 
@@ -28,10 +28,10 @@ class TextControlTest extends SimpleControlTest
     $changed = $form->getChangedControls();
 
     // After formatting and clean the date must be in ISO 8601 format.
-    $this->assertEquals( '1966-04-10', $values['birthday'] );
+    $this->assertEquals('1966-04-10', $values['birthday']);
 
     // Effectively the date is not changed.
-    $this->assertArrayNotHasKey( 'birthday', $changed );
+    $this->assertArrayNotHasKey('birthday', $changed);
 
   }
 
@@ -46,8 +46,8 @@ class TextControlTest extends SimpleControlTest
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'text', 'test' );
-    $control->setValue( 'Hello World!' );
+    $control  = $fieldset->createFormControl('text', 'test');
+    $control->setValue('Hello World!');
 
     $form->loadSubmittedValues();
 
@@ -55,10 +55,10 @@ class TextControlTest extends SimpleControlTest
     $changed = $form->getChangedControls();
 
     // After clean '  Hello    World!   ' must be equal 'Hello World!'.
-    $this->assertEquals( 'Hello World!', $values['test'] );
+    $this->assertEquals('Hello World!', $values['test']);
 
     // Effectively the value is not changed.
-    $this->assertArrayNotHasKey( 'test', $changed );
+    $this->assertArrayNotHasKey('test', $changed);
 
   }
 

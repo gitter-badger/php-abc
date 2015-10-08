@@ -36,16 +36,22 @@ class EmailTableColumn extends TableColumn
   /**
    * {@inheritdoc}
    */
-  public function getHtmlCell($theData)
+  public function getHtmlCell( $theData )
   {
     $value = $theData[$this->myFieldName];
 
     if ($value!==false && $value!==null && $value!=='')
     {
       // The value holds an email address.
-      $address = Html::txt2Html($value);
+      $address = Html::txt2Html( $value );
 
-      return '<td><a'.Html::generateAttribute('href', 'mailto:'.$address).'>'.Html::txt2Html($address).'</a></td>';
+      $html = '<td class="email"><a href="mailto:';
+      $html .= $address;
+      $html .= '">';
+      $html .= $address;
+      $html .= '</a></td>';
+
+      return $html;
     }
     else
     {

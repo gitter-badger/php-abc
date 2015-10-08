@@ -11,11 +11,11 @@ class DateTableColumnTest extends PHPUnit_Framework_TestCase
    */
   public function testEmptyDate1()
   {
-    $column = new DateTableColumn( 'header', 'date' );
+    $column = new DateTableColumn('header', 'date');
     $row    = ['date' => ''];
-    $ret    = $column->getHtmlCell( $row );
+    $ret    = $column->getHtmlCell($row);
 
-    $this->assertEquals( '<td class="date"></td>', $ret );
+    $this->assertEquals('<td class="date"></td>', $ret);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -24,11 +24,11 @@ class DateTableColumnTest extends PHPUnit_Framework_TestCase
    */
   public function testInvalidDate1()
   {
-    $column = new DateTableColumn( 'header', 'date' );
+    $column = new DateTableColumn('header', 'date');
     $row    = ['date' => 'not a date'];
-    $ret    = $column->getHtmlCell( $row );
+    $ret    = $column->getHtmlCell($row);
 
-    $this->assertEquals( '<td>not a date</td>', $ret );
+    $this->assertEquals('<td>not a date</td>', $ret);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -37,11 +37,11 @@ class DateTableColumnTest extends PHPUnit_Framework_TestCase
    */
   public function testOpenEndDate1()
   {
-    $column = new DateTableColumn( 'header', 'date' );
+    $column = new DateTableColumn('header', 'date');
     $row    = ['date' => '9999-12-31'];
-    $ret    = $column->getHtmlCell( $row );
+    $ret    = $column->getHtmlCell($row);
 
-    $this->assertEquals( '<td class="date"></td>', $ret );
+    $this->assertEquals('<td class="date"></td>', $ret);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -52,11 +52,11 @@ class DateTableColumnTest extends PHPUnit_Framework_TestCase
   {
     DateTableColumn::$ourOpenDate = '8888-88-88';
 
-    $column = new DateTableColumn( 'header', 'date' );
+    $column = new DateTableColumn('header', 'date');
     $row    = ['date' => '8888-88-88'];
-    $ret    = $column->getHtmlCell( $row );
+    $ret    = $column->getHtmlCell($row);
 
-    $this->assertEquals( '<td class="date"></td>', $ret );
+    $this->assertEquals('<td class="date"></td>', $ret);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -65,11 +65,11 @@ class DateTableColumnTest extends PHPUnit_Framework_TestCase
    */
   public function testValidDate1()
   {
-    $column = new DateTableColumn( 'header', 'date', 'l jS \of F Y' );
+    $column = new DateTableColumn('header', 'date', 'l jS \of F Y');
     $row    = ['date' => '2004-07-13'];  // PHP 5.0.0 release date.
-    $ret    = $column->getHtmlCell( $row );
+    $ret    = $column->getHtmlCell($row);
 
-    $this->assertEquals( '<td class="date" data-value="2004-07-13">Tuesday 13th of July 2004</td>', $ret );
+    $this->assertEquals('<td class="date" data-value="2004-07-13">Tuesday 13th of July 2004</td>', $ret);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

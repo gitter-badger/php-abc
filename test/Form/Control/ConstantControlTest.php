@@ -15,10 +15,10 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     // Assert the value of "name" is still "1".
-    $this->assertEquals( '1', $values['name'] );
+    $this->assertEquals('1', $values['name']);
 
     // Assert "name" has not be recoded as a changed value.
-    $this->assertArrayNotHasKey( 'name', $changed );
+    $this->assertArrayNotHasKey('name', $changed);
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -27,8 +27,8 @@ class ConstantControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( 'constant', 'name' );
-    $control->setValue( '1' );
+    $control = $fieldset->createFormControl('constant', 'name');
+    $control->setValue('1');
 
     $form->loadSubmittedValues();
 

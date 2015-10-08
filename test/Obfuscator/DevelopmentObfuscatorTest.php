@@ -8,7 +8,7 @@ class DevelopmentObfuscatorTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function setup()
   {
-    mt_srand( crc32( microtime() ) );
+    mt_srand(crc32(microtime()));
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -17,14 +17,14 @@ class DevelopmentObfuscatorTest extends PHPUnit_Framework_TestCase
    */
   public function testObfuscate1()
   {
-    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator( 'abc' );
+    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator('abc');
 
     $values = ['', null, false]; //, true, array('hello'=> 'world') );
     foreach ($values as $value)
     {
-      $code = $obfuscator->encode( $value );
+      $code = $obfuscator->encode($value);
 
-      $this->assertNull( $code );
+      $this->assertNull($code);
     }
   }
 
@@ -34,15 +34,15 @@ class DevelopmentObfuscatorTest extends PHPUnit_Framework_TestCase
    */
   public function testObfuscate2()
   {
-    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator( 'abc' );
+    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator('abc');
 
     $values = [0, '0'];
     foreach ($values as $value)
     {
-      $code = $obfuscator->encode( $value );
-      $tmp  = $obfuscator->decode( $code );
+      $code = $obfuscator->encode($value);
+      $tmp  = $obfuscator->decode($code);
 
-      $this->assertEquals( $tmp, 0 );
+      $this->assertEquals($tmp, 0);
     }
   }
 
@@ -52,22 +52,22 @@ class DevelopmentObfuscatorTest extends PHPUnit_Framework_TestCase
    */
   public function testObfuscateDeObfuscate1()
   {
-    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator( 'abc' );
+    $obfuscator = DevelopmentObfuscatorFactory::getObfuscator('abc');
 
     for ($value = 1; $value<100000; ++$value)
     {
-      $code = $obfuscator->encode( $value );
-      $tmp  = $obfuscator->decode( $code );
+      $code = $obfuscator->encode($value);
+      $tmp  = $obfuscator->decode($code);
 
-      $this->assertEquals( $value, $tmp );
+      $this->assertEquals($value, $tmp);
     }
 
-    for ($value = 100000; $value<=2147483647; $value += mt_rand( 1, 10000000 ))
+    for ($value = 100000; $value<=2147483647; $value += mt_rand(1, 10000000))
     {
-      $code = $obfuscator->encode( $value );
-      $tmp  = $obfuscator->decode( $code );
+      $code = $obfuscator->encode($value);
+      $tmp  = $obfuscator->decode($code);
 
-      $this->assertEquals( $value, $tmp );
+      $this->assertEquals($value, $tmp);
     }
   }
 
@@ -79,10 +79,10 @@ class DevelopmentObfuscatorTest extends PHPUnit_Framework_TestCase
    */
   public function testObfuscateDeObfuscate2()
   {
-    $id = mt_rand( 0, 4294967295 );
+    $id = mt_rand(0, 4294967295);
 
-    $code = DevelopmentObfuscatorFactory::encode( $id, 'abc' );
-    DevelopmentObfuscatorFactory::decode( $code, 'cba' );
+    $code = DevelopmentObfuscatorFactory::encode($id, 'abc');
+    DevelopmentObfuscatorFactory::decode($code, 'cba');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -15,10 +15,10 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
     $changed = $form->getChangedControls();
 
     // Assert the value of "name" is still "1".
-    $this->assertEquals( '1', $values['name'] );
+    $this->assertEquals('1', $values['name']);
 
     // Assert "name" has not be recorded as a changed value.
-    $this->assertArrayNotHasKey( 'name', $changed );
+    $this->assertArrayNotHasKey('name', $changed);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -27,17 +27,17 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( 'invisible', 'name' );
+    $control = $fieldset->createFormControl('invisible', 'name');
 
-    $control->setPrefix( 'Hello' );
-    $control->setPostfix( 'World' );
+    $control->setPrefix('Hello');
+    $control->setPostfix('World');
     $html = $form->Generate();
 
-    $pos = strpos( $html, 'Hello<input' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, 'Hello<input');
+    $this->assertNotEquals(false, $pos);
 
-    $pos = strpos( $html, '/>World' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, '/>World');
+    $this->assertNotEquals(false, $pos);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -46,8 +46,8 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( 'invisible', 'name' );
-    $control->setValue( '1' );
+    $control = $fieldset->createFormControl('invisible', 'name');
+    $control->setValue('1');
 
     $form->loadSubmittedValues();
 

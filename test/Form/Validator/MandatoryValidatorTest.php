@@ -12,8 +12,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    */
   public function testInvalidEmpty()
   {
-    $types  = array('text', 'password', 'hidden', 'textarea', 'checkbox');
-    $values = array(null, false, '');
+    $types  = ['text', 'password', 'hidden', 'textarea', 'checkbox'];
+    $values = [null, false, ''];
 
     foreach ($types as $type)
     {
@@ -21,12 +21,23 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
       {
 
         $_POST['input'] = $value;
-        $form           = $this->setupForm1( $type );
+        $form           = $this->setupForm1($type);
 
-        $this->assertFalse( $form->validate(),
-                            sprintf( "type: '%s', value: '%s'.", $type, var_export( $value, true ) ) );
+        $this->assertFalse($form->validate(),
+                           sprintf("type: '%s', value: '%s'.", $type, var_export($value, true)));
       }
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /** A mandatory unchecked checked box is invalid.
+   */
+  public function testInvalidUncheckedCheckbox()
+  {
+    $_POST = [];
+    $form  = $this->setupForm2();
+
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -35,8 +46,8 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    */
   public function testInvalidWhitespace()
   {
-    $types   = array('text', 'password', 'textarea');
-    $values = array(' ', '  ', " \n  ");
+    $types  = ['text', 'password', 'textarea'];
+    $values = [' ', '  ', " \n  "];
 
     foreach ($types as $type)
     {
@@ -44,10 +55,10 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
       {
 
         $_POST['input'] = $value;
-        $form           = $this->setupForm1( $type );
+        $form           = $this->setupForm1($type);
 
-        $this->assertFalse( $form->validate(),
-                            sprintf( "type: '%s', value: '%s'.", $type, var_export( $value, true ) ) );
+        $this->assertFalse($form->validate(),
+                           sprintf("type: '%s', value: '%s'.", $type, var_export($value, true)));
       }
     }
   }
@@ -61,24 +72,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
     $_POST['box'] = 'on';
     $form         = $this->setupForm2();
 
-    $this->assertTrue( $form->validate() );
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * A mandatory non-empty text, password, hidden, or textarea form control is valid.
-   */
-  public function testValidNoneEmptyText()
-  {
-    $types = array('text', 'password', 'hidden', 'textarea');
-
-    foreach ($types as $type)
-    {
-      $_POST['input'] = 'Set Based IT Consultancy';
-      $form           = $this->setupForm1( $type );
-
-      $this->assertTrue( $form->validate(), sprintf( "type: '%s'.", $type ) );
-    }
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -88,14 +82,20 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   // @todo test with checkboxes
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A mandatory unchecked checked box is invalid.
+  /**
+   * A mandatory non-empty text, password, hidden, or textarea form control is valid.
    */
-  public function testInvalidUncheckedCheckbox()
+  public function testValidNoneEmptyText()
   {
-    $_POST = array();
-    $form  = $this->setupForm2();
+    $types = ['text', 'password', 'hidden', 'textarea'];
 
-    $this->assertFalse( $form->validate() );
+    foreach ($types as $type)
+    {
+      $_POST['input'] = 'Set Based IT Consultancy';
+      $form           = $this->setupForm1($type);
+
+      $this->assertTrue($form->validate(), sprintf("type: '%s'.", $type));
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -106,14 +106,14 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    *
    * @return Form
    */
-  private function setupForm1( $theType )
+  private function setupForm1($theType)
   {
     $form = new Form();
 
-    $fieldset = $form->createFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet('fieldset');
 
-    $control = $fieldset->createFormControl( $theType, 'input' );
-    $control->addValidator( new MandatoryValidator() );
+    $control = $fieldset->createFormControl($theType, 'input');
+    $control->addValidator(new MandatoryValidator());
 
     $form->loadSubmittedValues();
 
@@ -128,10 +128,10 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
   {
     $form = new Form();
 
-    $fieldset = $form->createFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet('fieldset');
 
-    $control = $fieldset->createFormControl( 'checkbox', 'box' );
-    $control->addValidator( new MandatoryValidator() );
+    $control = $fieldset->createFormControl('checkbox', 'box');
+    $control->addValidator(new MandatoryValidator());
 
     $form->loadSubmittedValues();
 

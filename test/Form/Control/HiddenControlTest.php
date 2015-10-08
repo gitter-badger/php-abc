@@ -3,8 +3,8 @@
 require_once(__DIR__.'/SimpleControlTest.php');
 
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
 use SetBased\Abc\Form\Cleaner\PruneWhitespaceCleaner;
+use SetBased\Abc\Form\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 class HiddenControlTest extends SimpleControlTest
@@ -19,15 +19,15 @@ class HiddenControlTest extends SimpleControlTest
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'hidden', 'test' );
-    $control->setValue( 'Old value' );
+    $control  = $fieldset->createFormControl('hidden', 'test');
+    $control->setValue('Old value');
 
     $form->loadSubmittedValues();
 
     $changed = $form->getChangedControls();
 
     // Value is change.
-    $this->assertNotEmpty( $changed['test'] );
+    $this->assertNotEmpty($changed['test']);
 
   }
 
@@ -41,11 +41,11 @@ class HiddenControlTest extends SimpleControlTest
 
     $form     = new Form();
     $fieldset = $form->createFieldSet();
-    $control  = $fieldset->createFormControl( 'hidden', 'test' );
-    $control->setValue( 'Hello World!' );
+    $control  = $fieldset->createFormControl('hidden', 'test');
+    $control->setValue('Hello World!');
 
     // Set cleaner for hidden field (default it off).
-    $control->setCleaner( PruneWhitespaceCleaner::get() );
+    $control->setCleaner(PruneWhitespaceCleaner::get());
 
     $form->loadSubmittedValues();
 
@@ -53,10 +53,10 @@ class HiddenControlTest extends SimpleControlTest
     $changed = $form->getChangedControls();
 
     // After clean '  Hello    World!   ' must be equal 'Hello World!'.
-    $this->assertEquals( 'Hello World!', $values['test'] );
+    $this->assertEquals('Hello World!', $values['test']);
 
     // Value not change.
-    $this->assertArrayNotHasKey( 'test', $changed );
+    $this->assertArrayNotHasKey('test', $changed);
 
   }
 

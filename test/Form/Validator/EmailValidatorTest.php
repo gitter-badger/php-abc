@@ -15,7 +15,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = '"much.more unusual"@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = '"very.unusual.@.unusual.com"@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = '!#$%&\'*+-/=?^_`{}|~@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@localhost';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@info@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@setbased.nl@info';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@xsetbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -97,11 +97,11 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
    */
   public function testInvalidEmailWithToLongLocalPart()
   {
-    $local          = str_repeat( 'x', 65 );
+    $local          = str_repeat('x', 65);
     $_POST['email'] = "$local@setbased.nl";
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info.setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertFalse( $form->validate() );
+    $this->assertFalse($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'p.r.water@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'disposable.style.email.with+symbol@setbased.nl';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = '';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = false;
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = null;
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
     $_POST['email'] = 'info@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com';
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -207,11 +207,11 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
    */
   public function testValidEmailWithLongLocalPart()
   {
-    $local          = str_repeat( 'x', 64 );
+    $local          = str_repeat('x', 64);
     $_POST['email'] = "$local@setbased.nl";
     $form           = $this->setupForm1();
 
-    $this->assertTrue( $form->validate() );
+    $this->assertTrue($form->validate());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -222,10 +222,10 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   {
     $form = new Form();
 
-    $fieldset = $form->createFieldSet( 'fieldset' );
+    $fieldset = $form->createFieldSet('fieldset');
 
-    $control = $fieldset->createFormControl( 'text', 'email' );
-    $control->addValidator( new EmailValidator() );
+    $control = $fieldset->createFormControl('text', 'email');
+    $control->addValidator(new EmailValidator());
 
     $form->loadSubmittedValues();
 

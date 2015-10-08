@@ -55,20 +55,26 @@ class MultiEmailTableColumn extends TableColumn
   /**
    * {@inheritdoc}
    */
-  public function getHtmlCell($theData)
+  public function getHtmlCell( $theData )
   {
     $value = $theData[$this->myFieldName];
 
     if ($value!==false && $value!==null && $value!=='')
     {
-      // Vales has 1 or more mail addresses.
-      $addresses = explode($this->myDataSeparator, $value);
+      // Value has 1 or more mail addresses.
+      $addresses = explode( $this->myDataSeparator, $value );
 
-      $html = '<td>';
+      $html = '<td class="email">';
       foreach ($addresses as $i => $address)
       {
         if ($i) $html .= $this->myHtmlSeparator;
-        $html .= '<a'.Html::generateAttribute('href', 'mailto:'.$address).'>'.Html::txt2Html($address).'</a>';
+        $address = Html::txt2Html( $address );
+
+        $html .= '<a href="mailto:';
+        $html .= $address;
+        $html .= '">';
+        $html .= $address;
+        $html .= '</a>';
       }
       $html .= '</td>';
 

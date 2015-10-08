@@ -10,9 +10,9 @@ class TrimWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
   {
     $raw     = "  Hello  World!   ";
     $cleaner = TrimWhitespaceCleaner::get();
-    $value   = $cleaner->clean( $raw );
+    $value   = $cleaner->clean($raw);
 
-    $this->assertEquals( 'Hello  World!', $value );
+    $this->assertEquals('Hello  World!', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

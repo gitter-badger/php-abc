@@ -10,9 +10,9 @@ class PruneWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
   {
     $raw     = "  Hello  \n\n  World!   ";
     $cleaner = PruneWhitespaceCleaner::get();
-    $value   = $cleaner->clean( $raw );
+    $value   = $cleaner->clean($raw);
 
-    $this->assertEquals( 'Hello World!', $value );
+    $this->assertEquals('Hello World!', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

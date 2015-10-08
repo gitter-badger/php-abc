@@ -11,17 +11,17 @@ class DivControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
-    $control = $fieldset->createFormControl( 'div', 'name' );
+    $control = $fieldset->createFormControl('div', 'name');
 
-    $control->setPrefix( 'Hello' );
-    $control->setPostfix( 'World' );
+    $control->setPrefix('Hello');
+    $control->setPostfix('World');
     $html = $form->Generate();
 
-    $pos = strpos( $html, 'Hello<div>' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, 'Hello<div>');
+    $this->assertNotEquals(false, $pos);
 
-    $pos = strpos( $html, '</div>World' );
-    $this->assertNotEquals( false, $pos );
+    $pos = strpos($html, '</div>World');
+    $this->assertNotEquals(false, $pos);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

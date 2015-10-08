@@ -10,9 +10,9 @@ class RemoveWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
   {
     $raw     = "  Hello  \n\n  World!   ";
     $cleaner = RemoveWhitespaceCleaner::get();
-    $value   = $cleaner->clean( $raw );
+    $value   = $cleaner->clean($raw);
 
-    $this->assertEquals( 'HelloWorld!', $value );
+    $this->assertEquals('HelloWorld!', $value);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
