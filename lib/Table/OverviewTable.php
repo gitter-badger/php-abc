@@ -223,7 +223,7 @@ class OverviewTable
    *
    * @return string
    */
-  protected function getHtmlBody(&$theRows)
+  protected function getHtmlBody($theRows)
   {
     $ret = '';
     $i   = 0;
