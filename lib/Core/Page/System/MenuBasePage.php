@@ -7,8 +7,8 @@ use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Page\CorePage;
+use SetBased\Abc\Form\Validator\IntegerValidator;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\Form\Validator\IntegerValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**

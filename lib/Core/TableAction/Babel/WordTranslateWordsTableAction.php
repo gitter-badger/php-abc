@@ -51,7 +51,7 @@ class WordTranslateWordsTableAction implements TableAction
     $ret .= Html::generateAttribute('href', $this->myUrl);
     $ret .= '<img';
     $ret .= Html::generateAttribute('title', $this->myTitle);
-    $ret .= Html::generateAttribute('src=', ICON_BABEL_FISH );
+    $ret .= Html::generateAttribute('src=', ICON_BABEL_FISH);
     $ret .= ' width="16" height="16" alt="translate"/></a>';
 
     return $ret;

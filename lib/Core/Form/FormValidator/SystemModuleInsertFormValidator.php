@@ -2,8 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Core\Form\FormValidator;
 
-use SetBased\Html\Form;
-use SetBased\Html\Form\FormValidator;
+use SetBased\Abc\Form\FormValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**

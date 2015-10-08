@@ -45,12 +45,12 @@ class PageInsertPage extends PageBasePage
     }
 
     $this->myTargetPagId = Abc::$DL->systemPageInsertDetails($wrd_id,
-                                                          $values['ptb_id'],
-                                                          $values['pag_id_org'],
-                                                          $values['mnu_id'],
-                                                          $values['pag_class'],
-                                                          $values['pag_label'],
-                                                          $values['pag_weight']);
+                                                             $values['ptb_id'],
+                                                             $values['pag_id_org'],
+                                                             $values['mnu_id'],
+                                                             $values['pag_class'],
+                                                             $values['pag_label'],
+                                                             $values['pag_weight']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

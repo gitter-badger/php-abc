@@ -96,7 +96,7 @@ class Html
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Generates a HTML tag.
+   * Generates HTML code for an element.
    *
    * Note: tags for void elements such as '<br/>' are not supported.
    *
@@ -109,16 +109,9 @@ class Html
    *
    * @return string
    */
-  public static function generateTag($theTagName, $theAttributes = [], $theInnerText = '', $theIsHtmlFag = false)
+  public static function generateElement($theTagName, $theAttributes = [], $theInnerText = '', $theIsHtmlFag = false)
   {
-    $html = '<';
-    $html .= $theTagName;
-    foreach ($theAttributes as $name => $value)
-    {
-      // Ignore attributes with leading underscore.
-      if (strpos($name, '_')!==0) $html .= self::generateAttribute($name, $value);
-    }
-    $html .= '>';
+    $html = self::generateTag($theTagName, $theAttributes);
     $html .= ($theIsHtmlFag) ? $theInnerText : self::txt2Html($theInnerText);
     $html .= '</';
     $html .= $theTagName;
@@ -129,7 +122,31 @@ class Html
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Generates a HTML tag for a void element.
+   * Generates HTML code for a start tag of an element.
+   *
+   * @param string $theTagName    The name of the tag, e.g. a, form.
+   * @param array  $theAttributes The attributes of the tag. Special characters in the attributes will be replaced with
+   *                              HTML entities.
+   *
+   * @return string
+   */
+  public static function generateTag($theTagName, $theAttributes = [])
+  {
+    $html = '<';
+    $html .= $theTagName;
+    foreach ($theAttributes as $name => $value)
+    {
+      // Ignore attributes with leading underscore.
+      if (strpos($name, '_')!==0) $html .= self::generateAttribute($name, $value);
+    }
+    $html .= '>';
+
+    return $html;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Generates HTML code for a void element.
    *
    * Void elements are: area, base, br, col, embed, hr, img, input, keygen, link, menuitem, meta, param, source, track,
    * wbr. See <http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements>
@@ -140,7 +157,7 @@ class Html
    *
    * @return string
    */
-  public static function generateVoidTag($theTagName, $theAttributes = [])
+  public static function generateVoidElement($theTagName, $theAttributes = [])
   {
     $html = '<';
     $html .= $theTagName;

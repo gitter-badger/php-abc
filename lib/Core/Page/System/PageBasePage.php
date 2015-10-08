@@ -17,18 +17,18 @@ abstract class PageBasePage extends CorePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * The ID of the page created or modified
-   *
-   * @var int .
-   */
-  protected $myTargetPagId;
-
-  /**
    * The form shown on this page.
    *
    * @var CoreForm
    */
   protected $myForm;
+
+  /**
+   * The ID of the page created or modified
+   *
+   * @var int .
+   */
+  protected $myTargetPagId;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

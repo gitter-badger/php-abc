@@ -4,10 +4,10 @@ namespace SetBased\Abc\Core\Form\SlatControlFactory;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Html\Form\Control\SlatControl;
-use SetBased\Html\Form\Control\SlatControlFactory;
-use SetBased\Html\Form\SlatJoint\TableColumnSlatJoint;
-use SetBased\Html\Form\SlatJoint\TextSlatJoint;
+use SetBased\Abc\Form\Control\SlatControl;
+use SetBased\Abc\Form\Control\SlatControlFactory;
+use SetBased\Abc\Form\SlatJoint\TableColumnSlatJoint;
+use SetBased\Abc\Form\SlatJoint\TextSlatJoint;
 use SetBased\Html\TableColumn\NumericTableColumn;
 use SetBased\Html\TableColumn\TextTableColumn;
 
@@ -21,7 +21,7 @@ class BabelWordTranslateSlatControlFactory extends SlatControlFactory
   /**
    * Object constructor.
    *
-   * @param int $theLanId    The ID of the reference language.
+   * @param int $theLanId       The ID of the reference language.
    * @param int $theTargetLanId The ID of the target language.
    */
   public function __construct($theLanId, $theTargetLanId)
@@ -50,6 +50,7 @@ class BabelWordTranslateSlatControlFactory extends SlatControlFactory
    */
   public function createRow($theLouverControl, $theData)
   {
+    /** @var SlatControl $row */
     $row = $theLouverControl->addFormControl(new SlatControl($theData['wrd_id']));
     $row->setObfuscator($this->myWrdIdObfuscator);
 

@@ -32,7 +32,6 @@
     "php": ">=5.4.0",
     "ircmaxell/password-compat": "1.0.3",
     "setbased/php-stratum": "*",
-    "setbased/form": "0.9.*",
     "setbased/table": "0.9.*"
   },
   "autoload": {

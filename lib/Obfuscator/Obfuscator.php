@@ -10,16 +10,6 @@ interface Obfuscator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the obfuscated value of a database ID.
-   *
-   * @param int|null $theId The database ID.
-   *
-   * @return string|null The obfuscated value.
-   */
-  public function encode($theId);
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Returns the un-obfuscated ID a obfuscated database ID.
    *
    * @param string|null $theCode The obfuscated value.
@@ -27,6 +17,17 @@ interface Obfuscator
    * @return int|null The database ID.
    */
   public function decode($theCode);
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Returns the obfuscated value of a database ID.
+   *
+   * @param int|null $theId The database ID.
+   *
+   * @return string|null The obfuscated value.
+   */
+  public function encode($theId);
 
   //--------------------------------------------------------------------------------------------------------------------
 }

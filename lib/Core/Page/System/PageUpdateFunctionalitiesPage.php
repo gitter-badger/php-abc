@@ -11,8 +11,8 @@ use SetBased\Abc\Core\Form\SlatControlFactory\SystemPageUpdateFunctionalitiesSla
 use SetBased\Abc\Core\Page\CorePage;
 use SetBased\Abc\Core\Table\DetailTable;
 use SetBased\Abc\Core\TableRow\System\PageDetailsTableRow;
+use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\Form\Control\LouverControl;
 use SetBased\Html\TableRow\NumericTableRow;
 use SetBased\Html\TableRow\TextTableRow;
 
@@ -39,7 +39,7 @@ class PageUpdateFunctionalitiesPage extends CorePage
     parent::__construct();
 
     $this->myTargetPagId = self::getCgiVar('tar_pag', 'pag');
-    $this->myDetails  = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
+    $this->myDetails     = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

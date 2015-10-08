@@ -4,9 +4,15 @@ namespace SetBased\Abc\Core\Form\Control;
 
 use SetBased\Abc\Babel;
 use SetBased\Abc\Core\Form\Validator\MandatoryValidator;
+use SetBased\Abc\Form\Control\CheckboxesControl;
+use SetBased\Abc\Form\Control\ComplexControl;
+use SetBased\Abc\Form\Control\FieldSet;
+use SetBased\Abc\Form\Control\RadiosControl;
+use SetBased\Abc\Form\Control\SelectControl;
+use SetBased\Abc\Form\Control\SimpleControl;
+use SetBased\Abc\Form\Control\SpanControl;
+use SetBased\Abc\Form\Control\TextControl;
 use SetBased\Abc\Helper\Html;
-use SetBased\Html\Form\Control\FieldSet;
-use SetBased\Html\Form\Control\TextControl;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -63,18 +69,19 @@ class CoreFieldSet extends FieldSet
   )
   {
     $this->myButtonFormControl = new CoreButtonControl('');
-    $ret                       = $this->addFormControl($this->myButtonFormControl);
 
-    $submit = $ret->createFormControl('submit', $theSubmitName);
+    $submit = $this->myButtonFormControl->createFormControl('submit', $theSubmitName);
     $submit->setValue($theSubmitButtonText);
 
     if ($theResetButtonText)
     {
-      $reset = $ret->createFormControl('reset', $theResetName);
+      $reset = $this->myButtonFormControl->createFormControl('reset', $theResetName);
       $reset->setValue($theResetButtonText);
     }
 
-    return $ret;
+    $this->addFormControl($this->myButtonFormControl);
+
+    return $this->myButtonFormControl;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -86,7 +93,7 @@ class CoreFieldSet extends FieldSet
    * @param int    $theWrdId         The wrd_id of the legend of the form control.
    * @param bool   $theMandatoryFlag If set the form control is mandatory.
    *
-   * @return \SetBased\Html\Form\Control\CheckBoxesControl|\SetBased\Html\Form\Control\ComplexControl|\SetBased\Html\Form\Control\RadiosControl|\SetBased\Html\Form\Control\SelectControl|\SetBased\Html\Form\Control\SimpleControl|\SetBased\Html\Form\Control\SpanControl
+   * @return CheckBoxesControl|ComplexControl|RadiosControl|SelectControl|SimpleControl|SpanControl
    */
   public function createFormControl($theType, $theName, $theWrdId = null, $theMandatoryFlag = false)
   {
@@ -131,7 +138,7 @@ class CoreFieldSet extends FieldSet
   {
     $submit_name = $this->getSubmitName($theParentName);
 
-    $ret = $this->generateOpenTag();
+    $ret = $this->generateStartTag();
 
     $ret .= '<div class="input_table">';
     $ret .= '<table>';
@@ -193,7 +200,7 @@ class CoreFieldSet extends FieldSet
     $ret .= '</table>';
     $ret .= '</div>';
 
-    $ret .= $this->generateCloseTag();
+    $ret .= $this->generateEndTag();
 
     return $ret;
   }

@@ -6,7 +6,7 @@ namespace SetBased\Abc\Core\Form\Validator;
 /**
  * Validator for validating that a form control has been filled out.
  */
-class MandatoryValidator extends \SetBased\Html\Form\Validator\MandatoryValidator
+class MandatoryValidator extends \SetBased\Abc\Form\Validator\MandatoryValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**

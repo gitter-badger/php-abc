@@ -50,7 +50,7 @@ class WordUpdatePage extends WordBasePage
    */
   protected function databaseAction()
   {
-    $values = $this->myForm->getValues();
+    $values  = $this->myForm->getValues();
     $changes = $this->myForm->getChangedControls();
 
     // Return immediately when no form controls are changed.

@@ -8,8 +8,8 @@ use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\Control\CoreButtonControl;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\SlatControlFactory\CompanyModulesUpdateSlatControlFactory;
+use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\Form\Control\LouverControl;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -109,6 +109,15 @@ class ModuleUpdatePage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Echos the form shown on this page.
+   */
+  private function echoForm()
+  {
+    echo $this->myForm->generate();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    *  Handles the form submit.
    */
   private function handleForm()
@@ -127,15 +136,6 @@ class ModuleUpdatePage extends CompanyPage
         Abc::$DL->companyModuleDisable($this->myActCmpId, $mdl_id);
       }
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Echos the form shown on this page.
-   */
-  private function echoForm()
-  {
-    echo $this->myForm->generate();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

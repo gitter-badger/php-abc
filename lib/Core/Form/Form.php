@@ -2,15 +2,15 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Core\Form;
 
-use SetBased\Affirm\Affirm;
-use SetBased\Html\Form\Control\FieldSet;
 use SetBased\Abc\Abc;
+use SetBased\Abc\Form\Control\FieldSet;
+use SetBased\Affirm\Affirm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class for forms with CSRF protection.
  */
-class Form extends \SetBased\Html\Form
+class Form extends \SetBased\Abc\Form\Form
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**

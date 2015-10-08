@@ -322,7 +322,7 @@ abstract class Page
     // Echo links to external style sheets.
     foreach ($this->myCssSources as $css_source)
     {
-      echo Html::generateVoidTag('link', $css_source);
+      echo Html::generateVoidElement('link', $css_source);
     }
 
     // Echo the internal style sheet.

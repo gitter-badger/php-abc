@@ -40,15 +40,15 @@ class SpecificPageUpdatePage extends CompanyPage
     $this->myTargetPagId = self::getCgiVar('tar_pag', 'pag');
 
     $this->myTargetPageDetails = Abc::$DL->companySpecificPageGetDetails($this->myActCmpId,
-                                                                      $this->myTargetPagId,
-                                                                      $this->myLanId);
+                                                                         $this->myTargetPagId,
+                                                                         $this->myLanId);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the URL of this page.
    *
-   * @param int $theCmpId    The ID of the target company.
+   * @param int $theCmpId       The ID of the target company.
    * @param int $theTargetPagId The ID of the page.
    *
    * @return string The URL of this page.

@@ -30,7 +30,7 @@ class SpecificPageDeletePage extends Page
   /**
    * Returns the URL of this page.
    *
-   * @param int $theCmpId    The ID of the target company.
+   * @param int $theCmpId       The ID of the target company.
    * @param int $theTargetPagId The ID of the page the must be deleted.
    *
    * @return string

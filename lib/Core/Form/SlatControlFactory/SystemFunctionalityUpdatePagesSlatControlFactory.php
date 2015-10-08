@@ -3,10 +3,10 @@
 namespace SetBased\Abc\Core\Form\SlatControlFactory;
 
 use SetBased\Abc\Abc;
-use SetBased\Html\Form\Control\SlatControl;
-use SetBased\Html\Form\Control\SlatControlFactory;
-use SetBased\Html\Form\SlatJoint\CheckboxSlatJoint;
-use SetBased\Html\Form\SlatJoint\TableColumnSlatJoint;
+use SetBased\Abc\Form\Control\SlatControl;
+use SetBased\Abc\Form\Control\SlatControlFactory;
+use SetBased\Abc\Form\SlatJoint\CheckboxSlatJoint;
+use SetBased\Abc\Form\SlatJoint\TableColumnSlatJoint;
 use SetBased\Html\TableColumn\NumericTableColumn;
 use SetBased\Html\TableColumn\TextTableColumn;
 
@@ -43,6 +43,7 @@ class SystemFunctionalityUpdatePagesSlatControlFactory extends SlatControlFactor
    */
   public function createRow($theLouverControl, $theData)
   {
+    /** @var SlatControl $row */
     $row = $theLouverControl->addFormControl(new SlatControl($theData['pag_id']));
     $row->setObfuscator($this->myPagIdObfuscator);
 

@@ -2,8 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Core\TableColumn;
 
-use SetBased\Html\TableColumn\TableColumn;
 use SetBased\Abc\Helper\Html;
+use SetBased\Html\TableColumn\TableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**

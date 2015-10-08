@@ -56,7 +56,7 @@ class WordGroupDetailsPage extends BabelPage
   /**
    * Returns the relative URL of this page.
    *
-   * @param int $theWdgId    The ID of the word group.
+   * @param int $theWdgId       The ID of the word group.
    * @param int $theTargetLanId The ID of the target language.
    *
    * @return string

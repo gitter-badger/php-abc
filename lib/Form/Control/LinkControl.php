@@ -1,0 +1,87 @@
+<?php
+//----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\Abc\Form\Control;
+
+use SetBased\Abc\Helper\Html;
+
+/**
+ * A pseudo form control for generation hyperlink elements.
+ */
+class LinkControl extends Control
+{
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * @var string The inner HTML code of this hyperlink element.
+   */
+  protected $myInnerHtml;
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  public function generate($theParentName)
+  {
+    $ret = $this->myPrefix;
+    $ret .= Html::generateElement('a', $this->myAttributes, $this->myInnerHtml, true);
+    $ret .= $this->myPostfix;
+
+    return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns null;
+   */
+  public function getSubmittedValue()
+  {
+    return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the inner HTML of this hyperlink element.
+   *
+   * @param string $theHtmlSnippet The inner HTML. It is the developer's responsibility that it is valid HTML code.
+   */
+  public function setInnerHtml($theHtmlSnippet)
+  {
+    $this->myInnerHtml = $theHtmlSnippet;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Set the inner HTML of this hyperlink element.
+   *
+   * @param string $theText The inner text. Special characters will be converted to HTML entities.
+   */
+  public function setInnerText($theText)
+  {
+    $this->myInnerHtml = HTML::txt2Html($theText);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  protected function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs)
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns always true.
+   *
+   * @param array $theInvalidFormControls Not used.
+   *
+   * @return bool
+   */
+  protected function validateBase(&$theInvalidFormControls)
+  {
+    return true;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+}
+
+//----------------------------------------------------------------------------------------------------------------------

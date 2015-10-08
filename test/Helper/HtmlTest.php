@@ -7,11 +7,11 @@ class HtmlTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test generateTag.
+   * Test generateElement.
    */
   public function testGenerateTag1()
   {
-    $tag = Html::generateTag('a', ['href' => 'https://www.setbased.nl'], 'SetBased');
+    $tag = Html::generateElement('a', ['href' => 'https://www.setbased.nl'], 'SetBased');
     $this->assertEquals('<a href="https://www.setbased.nl">SetBased</a>', $tag);
   }
 
@@ -21,17 +21,17 @@ class HtmlTest extends PHPUnit_Framework_TestCase
    */
   public function testGenerateTag2()
   {
-    $tag = Html::generateTag('a', ['href' => 'https://www.setbased.nl', '_ignore' => 'ignored'], 'SetBased');
+    $tag = Html::generateElement('a', ['href' => 'https://www.setbased.nl', '_ignore' => 'ignored'], 'SetBased');
     $this->assertEquals('<a href="https://www.setbased.nl">SetBased</a>', $tag);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Test generateVoidTag.
+   * Test generateVoidElement.
    */
   public function testGenerateVoidTag1()
   {
-    $tag = Html::generateVoidTag('img', ['src' => '/images/logo.png', 'alt' => 'logo']);
+    $tag = Html::generateVoidElement('img', ['src' => '/images/logo.png', 'alt' => 'logo']);
     $this->assertEquals('<img src="/images/logo.png" alt="logo"/>', $tag);
   }
 
@@ -41,7 +41,7 @@ class HtmlTest extends PHPUnit_Framework_TestCase
    */
   public function testGenerateVoidTag2()
   {
-    $tag = Html::generateVoidTag('img', ['src' => '/images/logo.png', 'alt' => 'logo', '_ignore' => 'ignored']);
+    $tag = Html::generateVoidElement('img', ['src' => '/images/logo.png', 'alt' => 'logo', '_ignore' => 'ignored']);
     $this->assertEquals('<img src="/images/logo.png" alt="logo"/>', $tag);
   }
 

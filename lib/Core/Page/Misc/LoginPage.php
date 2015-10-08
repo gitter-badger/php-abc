@@ -6,11 +6,11 @@ use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\Form;
+use SetBased\Abc\Form\Control\ConstantControl;
+use SetBased\Abc\Form\Control\SpanControl;
 use SetBased\Abc\Helper\Http;
 use SetBased\Abc\Helper\Password;
 use SetBased\Abc\Page\Page;
-use SetBased\Html\Form\Control\ConstantControl;
-use SetBased\Html\Form\Control\SpanControl;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -165,6 +165,15 @@ class LoginPage extends Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Echos the form shown on this page.
+   */
+  private function echoForm()
+  {
+    echo $this->myForm->generate();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns true if login is successful. Otherwise returns false.
    *
    * @return bool
@@ -268,15 +277,6 @@ class LoginPage extends Page
       // The user has not logged on successfully.
       return false;
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Echos the form shown on this page.
-   */
-  private function echoForm()
-  {
-    echo $this->myForm->generate();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
