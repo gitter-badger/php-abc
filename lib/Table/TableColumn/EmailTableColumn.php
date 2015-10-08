@@ -45,7 +45,7 @@ class EmailTableColumn extends TableColumn
       // The value holds an email address.
       $address = Html::txt2Html($value);
 
-      return '<a'.Html::generateAttribute('href', 'mailto:'.$address).'>'.Html::txt2Html($address).'</a>';
+      return '<td><a'.Html::generateAttribute('href', 'mailto:'.$address).'>'.Html::txt2Html($address).'</a></td>';
     }
     else
     {
