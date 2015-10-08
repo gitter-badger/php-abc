@@ -5,14 +5,14 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\System\ModuleUpdateTableAction;
 use SetBased\Abc\Core\TableColumn\System\FunctionalityDetailsIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -83,7 +83,7 @@ class ModuleDetailsPage extends CorePage
    */
   private function showDetails()
   {
-    $table = new DetailTable();
+    $table = new CoreDetailTable();
 
     // Add table action for updating the module details.
     $table->addTableAction('default', new ModuleUpdateTableAction($this->myMdlId));
@@ -105,7 +105,7 @@ class ModuleDetailsPage extends CorePage
   {
     $functions = Abc::$DL->systemModuleGetFunctions($this->myMdlId, $this->myLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Show function ID.
     $table->addColumn(new NumericTableColumn('ID', 'fun_id'));

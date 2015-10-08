@@ -1,34 +1,31 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Abc\Core\TableRow\System;
+namespace SetBased\Abc\Table\TableRow;
 
-use SetBased\Abc\Core\Page\System\PageDetailsPage;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- *
+ * Table row in a detail table with an IPv4 address.
  */
-class PageDetailsTableRow
+class Ipv4TableRow
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a row with a class name of a page with link to the page details to a detail table.
+   * Adds a row with a IPv4 value to a detail table.
    *
-   * @param DetailTable $theTable  The (detail) table.
-   * @param string      $theHeader The row header text.
-   * @param array       $theData   The page details.
+   * @param DetailTable $theTable      The (detail) table.
+   * @param string      $theHeader     The row header text.
+   * @param string      $theIp4Address The IPv4 address.
    */
-  public static function addRow($theTable, $theHeader, $theData)
+  public static function addRow($theTable, $theHeader, $theIp4Address)
   {
     $row = '<tr><th>';
     $row .= Html::txt2Html($theHeader);
-    $row .= '</th><td class="text"><a';
-    $row .= Html::generateAttribute('href', PageDetailsPage::getUrl($theData['pag_id_org']));
-    $row .= '>';
-    $row .= $theData['pag_id_org'];
-    $row .= '</a></td></tr>';
+    $row .= '</th><td class="ipv4">';
+    $row .= Html::txt2Html($theIp4Address);
+    $row .= '</td></tr>';
 
     $theTable->addRow($row);
   }

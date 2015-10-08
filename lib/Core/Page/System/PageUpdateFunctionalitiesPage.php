@@ -9,12 +9,12 @@ use SetBased\Abc\Core\Form\Control\CoreButtonControl;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\SlatControlFactory\SystemPageUpdateFunctionalitiesSlatControlFactory;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Core\TableRow\System\PageDetailsTableRow;
 use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -165,7 +165,7 @@ class PageUpdateFunctionalitiesPage extends CorePage
   private function showPageDetails()
   {
     $details = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
-    $table   = new DetailTable();
+    $table   = new CoreDetailTable();
 
     // Add row with the ID of the page.
     NumericTableRow::addRow($table, 'ID', $details['pag_id'], '%d');

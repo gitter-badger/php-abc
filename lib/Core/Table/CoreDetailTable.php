@@ -3,12 +3,13 @@
 namespace SetBased\Abc\Core\Table;
 
 use SetBased\Abc\Core\TableAction\TableAction;
+use SetBased\Abc\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Extents \SetBased\Html\Table\DetailTable with table actions.
+ * Extends \SetBased\Abc\Table\DetailTable with table actions.
  */
-class DetailTable extends \SetBased\Html\Table\DetailTable
+class CoreDetailTable extends DetailTable
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**

@@ -4,12 +4,13 @@ namespace SetBased\Abc\Core\Table;
 
 use SetBased\Abc\Core\TableAction\RowCountTableAction;
 use SetBased\Abc\Core\TableAction\TableAction;
+use SetBased\Abc\Table\OverviewTable;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Extents \SetBased\Html\Table\OverviewTable with table actions.
+ * Extends \SetBased\Abc\Table\OverviewTable with table actions.
  */
-class OverviewTable extends \SetBased\Html\Table\OverviewTable
+class CoreOverviewTable extends OverviewTable
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**

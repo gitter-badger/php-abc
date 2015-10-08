@@ -4,17 +4,17 @@ namespace SetBased\Abc\Core\Page\Babel;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\DetailTable;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Babel\WordInsertTableAction;
 use SetBased\Abc\Core\TableAction\Babel\WordTranslateWordsTableAction;
 use SetBased\Abc\Core\TableColumn\Babel\WordDeleteIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Babel\WordTranslateIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Babel\WordUpdateIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -95,7 +95,7 @@ class WordGroupDetailsPage extends BabelPage
    */
   private function showWordGroupInfo()
   {
-    $table = new DetailTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreDetailTable($this->myCmpId, $this->myUsrId);
 
     // Add row for the ID of the word group.
     NumericTableRow::addRow($table, 'ID', $this->myDetails['wdg_id'], '%d');
@@ -121,7 +121,7 @@ class WordGroupDetailsPage extends BabelPage
     $ref_language = Abc::$DL->languageGetName($this->myRefLanId, $this->myRefLanId);
     $act_language = Abc::$DL->LanguageGetName($this->myActLanId, $this->myRefLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Add action for inserting a new word to the word group.
     $table->addTableAction('default', new WordInsertTableAction($this->myWdgId));

@@ -5,13 +5,13 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableColumn\System\PageDetailsIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -74,7 +74,7 @@ class TabDetailsPage extends CorePage
   private function showDetails()
   {
     $details = Abc::$DL->systemTabGetDetails($this->myTabId, $this->myLanId);
-    $table   = new DetailTable();
+    $table   = new CoreDetailTable();
 
     // Add row with the ID of the tab.
     NumericTableRow::addRow($table, 'ID', $details['ptb_id'], '%d');
@@ -96,7 +96,7 @@ class TabDetailsPage extends CorePage
   {
     $pages = Abc::$DL->systemTabGetMasterPages($this->myTabId, $this->myLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Show page ID.
     $table->addColumn(new NumericTableColumn('ID', 'pag_id'));

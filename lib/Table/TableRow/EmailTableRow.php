@@ -1,34 +1,39 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Abc\Core\TableRow\System;
+namespace SetBased\Abc\Table\TableRow;
 
-use SetBased\Abc\Core\Page\System\PageDetailsPage;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- *
+ * Table row in a detail table with aa email address.
  */
-class PageDetailsTableRow
+class EmailTableRow
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a row with a class name of a page with link to the page details to a detail table.
+   * Adds a row with a email address to a detail table.
    *
    * @param DetailTable $theTable  The (detail) table.
    * @param string      $theHeader The row header text.
-   * @param array       $theData   The page details.
+   * @param string      $theValue  The email address.
    */
-  public static function addRow($theTable, $theHeader, $theData)
+  public static function addRow($theTable, $theHeader, $theValue)
   {
     $row = '<tr><th>';
     $row .= Html::txt2Html($theHeader);
-    $row .= '</th><td class="text"><a';
-    $row .= Html::generateAttribute('href', PageDetailsPage::getUrl($theData['pag_id_org']));
-    $row .= '>';
-    $row .= $theData['pag_id_org'];
-    $row .= '</a></td></tr>';
+    $row .= '</th><td class="email">';
+    if ($theValue!==null && $theValue!==false && $theValue!=='')
+    {
+      $address = Html::txt2Html($theValue);
+      $row .= '<a href="mailto:';
+      $row .= $address;
+      $row .= '">';
+      $row .= $address;
+      $row .= '</a>';
+    }
+    $row .= '</td></tr>';
 
     $theTable->addRow($row);
   }

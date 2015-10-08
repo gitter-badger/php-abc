@@ -1,34 +1,35 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Abc\Core\TableRow\System;
+namespace SetBased\Abc\Table\TableRow;
 
-use SetBased\Abc\Core\Page\System\PageDetailsPage;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Table\DetailTable;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- *
+ * Table row in a detail table with a number.
  */
-class PageDetailsTableRow
+class NumericTableRow
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a row with a class name of a page with link to the page details to a detail table.
+   * Adds a row with a numeric value to a detail table.
    *
    * @param DetailTable $theTable  The (detail) table.
    * @param string      $theHeader The row header text.
-   * @param array       $theData   The page details.
+   * @param string      $theValue  The text.
+   * @param string      $theFormat The formatting string (see sprintf).
    */
-  public static function addRow($theTable, $theHeader, $theData)
+  public static function addRow($theTable, $theHeader, $theValue, $theFormat)
   {
     $row = '<tr><th>';
     $row .= Html::txt2Html($theHeader);
-    $row .= '</th><td class="text"><a';
-    $row .= Html::generateAttribute('href', PageDetailsPage::getUrl($theData['pag_id_org']));
-    $row .= '>';
-    $row .= $theData['pag_id_org'];
-    $row .= '</a></td></tr>';
+    $row .= '</th><td class="number">';
+    if ($theValue!==null && $theValue!==false && $theValue!=='')
+    {
+      $row .= Html::txt2Html(sprintf($theFormat, $theValue));
+    }
+    $row .= '</td></tr>';
 
     $theTable->addRow($row);
   }

@@ -4,10 +4,10 @@ namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Core\TableAction\Company\CompanyUpdateTableAction;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -67,7 +67,7 @@ class CompanyDetailsPage extends CompanyPage
    */
   private function showCompanyDetails()
   {
-    $table = new DetailTable();
+    $table = new CoreDetailTable();
 
     // Add table action for update the company details.
     $table->addTableAction('default', new CompanyUpdateTableAction($this->myActCmpId));

@@ -194,7 +194,7 @@ abstract class Control
   /**
    * Sets the value of an attribute of this form control.
    *
-   * The attribute is unset when $theValue is one of:
+   * The attribute is unset when the value is one of:
    * * null
    * * false
    * * ''.
@@ -209,7 +209,7 @@ abstract class Control
    * * checked Use method setValue() instead.
    *
    * @param string $theName  The name of the attribute.
-   * @param mixed  $theValue The value for the attribute.
+   * @param string $theValue The value for the attribute.
    */
   public function setAttribute($theName, $theValue)
   {

@@ -5,12 +5,12 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\System\TabInsertTableAction;
 use SetBased\Abc\Core\TableColumn\System\TabDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\System\TabUpdateIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -37,7 +37,7 @@ class TabOverviewPage extends CorePage
   {
     $tabs = Abc::$DL->systemTabGetAll($this->myLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Add table action for creating a new page tab.
     $table->addTableAction('default', new TabInsertTableAction());

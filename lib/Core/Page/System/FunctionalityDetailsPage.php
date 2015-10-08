@@ -5,15 +5,15 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\System\FunctionalityUpdatePagesTableAction;
 use SetBased\Abc\Core\TableColumn\Company\RoleDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\System\PageDetailsIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -86,7 +86,7 @@ class FunctionalityDetailsPage extends CorePage
    */
   private function showDetails()
   {
-    $table = new DetailTable();
+    $table = new CoreDetailTable();
 
     // Add row for the ID of the function.
     NumericTableRow::addRow($table, 'ID', $this->myDetails['fun_id'], '%d');
@@ -108,7 +108,7 @@ class FunctionalityDetailsPage extends CorePage
   {
     $pages = Abc::$DL->systemFunctionalityGetPages($this->myFunId, $this->myLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
     $table->addTableAction('default', new FunctionalityUpdatePagesTableAction($this->myFunId));
 
     // Show page ID.
@@ -138,7 +138,7 @@ class FunctionalityDetailsPage extends CorePage
   {
     $roles = Abc::$DL->systemFunctionalityGetRoles($this->myFunId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Show Company ID.
     $table->addColumn(new NumericTableColumn('ID', 'cmp_id'));

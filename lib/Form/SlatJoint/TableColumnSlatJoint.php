@@ -4,7 +4,7 @@ namespace SetBased\Abc\Form\SlatJoint;
 
 use SetBased\Abc\Form\Control\ButtonControl;
 use SetBased\Abc\Form\Control\TableColumnControl;
-use SetBased\Html\TableColumn\TableColumn;
+use SetBased\Abc\Table\TableColumn\TableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 class TableColumnSlatJoint extends SlatJoint

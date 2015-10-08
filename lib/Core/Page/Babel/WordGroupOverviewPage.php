@@ -4,12 +4,12 @@ namespace SetBased\Abc\Core\Page\Babel;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Babel\WordGroupInsertTableAction;
 use SetBased\Abc\Core\TableColumn\Babel\WordGroupDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Babel\WordGroupUpdateIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -52,7 +52,7 @@ class WordGroupOverviewPage extends BabelPage
   {
     $groups = Abc::$DL->wordGroupGetAll($this->myActLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Table action for inserting a new word group.
     $table->addTableAction('default', new WordGroupInsertTableAction());

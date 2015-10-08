@@ -5,12 +5,12 @@ namespace SetBased\Abc\Core\Page\Company;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Company\CompanyInsertTableAction;
 use SetBased\Abc\Core\TableColumn\Company\CompanyDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Company\CompanyUpdateIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -43,7 +43,7 @@ class CompanyOverviewPage extends CompanyPage
   {
     $companies = Abc::$DL->companyGetAll();
 
-    $table = new OverviewTable();
+    $table = new CoreOverviewTable();
 
     // Add table action for creating a new Company.
     $table->addTableAction('default', new CompanyInsertTableAction());

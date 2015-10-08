@@ -4,10 +4,10 @@ namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Company\ModuleUpdateTableAction;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -39,7 +39,7 @@ class ModuleOverviewPage extends CompanyPage
   {
     $modules = Abc::$DL->companyModuleGetAllEnabled($this->myActCmpId, $this->myLanId);
 
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     // Add table action for modifying the enabled modules of the Company.
     $table->addTableAction('default', new ModuleUpdateTableAction($this->myActCmpId));

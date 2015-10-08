@@ -144,7 +144,7 @@ abstract class SimpleControl extends Control
   /**
    * Sets the value of an attribute the label for this form control.
    *
-   * The attribute is unset when $theValue is one of:
+   * The attribute is unset when the value is one of:
    * * null
    * * false
    * * ''.

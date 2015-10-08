@@ -4,13 +4,13 @@ namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Company\SpecificPageInsertTableAction;
 use SetBased\Abc\Core\TableColumn\Company\SpecificPageDeleteIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Company\SpecificPageUpdateIconTableColumn;
 use SetBased\Abc\Core\TableColumn\System\PageDetailsIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -51,7 +51,7 @@ class SpecificPageOverviewPage extends CompanyPage
    */
   protected function echoTabContent()
   {
-    $table = new OverviewTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
     $table->addTableAction('default', new SpecificPageInsertTableAction($this->myActCmpId));
 

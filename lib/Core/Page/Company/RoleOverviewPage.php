@@ -4,12 +4,12 @@ namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\Company\RoleInsertTableAction;
 use SetBased\Abc\Core\TableColumn\Company\RoleDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\Company\RoleUpdateIconTableColumn;
-use SetBased\Html\TableColumn\NumericTableColumn;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\NumericTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -41,7 +41,7 @@ class RoleOverviewPage extends CompanyPage
   {
     $roles = Abc::$DL->companyRoleGetAll($this->myActCmpId);
 
-    $table = new OverviewTable();
+    $table = new CoreOverviewTable();
 
     // Add table action for creating a new Company.
     $table->addTableAction('default', new RoleInsertTableAction($this->myActCmpId));

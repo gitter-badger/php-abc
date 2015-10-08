@@ -5,14 +5,14 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
-use SetBased\Abc\Core\Table\OverviewTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\System\PageUpdateFunctionalitiesTableAction;
 use SetBased\Abc\Core\TableAction\System\PageUpdateTableAction;
 use SetBased\Abc\Core\TableRow\System\PageDetailsTableRow;
-use SetBased\Html\TableColumn\TextTableColumn;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -75,7 +75,7 @@ class PageDetailsPage extends CorePage
   private function showDetails()
   {
     $details = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
-    $table   = new DetailTable();
+    $table   = new CoreDetailTable();
 
     // Add table action for updating the page details.
     $table->addTableAction('default', new PageUpdateTableAction($this->myTargetPagId));
@@ -112,7 +112,7 @@ class PageDetailsPage extends CorePage
   {
     $roles = Abc::$DL->systemPageGetGrantedFunctionalities($this->myTargetPagId, $this->myLanId);
 
-    $table = new OverviewTable();
+    $table = new CoreOverviewTable();
 
     // Table action for modify the functionalities that grant access to the page whow on this page.
     $table->addTableAction('default', new PageUpdateFunctionalitiesTableAction($this->myTargetPagId));
@@ -134,7 +134,7 @@ class PageDetailsPage extends CorePage
   {
     $roles = Abc::$DL->systemPageGetGrantedRoles($this->myTargetPagId, $this->myLanId);
 
-    $table = new OverviewTable();
+    $table = new CoreOverviewTable();
 
     // Show Company abbreviation.
     $table->addColumn(new TextTableColumn('Company', 'cmp_abbr'));

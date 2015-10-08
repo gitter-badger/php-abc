@@ -7,7 +7,7 @@ use SetBased\Abc\Form\Control\SlatControl;
 use SetBased\Abc\Form\Control\SlatControlFactory;
 use SetBased\Abc\Form\SlatJoint\CheckboxSlatJoint;
 use SetBased\Abc\Form\SlatJoint\TableColumnSlatJoint;
-use SetBased\Html\TableColumn\TextTableColumn;
+use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**

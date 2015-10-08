@@ -9,11 +9,11 @@ use SetBased\Abc\Core\Form\Control\CoreButtonControl;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\SlatControlFactory\SystemFunctionalityUpdatePagesSlatControlFactory;
 use SetBased\Abc\Core\Page\CorePage;
-use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -170,7 +170,7 @@ class FunctionalityUpdatePagesPage extends CorePage
   {
     $details = Abc::$DL->systemFunctionalityGetDetails($this->myFunId, $this->myLanId);
 
-    $table = new DetailTable();
+    $table = new CoreDetailTable();
 
     // Add row for the ID of the function.
     NumericTableRow::addRow($table, 'ID', $details['fun_id'], '%d');

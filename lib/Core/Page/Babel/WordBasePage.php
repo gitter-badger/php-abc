@@ -5,11 +5,11 @@ namespace SetBased\Abc\Core\Page\Babel;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
-use SetBased\Abc\Core\Table\DetailTable;
+use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Helper\Http;
-use SetBased\Html\TableRow\NumericTableRow;
-use SetBased\Html\TableRow\TextTableRow;
+use SetBased\Abc\Table\TableRow\NumericTableRow;
+use SetBased\Abc\Table\TableRow\TextTableRow;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -146,7 +146,7 @@ abstract class WordBasePage extends BabelPage
   {
     $group = Abc::$DL->wordGroupGetDetails($this->myWdgId);
 
-    $table = new DetailTable($this->myCmpId, $this->myUsrId);
+    $table = new CoreDetailTable($this->myCmpId, $this->myUsrId);
 
     // Add row for the ID of the word group.
     NumericTableRow::addRow($table, 'ID', $group['wdg_id'], '%d');
