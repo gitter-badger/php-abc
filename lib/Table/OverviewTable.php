@@ -106,13 +106,13 @@ class OverviewTable
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the HTML code of this table displaying @a $theRows as data.
+   * Returns the HTML code of this table
    *
-   * @param array $theRows
+   * @param array $theRows The data shown in the table.
    *
    * @return string
    */
-  public function getHtmlTable(&$theRows)
+  public function getHtmlTable($theRows)
   {
     $ret = $this->getHtmlPrefix();
 
