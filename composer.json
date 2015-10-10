@@ -35,7 +35,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SetBased\\Abc\\": "lib/"
+      "SetBased\\Abc\\": "src/"
     }
   },
   "config": {
