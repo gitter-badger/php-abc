@@ -135,7 +135,7 @@ class LoginPage extends Page
   {
     $abc = Abc::getInstance();
 
-    $this->myForm = new CoreForm();
+    $this->myForm = new CoreForm(false);
 
     $input = $this->myForm->createFormControl('text', 'usr_name', 'Naam', true);
     $input->setAttribute('maxlength', C::LEN_USR_NAME);
