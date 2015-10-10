@@ -6,7 +6,6 @@ bin/phpunit
 bin/stratum
 bin/yuicompressor.jar
 build/
-components/
 composer.lock
-lib/C.php
+src/C.php
 vendor/
