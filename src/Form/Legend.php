@@ -1,13 +1,13 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Abc\Html;
+namespace SetBased\Abc\Form;
 
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Misc\HtmlElement;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for [legend](http://www.w3schools.com/tags/tag_legend.asp) elements.
+ * Class for generating [legend](http://www.w3schools.com/tags/tag_legend.asp) elements.
  */
 class Legend extends HtmlElement
 {
@@ -30,20 +30,20 @@ class Legend extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Set the text of this legend.
+   * Sets the inner HTML of this legend.
    *
-   * @param string $theHtmlSnippet The text of legend. It is the developer's responsibility that it is valid HTML code.
+   * @param string $theHtml The HTML of legend. It is the developer's responsibility that it is valid HTML code.
    */
-  public function setLegendHtml($theHtmlSnippet)
+  public function setLegendHtml($theHtml)
   {
-    $this->myLegend = $theHtmlSnippet;
+    $this->myLegend = $theHtml;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Set the text of this legend.
+   * Sets the inner HTML of this legend.
    *
-   * @param string $theText The text of legend. This text will be converted to valid HTML code.
+   * @param string $theText The text of legend. Special characters will be converted to HTML entities.
    */
   public function setLegendText($theText)
   {

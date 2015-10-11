@@ -4,7 +4,6 @@ namespace SetBased\Abc\Form;
 
 use SetBased\Abc\Error\FallenException;
 use SetBased\Abc\Error\LogicException;
-use SetBased\Abc\Form\Control\ComplexControl;
 use SetBased\Abc\Form\Control\Control;
 use SetBased\Abc\Form\Control\FieldSet;
 use SetBased\Abc\Helper\Html;
@@ -12,13 +11,13 @@ use SetBased\Abc\Misc\HtmlElement;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * CLass for generation form elements.
+ * Class for generating [form](http://www.w3schools.com/tags/tag_form.asp) elements abn processing submitted data.
  */
 class Form extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * After a call to Form::loadSubmittedValues holds the names of the form controls of which the value has
+   * After a call to {@link loadSubmittedValues} holds the names of the form controls of which the value has
    * changed.
    *
    * @var array
@@ -40,7 +39,7 @@ class Form extends HtmlElement
   protected $myFormValidators = [];
 
   /**
-   * After a call to Form::validate holds the names of the form controls which have valid one or more
+   * After a call to {@link validate} holds the names of the form controls which have valid one or more
    * validation tests.
    *
    * @var array
@@ -48,7 +47,7 @@ class Form extends HtmlElement
   protected $myInvalidControls = [];
 
   /**
-   * After a call to Form::loadSubmittedValues holds the white-listed submitted values.
+   * After a call to {@link loadSubmittedValues} holds the white-listed submitted values.
    *
    * @var array
    */
@@ -67,9 +66,9 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns @c true if @a $theArray has one or more scalars. Otherwise, returns @c false.
+   * Returns true if array has one or more scalars. Otherwise, returns false.
    *
-   * @param array $theArray
+   * @param array $theArray The array.
    *
    * @return bool
    */
@@ -120,12 +119,11 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates a fieldset of @a $theType and with @a $theName and appends this fieldset to the list of field
-   * sets of this form.
+   * Creates a fieldset  and appends this fieldset to the list of field sets of this form.
    *
    * @param string $theType The class name of the fieldset which must be derived from class FieldSet. The following
    *                        aliases are implemented:
-   *                        - fieldset: class FieldSet
+   *                        * fieldset: class FieldSet
    * @param string $theName The name (which might be empty) of the fieldset.
    *
    * @return FieldSet
@@ -160,14 +158,12 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
-   * exists the first found form control is returned. If no form control with @a $theName exists @c null is
-   * returned.
+   * Searches for a form control with by name. If more than one form control with the same name exists the first
+   * found form control is returned. If no form control is found null is returned.
    *
    * @param string $theName The name of the searched form control.
    *
-   * @return Control|ComplexControl|null
-   * @sa getFormControlByName.
+   * @return Control
    */
   public function findFormControlByName($theName)
   {
@@ -187,14 +183,12 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
-   * exists the first found form control is returned. If no form control with @a $thePath exists @c null is
-   * returned.
+   * Searches for a form control by path. If more than one form control with same path exists the first found form
+   * control is returned. If not form control is found null is returned.
    *
    * @param string $thePath The path of the searched form control.
    *
-   * @@return Control|ComplexControl|null
-   * @sa GetFormControlByPath.
+   * @return Control
    */
   public function findFormControlByPath($thePath)
   {
@@ -269,14 +263,12 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for the form control with name @a $theName. If more than one form control with name @a $theName
-   * exists the first found form control is returned. If no form control with @a $theName exists an exception will
-   * be thrown.
+   * Searches for a form control with by name. If more than one form control with the same name exists the first found
+   * form control is returned. If no form control is found an exception is thrown.
    *
    * @param string $theName The name of the searched form control.
    *
-   * @return Control|ComplexControl|null
-   * @sa findFormControlByName.
+   * @return Control
    */
   public function getFormControlByName($theName)
   {
@@ -291,14 +283,12 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for the form control with path @a $thePath. If more than one form control with path @a $thePath
-   * exists the first found form control is returned. If no form control with @a $thePath exists an exception will
-   * be thrown.
+   * Searches for a form control by path. If more than one form control with the same path exists the first found
+   * form control is returned. If no form control is found an exception is thrown.
    *
    * @param string $thePath The path of the searched form control.
    *
-   * @return Control|ComplexControl|null
-   * @sa FindFormControlByPath.
+   * @return Control
    */
   public function getFormControlByPath($thePath)
   {
@@ -316,7 +306,7 @@ class Form extends HtmlElement
    * Returns all form controls which failed one or more validation tests.
    *
    * @return array A nested array of form control names (keys are form control names and (for complex form controls)
-   *               values are arrays or (for simple form controls) @c true).
+   *               values are arrays or (for simple form controls) true).
    * @note This method should only be invoked after method Form::validate() has been invoked.
    */
   public function getInvalidControls()
@@ -327,9 +317,9 @@ class Form extends HtmlElement
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the current values of the form controls of this form. This method can be invoked be for
-   * loadSubmittedValues has been invoked. The values returned are the values set with Form::setValues,
-   * Form::mergeValues, and SimpleControl::setValue. These values might not be white listed.
-   * After loadSubmittedValues has been invoked use getValues.
+   * loadSubmittedValues has been invoked. The values returned are the values set with {@link setValues},
+   * {@link mergeValues}, and {@link SimpleControl.setValue}. These values might not be white listed.
+   * After {@link loadSubmittedValues} has been invoked use getValues.
    */
   public function getSetValues()
   {
@@ -346,7 +336,8 @@ class Form extends HtmlElement
   /**
    * Returns the submitted values of all form controls.
    *
-   * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
+   * @note This method should only be invoked after method {@link loadSubmittedValues} has been invoked.
+   *
    * @return array
    */
   public function getValues()
@@ -356,10 +347,9 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns @c true if and only if the value of one or more submitted form controls have changed. Otherwise returns
+   * Returns true if and only if the value of one or more submitted form controls have changed. Otherwise returns false.
    *
-   * @c    false.
-   * @note This method should only be invoked after method Form::loadSubmittedValues() has been invoked.
+   * @note This method should only be invoked after method {@link loadSubmittedValues} has been invoked.
    */
   public function haveChangedInputs()
   {
@@ -368,7 +358,7 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns @c true if the element (of type submit or image) has been submitted.
+   * Returns true if the element (of type submit or image) has been submitted.
    *
    * @param string $theName
    *
@@ -396,8 +386,7 @@ class Form extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Loads the submitted values.
-   * The white listed values can be obtained with method getValues.
+   * Loads the submitted values. The white listed values can be obtained with method getValues.
    */
   public function loadSubmittedValues()
   {
