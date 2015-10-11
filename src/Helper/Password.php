@@ -6,13 +6,13 @@ use SetBased\Affirm\Affirm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * A helper class for hashing and verifying passwords.
+ * Static class with helper functions for hashing and verifying passwords.
  */
 class Password
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * The algorithmic cost that should be used in password_hash.
+   * The algorithmic cost that should be used in [password_hash](http://php.net/manual/function.password-hash.php).
    *
    * @var int
    */
@@ -20,9 +20,10 @@ class Password
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns a hashed password using PHP native password_hash function.
+   * Returns a hashed password using PHP native [password_hash](http://php.net/manual/function.password-hash.php)
+   * function.
    *
-   * @param string $thePassword
+   * @param string $thePassword The password (given by the user).
    *
    * @return string The hashed password.
    */
@@ -38,9 +39,10 @@ class Password
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Checks if the given hash matches the given options using PHP native password_needs_rehash function.
+   * Checks if the given hash matches the given options using PHP native
+   * [password_needs_rehash](http://php.net/manual/function.password-needs-rehash.php) function.
    *
-   * @param string $theHash The hash (as stored in the database).
+   * @param string $theHash The hash (stored in the system).
    *
    * @return bool True if and only if the password matches with the hash value.
    */
@@ -53,10 +55,11 @@ class Password
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Verifies that a password matches a hash using PHP native password_verify function.
+   * Verifies that a password matches a hash using PHP native
+   * [password_verify](http://php.net/manual/function.password-verify.php) function.
    *
-   * @param string $thePassword The password (as given by the user).
-   * @param string $theHash     The hash (as stored in the database).
+   * @param string $thePassword The password (given by the user).
+   * @param string $theHash     The hash (stored in the system).
    *
    * @return bool True if and only if the password matches with the hash value.
    */
