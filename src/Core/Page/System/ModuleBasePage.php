@@ -96,7 +96,7 @@ abstract class ModuleBasePage extends CorePage
 
     // Create a text box for (new) module name.
     $input = $this->myForm->createFormControl('text', 'mdl_name', 'Module Name');
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
 
     // Add submit button.

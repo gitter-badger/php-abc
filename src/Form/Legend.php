@@ -3,34 +3,19 @@
 namespace SetBased\Abc\Html;
 
 use SetBased\Abc\Helper\Html;
+use SetBased\Abc\Misc\HtmlElement;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for generation legend elements.
+ * Class for [legend](http://www.w3schools.com/tags/tag_legend.asp) elements.
  */
-class Legend
+class Legend extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * The attributes of this legend.
-   *
-   * @var string[]
-   */
-  protected $myAttributes = [];
-
   /**
    * @var string The inner HTML snippet of this legend.
    */
   protected $myLegend;
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Object constructor.
-   */
-  public function __construct()
-  {
-    // Nothing to do.
-  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -41,36 +26,6 @@ class Legend
   public function generate()
   {
     return Html::generateElement('legend', $this->myAttributes, $this->myLegend, true);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of attribute @a $theName of this attribute to @a $theValue.
-   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
-   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
-   *   applies.)
-   *
-   * @param string $theName  The name of the attribute.
-   * @param string $theValue The value for the attribute.
-   */
-  public function setAttribute($theName, $theValue)
-  {
-    if ($theValue==='' || $theValue===null || $theValue===false)
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName=='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

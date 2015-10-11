@@ -42,7 +42,7 @@ class Form extends \SetBased\Abc\Form\Form
     $this->myHiddenFieldSet = parent::createFieldSet('fieldset');
 
     // Turn auto complete off.
-    $this->setAttribute('autocomplete', 0);
+    $this->myAttributes['autocomplete'] = false;
 
     // Add hidden field for protection against CSRF.
     if ($this->myEnableCsrfCheck) $this->myHiddenFieldSet->createFormControl('hidden', 'ses_csrf_token');

@@ -85,11 +85,11 @@ abstract class RoleBasePage extends CompanyPage
 
     // Create form control for Company name.
     $input = $this->myForm->createFormControl('text', 'rol_name', 'Role');
-    $input->setAttribute('maxlength', C::LEN_ROL_NAME);
+    $input->setAttrMaxLength(C::LEN_ROL_NAME);
 
     // Create form control for comment.
     $input = $this->myForm->createFormControl('text', 'rol_weight', 'Weight');
-    $input->setAttribute('maxlength', C::LEN_ROL_WEIGHT);
+    $input->setAttrMaxLength(C::LEN_ROL_WEIGHT);
     // XXX numeric
 
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));

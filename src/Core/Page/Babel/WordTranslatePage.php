@@ -148,7 +148,7 @@ class WordTranslatePage extends BabelPage
 
     // Create form control for the actual word.
     $input = $this->myForm->createFormControl('text', 'wdt_text', $act_language, true);
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
     $input->setValue($this->myDetails['wdt_text']);
 
     // Create a submit button.

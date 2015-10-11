@@ -49,6 +49,17 @@ class FileControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the attribute [accept](http://www.w3schools.com/tags/att_input_accept.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrForm($theValue)
+  {
+    $this->myAttributes['accept'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs)

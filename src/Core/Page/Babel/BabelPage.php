@@ -65,7 +65,7 @@ abstract class BabelPage extends CorePage
     }
 
     $form = new CoreForm($this->myLanId);
-    $form->setAttribute('method', 'get');
+    $form->setAttrMethod('get');
 
     $input = $form->createFormControl('select', 'act_lan_id', C::WRD_ID_LANGUAGE, true);
     $input->setOptions($languages, 'lan_id', 'lan_name');

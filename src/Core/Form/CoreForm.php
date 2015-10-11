@@ -40,6 +40,8 @@ class CoreForm extends Form
   {
     parent::__construct($theCsrfCheckFlag);
 
+    $this->myAttributes['class'] = 'input_table';
+
     $this->myVisibleFieldSet = parent::addFieldSet(new CoreFieldSet(''));
   }
 
@@ -82,7 +84,7 @@ class CoreForm extends Form
 
     if ($theWrdId)
     {
-      $theControl->setAttribute('_abc_label', Babel::getWord($theWrdId));
+      $theControl->setFakeAttribute('_abc_label', Babel::getWord($theWrdId));
     }
 
     if ($theMandatoryFlag)

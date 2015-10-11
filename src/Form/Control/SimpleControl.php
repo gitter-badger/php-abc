@@ -120,6 +120,184 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the attribute [autocomplete](http://www.w3schools.com/tags/att_input_autocomplete.asp).
+   * * Any value that evaluates to true will set the attribute to 'on'.
+   * * Any value that evaluates to false will set the attribute to 'off'.
+   * * Null will unset the attribute.
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrAutoComplete($theValue)
+  {
+    $this->myAttributes['autocomplete'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [autofocus](http://www.w3schools.com/tags/att_input_autofocus.asp).
+   * This is a boolean attribute. Any none [empty](http://php.net/manual/function.empty.php) value will set the
+   * attribute to 'autofocus'. Any other value will unset the attribute.
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrAutoFocus($theValue)
+  {
+    $this->myAttributes['autofocus'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [disabled](http://www.w3schools.com/tags/att_input_disabled.asp).
+   * This is a boolean attribute. Any none [empty](http://php.net/manual/function.empty.php) value will set the
+   * attribute to 'disabled'. Any other value will unset the attribute.
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrDisabled($theValue)
+  {
+    $this->myAttributes['disabled'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [form](http://www.w3schools.com/tags/att_input_form.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrForm($theValue)
+  {
+    $this->myAttributes['form'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [list](http://www.w3schools.com/tags/att_input_list.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrList($theValue)
+  {
+    $this->myAttributes['list'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [max](http://www.w3schools.com/tags/att_input_max.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrMax($theValue)
+  {
+    $this->myAttributes['max'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [maxlength](http://www.w3schools.com/tags/att_input_maxlength.asp).
+   *
+   * @param int $theValue The attribute value.
+   */
+  public function setAttrMaxLength($theValue)
+  {
+    $this->myAttributes['maxlength'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [min](http://www.w3schools.com/tags/att_input_min.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrMin($theValue)
+  {
+    $this->myAttributes['min'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [multiple](http://www.w3schools.com/tags/att_input_multiple.asp).
+   * This is a boolean attribute. Any none [empty](http://php.net/manual/function.empty.php) value will set the
+   * attribute to 'multiple'. Any other value will unset the attribute.
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrMultiple($theValue)
+  {
+    $this->myAttributes['multiple'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [pattern](http://www.w3schools.com/tags/att_input_pattern.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrPattern($theValue)
+  {
+    $this->myAttributes['pattern'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [placeholder](http://www.w3schools.com/tags/att_input_placeholder.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrPlaceHolder($theValue)
+  {
+    $this->myAttributes['placeholder'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [readonly](http://www.w3schools.com/tags/att_input_readonly.asp).
+   * This is a boolean attribute. Any none [empty](http://php.net/manual/function.empty.php) value will set the
+   * attribute to 'readonly'. Any other value will unset the attribute.
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrReadOnly($theValue)
+  {
+    $this->myAttributes['readonly'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [required](http://www.w3schools.com/tags/att_input_required.asp).
+   * This is a boolean attribute. Any none [empty](http://php.net/manual/function.empty.php) value will set the
+   * attribute to 'required'. Any other value will unset the attribute.
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrRequired($theValue)
+  {
+    $this->myAttributes['required'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [size](http://www.w3schools.com/tags/att_input_size.asp).
+   *
+   * @param int $theValue The attribute value.
+   */
+  public function setAttrSize($theValue)
+  {
+    $this->myAttributes['size'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [step](http://www.w3schools.com/tags/att_input_step.asp).
+   *
+   * @param string $theValue The attribute value.
+   */
+  public function setAttrStep($theValue)
+  {
+    $this->myAttributes['step'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the cleaner for this form control.
    *
    * @param Cleaner $theCleaner The cleaner.

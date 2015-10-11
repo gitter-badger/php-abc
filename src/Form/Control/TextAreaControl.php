@@ -40,6 +40,41 @@ class TextAreaControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the attribute [cols](http://www.w3schools.com/tags/att_textarea_cols.asp).
+   *
+   * @param int $theValue The attribute value.
+   */
+  public function setAttrCols($theValue)
+  {
+    $this->myAttributes['cols'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [rows](http://www.w3schools.com/tags/att_textarea_rows.asp).
+   *
+   * @param int $theValue The attribute value.
+   */
+  public function setAttrRows($theValue)
+  {
+    $this->myAttributes['rows'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [wrap](http://www.w3schools.com/tags/att_textarea_wrap.asp). Possible values:
+   * * soft
+   * * hard
+   *
+   * @param int $theValue The attribute value.
+   */
+  public function setAttrWrap($theValue)
+  {
+    $this->myAttributes['wrap'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs)

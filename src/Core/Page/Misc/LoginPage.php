@@ -138,11 +138,11 @@ class LoginPage extends Page
     $this->myForm = new CoreForm(false);
 
     $input = $this->myForm->createFormControl('text', 'usr_name', 'Naam', true);
-    $input->setAttribute('maxlength', C::LEN_USR_NAME);
+    $input->setAttrMaxLength(C::LEN_USR_NAME);
 
     $input = $this->myForm->createFormControl('password', 'usr_password', 'Wachtwoord', true);
-    $input->setAttribute('size', C::LEN_USR_NAME);
-    $input->setAttribute('maxlength', C::LEN_PASSWORD);
+    $input->setAttrSize(C::LEN_USR_NAME);
+    $input->setAttrMaxLength(C::LEN_PASSWORD);
 
     if ($abc->getDomain())
     {
@@ -157,7 +157,7 @@ class LoginPage extends Page
     else
     {
       $input = $this->myForm->createFormControl('text', 'cmp_abbr', 'Company', true);
-      $input->setAttribute('maxlength', C::LEN_CMP_ABBR);
+      $input->setAttrMaxLength(C::LEN_CMP_ABBR);
     }
 
     $this->myForm->addButtons('Login');

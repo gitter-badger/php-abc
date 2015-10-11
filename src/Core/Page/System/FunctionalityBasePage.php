@@ -89,7 +89,7 @@ abstract class FunctionalityBasePage extends CorePage
     $control->setEmptyOption(' ');
 
     $control = $this->myForm->createFormControl('text', 'fun_name', 'Name');
-    $control->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $control->setAttrMaxLength(C::LEN_WDT_TEXT);
 
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
 

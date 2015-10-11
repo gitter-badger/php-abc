@@ -143,7 +143,7 @@ class LouverControl extends ComplexControl
       if ($control!==$this->myFooterControl)
       {
         // Add class for zebra theme.
-        $control->setAttribute('class', ($i % 2==0) ? 'even' : 'odd');
+        $control->setAttrClass(($i % 2==0) ? 'even' : 'odd');
 
         // Generate the table row.
         $ret .= $control->generate($theSubmitParentName);

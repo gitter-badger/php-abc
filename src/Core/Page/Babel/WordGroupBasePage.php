@@ -91,11 +91,11 @@ abstract class WordGroupBasePage extends BabelPage
 
     // Input for the name of the word group.
     $input = $this->myForm->createFormControl('text', 'wdg_name', 'Name', true);
-    $input->setAttribute('maxlength', C::LEN_WDG_NAME);
+    $input->setAttrMaxLength(C::LEN_WDG_NAME);
 
     // Input for the label of the word group.
     $input = $this->myForm->createFormControl('text', 'wdg_label', 'Label');
-    $input->setAttribute('maxlength', C::LEN_WRD_LABEL);
+    $input->setAttrMaxLength(C::LEN_WRD_LABEL);
 
     // Create a submit button.
     $this->myForm->addButtons('OK');

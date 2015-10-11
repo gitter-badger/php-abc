@@ -101,8 +101,8 @@ class CoreFieldSet extends FieldSet
     {
       case 'text':
         $control = new TextControl($theName);
-        $ret     = $this->addFormControl($control);
-        $ret->setAttribute('size', '80');
+        $control->setAttrSize(80);
+        $ret = $this->addFormControl($control);
         break;
 
       default:
@@ -113,18 +113,18 @@ class CoreFieldSet extends FieldSet
     {
       if (is_int($theWrdId))
       {
-        $ret->setAttribute('_abc_label', Babel::getWord($theWrdId));
+        $ret->setFakeAttribute('_abc_label', Babel::getWord($theWrdId));
       }
       else
       {
-        $ret->setAttribute('_abc_label', $theWrdId);
+        $ret->setFakeAttribute('_abc_label', $theWrdId);
       }
     }
 
     if ($theMandatoryFlag)
     {
       $ret->addValidator(new MandatoryValidator(0, 0));
-      $ret->setAttribute('_set_mandatory', true);
+      $ret->setFakeAttribute('_set_mandatory', true);
     }
 
     return $ret;

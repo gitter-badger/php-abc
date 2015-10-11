@@ -126,7 +126,7 @@ abstract class CompanyPage extends CorePage
 
     // Create input control for Company abbreviation.
     $input = $this->myCompanyForm->createFormControl('text', 'cmp_abbr', 'Company', true);
-    $input->setAttribute('maxlength', C::LEN_CMP_ABBR);
+    $input->setAttrMaxLength(C::LEN_CMP_ABBR);
 
     // Create "OK" submit button.
     $this->myCompanyForm->addButtons();

@@ -115,15 +115,15 @@ abstract class WordBasePage extends BabelPage
 
     // Create form control for label.
     $input = $this->myForm->createFormControl('text', 'wrd_label', 'Label');
-    $input->setAttribute('maxlength', C::LEN_WRD_LABEL);
+    $input->setAttrMaxLength(C::LEN_WRD_LABEL);
 
     // Input for the actual word.
     $input = $this->myForm->createFormControl('text', 'wdt_text', Html::txt2html($ref_language), true);
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
     // Create form control for comment.
     $input = $this->myForm->createFormControl('text', 'wrd_comment', 'Remark');
-    $input->setAttribute('maxlength', C::LEN_WRD_COMMENT);
+    $input->setAttrMaxLength(C::LEN_WRD_COMMENT);
 
     // Create a submit button.
     $this->myForm->addButtons('OK');

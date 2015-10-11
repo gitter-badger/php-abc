@@ -3,21 +3,15 @@
 namespace SetBased\Abc\Table;
 
 use SetBased\Abc\Helper\Html;
+use SetBased\Abc\Misc\HtmlElement;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class for generating tables with the details of an entity.
  */
-class DetailTable
+class DetailTable extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * The attributes the table element.
-   *
-   * @var string[]
-   */
-  protected $myAttributes = [];
-
   /**
    * The HTML snippet with all rows of this table.
    *
@@ -69,40 +63,6 @@ class DetailTable
     $ret .= $this->getHtmlPostfix();
 
     return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of an attribute of this form control.
-   *
-   * The attribute is unset when the value is one of:
-   * * null
-   * * false
-   * * ''.
-   *
-   * If attribute name is 'class' then the value is appended to the space separated list of classes.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param string $theValue The value for the attribute.
-   */
-  public function setAttribute($theName, $theValue)
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

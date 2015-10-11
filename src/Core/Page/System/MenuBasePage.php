@@ -89,7 +89,7 @@ abstract class MenuBasePage extends CorePage
 
     // Create text box for the title the menu item.
     $input = $this->myForm->createFormControl('text', 'mnu_title', 'Menu Title');
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
 
     // Create select box for chose page for menu.
@@ -102,26 +102,26 @@ abstract class MenuBasePage extends CorePage
 
     // Create text form control for input menu level.
     $input = $this->myForm->createFormControl('text', 'mnu_level', 'Menu Level', true);
-    $input->setAttribute('maxlength', C::LEN_MNU_LEVEL);
+    $input->setAttrMaxLength(C::LEN_MNU_LEVEL);
     $input->setValue(1);
     $input->addValidator(new IntegerValidator(0, $this->myLanId));
 
 
     // Create text form control for input menu group.
     $input = $this->myForm->createFormControl('text', 'mnu_group', 'Menu Group', true);
-    $input->setAttribute('maxlength', C::LEN_MNU_GROUP);
+    $input->setAttrMaxLength(C::LEN_MNU_GROUP);
     $input->addValidator(new IntegerValidator(0, $this->myLanId));
 
 
     // Create text form control for input menu weight.
     $input = $this->myForm->createFormControl('text', 'mnu_weight', 'Menu Weight', true);
-    $input->setAttribute('maxlength', C::LEN_MNU_WEIGHT);
+    $input->setAttrMaxLength(C::LEN_MNU_WEIGHT);
     $input->addValidator(new IntegerValidator(0, $this->myLanId));
 
 
     // Create text box for URL of the menu item.
     $input = $this->myForm->createFormControl('text', 'mnu_link', 'Menu Link');
-    $input->setAttribute('maxlength', C::LEN_MNU_LINK);
+    $input->setAttrMaxLength(C::LEN_MNU_LINK);
 
     // Add submit button.
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));

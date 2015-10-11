@@ -50,6 +50,7 @@ class Html
       case 'novalidate':
       case 'readonly':
       case 'required':
+      case 'spellcheck':
         if (!empty($theValue))
         {
           $html = ' ';
@@ -62,6 +63,7 @@ class Html
 
       // Annoying boolean attribute exceptions.
       case 'draggable':
+      case 'contenteditable':
         if (isset($theValue))
         {
           $html = ' ';
@@ -76,6 +78,15 @@ class Html
           $html = ' ';
           $html .= $theName;
           $html .= ($theValue) ? '="on"' : '="off"';
+        }
+        break;
+
+      case 'translate':
+        if (isset($theValue))
+        {
+          $html = ' ';
+          $html .= $theName;
+          $html .= ($theValue) ? '="yes"' : '="no"';
         }
         break;
 

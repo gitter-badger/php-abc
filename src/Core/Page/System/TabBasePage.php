@@ -86,11 +86,11 @@ abstract class TabBasePage extends CorePage
 
     // Create text box for (new) page title.
     $input = $this->myForm->createFormControl('text', 'ptb_title', 'Title');
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
     // Create form control for the page label.
     $input = $this->myForm->createFormControl('text', 'ptb_label', 'Label');
-    $input->setAttribute('maxlength', C::LEN_PTB_LABEL);
+    $input->setAttrMaxLength(C::LEN_PTB_LABEL);
 
     // Add submit button.
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));

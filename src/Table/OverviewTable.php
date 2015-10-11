@@ -3,6 +3,7 @@
 namespace SetBased\Abc\Table;
 
 use SetBased\Abc\Helper\Html;
+use SetBased\Abc\Misc\HtmlElement;
 use SetBased\Abc\Table\TableColumn\DualTableColumn;
 use SetBased\Abc\Table\TableColumn\TableColumn;
 
@@ -10,16 +11,9 @@ use SetBased\Abc\Table\TableColumn\TableColumn;
 /**
  * Class for generating tables with an overview of a list of entities.
  */
-class OverviewTable
+class OverviewTable extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * The attributes of the table tag of this table.
-   *
-   * @var string[]
-   */
-  protected $myAttributes = [];
-
   /**
    * The objects for generating the columns of this table.
    *
@@ -168,40 +162,6 @@ class OverviewTable
   public function getTitle()
   {
     return $this->myTitle;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of an attribute of this form control.
-   *
-   * The attribute is unset when the value is one of:
-   * * null
-   * * false
-   * * ''.
-   *
-   * If attribute name is 'class' then the value is appended to the space separated list of classes.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param string $theValue The value for the attribute.
-   */
-  public function setAttribute($theName, $theValue)
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

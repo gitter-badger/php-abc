@@ -62,7 +62,7 @@ class BabelWordTranslateSlatControlFactory extends SlatControlFactory
 
     $control = $this->createFormControl($row, 'act_wdt_text');
     $control->setValue($theData['act_wdt_text']);
-    $control->setAttribute('size', C::LEN_WDT_TEXT);
+    $control->setAttrSize(C::LEN_WDT_TEXT);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

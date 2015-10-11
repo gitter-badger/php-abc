@@ -106,7 +106,6 @@ class WordTranslateWordsPage extends BabelPage
     $words = Abc::$DL->wordGroupGetAllWordsTranslator($this->myWdgId, $this->myActLanId);
 
     $this->myForm = new CoreForm($this->myLanId);
-    $this->myForm->setAttribute('class', 'input_table');
 
     // Add field set.
     $field_set = $this->myForm->createFieldSet();
@@ -122,7 +121,7 @@ class WordTranslateWordsPage extends BabelPage
 
     // Put everything together in a LoverControl.
     $louver = new LouverControl('data');
-    $louver->setAttribute('class', 'overview_table');
+    $louver->setAttrClass('overview_table');
     $louver->setRowFactory($factory);
     $louver->setFooterControl($button);
     $louver->setData($words);

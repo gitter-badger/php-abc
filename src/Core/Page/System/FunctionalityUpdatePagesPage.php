@@ -103,7 +103,6 @@ class FunctionalityUpdatePagesPage extends CorePage
 
     // Create form.
     $this->myForm = new CoreForm();
-    $this->myForm->setAttribute('class', 'input_table');
 
     // Add field set.
     $field_set = $this->myForm->createFieldSet();
@@ -119,7 +118,7 @@ class FunctionalityUpdatePagesPage extends CorePage
 
     // Put everything together in a LouverControl.
     $louver = new LouverControl('data');
-    $louver->setAttribute('class', 'overview_table');
+    $louver->setAttrClass('overview_table');
     $louver->setRowFactory($factory);
     $louver->setFooterControl($button);
     $louver->setData($pages);

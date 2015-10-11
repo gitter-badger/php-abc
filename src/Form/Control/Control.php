@@ -3,21 +3,15 @@
 namespace SetBased\Abc\Form\Control;
 
 use SetBased\Abc\Form\Validator\Validator;
+use SetBased\Abc\Misc\HtmlElement;
 use SetBased\Abc\Obfuscator\Obfuscator;
 
 /**
  * Abstract parent class for form controls.
  */
-abstract class Control
+abstract class Control extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * The HTML attributes of this form control.
-   *
-   * @var string[]
-   */
-  protected $myAttributes = [];
-
   /**
    * The list of error messages associated with this form control.
    *
@@ -188,47 +182,6 @@ abstract class Control
   public function mergeValuesBase($theValues)
   {
     // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Sets the value of an attribute of this form control.
-   *
-   * The attribute is unset when the value is one of:
-   * * null
-   * * false
-   * * ''.
-   *
-   * If attribute name is 'class' then the value is appended to the space separated list of classes.
-   *
-   * Depending on the child class the following attributes might be overwritten upon a call to method
-   * generate():
-   * * type    Is automatically generated (for simple controls).
-   * * name    Is automatically generated (for simple controls)..
-   * * value   Use method setValue() instead.
-   * * checked Use method setValue() instead.
-   *
-   * @param string $theName  The name of the attribute.
-   * @param string $theValue The value for the attribute.
-   */
-  public function setAttribute($theName, $theValue)
-  {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName=='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

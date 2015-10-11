@@ -86,11 +86,11 @@ abstract class CompanyBasePage extends CorePage
 
     // Create form control for company name.
     $input = $this->myForm->createFormControl('text', 'cmp_abbr', 'CompanyPage Abbreviation');
-    $input->setAttribute('maxlength', C::LEN_CMP_ABBR);
+    $input->setAttrMaxLength(C::LEN_CMP_ABBR);
 
     // Create form control for comment.
     $input = $this->myForm->createFormControl('text', 'cmp_label', 'Label');
-    $input->setAttribute('maxlength', C::LEN_CMP_LABEL);
+    $input->setAttrMaxLength(C::LEN_CMP_LABEL);
 
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
   }

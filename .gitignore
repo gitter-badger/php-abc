@@ -7,5 +7,6 @@ bin/stratum
 bin/yuicompressor.jar
 build/
 composer.lock
+doc/
 src/C.php
 vendor/

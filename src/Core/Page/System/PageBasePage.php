@@ -95,7 +95,7 @@ abstract class PageBasePage extends CorePage
 
     // Create text box for (new) page title.
     $input = $this->myForm->createFormControl('text', 'pag_title', 'Title');
-    $input->setAttribute('maxlength', C::LEN_WDT_TEXT);
+    $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
     /** @todo Add validator: either wrd_id is not empty or pag_title is not empty */
 
@@ -121,16 +121,16 @@ abstract class PageBasePage extends CorePage
 
     // Create form control for page class.
     $input = $this->myForm->createFormControl('text', 'pag_class', 'Class', true);
-    $input->setAttribute('maxlength', C::LEN_PAG_CLASS);
+    $input->setAttrMaxLength(C::LEN_PAG_CLASS);
 
     // Create form control for the page label.
     $input = $this->myForm->createFormControl('text', 'pag_label', 'Label');
-    $input->setAttribute('maxlength', C::LEN_PAG_LABEL);
+    $input->setAttrMaxLength(C::LEN_PAG_LABEL);
 
     // Create form control for the weight of the page (inside a tab group).
     /** @todo validate weight is a number and/or form control or validator for numeric input. */
     $input = $this->myForm->createFormControl('text', 'pag_weight', 'Weight');
-    $input->setAttribute('maxlength', C::LEN_PAG_WEIGHT);
+    $input->setAttrMaxLength(C::LEN_PAG_WEIGHT);
 
     // Add submit button.
     $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));

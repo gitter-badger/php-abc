@@ -81,7 +81,6 @@ class ModuleUpdatePage extends CompanyPage
 
     // Create the form.
     $this->myForm = new CoreForm();
-    $this->myForm->setAttribute('class', 'input_table');
 
     // Add field set.
     $field_set = $this->myForm->createFieldSet();
@@ -97,7 +96,7 @@ class ModuleUpdatePage extends CompanyPage
 
     // Put everything together in a LoverControl.
     $louver = new LouverControl('data');
-    $louver->setAttribute('class', 'overview_table');
+    $louver->setAttrClass('overview_table');
     $louver->setRowFactory($factory);
     $louver->setFooterControl($button);
     $louver->setData($modules);

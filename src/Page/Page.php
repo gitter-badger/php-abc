@@ -390,7 +390,7 @@ abstract class Page
   {
     if (Abc::$ourJsTrailerAttributes)
     {
-      echo Html::generateVoidElement('script', Abc::$ourJsTrailerAttributes);
+      echo Html::generateElement('script', Abc::$ourJsTrailerAttributes);
     }
     if ($this->myJavaScript)
     {

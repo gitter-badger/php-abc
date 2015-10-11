@@ -8,21 +8,15 @@ use SetBased\Abc\Form\Control\ComplexControl;
 use SetBased\Abc\Form\Control\Control;
 use SetBased\Abc\Form\Control\FieldSet;
 use SetBased\Abc\Helper\Html;
+use SetBased\Abc\Misc\HtmlElement;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * CLass for generation form elements.
  */
-class Form
+class Form extends HtmlElement
 {
   //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * The attributes of this form.
-   *
-   * @var string[]
-   */
-  protected $myAttributes = [];
-
   /**
    * After a call to Form::loadSubmittedValues holds the names of the form controls of which the value has
    * changed.
@@ -448,32 +442,43 @@ class Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Sets the value of attribute @a $theName of this form to @a $theValue.
-   * * If @a $theValue is @c null, @c false, or @c '' the attribute is unset.
-   * * If @a $theName is 'class' the @a $theValue is appended to space separated list of classes (unless the above rule
-   *   applies.)
+   * Sets the attribute [autocomplete](http://www.w3schools.com/tags/att_form_autocomplete.asp). Possible values:
+   * * Any value that evaluates to true will set the attribute to 'on'.
+   * * Any value that evaluates to false will set the attribute to 'off'.
+   * * Null will unset the attribute.
    *
-   * @param string      $theName  The name of the attribute.
-   * @param string|null $theValue The value for the attribute.
+   * @param mixed $theAutoCompleteFlag The auto complete.
    */
-  public function setAttribute($theName, $theValue)
+  public function setAttrAutoComplete($theAutoCompleteFlag)
   {
-    if ($theValue===null || $theValue===false || $theValue==='')
-    {
-      unset($this->myAttributes[$theName]);
-    }
-    else
-    {
-      if ($theName==='class' && isset($this->myAttributes[$theName]))
-      {
-        $this->myAttributes[$theName] .= ' ';
-        $this->myAttributes[$theName] .= $theValue;
-      }
-      else
-      {
-        $this->myAttributes[$theName] = $theValue;
-      }
-    }
+    $this->myAttributes['autocomplete'] = $theAutoCompleteFlag;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [enctype](http://www.w3schools.com/tags/att_form_enctype.asp). Possible values:
+   * * application/x-www-form-urlencoded (default)
+   * * multipart/form-data
+   * * text/plain
+   *
+   * @param string $theEncType The encoding type.
+   */
+  public function setAttrEncType($theEncType)
+  {
+    $this->myAttributes['enctype'] = $theEncType;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the attribute [method](http://www.w3schools.com/tags/att_form_method.asp). Possible values:
+   * * post (default)
+   * * get
+   *
+   * @param string $theMethod The method.
+   */
+  public function setAttrMethod($theMethod)
+  {
+    $this->myAttributes['method'] = $theMethod;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
