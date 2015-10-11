@@ -388,7 +388,10 @@ abstract class Page
    */
   protected function echoPageTrailer()
   {
-    echo '<script data-main="/js/abc" src="/js/require.js"></script>';
+    if (Abc::$ourJsTrailerAttributes)
+    {
+      echo Html::generateVoidElement('script', Abc::$ourJsTrailerAttributes);
+    }
     if ($this->myJavaScript)
     {
       echo '<script type="text/javascript">/*<![CDATA[*/require([],function(){', $this->myJavaScript,

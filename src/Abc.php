@@ -46,6 +46,16 @@ abstract class Abc
   private static $ourInstance;
 
   /**
+   * The attributes of the script element in the page trailer (i.e. near the end html tag). Example:
+   * ```
+   * [ 'src' => '/js/requirejs.js', 'data-main' => '/js/main.js' ]
+   * ```
+   *
+   * @var array
+   */
+  public static $ourJsTrailerAttributes;
+
+  /**
    * The canonical host name of the (virtual) web server.
    *
    * @var string
@@ -85,6 +95,8 @@ abstract class Abc
 
   /**
    * Information about the session.
+   *
+   * @var array
    */
   private $mySessionInfo;
 
