@@ -7,7 +7,7 @@ use SetBased\Abc\Obfuscator\Obfuscator;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type select.
+ * Class for form controls of type [select](http://www.w3schools.com/tags/tag_select.asp).
  */
 class SelectControl extends SimpleControl
 {

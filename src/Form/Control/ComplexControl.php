@@ -5,7 +5,7 @@ namespace SetBased\Abc\Form\Control;
 use SetBased\Abc\Error\LogicException;
 
 /**
- * A complex from control consists of one ore more complex or simple form controls.
+ * Class for complex form controls. A complex form control consists of one of more form controls.
  */
 class ComplexControl extends Control
 {

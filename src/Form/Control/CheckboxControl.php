@@ -5,9 +5,8 @@ namespace SetBased\Abc\Form\Control;
 use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
-
 /**
- * Class for form controls of type input:checkbox.
+ * Class for form controls of type [input:checkbox](http://www.w3schools.com/tags/tag_input.asp).
  *
  * @todo    Add attribute for label.
  */

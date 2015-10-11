@@ -4,8 +4,10 @@ namespace SetBased\Abc\Form\Control;
 
 use SetBased\Abc\Helper\Html;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
- * A pseudo form control for generation hyperlink elements.
+ * A class for pseudo form controls for generating [hyperlink](http://www.w3schools.com/tags/tag_a.asp) elements inside
+ * forms.
  */
 class LinkControl extends Control
 {

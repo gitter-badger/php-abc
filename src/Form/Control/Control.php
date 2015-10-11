@@ -6,6 +6,7 @@ use SetBased\Abc\Form\Validator\Validator;
 use SetBased\Abc\Misc\HtmlElement;
 use SetBased\Abc\Obfuscator\Obfuscator;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
  * Abstract parent class for form controls.
  */

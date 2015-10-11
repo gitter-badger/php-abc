@@ -6,7 +6,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:radio.
+ * Class for form controls of type [input:radio](http://www.w3schools.com/tags/tag_input.asp).
  *
  * @todo  Add attribute for label.
  */

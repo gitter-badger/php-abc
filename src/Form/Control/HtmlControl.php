@@ -6,7 +6,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * A pseudo form control for generation arbitrary HTML code.
+ * A class for pseudo form controls for generating arbitrary HTML code inside forms.
  */
 class HtmlControl extends Control
 {

@@ -6,7 +6,8 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * A pseudo form control for generation div elements.
+ * A class for pseudo form controls for generating [div](http://www.w3schools.com/tags/tag_div.asp) elements inside
+ * forms.
  */
 class DivControl extends Control
 {
@@ -31,7 +32,7 @@ class DivControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns null;
+   * Returns null.
    */
   public function getSubmittedValue()
   {
@@ -53,7 +54,7 @@ class DivControl extends Control
   /**
    * Set the inner HTML of this div element.
    *
-   * @param string $theText The inner text. Special characters will be converted to HTML entities.
+   * @param string $theText The inner HTML. Special characters will be converted to HTML entities.
    */
   public function setInnerText($theText)
   {

@@ -4,7 +4,7 @@ namespace SetBased\Abc\Form\Control;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:button.
+ * Class for form controls of type [input:button](http://www.w3schools.com/tags/tag_input.asp).
  */
 class ButtonControl extends PushMeControl
 {

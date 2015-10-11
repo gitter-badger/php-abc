@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:image.
+ * Class for form controls of type [input:image](http://www.w3schools.com/tags/tag_input.asp).
  */
 class ImageControl extends SimpleControl
 {

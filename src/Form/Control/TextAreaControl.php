@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type textarea.
+ * Class for form controls of type [textarea](http://www.w3schools.com/tags/tag_textarea.asp).
  */
 class TextAreaControl extends SimpleControl
 {

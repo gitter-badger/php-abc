@@ -6,7 +6,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:file.
+ * Class for form controls of type [input:file](http://www.w3schools.com/tags/tag_input.asp).
  */
 class FileControl extends SimpleControl
 {

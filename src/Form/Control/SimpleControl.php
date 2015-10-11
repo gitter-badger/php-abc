@@ -9,7 +9,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Abstract parent class for generating form control elements of type:
+ * Abstract parent class for form controls of type:
  * * text
  * * password
  * * hidden
@@ -68,8 +68,7 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates a SimpleControl object for generating a form control element of @a $theType with (local)
-   * name \a $theName.
+   * Object constructor.
    *
    * @param string $theName The name of the form control.
    */
@@ -382,7 +381,7 @@ abstract class SimpleControl extends Control
   /**
    * Sets the inner HTML of the abel for this form control.
    *
-   * @param string $theText The (inner) label text special characters are converted to HTML entities.
+   * @param string $theText The (inner) label text. Special characters are converted to HTML entities.
    */
   public function setLabelText($theText)
   {

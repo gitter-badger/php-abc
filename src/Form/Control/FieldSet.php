@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for fieldsets.
+ * Class for [fieldsets](http://www.w3schools.com/tags/tag_fieldset.asp).
  */
 class FieldSet extends ComplexControl
 {

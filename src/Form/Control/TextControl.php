@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:text.
+ * Class for form controls of type [input:text](http://www.w3schools.com/tags/tag_input.asp).
  */
 class TextControl extends SimpleControl
 {

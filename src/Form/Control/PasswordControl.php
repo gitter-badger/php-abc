@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //--------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type input:password.
+ * Class for form controls of type [input:password](http://www.w3schools.com/tags/tag_input.asp).
  */
 class PasswordControl extends SimpleControl
 {
