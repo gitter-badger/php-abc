@@ -16,11 +16,6 @@ class CheckboxControl extends SimpleControl
   /**
    * Returns the HTML code for this form control.
    *
-   * @note Before generation the following HTML attributes are overwritten:
-   *       * name    Will be replaced with the submit name of this form control.
-   *       * type    Will be replaced with 'checkbox'.
-   *       * checked Will be replaced with 'checked' if @a $myValue is not empty, otherwise will be empty.
-   *
    * @param string $theParentName
    *
    * @return string

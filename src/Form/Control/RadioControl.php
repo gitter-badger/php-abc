@@ -16,20 +16,24 @@ class RadioControl extends SimpleControl
   /**
    * Returns the HTML code for this form control.
    *
-   * @note Before generation the following HTML attributes are overwritten:
-   *       * name    Will be replaced with the submit name of this form control.
-   *       * type    Will be replaced with 'radio'.
-   *       * value   Will be replaced with the value of this form control.
-   *
    * @param string $theParentName
    *
    * @return string
    */
   public function generate($theParentName)
   {
-    $this->myAttributes['type']  = 'radio';
-    $this->myAttributes['name']  = $this->getSubmitName($theParentName);
-    $this->myAttributes['value'] = $this->myValue;
+    $this->myAttributes['type'] = 'radio';
+    $this->myAttributes['name'] = $this->getSubmitName($theParentName);
+
+    // A radio button is checked if and only if its value equals to the value of attribute value.
+    if (isset($this->myAttributes['value']) && ((string)$this->myValue===(string)$this->myAttributes['value']))
+    {
+      $this->myAttributes['checked'] = true;
+    }
+    else
+    {
+      unset($this->myAttributes['checked']);
+    }
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
@@ -42,20 +46,33 @@ class RadioControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the attribute [value](http://www.w3schools.com/tags/att_input_value.asp).
+   *
+   * @param mixed $theValue The attribute value.
+   */
+  public function setAttrValue($theValue)
+  {
+    $this->myAttributes['value'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   protected function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs)
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
+    $new_value   = (isset($theSubmittedValue[$submit_name])) ? (string)$theSubmittedValue[$submit_name] : null;
 
-    if ((string)$theSubmittedValue[$submit_name]===(string)$this->myValue)
+    if (isset($this->myAttributes['value']) && $new_value===(string)$this->myAttributes['value'])
     {
       if (empty($this->myAttributes['checked']))
       {
         $theChangedInputs[$this->myName] = $this;
       }
       $this->myAttributes['checked']    = true;
-      $theWhiteListValue[$this->myName] = $this->myValue;
+      $theWhiteListValue[$this->myName] = $this->myAttributes['value'];
+      $this->myValue                    = $this->myAttributes['value'];
     }
     else
     {
@@ -64,6 +81,7 @@ class RadioControl extends SimpleControl
         $theChangedInputs[$this->myName] = $this;
       }
       $this->myAttributes['checked'] = false;
+      $this->myValue                 = null;
 
       // If the white listed value is not set by a radio button with the same name as this radio button, set the white
       // listed value of this radio button (and other radio buttons with the same name) to null. If another radio button
