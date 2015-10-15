@@ -63,12 +63,9 @@ class WordGroupDetailsPage extends BabelPage
    */
   public static function getUrl($theWdgId, $theTargetLanId)
   {
-    $url = '/pag/';
-    $url .= Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_DETAILS, 'pag');
-    $url .= '/wdg/';
-    $url .= Abc::obfuscate($theWdgId, 'wdg');
-    $url .= '/?act_lan_id=';
-    $url .= $theTargetLanId;
+    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_DETAILS, 'pag');
+    $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
+    $url .= '/act_lan/'.Abc::obfuscate($theTargetLanId, 'lan');
 
     return $url;
   }
@@ -79,7 +76,7 @@ class WordGroupDetailsPage extends BabelPage
    */
   public function echoTabContent()
   {
-    $this->myActLanId = $this->selectLanguage($this->myActLanId);
+    $this->selectLanguage($this->myActLanId);
 
     if ($this->myActLanId)
     {

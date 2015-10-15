@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Page\System;
 
 use SetBased\Abc\Abc;
-use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Page\CorePage;
@@ -16,6 +15,13 @@ use SetBased\Abc\Helper\Http;
 abstract class FunctionalityBasePage extends CorePage
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The ID of the word for the text of the submit button of the form shown on this page.
+   *
+   * @var int
+   */
+  protected $myButtonWrdId;
+
   /**
    * The form shown on this page.
    *
@@ -39,26 +45,8 @@ abstract class FunctionalityBasePage extends CorePage
   {
     $this->createForm();
     $this->loadValues();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->dataBaseAction();
-
-        Http::redirect(FunctionalityOverviewPage::getUrl());
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -78,9 +66,9 @@ abstract class FunctionalityBasePage extends CorePage
     $modules = Abc::$DL->systemModuleGetAll($this->myLanId);
     $words   = Abc::$DL->wordGroupGetAllWords(C::WDG_ID_FUNCTIONALITIES, $this->myLanId);
 
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
-    $control = $this->myForm->createFormControl('select', 'mdl_id', 'Module');
+    $control = $this->myForm->createFormControl('select', 'mdl_id', 'Module', true);
     $control->setOptions($modules, 'mdl_id', 'mdl_name');
     $control->setEmptyOption(' ');
 
@@ -91,18 +79,21 @@ abstract class FunctionalityBasePage extends CorePage
     $control = $this->myForm->createFormControl('text', 'fun_name', 'Name');
     $control->setAttrMaxLength(C::LEN_WDT_TEXT);
 
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    // Create a submit button.
+    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
 
     // $this->myForm->addFormValidator( new SystemFunctionalityInsertFormValidator() );
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(FunctionalityOverviewPage::getUrl());
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -13,6 +13,17 @@ class WordGroupInsertPage extends WordGroupBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_INSERT;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the relative URL for this page.
    *
    * @return string
@@ -20,7 +31,7 @@ class WordGroupInsertPage extends WordGroupBasePage
   public static function getUrl()
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_INSERT, 'pag');
-    $url .= "/?act_lan_id=".C::LAN_ID_BABEL_REFERENCE;
+    $url .= '/act_lan/'.Abc::obfuscate(C::LAN_ID_BABEL_REFERENCE, 'lan');
 
     return $url;
   }

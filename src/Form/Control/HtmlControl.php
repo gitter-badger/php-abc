@@ -22,7 +22,7 @@ class HtmlControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $html = $this->myPrefix;
     $html .= $this->myHtml;

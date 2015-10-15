@@ -10,16 +10,18 @@ use SetBased\Abc\Helper\Html;
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Abstract parent class for form controls of type:
- * * text
- * * password
- * * hidden
- * * checkbox
- * * radio
- * * submit
- * * reset
- * * button
- * * file
- * * image
+ * <ul>
+ * <li> text
+ * <li> password
+ * <li> hidden
+ * <li> checkbox
+ * <li> radio
+ * <li> submit
+ * <li> reset
+ * <li> button
+ * <li> file
+ * <li> image
+ * </ul>
  */
 abstract class SimpleControl extends Control
 {
@@ -54,8 +56,10 @@ abstract class SimpleControl extends Control
 
   /**
    * The position of the label of this form control.
-   * * 'pre'  The label will be inserted before the HML code of this form control.
-   * * 'post' The label will be appended after the HML code of this form control.
+   * <ul>
+   * <li> 'pre'  The label will be inserted before the HML code of this form control.
+   * <li> 'post' The label will be appended after the HML code of this form control.
+   * </ul>
    *
    * @var 'pre'|'post'|null
    */
@@ -322,9 +326,11 @@ abstract class SimpleControl extends Control
    * Sets the value of an attribute the label for this form control.
    *
    * The attribute is unset when the value is one of:
-   * * null
-   * * false
-   * * ''.
+   * <ul>
+   * <li> null
+   * <li> false
+   * <li> ''.
+   * </ul>
    *
    * If attribute name is 'class' then the value is appended to the space separated list of classes.
    *
@@ -365,10 +371,12 @@ abstract class SimpleControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *  Sets the position of the label of this form control.
-   * * 'pre'  The label will be inserted before the HML code of this form control.
-   * * 'post' The label will be appended after the HML code of this form control.
-   * * 'null' No label will be generated for this form control.
+   * Sets the position of the label of this form control.
+   * <ul>
+   * <li> 'pre'  The label will be inserted before the HML code of this form control.
+   * <li> 'post' The label will be appended after the HML code of this form control.
+   * <li> null No label will be generated for this form control.
+   * </ul>
    *
    * @param 'pre'|'post'|null $thePosition
    */

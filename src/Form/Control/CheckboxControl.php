@@ -21,14 +21,12 @@ class CheckboxControl extends SimpleControl
    *       * type    Will be replaced with 'checkbox'.
    *       * checked Will be replaced with 'checked' if @a $myValue is not empty, otherwise will be empty.
    *
-   * @param string $theParentName
-   *
    * @return string
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $this->myAttributes['type']    = 'checkbox';
-    $this->myAttributes['name']    = $this->getSubmitName($theParentName);
+    $this->myAttributes['name']    = $this->mySubmitName;
     $this->myAttributes['checked'] = $this->myValue;
 
     $html = $this->myPrefix;
@@ -44,13 +42,11 @@ class CheckboxControl extends SimpleControl
   /**
    * Returns the HTML code for this form control in a table cell.
    *
-   * @param string $theParentName The submit name of the parent form control.
-   *
    * @return string
    */
-  public function getHtmlTableCell($theParentName)
+  public function getHtmlTableCell()
   {
-    return '<td class="control checkbox">'.$this->generate($theParentName).'</td>';
+    return '<td class="control checkbox">'.$this->generate().'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

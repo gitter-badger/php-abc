@@ -2,7 +2,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Core\Page\Company;
 
-use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Helper\Http;
@@ -14,6 +13,13 @@ use SetBased\Abc\Helper\Http;
 abstract class RoleBasePage extends CompanyPage
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The ID of the word for the text of the submit button of the form shown on this page.
+   *
+   * @var int
+   */
+  protected $myButtonWrdId;
+
   /**
    * The form shown on this page.
    *
@@ -44,27 +50,8 @@ abstract class RoleBasePage extends CompanyPage
   {
     $this->createForm();
     $this->loadValues();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        Http::redirect(RoleDetailsPage::getUrl($this->myActCmpId, $this->myRolId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -92,16 +79,19 @@ abstract class RoleBasePage extends CompanyPage
     $input->setAttrMaxLength(C::LEN_ROL_WEIGHT);
     // XXX numeric
 
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    // Create a submit button.
+    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(RoleDetailsPage::getUrl($this->myActCmpId, $this->myRolId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

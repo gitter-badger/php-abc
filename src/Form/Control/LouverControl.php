@@ -36,14 +36,10 @@ class LouverControl extends ComplexControl
   /**
    * Returns the HTML code of displaying the form controls of this complex form control in a table.
    *
-   * @param string $theParentName
-   *
    * @return string
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     $ret = $this->myPrefix;
 
     $ret .= Html::generateTag('div', $this->myAttributes);
@@ -63,14 +59,14 @@ class LouverControl extends ComplexControl
       $ret .= '<tfoot>';
       $ret .= '<tr>';
       $ret .= '<td colspan="'.$this->myRowFactory->getNumberOfColumns().'">';
-      $ret .= $this->myFooterControl->generate($submit_name);
+      $ret .= $this->myFooterControl->generate();
       $ret .= '</td>';
       $ret .= '</tr>';
       $ret .= '</tfoot>';
     }
 
     $ret .= '<tbody>';
-    $ret .= $this->getHtmlBody($submit_name);
+    $ret .= $this->getHtmlBody();
     $ret .= '</tbody>';
 
     $ret .= '</table>';
@@ -130,11 +126,9 @@ class LouverControl extends ComplexControl
   /**
    * Returns the inner HTML code of the tbody element of this table form control.
    *
-   * @param string $theSubmitParentName The submit name of the parent form control of this table form control.
-   *
    * @return string
    */
-  protected function getHtmlBody($theSubmitParentName)
+  protected function getHtmlBody()
   {
     $ret = '';
     $i   = 0;
@@ -146,7 +140,7 @@ class LouverControl extends ComplexControl
         $control->setAttrClass(($i % 2==0) ? 'even' : 'odd');
 
         // Generate the table row.
-        $ret .= $control->generate($theSubmitParentName);
+        $ret .= $control->generate();
 
         $i++;
       }

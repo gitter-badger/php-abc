@@ -30,13 +30,6 @@ abstract class CompanyPage extends CorePage
    */
   protected $myCompanyDetails;
 
-  /**
-   * Form for selecting the company.
-   *
-   * @var CoreForm
-   */
-  private $myCompanyForm;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
@@ -118,59 +111,45 @@ abstract class CompanyPage extends CorePage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Handle the form submit of the form for selecting a company.
+   *
+   * @param CoreForm $theForm The form.
+   */
+  protected function handleCompanyForm($theForm)
+  {
+    $abc = Abc::getInstance();
+
+    $values           = $theForm->getValues();
+    $this->myActCmpId = Abc::$DL->companyGetCmpIdByCmpAbbr($values['cmp_abbr']);
+    if ($this->myActCmpId) Http::redirect(CompanyPage::getChildUrl($abc->getPagId(), $this->myActCmpId));
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Creates the form for selecting the target company.
    */
   private function createCompanyForm()
   {
-    $this->myCompanyForm = new CoreForm();
+    $form = new CoreForm();
 
     // Create input control for Company abbreviation.
-    $input = $this->myCompanyForm->createFormControl('text', 'cmp_abbr', 'Company', true);
+    $input = $form->createFormControl('text', 'cmp_abbr', 'Company', true);
     $input->setAttrMaxLength(C::LEN_CMP_ABBR);
 
     // Create "OK" submit button.
-    $this->myCompanyForm->addButtons();
-  }
+    $form->addSubmitButton(C::WRD_ID_BUTTON_OK, 'handleForm');
 
+    return $form;
+  }
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the target company.
    */
   private function getCompany()
   {
-    $abc = Abc::getInstance();
-
-    $this->createCompanyForm();
-
-    if ($this->myCompanyForm->isSubmitted('submit'))
-    {
-      $this->myCompanyForm->loadSubmittedValues();
-      $valid = $this->myCompanyForm->validate();
-      if (!$valid)
-      {
-        $this->showCompanyForm();
-      }
-      else
-      {
-        $values           = $this->myCompanyForm->getValues();
-        $this->myActCmpId = Abc::$DL->companyGetCmpIdByCmpAbbr($values['cmp_abbr']);
-        if ($this->myActCmpId) Http::redirect(CompanyPage::getChildUrl($abc->getPagId(), $this->myActCmpId));
-        else $this->showCompanyForm();
-      }
-    }
-    else
-    {
-      $this->showCompanyForm();
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Echos the form for selecting the target company.
-   */
-  private function showCompanyForm()
-  {
-    echo $this->myCompanyForm->generate();
+    $form   = $this->createCompanyForm();
+    $method = $form->execute();
+    if ($method) $this->$method($form);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

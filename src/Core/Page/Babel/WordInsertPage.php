@@ -19,14 +19,15 @@ class WordInsertPage extends WordBasePage
   {
     parent::__construct();
 
-    $this->myWdgId = self::getCgiVar('wdg', 'wdg');
+    $this->myWdgId       = self::getCgiVar('wdg', 'wdg');
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_INSERT;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the relative URL for this page.
    *
-   * @param int $theWdgId
+   * @param int $theWdgId The ID of the word group.
    *
    * @return string
    */
@@ -34,7 +35,7 @@ class WordInsertPage extends WordBasePage
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_INSERT, 'pag');
     $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
-    $url .= "/?act_lan_id=".C::LAN_ID_BABEL_REFERENCE;
+    $url .= '/act_lan/'.Abc::obfuscate(C::LAN_ID_BABEL_REFERENCE, 'lan');
 
     return $url;
   }

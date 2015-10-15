@@ -23,7 +23,7 @@ class SpanControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $html = $this->myPrefix;
     $html .= Html::generateElement('span', $this->myAttributes, $this->myInnerHtml, true);

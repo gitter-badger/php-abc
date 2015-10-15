@@ -14,18 +14,12 @@ class FileControl extends SimpleControl
   /**
    * Returns the HTML code for this form control.
    *
-   * @note Before generation the following HTML attributes are overwritten:
-   *       * name    Will be replaced with the submit name of this form control.
-   *       * type    Will be replaced with 'file'.
-   *
-   * @param $theParentName
-   *
    * @return string
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $this->myAttributes['type'] = 'file';
-    $this->myAttributes['name'] = $this->getSubmitName($theParentName);
+    $this->myAttributes['name'] = $this->mySubmitName;
 
     $ret = $this->myPrefix;
     $ret .= $this->generatePrefixLabel();
@@ -38,17 +32,6 @@ class FileControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Does nothing. It is not possible the set the value of a file form control.
-   *
-   * @param string $theValue Not used.
-   */
-  public function setValue($theValue)
-  {
-    // Nothing to do.
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Sets the attribute [accept](http://www.w3schools.com/tags/att_input_accept.asp).
    *
    * @param string $theValue The attribute value.
@@ -56,6 +39,17 @@ class FileControl extends SimpleControl
   public function setAttrForm($theValue)
   {
     $this->myAttributes['accept'] = $theValue;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Does nothing. It is not possible the set the value of a file form control.
+   *
+   * @param string $theValue Not used.
+   */
+  public function setValue($theValue)
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------

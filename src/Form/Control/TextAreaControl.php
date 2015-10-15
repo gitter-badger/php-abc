@@ -27,9 +27,9 @@ class TextAreaControl extends SimpleControl
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $this->myAttributes['name'] = $this->getSubmitName($theParentName);
+    $this->myAttributes['name'] = $this->mySubmitName;
 
     $html = $this->myPrefix;
     $html .= Html::generateElement('textarea', $this->myAttributes, $this->myValue);

@@ -6,11 +6,9 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Class for form controls of type [input:radio](http://www.w3schools.com/tags/tag_input.asp).
- *
- * @todo  Add attribute for label.
+ * Class for form controls of type [input:hidden](http://www.w3schools.com/tags/tag_input.asp), however
  */
-class RadioControl extends SimpleControl
+class SilentControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -20,17 +18,28 @@ class RadioControl extends SimpleControl
    */
   public function generate()
   {
-    $this->myAttributes['type']  = 'radio';
-    $this->myAttributes['name']  = $this->mySubmitName;
-    $this->myAttributes['value'] = $this->myValue;
+    $this->myAttributes['type'] = 'hidden';
+    $this->myAttributes['name'] = $this->mySubmitName;
+
+    if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format($this->myValue);
+    else                    $this->myAttributes['value'] = $this->myValue;
 
     $ret = $this->myPrefix;
-    $ret .= $this->generatePrefixLabel();
     $ret .= Html::generateVoidElement('input', $this->myAttributes);
-    $ret .= $this->generatePostfixLabel();
     $ret .= $this->myPostfix;
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * A silent control must never be shown in a table.
+   *
+   * @return string An empty string.
+   */
+  public function getHtmlTableCell()
+  {
+    return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -41,30 +50,23 @@ class RadioControl extends SimpleControl
   {
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
 
-    if ((string)$theSubmittedValue[$submit_name]===(string)$this->myValue)
+    // Get the submitted value and clean it (if required).
+    if ($this->myCleaner)
     {
-      if (empty($this->myAttributes['checked']))
-      {
-        $theChangedInputs[$this->myName] = $this;
-      }
-      $this->myAttributes['checked']    = true;
-      $theWhiteListValue[$this->myName] = $this->myValue;
+      $new_value = $this->myCleaner->clean($theSubmittedValue[$submit_name]);
     }
     else
     {
-      if (!empty($this->myAttributes['checked']))
-      {
-        $theChangedInputs[$this->myName] = $this;
-      }
-      $this->myAttributes['checked'] = false;
+      $new_value = $theSubmittedValue[$submit_name];
+    }
 
-      // If the white listed value is not set by a radio button with the same name as this radio button, set the white
-      // listed value of this radio button (and other radio buttons with the same name) to null. If another radio button
-      // with the same name is checked the white listed value will be overwritten.
-      if (!isset($theWhiteListValue[$this->myName]))
-      {
-        $theWhiteListValue[$this->myName] = null;
-      }
+    // Normalize old (original) value and new (submitted) value.
+    $old_value = (string)$this->myValue;
+    $new_value = (string)$new_value;
+
+    if ($old_value!==$new_value)
+    {
+      $this->myValue = $new_value;
     }
   }
 

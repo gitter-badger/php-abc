@@ -25,9 +25,9 @@ class ModuleUpdatePage extends ModuleBasePage
   {
     parent::__construct();
 
-    $this->myMdlId = self::getCgiVar('mdl', 'mdl');
-
-    $this->myDetails = Abc::$DL->systemModuleGetDetails($this->myMdlId, $this->myLanId);
+    $this->myMdlId       = self::getCgiVar('mdl', 'mdl');
+    $this->myDetails     = Abc::$DL->systemModuleGetDetails($this->myMdlId, $this->myLanId);
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_UPDATE;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

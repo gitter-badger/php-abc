@@ -63,7 +63,7 @@ class WordTranslateWordsPage extends BabelPage
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_TRANSLATE_WORDS, 'pag');
     $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
-    $url .= "/?act_lan_id=$theLanId";
+    $url .= '/act_lan/'.Abc::obfuscate($theLanId, 'lan');
 
     return $url;
   }
@@ -75,26 +75,8 @@ class WordTranslateWordsPage extends BabelPage
   public function echoTabContent()
   {
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        Http::redirect(WordGroupDetailsPage::getUrl($this->myWdgId, $this->myActLanId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -105,7 +87,7 @@ class WordTranslateWordsPage extends BabelPage
   {
     $words = Abc::$DL->wordGroupGetAllWordsTranslator($this->myWdgId, $this->myActLanId);
 
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     // Add field set.
     $field_set = $this->myForm->createFieldSet();
@@ -117,7 +99,8 @@ class WordTranslateWordsPage extends BabelPage
     // Add submit button.
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
-    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_TRANSLATE));
+    $this->myForm->addEventHandler($button, 'handleForm');
 
     // Put everything together in a LoverControl.
     $louver = new LouverControl('data');
@@ -148,11 +131,13 @@ class WordTranslateWordsPage extends BabelPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(WordGroupDetailsPage::getUrl($this->myWdgId, $this->myActLanId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

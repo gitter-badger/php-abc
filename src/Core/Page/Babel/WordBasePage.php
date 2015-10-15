@@ -19,6 +19,13 @@ abstract class WordBasePage extends BabelPage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * The ID of the word for the text of the submit button of the form shown on this page.
+   *
+   * @var int
+   */
+  protected $myButtonWrdId;
+
+  /**
    * The form shown on this page.
    *
    * @var CoreForm.
@@ -57,28 +64,8 @@ abstract class WordBasePage extends BabelPage
 
     $this->createForm();
     $this->setValues();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        $values = $this->myForm->getValues();
-        Http::redirect(WordGroupDetailsPage::getUrl($values['wdg_id'], $this->myActLanId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -98,7 +85,7 @@ abstract class WordBasePage extends BabelPage
     $ref_language = Abc::$DL->LanguageGetName($this->myRefLanId, $this->myRefLanId);
     // $act_language = \SetBased\Rank\Abc::$DL->LanguageGetName( $this->myActLanId, $this->myRefLanId );
 
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     // Create from control for word group name.
     $word_groups = Abc::$DL->wordGroupGetAll($this->myRefLanId);
@@ -126,16 +113,7 @@ abstract class WordBasePage extends BabelPage
     $input->setAttrMaxLength(C::LEN_WRD_COMMENT);
 
     // Create a submit button.
-    $this->myForm->addButtons('OK');
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Echos the form shown on this page.
-   */
-  private function echoForm()
-  {
-    echo $this->myForm->generate();
+    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -155,6 +133,17 @@ abstract class WordBasePage extends BabelPage
     TextTableRow::addRow($table, 'Word Group', $group['wdg_name']);
 
     echo $table->getHtmlTable();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Handles the form submit.
+   */
+  private function handleForm()
+  {
+    $this->databaseAction();
+
+    Http::redirect(WordGroupDetailsPage::getUrl($this->myWdgId, $this->myActLanId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

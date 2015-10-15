@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
-use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Helper\Http;
@@ -64,45 +63,26 @@ class SpecificPageUpdatePage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
-   */
-  protected function echoTabContent()
-  {
-    $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->handlePost();
-
-        Http::redirect(SpecificPageOverviewPage::getUrl($this->myActCmpId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Updates the Company specific page after a form submit.
    */
-  protected function handlePost()
+  protected function databaseAction()
   {
     if (!$this->myForm->getChangedControls()) return;
 
     $values = $this->myForm->getValues();
 
     Abc::$DL->companySpecificPageUpdate($this->myActCmpId, $this->myTargetPagId, $values['pag_class_child']);
+  }
 
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  protected function echoTabContent()
+  {
+    $this->createForm();
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -111,7 +91,7 @@ class SpecificPageUpdatePage extends CompanyPage
    */
   private function createForm()
   {
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     // Show the ID of the page.
     $control = $this->myForm->createFormControl('html', 'pag_id', 'ID');
@@ -129,17 +109,19 @@ class SpecificPageUpdatePage extends CompanyPage
     $control = $this->myForm->createFormControl('text', 'pag_class_child', 'Child Class');
     $control->setValue($this->myTargetPageDetails['pag_class_child']);
 
-    // Add a submit button
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    // Create a submit button.
+    $this->myForm->addSubmitButton(C::WRD_ID_BUTTON_UPDATE, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(SpecificPageOverviewPage::getUrl($this->myActCmpId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

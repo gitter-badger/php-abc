@@ -48,13 +48,13 @@ class FieldSet extends ComplexControl
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $ret = $this->generateStartTag();
 
     $ret .= $this->generateLegend();
 
-    $ret .= parent::generate($theParentName);
+    $ret .= parent::generate();
 
     $ret .= $this->generateEndTag();
 

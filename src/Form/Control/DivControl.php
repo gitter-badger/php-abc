@@ -21,7 +21,7 @@ class DivControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $html = $this->myPrefix;
     $html .= Html::generateElement('div', $this->myAttributes, $this->myInnerHtml, true);

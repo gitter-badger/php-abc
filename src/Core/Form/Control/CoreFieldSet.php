@@ -11,6 +11,7 @@ use SetBased\Abc\Form\Control\RadiosControl;
 use SetBased\Abc\Form\Control\SelectControl;
 use SetBased\Abc\Form\Control\SimpleControl;
 use SetBased\Abc\Form\Control\SpanControl;
+use SetBased\Abc\Form\Control\SubmitControl;
 use SetBased\Abc\Form\Control\TextControl;
 use SetBased\Abc\Helper\Html;
 
@@ -37,22 +38,6 @@ class CoreFieldSet extends FieldSet
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds buttons at the bottom to this form.
-   *
-   * @param CoreButtonControl $theControl For control with buttons.
-   *
-   * @return CoreButtonControl
-   */
-  public function addButtonControl($theControl)
-  {
-    $this->myButtonFormControl = $theControl;
-    $ret                       = $this->addFormControl($this->myButtonFormControl);
-
-    return $ret;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Adds a button control to this fieldset.
    *
    * @param string $theSubmitButtonText The text of the submit button.
@@ -62,10 +47,10 @@ class CoreFieldSet extends FieldSet
    *
    * @return CoreButtonControl
    */
-  public function addButtons($theSubmitButtonText = 'OK',
-                             $theResetButtonText = null,
-                             $theSubmitName = 'submit',
-                             $theResetName = 'reset'
+  public function addButton($theSubmitButtonText = 'OK',
+                            $theResetButtonText = null,
+                            $theSubmitName = 'submit',
+                            $theResetName = 'reset'
   )
   {
     $this->myButtonFormControl = new CoreButtonControl('');
@@ -82,6 +67,34 @@ class CoreFieldSet extends FieldSet
     $this->addFormControl($this->myButtonFormControl);
 
     return $this->myButtonFormControl;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a submit button to this fieldset.
+   *
+   * @param int|string $theWrdId Depending on the type:
+   *                             <ul>
+   *                             <li>int: The ID of the word of the button text.
+   *                             <li>string: The text of the button.
+   *                             </ul>
+   * @param string     $theName  The name of the submit button.
+   *
+   * @return SubmitControl
+   */
+  public function addSubmitButton($theWrdId, $theName = 'submit')
+  {
+    // If necessary create a button form control.
+    if (!$this->myButtonFormControl)
+    {
+      $this->myButtonFormControl = $this->addFormControl(new CoreButtonControl(''));
+    }
+
+    /** @var SubmitControl $input */
+    $input = $this->myButtonFormControl->addFormControl(new SubmitControl($theName));
+    $input->setValue((is_int($theWrdId)) ? Babel::getWord($theWrdId) : $theWrdId);
+
+    return $input;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -134,10 +147,8 @@ class CoreFieldSet extends FieldSet
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     $ret = $this->generateStartTag();
 
     $ret .= '<div class="input_table">';
@@ -157,7 +168,7 @@ class CoreFieldSet extends FieldSet
       $ret .= '<tfoot class="button">';
       $ret .= '<tr>';
       $ret .= '<td colspan="2">';
-      $ret .= $this->myButtonFormControl->generate($submit_name);
+      $ret .= $this->myButtonFormControl->generate();
       $ret .= '</td>';
       $ret .= '</tr>';
       $ret .= '</tfoot>';
@@ -175,7 +186,7 @@ class CoreFieldSet extends FieldSet
         $ret .= '</th>';
 
         $ret .= '<td>';
-        $ret .= $control->generate($submit_name);
+        $ret .= $control->generate();
         $ret .= '</td>';
 
         $errmsg = $control->getErrorMessages(true);

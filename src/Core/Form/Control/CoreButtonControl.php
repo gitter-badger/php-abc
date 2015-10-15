@@ -14,10 +14,8 @@ class CoreButtonControl extends ComplexControl
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     $html = $this->myPrefix;
     $html .= '<table class="button">';
     $html .= '<tr>';
@@ -25,7 +23,7 @@ class CoreButtonControl extends ComplexControl
     foreach ($this->myControls as $control)
     {
       $html .= '<td>';
-      $html .= $control->generate($submit_name);
+      $html .= $control->generate();
       $html .= '</td>';
     }
 

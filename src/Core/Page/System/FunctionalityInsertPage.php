@@ -13,6 +13,16 @@ class FunctionalityInsertPage extends FunctionalityBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_INSERT;
+  }
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the relative URL to this page.
    *
    * @return string

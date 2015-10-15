@@ -14,17 +14,15 @@ class SlatControl extends ComplexControl
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     // Create start tag of table row.
     $ret = Html::generateTag('tr', $this->myAttributes);
 
     // Create table cells.
     foreach ($this->myControls as $control)
     {
-      $ret .= $control->getHtmlTableCell($submit_name);
+      $ret .= $control->getHtmlTableCell();
     }
 
     // Create table cell with error message, if any.

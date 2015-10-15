@@ -27,7 +27,7 @@ class TableColumnControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     return null;
   }
@@ -36,7 +36,7 @@ class TableColumnControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function getHtmlTableCell($theParentName)
+  public function getHtmlTableCell()
   {
     return $this->myTableColumn->getHtmlCell($this->myRow);
   }

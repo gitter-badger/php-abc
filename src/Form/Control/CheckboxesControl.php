@@ -88,10 +88,8 @@ class CheckboxesControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     $html = $this->myPrefix;
     $html .= Html::generateTag('span', $this->myAttributes);
 
@@ -109,7 +107,7 @@ class CheckboxesControl extends Control
         $code = ($this->myOptionsObfuscator) ?
           $this->myOptionsObfuscator->encode($option[$this->myKeyKey]) : $option[$this->myKeyKey];
 
-        $input_attributes['name']     = ($submit_name!=='') ? "${submit_name}[$code]" : $code;
+        $input_attributes['name']     = ($this->mySubmitName!=='') ? $this->mySubmitName.'['.$code.']' : $code;
         $input_attributes['id']       = ($this->myIdKey && isset($option[$this->myIdKey])) ? $option[$this->myIdKey] : Html::getAutoId();
         $input_attributes['checked']  = ($this->myCheckedKey && !empty($option[$this->myCheckedKey]));
         $input_attributes['disabled'] = ($this->myDisabledKey && !empty($option[$this->myDisabledKey]));

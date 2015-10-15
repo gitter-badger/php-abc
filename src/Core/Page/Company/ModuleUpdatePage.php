@@ -48,26 +48,8 @@ class ModuleUpdatePage extends CompanyPage
   protected function echoTabContent()
   {
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->handleForm();
-
-        Http::redirect(ModuleOverviewPage::getUrl($this->myActCmpId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -93,6 +75,7 @@ class ModuleUpdatePage extends CompanyPage
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
     $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    $this->myForm->addEventHandler($button, 'handleForm');
 
     // Put everything together in a LoverControl.
     $louver = new LouverControl('data');
@@ -108,18 +91,9 @@ class ModuleUpdatePage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
-   */
-  private function echoForm()
-  {
-    echo $this->myForm->generate();
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    *  Handles the form submit.
    */
-  private function handleForm()
+  private function databaseAction()
   {
     $values  = $this->myForm->getValues();
     $changes = $this->myForm->getChangedControls();
@@ -135,6 +109,17 @@ class ModuleUpdatePage extends CompanyPage
         Abc::$DL->companyModuleDisable($this->myActCmpId, $mdl_id);
       }
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Handles the form submit.
+   */
+  private function handleForm()
+  {
+    $this->databaseAction();
+
+    Http::redirect(ModuleOverviewPage::getUrl($this->myActCmpId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

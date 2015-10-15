@@ -12,7 +12,7 @@ interface FormValidator
   /**
    * Validates a form at form level.
    *
-   * @param Form $theForm The form to be validated.
+   * @param RawForm $theForm The form to be validated.
    *
    * @return bool On Successful validation returns true, otherwise false.
    */

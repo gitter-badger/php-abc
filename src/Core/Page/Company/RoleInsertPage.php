@@ -13,6 +13,16 @@ class RoleInsertPage extends RoleBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * {@inheritdoc}
+   */
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_INSERT;
+  }
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns the relative URL for this page.
    *
    * @param int $theCmpId The ID of the target company.

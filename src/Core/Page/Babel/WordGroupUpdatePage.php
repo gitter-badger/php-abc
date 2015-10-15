@@ -19,9 +19,9 @@ class WordGroupUpdatePage extends WordGroupBasePage
   {
     parent::__construct();
 
-    $this->myWdgId = self::getCgiVar('wdg', 'wdg');
-
-    $this->myDetails = Abc::$DL->WordGroupGetDetails($this->myWdgId);
+    $this->myWdgId       = self::getCgiVar('wdg', 'wdg');
+    $this->myDetails     = Abc::$DL->WordGroupGetDetails($this->myWdgId);
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_UPDATE;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ class WordGroupUpdatePage extends WordGroupBasePage
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_UPDATE, 'pag');
     $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
-    $url .= "/?act_lan_id=".C::LAN_ID_BABEL_REFERENCE;
+    $url .= '/act_lan/'.Abc::obfuscate(C::LAN_ID_BABEL_REFERENCE, 'lan');
 
     return $url;
   }

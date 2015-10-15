@@ -22,6 +22,7 @@ class PageUpdatePage extends PageBasePage
     $this->myTargetPagId = self::getCgiVar('tar_pag', 'pag');
     $this->myDetails     = Abc::$DL->systemPageGetDetails($this->myTargetPagId, $this->myLanId);
     $this->myMode        = 'modify';
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_UPDATE;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

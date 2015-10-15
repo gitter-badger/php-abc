@@ -69,27 +69,11 @@ class FunctionalityUpdatePagesPage extends CorePage
    */
   protected function echoTabContent()
   {
+    $this->showFunctionality();
+
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->Validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->dataBaseAction();
-
-        Http::redirect(FunctionalityDetailsPage::getUrl($this->myFunId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -114,7 +98,8 @@ class FunctionalityUpdatePagesPage extends CorePage
     // Add submit button.
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
-    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_UPDATE));
+    $this->myForm->addEventHandler($button, 'handleForm');
 
     // Put everything together in a LouverControl.
     $louver = new LouverControl('data');
@@ -152,13 +137,13 @@ class FunctionalityUpdatePagesPage extends CorePage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    $this->showFunctionality();
+    $this->databaseAction();
 
-    echo $this->myForm->generate();
+    Http::redirect(FunctionalityDetailsPage::getUrl($this->myFunId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

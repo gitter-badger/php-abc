@@ -12,11 +12,9 @@ class ConstantControl extends SimpleControl
   /**
    * Returns an empty string.
    *
-   * @param string $theParentName
-   *
    * @return string
    */
-  public function generate($theParentName)
+  public function generate()
   {
     return '';
   }
@@ -25,11 +23,9 @@ class ConstantControl extends SimpleControl
   /**
    * A constant control must never be shown in a table.
    *
-   * @param string $theParentName Not used.
-   *
    * @return string An empty string.
    */
-  public function getHtmlTableCell($theParentName)
+  public function getHtmlTableCell()
   {
     return null;
   }

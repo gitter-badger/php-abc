@@ -5,9 +5,9 @@ namespace SetBased\Abc\Core\Page\Misc;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
-use SetBased\Abc\Core\Form\Form;
 use SetBased\Abc\Form\Control\ConstantControl;
 use SetBased\Abc\Form\Control\SpanControl;
+use SetBased\Abc\Form\Form;
 use SetBased\Abc\Helper\Http;
 use SetBased\Abc\Helper\Password;
 use SetBased\Abc\Page\Page;
@@ -104,27 +104,11 @@ class LoginPage extends Page
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-
   protected function showPageContent()
   {
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $login_succeeded = false;
-      $this->myForm->loadSubmittedValues();
-
-      if ($this->myForm->validate())
-      {
-        $login_succeeded = $this->handleForm();
-      }
-
-      if (!$login_succeeded) $this->echoForm();
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -135,7 +119,7 @@ class LoginPage extends Page
   {
     $abc = Abc::getInstance();
 
-    $this->myForm = new CoreForm(false);
+    $this->myForm = new CoreForm('', false);
 
     $input = $this->myForm->createFormControl('text', 'usr_name', 'Naam', true);
     $input->setAttrMaxLength(C::LEN_USR_NAME);
@@ -160,7 +144,7 @@ class LoginPage extends Page
       $input->setAttrMaxLength(C::LEN_CMP_ABBR);
     }
 
-    $this->myForm->addButtons('Login');
+    $this->myForm->addSubmitButton(C::WRD_ID_BUTTON_LOGIN, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -174,11 +158,22 @@ class LoginPage extends Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Handles the form submit.
+   */
+  private function handleForm()
+  {
+    $login_succeeded = $this->login();
+
+    if (!$login_succeeded) $this->echoForm();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns true if login is successful. Otherwise returns false.
    *
    * @return bool
    */
-  private function handleForm()
+  private function login()
   {
     $abc = Abc::getInstance();
 

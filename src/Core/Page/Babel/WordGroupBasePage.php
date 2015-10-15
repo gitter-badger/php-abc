@@ -14,6 +14,13 @@ abstract class WordGroupBasePage extends BabelPage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * The ID of the word for the text of the submit button of the form shown on this page.
+   *
+   * @var int
+   */
+  protected $myButtonWrdId;
+
+  /**
    * The form shown on this page.
    *
    * @var CoreForm
@@ -43,27 +50,8 @@ abstract class WordGroupBasePage extends BabelPage
   {
     $this->createForm();
     $this->setValues();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        Http::redirect(WordGroupDetailsPage::getUrl($this->myWdgId, $this->myActLanId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -80,7 +68,7 @@ abstract class WordGroupBasePage extends BabelPage
    */
   private function createForm()
   {
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     // Show word group ID (update only).
     if ($this->myWdgId)
@@ -98,16 +86,18 @@ abstract class WordGroupBasePage extends BabelPage
     $input->setAttrMaxLength(C::LEN_WRD_LABEL);
 
     // Create a submit button.
-    $this->myForm->addButtons('OK');
+    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->dataBaseAction();
+
+    Http::redirect(WordGroupDetailsPage::getUrl($this->myWdgId, $this->myActLanId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

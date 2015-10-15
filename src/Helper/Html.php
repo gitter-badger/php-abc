@@ -50,6 +50,7 @@ class Html
       case 'novalidate':
       case 'readonly':
       case 'required':
+      case 'selected':
       case 'spellcheck':
         if (!empty($theValue))
         {

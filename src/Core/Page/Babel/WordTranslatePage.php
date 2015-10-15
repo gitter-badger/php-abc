@@ -41,7 +41,7 @@ class WordTranslatePage extends BabelPage
    *
    * @var string
    */
-  private $myRetUrl;
+  private $myRedirectUrl;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -53,13 +53,13 @@ class WordTranslatePage extends BabelPage
 
     $this->myWrdId = self::getCgiVar('wrd', 'wrd');
 
-    $this->myRetUrl = self::getCgiUrl('redirect');
+    $this->myRedirectUrl = self::getCgiUrl('redirect');
 
     $this->myDetails = Abc::$DL->WordGetDetails($this->myWrdId, $this->myActLanId);
 
-    if (!$this->myRetUrl)
+    if (!$this->myRedirectUrl)
     {
-      $this->myRetUrl = WordGroupDetailsPage::getUrl($this->myDetails['wdg_id'], $this->myActLanId);
+      $this->myRedirectUrl = WordGroupDetailsPage::getUrl($this->myDetails['wdg_id'], $this->myActLanId);
     }
   }
 
@@ -67,18 +67,18 @@ class WordTranslatePage extends BabelPage
   /**
    * Returns the relative URL for this page.
    *
-   * @param int    $theWrdId
-   * @param int    $theLanId
-   * @param string $theRetUrl
+   * @param int    $theWrdId       The ID of the word to be translated.
+   * @param int    $theLanId       The ID of the target language.
+   * @param string $theRedirectUrl The URL to redirect the user agent after the word has been translated.
    *
    * @return string
    */
-  public static function getUrl($theWrdId, $theLanId, $theRetUrl = null)
+  public static function getUrl($theWrdId, $theLanId, $theRedirectUrl = null)
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_TRANSLATE, 'pag');
     $url .= '/wrd/'.Abc::obfuscate($theWrdId, 'wrd');
-    $url .= "/?act_lan_id=$theLanId";
-    if ($theRetUrl) $url .= ";redirect=".urlencode($theRetUrl);
+    $url .= '/act_lan/'.Abc::obfuscate($theLanId, 'lan');
+    if ($theRedirectUrl) $url .= ";redirect=".urlencode($theRedirectUrl);
 
     return $url;
   }
@@ -90,26 +90,8 @@ class WordTranslatePage extends BabelPage
   public function echoTabContent()
   {
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        Http::redirect($this->myRetUrl);
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -121,7 +103,7 @@ class WordTranslatePage extends BabelPage
     $ref_language = Abc::$DL->LanguageGetName($this->myRefLanId, $this->myRefLanId);
     $act_language = Abc::$DL->LanguageGetName($this->myActLanId, $this->myRefLanId);
 
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     // Show word group name.
     $input = $this->myForm->createFormControl('span', 'word_group', 'Word Group');
@@ -152,14 +134,14 @@ class WordTranslatePage extends BabelPage
     $input->setValue($this->myDetails['wdt_text']);
 
     // Create a submit button.
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    $this->myForm->addSubmitButton(C::WRD_ID_BUTTON_TRANSLATE, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Updates the translation of the word in the target language.
    */
-  private function databaseAction()
+  private function dataBaseAction()
   {
     $values  = $this->myForm->getValues();
     $changes = $this->myForm->getChangedControls();
@@ -172,11 +154,13 @@ class WordTranslatePage extends BabelPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->dataBaseAction();
+
+    Http::redirect($this->myRedirectUrl);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

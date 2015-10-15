@@ -6,7 +6,7 @@ namespace SetBased\Abc\Error;
 /**
  * Parent class for runtime exceptions.
  */
-class RunTimeException extends \RuntimeException
+class RuntimeException extends \RuntimeException
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**

@@ -63,18 +63,11 @@ class SelectControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the HTML code for this form control.
-   *
-   * @note Before generation the following HTML attributes are overwritten:
-   *       * name    Will be replaced with the submit name of this form control.
-   *
-   * @param string $theParentName
-   *
-   * @return string
+   * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $this->myAttributes['name'] = $this->getSubmitName($theParentName);
+    $this->myAttributes['name'] = $this->mySubmitName;
 
     $html = $this->myPrefix;
     $html .= Html::generateTag('select', $this->myAttributes);

@@ -21,14 +21,14 @@ class WordGroupOverviewPage extends BabelPage
   /**
    * Returns the relative URL for this page.
    *
-   * @param bool|int $theTargetLanId
+   * @param int $theTargetLanId
    *
    * @return string
    */
-  public static function getUrl($theTargetLanId = false)
+  public static function getUrl($theTargetLanId = null)
   {
     $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_OVERVIEW, 'pag');
-    if ($theTargetLanId) $url .= "/?act_lan_id=$theTargetLanId";
+    if ($theTargetLanId) $url .= '/act_lan/'.Abc::obfuscate($theTargetLanId, 'lan');
 
     return $url;
   }
@@ -39,9 +39,12 @@ class WordGroupOverviewPage extends BabelPage
    */
   protected function echoTabContent()
   {
-    $this->myActLanId = $this->selectLanguage($this->myActLanId);
+    $this->selectLanguage($this->myActLanId);
 
-    if ($this->myActLanId) $this->showWordGroups();
+    if ($this->myActLanId)
+    {
+      $this->showWordGroups();
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

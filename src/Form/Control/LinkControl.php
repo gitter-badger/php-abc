@@ -21,7 +21,7 @@ class LinkControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $ret = $this->myPrefix;
     $ret .= Html::generateElement('a', $this->myAttributes, $this->myInnerHtml, true);

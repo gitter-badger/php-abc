@@ -49,6 +49,13 @@ abstract class Control extends HtmlElement
   protected $myPrefix;
 
   /**
+   * The submit name or name in the generated HTMl code of this form control.
+   *
+   * @var string
+   */
+  protected $mySubmitName;
+
+  /**
    * The validators that will be used to validate this form control.
    *
    * @var Validator[]
@@ -92,11 +99,9 @@ abstract class Control extends HtmlElement
   /**
    * Returns the HTML code for this form control.
    *
-   * @param string $theParentName The submit name of the parent form control.
-   *
    * @return string
    */
-  abstract public function generate($theParentName);
+  abstract public function generate();
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -104,11 +109,13 @@ abstract class Control extends HtmlElement
    *
    * @note Depending on the child class the returned value might be different than in the actual generated HTML code
    *       for the following attributes:
-   *       * type
-   *       * name
-   *       * value
-   *       * checked
-   *       * size
+   *       <ul>
+   *       <li> type
+   *       <li> name
+   *       <li> value
+   *       <li> checked
+   *       <li> size
+   *       </ul>
    *
    * @param string $theName The name of the requested attribute.
    *
@@ -137,13 +144,11 @@ abstract class Control extends HtmlElement
   /**
    * Returns the HTML code for this form control in a table cell.
    *
-   * @param string $theParentName The submit name of the parent form control.
-   *
    * @return string
    */
-  public function getHtmlTableCell($theParentName)
+  public function getHtmlTableCell()
   {
-    return '<td class="control">'.$this->generate($theParentName).'</td>';
+    return '<td class="control">'.$this->generate().'</td>';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -166,6 +171,17 @@ abstract class Control extends HtmlElement
   public function getSetValuesBase(&$theValues)
   {
     // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the submit name of this form control
+   *
+   * @return string
+   */
+  public function getSubmitName()
+  {
+    return $this->mySubmitName;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -240,31 +256,6 @@ abstract class Control extends HtmlElement
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the name this will be used for this form control when the form is submitted.
-   *
-   * @param string $theParentSubmitName The submit name of the parent form control of this form control.
-   *
-   * @return string
-   */
-  protected function getSubmitName($theParentSubmitName)
-  {
-    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
-
-    if ($theParentSubmitName!=='')
-    {
-      if ($submit_name!=='') $global_name = $theParentSubmitName.'['.$submit_name.']';
-      else                   $global_name = $theParentSubmitName;
-    }
-    else
-    {
-      $global_name = $submit_name;
-    }
-
-    return $global_name;
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Loads the submitted values.
    *
    * @param array $theSubmittedValue The submitted values.
@@ -272,6 +263,38 @@ abstract class Control extends HtmlElement
    * @param array $theChangedInputs  The form controls which values are changed by the form submit.
    */
   abstract protected function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs);
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Prepares this form control for HTML code generation or loading submitted values.
+   *
+   * @param string $theParentSubmitName The submit name of the parent control.
+   */
+  protected function prepare($theParentSubmitName)
+  {
+    $this->setSubmitName($theParentSubmitName);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the name this will be used for this form control when the form is submitted.
+   *
+   * @param string $theParentSubmitName The submit name of the parent form control of this form control.
+   */
+  protected function setSubmitName($theParentSubmitName)
+  {
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
+
+    if ($theParentSubmitName!=='')
+    {
+      if ($submit_name!=='') $this->mySubmitName = $theParentSubmitName.'['.$submit_name.']';
+      else                   $this->mySubmitName = $theParentSubmitName;
+    }
+    else
+    {
+      $this->mySubmitName = $submit_name;
+    }
+  }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**

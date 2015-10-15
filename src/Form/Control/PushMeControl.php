@@ -12,27 +12,22 @@ class PushMeControl extends SimpleControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /** The type of this button. Valid values are:
-   *  * submit
-   *  * reset
-   *  * button
+   *  <ul>
+   *  <li> submit
+   *  <li> reset
+   *  <li> button
+   *  </ul>
    */
   protected $myButtonType;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * {@inheritdoc}
-   *
-   * @param string $theParentName
-   *
-   * @return string
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $this->myAttributes['type'] = $this->myButtonType;
-
-    // For buttons we use local names. It is the task of the developer to ensure the local names of buttons
-    // are unique.
-    $this->myAttributes['name'] = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
+    $this->myAttributes['name'] = $this->mySubmitName;
 
     if ($this->myFormatter) $this->myAttributes['value'] = $this->myFormatter->format($this->myValue);
     else                    $this->myAttributes['value'] = $this->myValue;

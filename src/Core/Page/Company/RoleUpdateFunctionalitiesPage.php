@@ -70,28 +70,8 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
   protected function echoTabContent()
   {
     $this->createForm();
-    // $this->loadValues();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-
-        Http::redirect(RoleDetailsPage::getUrl($this->myActCmpId, $this->myRolId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -116,7 +96,8 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
     // Add submit button.
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
-    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_UPDATE));
+    $this->myForm->addEventHandler($button, 'handleForm');
 
     // Put everything together in a LouverControl.
     $louver = new LouverControl('data');
@@ -157,11 +138,13 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(RoleDetailsPage::getUrl($this->myActCmpId, $this->myRolId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

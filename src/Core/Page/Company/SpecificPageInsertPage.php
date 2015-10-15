@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Page\Company;
 
 use SetBased\Abc\Abc;
-use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Helper\Http;
@@ -40,42 +39,24 @@ class SpecificPageInsertPage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Inserts a company specific page.
+   */
+  protected function databaseAction()
+  {
+    $values = $this->myForm->getValues();
+
+    Abc::$DL->companySpecificPageInsert($this->myActCmpId, $values['prt_pag_id'], $values['pag_class_child']);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * {@inheritdoc}
    */
   protected function echoTabContent()
   {
     $this->createForm();
-
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->handlePost();
-
-        Http::redirect(SpecificPageOverviewPage::getUrl($this->myActCmpId));
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Inserts a company specific page.
-   */
-  protected function handlePost()
-  {
-    $values = $this->myForm->getValues();
-
-    Abc::$DL->companySpecificPageInsert($this->myActCmpId, $values['prt_pag_id'], $values['pag_class_child']);
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -86,7 +67,7 @@ class SpecificPageInsertPage extends CompanyPage
   {
     $pages = Abc::$DL->systemPageGetAll($this->myLanId);
 
-    $this->myForm = new CoreForm($this->myLanId);
+    $this->myForm = new CoreForm();
 
     $control = $this->myForm->createFormControl('select', 'prt_pag_id', 'Parent Class');
     $control->setOptions($pages, 'pag_id', 'pag_class');
@@ -94,18 +75,19 @@ class SpecificPageInsertPage extends CompanyPage
 
     $this->myForm->createFormControl('text', 'pag_class_child', 'Child Class');
 
-    // Add a submit button
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
+    // Create a submit button.
+    $this->myForm->addSubmitButton(C::WRD_ID_BUTTON_INSERT, 'handleForm');
   }
-
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the form shown on this page.
+   * Handles the form submit.
    */
-  private function echoForm()
+  private function handleForm()
   {
-    echo $this->myForm->generate();
+    $this->databaseAction();
+
+    Http::redirect(SpecificPageOverviewPage::getUrl($this->myActCmpId));
   }
 
   //--------------------------------------------------------------------------------------------------------------------

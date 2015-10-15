@@ -27,6 +27,16 @@ abstract class Abc
   public static $DL;
 
   /**
+   * The attributes of the script element in the page trailer (i.e. near the end html tag). Example:
+   * ```
+   * [ 'src' => '/js/requirejs.js', 'data-main' => '/js/main.js' ]
+   * ```
+   *
+   * @var array
+   */
+  public static $ourJsTrailerAttributes;
+
+  /**
    * The start time of serving the page request.
    *
    * @var float
@@ -44,16 +54,6 @@ abstract class Abc
    * @var Abc A reference to the singleton instance of this class.
    */
   private static $ourInstance;
-
-  /**
-   * The attributes of the script element in the page trailer (i.e. near the end html tag). Example:
-   * ```
-   * [ 'src' => '/js/requirejs.js', 'data-main' => '/js/main.js' ]
-   * ```
-   *
-   * @var array
-   */
-  public static $ourJsTrailerAttributes;
 
   /**
    * The canonical host name of the (virtual) web server.

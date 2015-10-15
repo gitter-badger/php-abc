@@ -19,9 +19,9 @@ class TabUpdatePage extends TabBasePage
   {
     parent::__construct();
 
-    $this->myPtbId = self::getCgiVar('ptb', 'ptb');
-
-    $this->myDetails = Abc::$DL->systemTabGetDetails($this->myPtbId, $this->myLanId);
+    $this->myPtbId       = self::getCgiVar('ptb', 'ptb');
+    $this->myDetails     = Abc::$DL->systemTabGetDetails($this->myPtbId, $this->myLanId);
+    $this->myButtonWrdId = C::WRD_ID_BUTTON_UPDATE;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class TabUpdatePage extends TabBasePage
    */
   public static function getUrl($thePtbId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_TAB_UPDATE, 'ptb');
+    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_TAB_UPDATE, 'pag');
     $url .= '/ptb/'.Abc::obfuscate($thePtbId, 'ptb');
 
     return $url;

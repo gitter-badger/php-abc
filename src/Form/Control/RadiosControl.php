@@ -61,13 +61,9 @@ class RadiosControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns the HTML code for this form control.
-   *
-   * @param string $theParentName
-   *
-   * @return string
+   * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
     $html = $this->myPrefix;
     $html .= Html::generateTag('span', $this->myAttributes);
@@ -75,11 +71,13 @@ class RadiosControl extends Control
     if (is_array($this->myOptions))
     {
       $input_attributes = ['type'     => 'radio',
-                           'name'     => $this->getSubmitName($theParentName),
+                           'name'     => $this->mySubmitName,
                            'id'       => '',
                            'value'    => '',
                            'checked'  => false,
                            'disabled' => false];
+      // Note: we use a reference to unsure that the for attribute of the label and the id attribute of the radio
+      // button match.
       $label_attributes = ['for' => &$input_attributes['id']];
 
       foreach ($this->myOptions as $option)

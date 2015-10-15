@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Form;
 
 use SetBased\Abc\Babel;
-use SetBased\Abc\Core\Form\Control\CoreButtonControl;
 use SetBased\Abc\Core\Form\Control\CoreFieldSet;
 use SetBased\Abc\Core\Form\Validator\MandatoryValidator;
 use SetBased\Abc\Form\Control\CheckBoxesControl;
@@ -15,6 +14,8 @@ use SetBased\Abc\Form\Control\RadiosControl;
 use SetBased\Abc\Form\Control\SelectControl;
 use SetBased\Abc\Form\Control\SimpleControl;
 use SetBased\Abc\Form\Control\SpanControl;
+use SetBased\Abc\Form\Control\SubmitControl;
+use SetBased\Abc\Form\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -32,40 +33,16 @@ class CoreForm extends Form
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Object constructor.
-   *
-   * @param bool $theCsrfCheckFlag If set the generated form has protection against CSRF.
+   * {@inheritdoc}
    */
-  public function __construct($theCsrfCheckFlag = true)
+  public function __construct($theName = '', $theCsrfCheckFlag = true)
   {
-    parent::__construct($theCsrfCheckFlag);
+    parent::__construct($theName, $theCsrfCheckFlag);
 
-    $this->myAttributes['class'] = 'input_table';
+    $this->myAttributes['class']        = 'input_table';
+    $this->myAttributes['autocomplete'] = false;
 
     $this->myVisibleFieldSet = parent::addFieldSet(new CoreFieldSet(''));
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Adds a button control to the visible fieldset of this form.
-   *
-   * @param string $theSubmitButtonText The text of the submit button.
-   * @param null   $theResetButtonText  The text of the reset button. If null no reset button will be created.
-   * @param string $theSubmitName       The name of the submit button.
-   * @param string $theResetName        The name of the reset button.
-   *
-   * @return CoreButtonControl
-   */
-  public function addButtons($theSubmitButtonText = 'OK',
-                             $theResetButtonText = null,
-                             $theSubmitName = 'submit',
-                             $theResetName = 'reset'
-  )
-  {
-    return $this->myVisibleFieldSet->addButtons($theSubmitButtonText,
-                                                $theResetButtonText,
-                                                $theSubmitName,
-                                                $theResetName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -93,6 +70,29 @@ class CoreForm extends Form
     }
 
     return $theControl;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a submit button to this form.
+   *
+   * @param int|string $theWrdId  Depending on the type:
+   *                              <ul>
+   *                              <li>int: The ID of the word of the button text.
+   *                              <li>string: The text of the button.
+   *                              </ul>
+   * @param string     $theMethod The name of method for handling the form submit.
+   * @param string     $theName   The name of the submit button.
+   *
+   * @return SubmitControl
+   */
+  public function addSubmitButton($theWrdId, $theMethod, $theName = 'submit')
+  {
+    /** @var SubmitControl $control */
+    $control = $this->myVisibleFieldSet->addSubmitButton($theWrdId, $theName);
+    $this->addEventHandler($control, $theMethod);
+
+    return $control;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

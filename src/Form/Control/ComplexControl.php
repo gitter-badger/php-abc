@@ -7,7 +7,7 @@ use SetBased\Abc\Error\LogicException;
 /**
  * Class for complex form controls. A complex form control consists of one of more form controls.
  */
-class ComplexControl extends Control
+class ComplexControl extends Control implements CompoundControl
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -116,6 +116,10 @@ class ComplexControl extends Control
         $control = new SelectControl($theName);
         break;
 
+      case 'silent':
+        $control = new SilentControl($theName);
+        break;
+
       case 'span':
         $control = new SpanControl($theName);
         break;
@@ -155,12 +159,7 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for a form control with by name. If more than one form control with the same name exists the first
-   * found form control is returned. If no form control is found null is returned.
-   *
-   * @param string $theName The name of the searched form control.
-   *
-   * @return ComplexControl|Control
+   * {@inheritdoc}
    */
   public function findFormControlByName($theName)
   {
@@ -183,12 +182,7 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for a form control by path. If more than one form control with same path exists the first found form
-   * control is returned. If not form control is found null is returned.
-   *
-   * @param string $thePath The path of the searched form control.
-   *
-   * @return ComplexControl|Control
+   * {@inheritdoc}
    */
   public function findFormControlByPath($thePath)
   {
@@ -240,14 +234,12 @@ class ComplexControl extends Control
   /**
    * {@inheritdoc}
    */
-  public function generate($theParentName)
+  public function generate()
   {
-    $submit_name = $this->getSubmitName($theParentName);
-
     $ret = '';
     foreach ($this->myControls as $control)
     {
-      $ret .= $control->generate($submit_name);
+      $ret .= $control->generate();
     }
 
     return $ret;
@@ -289,12 +281,7 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for a form control with by name. If more than one form control with the same name exists the first found
-   * form control is returned. If no form control is found an exception is thrown.
-   *
-   * @param string $theName The name of the searched form control.
-   *
-   * @return ComplexControl|Control
+   * {@inheritdoc}
    */
   public function getFormControlByName($theName)
   {
@@ -309,12 +296,7 @@ class ComplexControl extends Control
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Searches for a form control by path. If more than one form control with the same path exists the first found
-   * form control is returned. If no form control is found an exception is thrown.
-   *
-   * @param string $thePath The path of the searched form control.
-   *
-   * @return ComplexControl|Control
+   * {@inheritdoc}
    */
   public function getFormControlByPath($thePath)
   {
@@ -436,6 +418,22 @@ class ComplexControl extends Control
       {
         $control->mergeValuesBase($values);
       }
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Prepares this form complex control for HTML code generation or loading submitted values.
+   *
+   * @param string $theParentSubmitName The submit name of the parent control.
+   */
+  public function prepare($theParentSubmitName)
+  {
+    parent::prepare($theParentSubmitName);
+
+    foreach ($this->myControls as $control)
+    {
+      $control->prepare($this->mySubmitName);
     }
   }
 

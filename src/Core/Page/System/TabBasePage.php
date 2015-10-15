@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Page\System;
 
 use SetBased\Abc\Abc;
-use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Page\CorePage;
@@ -16,6 +15,13 @@ use SetBased\Abc\Helper\Http;
 abstract class TabBasePage extends CorePage
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The ID of the word for the text of the submit button of the form shown on this page.
+   *
+   * @var int
+   */
+  protected $myButtonWrdId;
+
   /**
    * The form shown on this page.
    *
@@ -39,26 +45,19 @@ abstract class TabBasePage extends CorePage
   {
     $this->createForm();
     $this->loadValues();
+    $method = $this->myForm->execute();
+    if ($method) $this->$method();
+  }
 
-    if ($this->myForm->isSubmitted('submit'))
-    {
-      $this->myForm->loadSubmittedValues();
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Handles the form submit.
+   */
+  protected function handleForm()
+  {
+    $this->databaseAction();
 
-      $valid = $this->myForm->validate();
-      if (!$valid)
-      {
-        $this->echoForm();
-      }
-      else
-      {
-        $this->databaseAction();
-        Http::redirect(TabOverviewPage::getUrl());
-      }
-    }
-    else
-    {
-      $this->echoForm();
-    }
+    Http::redirect(TabOverviewPage::getUrl());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -92,17 +91,8 @@ abstract class TabBasePage extends CorePage
     $input = $this->myForm->createFormControl('text', 'ptb_label', 'Label');
     $input->setAttrMaxLength(C::LEN_PTB_LABEL);
 
-    // Add submit button.
-    $this->myForm->addButtons(Babel::getWord(C::WRD_ID_BUTTON_OK));
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Echos the form shown on this page.
-   */
-  private function echoForm()
-  {
-    echo $this->myForm->generate();
+    // Create a submit button.
+    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
