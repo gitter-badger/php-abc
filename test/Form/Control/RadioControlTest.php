@@ -1,5 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+use SetBased\Abc\Form\Control\RadioControl;
 use SetBased\Abc\Form\Form;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -84,7 +85,6 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
   /**
    * Only white list values must be value.
    */
-
   public function testWhiteList1()
   {
     $_POST['name'] = 'ten';
@@ -125,15 +125,17 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
+    /** @var RadioControl $control */
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue('1');
+    $control->setAttrValue('1');
 
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue('2');
+    $control->setAttrValue('2');
 
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue('3');
+    $control->setAttrValue('3');
 
+    $form->generate();
     $form->loadSubmittedValues();
 
     return $form;
@@ -145,16 +147,18 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
+    /** @var RadioControl $control */
     $control = $fieldset->createFormControl('radio', 'name');
+    $control->setAttrValue(1);
     $control->setValue(1);
-    $control->setAttribute('checked', true);
 
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue(2);
+    $control->setAttrValue(2);
 
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue(3);
+    $control->setAttrValue(3);
 
+    $form->generate();
     $form->loadSubmittedValues();
 
     return $form;
@@ -166,17 +170,18 @@ class RadioControlTest extends PHPUnit_Framework_TestCase
     $form     = new Form();
     $fieldset = $form->createFieldSet();
 
+    /** @var RadioControl $control */
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue('0');
-
+    $control->setAttrValue('0');
 
     $control = $fieldset->createFormControl('radio', 'name');
+    $control->setAttrValue('0.0');
     $control->setValue('0.0');
-    $control->setAttribute('checked', true);
 
     $control = $fieldset->createFormControl('radio', 'name');
-    $control->setValue(' ');
+    $control->setAttrValue(' ');
 
+    $form->generate();
     $form->loadSubmittedValues();
 
     return $form;
