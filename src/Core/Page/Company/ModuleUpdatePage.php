@@ -75,7 +75,7 @@ class ModuleUpdatePage extends CompanyPage
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
     $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_OK));
-    $this->myForm->addEventHandler($button, 'handleForm');
+    $this->myForm->addSubmitHandler($button, 'handleForm');
 
     // Put everything together in a LoverControl.
     $louver = new LouverControl('data');

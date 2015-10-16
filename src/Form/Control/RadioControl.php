@@ -21,7 +21,7 @@ class RadioControl extends SimpleControl
   public function generate()
   {
     $this->myAttributes['type'] = 'radio';
-    $this->myAttributes['name']  = $this->mySubmitName;
+    $this->myAttributes['name'] = $this->mySubmitName;
 
     // A radio button is checked if and only if its value equals to the value of attribute value.
     if (isset($this->myAttributes['value']) && ((string)$this->myValue===(string)$this->myAttributes['value']))

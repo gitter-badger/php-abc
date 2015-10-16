@@ -99,7 +99,7 @@ class FunctionalityUpdatePagesPage extends CorePage
     $button = new CoreButtonControl('');
     $submit = $button->createFormControl('submit', 'submit');
     $submit->setValue(Babel::getWord(C::WRD_ID_BUTTON_UPDATE));
-    $this->myForm->addEventHandler($button, 'handleForm');
+    $this->myForm->addSubmitHandler($button, 'handleForm');
 
     // Put everything together in a LouverControl.
     $louver = new LouverControl('data');

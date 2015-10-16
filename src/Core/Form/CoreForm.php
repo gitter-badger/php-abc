@@ -90,7 +90,7 @@ class CoreForm extends Form
   {
     /** @var SubmitControl $control */
     $control = $this->myVisibleFieldSet->addSubmitButton($theWrdId, $theName);
-    $this->addEventHandler($control, $theMethod);
+    $this->addSubmitHandler($control, $theMethod);
 
     return $control;
   }

@@ -17,6 +17,13 @@ class Form extends RawForm
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * The handler for echoing this this form.
+   *
+   * @var string
+   */
+  protected $myEchoHandler;
+
+  /**
    * If set the generated form has protection against CSRF.
    *
    * @var bool
@@ -24,18 +31,18 @@ class Form extends RawForm
   protected $myEnableCsrfCheck;
 
   /**
-   * The event handlers for this form.
-   *
-   * @var array
-   */
-  protected $myEventHandlers = [];
-
-  /**
    * FieldSet for all form control elements of type "hidden".
    *
    * @var FieldSet
    */
   protected $myHiddenFieldSet;
+
+  /**
+   * The handlers for handling submits of this form.
+   *
+   * @var array
+   */
+  protected $mySubmitHandlers = [];
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -62,9 +69,16 @@ class Form extends RawForm
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  private static function testSubmitted($thePath)
+  /**
+   * Test whether a form control is submitted.
+   *
+   * @param string $theSubmitName The submit name of the form control.
+   *
+   * @return mixed
+   */
+  private static function testSubmitted($theSubmitName)
   {
-    $parts = explode('[', str_replace(']', '', $thePath));
+    $parts = explode('[', str_replace(']', '', $theSubmitName));
 
     $ret = $_POST;
     foreach ($parts as $part)
@@ -85,19 +99,6 @@ class Form extends RawForm
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Appends an event handler for form submit.
-   *
-   * @param Control $theControl The form control that submits the form.
-   * @param string  $method     The method for handeling the form submit.
-   */
-  public function addEventHandler($theControl, $method)
-  {
-    $this->myEventHandlers[] = ['control' => $theControl,
-                                'method'  => $method];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Adds a hidden form control to the fieldset for hidden form controls.
    *
    * @param Control $theControl The hidden form control.
@@ -107,6 +108,18 @@ class Form extends RawForm
     $this->myHiddenFieldSet->addFormControl($theControl);
   }
 
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Appends an event handler for form submit.
+   *
+   * @param Control $theControl The form control that submits the form.
+   * @param string  $theMethod  The method for handeling the form submit.
+   */
+  public function addSubmitHandler($theControl, $theMethod)
+  {
+    $this->mySubmitHandlers[] = ['control' => $theControl,
+                                 'method'  => $theMethod];
+  }
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Defends against CSRF attacks using State Full Double Submit Cookie.
@@ -153,7 +166,7 @@ class Form extends RawForm
     // @todo implement submit without button (i.e. submit via JS)
     $handler   = null;
     $submitted = null;
-    foreach ($this->myEventHandlers as $handler)
+    foreach ($this->mySubmitHandlers as $handler)
     {
       /** @var Control $control */
       $control = $handler['control'];
@@ -173,7 +186,8 @@ class Form extends RawForm
       $valid = $this->validate();
       if (!$valid)
       {
-        echo $this->generate();
+        if (isset($this->myEchoHandler)) $method = $this->myEchoHandler;
+        else                             echo $this->generate();
       }
       else
       {
@@ -182,7 +196,8 @@ class Form extends RawForm
     }
     else
     {
-      echo $this->generate();
+      if (isset($this->myEchoHandler)) $method = $this->myEchoHandler;
+      else                             echo $this->generate();
     }
 
     return $method;
@@ -210,6 +225,17 @@ class Form extends RawForm
     parent::loadSubmittedValues();
 
     $this->csrfCheck();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the handler for echo the HTML code of this form. If not set form will generated and echoed.
+   *
+   * @param string $theMethod The method for echoing the form.
+   */
+  public function setEchoHandler($theMethod)
+  {
+    $this->myEchoHandler = $theMethod;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
