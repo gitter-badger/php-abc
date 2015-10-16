@@ -1,8 +1,8 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 use SetBased\Abc\Form\Cleaner\DateCleaner;
-use SetBased\Abc\Form\Form;
 use SetBased\Abc\Form\Formatter\DateFormatter;
+use SetBased\Abc\Form\RawForm;
 
 class TextControlTest extends SimpleControlTest
 {
@@ -15,7 +15,7 @@ class TextControlTest extends SimpleControlTest
   {
     $_POST['birthday'] = '10.04.1966';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('text', 'birthday');
     $control->setValue('1966-04-10');
@@ -44,7 +44,7 @@ class TextControlTest extends SimpleControlTest
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('text', 'test');
     $control->setValue('Hello World!');
@@ -59,7 +59,6 @@ class TextControlTest extends SimpleControlTest
 
     // Effectively the value is not changed.
     $this->assertArrayNotHasKey('test', $changed);
-
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 use SetBased\Abc\Form\Validator\MandatoryValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -104,11 +104,11 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    *
    * @param string $theType The form control type.
    *
-   * @return Form
+   * @return RawForm
    */
   private function setupForm1($theType)
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $fieldset = $form->createFieldSet('fieldset');
 
@@ -126,7 +126,7 @@ class MandatoryValidatorTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $fieldset = $form->createFieldSet('fieldset');
 

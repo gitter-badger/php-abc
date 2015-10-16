@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -114,7 +114,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => 4, 'cnt_name' => 'GB'];
 
     // Create a form with checkboxes.
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
     $control->setOptions($countries, 'cnt_id', 'cnt_name');
@@ -122,7 +122,8 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form->LoadSubmittedValues();
 
     // Generate HTML code for the form.
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $doc = new DOMDocument();
     $doc->loadXML($html);
@@ -158,7 +159,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => 4, 'cnt_name' => 'GB'];
 
     // Create a form with checkboxes.
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
     $control->setOptions($countries, 'cnt_id', 'cnt_name', 'checked');
@@ -173,7 +174,8 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $form->setValues($values);
 
     // Generate HTML code for the form.
-    $form = $form->Generate();
+    $form->prepare();
+    $form = $form->generate();
 
     $doc = new DOMDocument();
     $doc->loadXML($form);
@@ -297,7 +299,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => '3', 'cnt_name' => 'LU'];
     $countries[] = ['cnt_id' => '0.1', 'cnt_name' => 'UA'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
     $control->setOptions($countries, 'cnt_id', 'cnt_name');
@@ -319,7 +321,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => 2, 'cnt_name' => 'LU'];
     $countries[] = ['cnt_id' => 0.1, 'cnt_name' => 'UA'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
     $control->setOptions($countries, 'cnt_id', 'cnt_name');
@@ -338,7 +340,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => '0', 'cnt_name' => 'NL'];
     $countries[] = ['cnt_id' => '0.0', 'cnt_name' => 'BE'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
     $control->setOptions($countries, 'cnt_id', 'cnt_name');
@@ -354,7 +356,7 @@ class CheckboxesControlTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm4()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkboxes', 'cnt_id');
 

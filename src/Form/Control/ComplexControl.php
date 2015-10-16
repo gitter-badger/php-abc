@@ -170,7 +170,7 @@ class ComplexControl extends Control implements CompoundControl
     {
       if ($control->myName===$name) return $control;
 
-      if (is_a($control, '\SetBased\Abc\Form\Control\ComplexControl'))
+      if (is_a($control, '\\SetBased\\Abc\\Form\\Control\\ComplexControl'))
       {
         $tmp = $control->findFormControlByName($name);
         if ($tmp) return $tmp;

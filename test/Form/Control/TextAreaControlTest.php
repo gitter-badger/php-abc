@@ -1,7 +1,7 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
 use SetBased\Abc\Form\Cleaner\PruneWhitespaceCleaner;
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 class TextAreaControlTest extends PHPUnit_Framework_TestCase
@@ -9,14 +9,15 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('checkbox', 'name');
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<input');
     $this->assertNotEquals(false, $pos);
@@ -33,7 +34,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('textarea', 'test');
     $control->setValue('Hello World!');
@@ -62,7 +63,7 @@ class TextAreaControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test'] = 'Hello World!';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('textarea', 'test');
     $control->setValue('Hi World!');

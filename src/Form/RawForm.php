@@ -60,7 +60,7 @@ class RawForm extends HtmlElement implements CompoundControl
    *
    * @param string $theName The name of the form.
    */
-  public function __construct($theName)
+  public function __construct($theName = '')
   {
     $this->myAttributes['action'] = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
     $this->myAttributes['method'] = 'post';
@@ -149,7 +149,7 @@ class RawForm extends HtmlElement implements CompoundControl
    */
   public function findFormControlByName($theName)
   {
-    $this->myFieldSets->findFormControlByName($theName);
+    return $this->myFieldSets->findFormControlByName($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ class RawForm extends HtmlElement implements CompoundControl
    */
   public function findFormControlByPath($thePath)
   {
-    $this->myFieldSets->findFormControlByPath($thePath);
+    return $this->myFieldSets->findFormControlByPath($thePath);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -195,7 +195,7 @@ class RawForm extends HtmlElement implements CompoundControl
    */
   public function getFormControlByName($theName)
   {
-    return $this->myFieldSets->findFormControlByPath($theName);
+    return $this->myFieldSets->getFormControlByName($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -325,6 +325,15 @@ class RawForm extends HtmlElement implements CompoundControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Prepares this form for HTML code generation or loading submitted values.
+   */
+  public function prepare()
+  {
+    $this->myFieldSets->prepare('');
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the attribute [autocomplete](http://www.w3schools.com/tags/att_form_autocomplete.asp). Possible values:
    * * Any value that evaluates to true will set the attribute to 'on'.
    * * Any value that evaluates to false will set the attribute to 'off'.
@@ -413,15 +422,6 @@ class RawForm extends HtmlElement implements CompoundControl
   protected function generateStartTag()
   {
     return Html::generateTag('form', $this->myAttributes);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Prepares this form for HTML code generation or loading submitted values.
-   */
-  protected function prepare()
-  {
-    $this->myFieldSets->prepare('');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 class SpanControlTest extends PHPUnit_Framework_TestCase
@@ -8,14 +8,15 @@ class SpanControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('span', 'name');
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<span>');
     $this->assertNotEquals(false, $pos);

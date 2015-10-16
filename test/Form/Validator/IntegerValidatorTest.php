@@ -1,8 +1,9 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 use SetBased\Abc\Form\Validator\IntegerValidator;
 
+//----------------------------------------------------------------------------------------------------------------------
 class IntegerValidatorTest extends PHPUnit_Framework_TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
@@ -201,7 +202,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $fieldset = $form->createFieldSet();
 
@@ -219,7 +220,7 @@ class IntegerValidatorTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm2()
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $fieldset = $form->createFieldSet();
 

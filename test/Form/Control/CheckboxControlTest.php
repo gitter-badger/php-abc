@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -14,14 +14,15 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('checkbox', 'name');
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<input');
     $this->assertNotEquals(false, $pos);
@@ -38,7 +39,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSubmittedValue1()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $fieldset->createFormControl('checkbox', 'test1');
 
@@ -62,7 +63,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test2'] = 'on';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $fieldset->createFormControl('checkbox', 'test2');
 
@@ -86,7 +87,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
    */
   public function testSubmittedValue3()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkbox', 'test3');
     $control->setValue(true);
@@ -112,7 +113,7 @@ class CheckboxControlTest extends PHPUnit_Framework_TestCase
   {
     $_POST['test4'] = 'on';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('checkbox', 'test4');
     $control->setValue(true);

@@ -2,9 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 require_once(__DIR__.'/SimpleControlTest.php');
 
-//----------------------------------------------------------------------------------------------------------------------
 use SetBased\Abc\Form\Cleaner\PruneWhitespaceCleaner;
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 class HiddenControlTest extends SimpleControlTest
@@ -17,7 +16,7 @@ class HiddenControlTest extends SimpleControlTest
   {
     $_POST['test'] = 'New value';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('hidden', 'test');
     $control->setValue('Old value');
@@ -39,7 +38,7 @@ class HiddenControlTest extends SimpleControlTest
   {
     $_POST['test'] = '  Hello    World!   ';
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('hidden', 'test');
     $control->setValue('Hello World!');

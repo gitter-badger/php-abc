@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 class InvisibleControlTest extends PHPUnit_Framework_TestCase
@@ -24,14 +24,15 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('invisible', 'name');
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<input');
     $this->assertNotEquals(false, $pos);
@@ -43,7 +44,7 @@ class InvisibleControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   private function setupForm1()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('invisible', 'name');

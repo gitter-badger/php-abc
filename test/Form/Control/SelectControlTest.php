@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 class SelectControlTest extends PHPUnit_Framework_TestCase
@@ -8,14 +8,15 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl('checkbox', 'name');
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<input');
     $this->assertNotEquals(false, $pos);
@@ -79,7 +80,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => '2', 'cnt_name' => 'BE'];
     $countries[] = ['cnt_id' => '3', 'cnt_name' => 'LU'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('select', 'cnt_id');
     $control->setEmptyOption(true);
@@ -101,7 +102,7 @@ class SelectControlTest extends PHPUnit_Framework_TestCase
     $countries[] = ['cnt_id' => 2, 'cnt_name' => 'BE'];
     $countries[] = ['cnt_id' => 3, 'cnt_name' => 'LU'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $control  = $fieldset->createFormControl('select', 'cnt_id');
     $control->setEmptyOption(true);

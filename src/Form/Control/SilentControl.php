@@ -51,13 +51,20 @@ class SilentControl extends SimpleControl
     $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
 
     // Get the submitted value and clean it (if required).
-    if ($this->myCleaner)
+    if (isset($theSubmittedValue[$submit_name]))
     {
-      $new_value = $this->myCleaner->clean($theSubmittedValue[$submit_name]);
+      if ($this->myCleaner)
+      {
+        $new_value = $this->myCleaner->clean($theSubmittedValue[$submit_name]);
+      }
+      else
+      {
+        $new_value = $theSubmittedValue[$submit_name];
+      }
     }
     else
     {
-      $new_value = $theSubmittedValue[$submit_name];
+      $new_value = null;
     }
 
     // Normalize old (original) value and new (submitted) value.

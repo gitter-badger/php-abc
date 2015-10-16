@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -45,7 +45,7 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
   //--------------------------------------------------------------------------------------------------------------------
   public function testPrefixAndPostfix()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl($this->getInputType(), 'name');
@@ -53,7 +53,8 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
 
     $control->setPrefix('Hello');
     $control->setPostfix('World');
-    $html = $form->Generate();
+    $form->prepare();
+    $html = $form->generate();
 
     $pos = strpos($html, 'Hello<input');
     $this->assertNotEquals(false, $pos);
@@ -105,11 +106,11 @@ abstract class SimpleControlTest extends PHPUnit_Framework_TestCase
    *
    * @param string $theValue The value of the form control
    *
-   * @return Form
+   * @return RawForm
    */
   private function setupForm1($theValue)
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $control = $fieldset->createFormControl($this->getInputType(), 'name');

@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -73,7 +73,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     $options[] = ['id' => 2, 'label' => 'label2'];
     $options[] = ['id' => 3, 'label' => 'label3'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $fieldset->createFormControl('text', 'name1');
@@ -179,7 +179,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     $options[] = ['id' => 2, 'label' => 'label2'];
     $options[] = ['id' => 3, 'label' => 'label3'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet('fieldset', 'name');
 
     $fieldset->createFormControl('text', 'name1');
@@ -205,6 +205,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     $form->mergeValues($merge);
 
     // Generate HTML.
+    $form->prepare();
     $html = $form->generate();
 
     $doc = new DOMDocument();
@@ -234,7 +235,7 @@ class FormTest extends PHPUnit_Framework_TestCase
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @return Form
+   * @return RawForm
    */
   private function setupForm1()
   {
@@ -243,7 +244,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     $options[] = ['id' => 2, 'label' => 'label2'];
     $options[] = ['id' => 2, 'label' => 'label3'];
 
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $fieldset->createFormControl('text', 'name1');
@@ -261,14 +262,14 @@ class FormTest extends PHPUnit_Framework_TestCase
    * @param string $theComplexControlName
    * @param string $theTextControlName
    *
-   * @return Form
+   * @return RawForm
    */
   private function setupFormFind($theFieldSetName = 'vacation',
                                  $theComplexControlName = 'post',
                                  $theTextControlName = 'city'
   )
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet('fieldset', $theFieldSetName);
     $complex  = $fieldset->createFormControl('complex', '');
     $complex->createFormControl('text', 'street');

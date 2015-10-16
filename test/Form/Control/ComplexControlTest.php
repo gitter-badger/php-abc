@@ -2,7 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 use SetBased\Abc\Form\Control\ComplexControl;
 use SetBased\Abc\Form\Control\SimpleControl;
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 use SetBased\Abc\Form\Validator\MandatoryValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
     // Find form control by name. Must return object.
     $control = $form->findFormControlByName('street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     // Find form control by name what does not exist. Must return null.
     $control = $form->findFormControlByName('not_exists');
@@ -56,22 +56,22 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
     // Find form control by path. Must return object.
     $control = $form->findFormControlByPath('/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->findFormControlByPath('/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->findFormControlByPath('/post/zip-code');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->findFormControlByPath('/vacation/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->findFormControlByPath('/vacation/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->findFormControlByPath('/vacation/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
 
     // Find form control by path what does not exist. Must return null.
@@ -96,10 +96,10 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
     // Get form control by name. Must return object.
     $control = $form->getFormControlByName('vacation');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $control->getFormControlByName('city2');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
     $this->assertEquals('city2', $control->getLocalName());
   }
 
@@ -114,19 +114,19 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
 
     // Get form control by path. Must return object.
     $control = $form->getFormControlByPath('/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->getFormControlByPath('/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->getFormControlByPath('/vacation/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->getFormControlByPath('/vacation/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
 
     $control = $form->getFormControlByPath('/vacation/post/street');
-    $this->assertInstanceOf('\SetBased\Abc\Form\Control\Control', $control);
+    $this->assertInstanceOf('\\SetBased\\Abc\\Form\\Control\\Control', $control);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -276,7 +276,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    */
   public function testValidate()
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $field_set = $form->createFieldSet('fieldset');
 
@@ -326,7 +326,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    */
   private function setForm1()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
     $complex  = $fieldset->createFormControl('complex', '');
     $complex->createFormControl('text', 'street');
@@ -366,7 +366,7 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    */
   private function setForm2()
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $complex = $fieldset->createFormControl('complex', '');
@@ -391,11 +391,11 @@ class ComplexControlTest extends PHPUnit_Framework_TestCase
    *
    * @param string $theName The name of the form control.
    *
-   * @return Form
+   * @return RawForm
    */
   private function setForm3($theName)
   {
-    $form     = new Form();
+    $form     = new RawForm();
     $fieldset = $form->createFieldSet();
 
     $complex = $fieldset->createFormControl('complex', $theName);

@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-use SetBased\Abc\Form\Form;
+use SetBased\Abc\Form\RawForm;
 use SetBased\Abc\Form\Validator\HttpValidator;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ class HttpValidatorTest extends PHPUnit_Framework_TestCase
    */
   private function setupForm1()
   {
-    $form = new Form();
+    $form = new RawForm();
 
     $fieldset = $form->createFieldSet('fieldset');
 
