@@ -34,9 +34,9 @@ class WordGroupUpdatePage extends WordGroupBasePage
    */
   public static function getUrl($theWdgId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_UPDATE, 'pag');
-    $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
-    $url .= '/act_lan/'.Abc::obfuscate(C::LAN_ID_BABEL_REFERENCE, 'lan');
+    $url = self::putCgiVar('pag', C::PAG_ID_BABEL_WORD_GROUP_UPDATE, 'pag');
+    $url .= self::putCgiVar('wdg', $theWdgId, 'wdg');
+    $url .= self::putCgiVar('act_lan', C::LAN_ID_BABEL_REFERENCE, 'lan');
 
     return $url;
   }

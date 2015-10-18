@@ -131,8 +131,10 @@ abstract class Page
    * Returns the value of a CGI variable. If the CGI variable is an obfuscated database ID the value will be
    * de-obfuscated.
    *
+   * For retrieving a CGI variable with a relative URL use {@link getCgiUrl}.
+   *
    * @param string $theVarName The name of the CGI variable.
-   * @param string $theLabel   Must only be used if the CGI variable is an obfuscate database ID. An alias for the
+   * @param string $theLabel   Must only be used if the CGI variable is an obfuscated database ID. An alias for the
    *                           column holding database ID and must corresponds with label that was used to obfuscate the
    *                           database ID.
    *
@@ -142,12 +144,41 @@ abstract class Page
   {
     if (isset($_GET[$theVarName]))
     {
-      if (isset($theLabel)) return Abc::deObfuscate($_GET[$theVarName], $theLabel);
+      if (isset($theLabel))
+      {
+        return Abc::deObfuscate($_GET[$theVarName], $theLabel);
+      }
 
-      return $_GET[$theVarName];
+      return urlencode($_GET[$theVarName]);
     }
 
     return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns a string with holding a CGI variable that can be used as a part of a URL.
+   *
+   * @param string $theVarName The name of the CGI variable.
+   * @param mixed  $theValue   The value (must be a scalar) of the CGI variable.
+   * @param string $theLabel   Must only be used if the CGI variable is a database ID. An alias for the column holding
+   *                           database ID.
+   *
+   * @return string
+   */
+  public static function putCgiVar($theVarName, $theValue, $theLabel = null)
+  {
+    if (isset($theValue))
+    {
+      if (isset($theLabel))
+      {
+        return '/'.$theVarName.'/'.Abc::obfuscate($theValue, $theLabel);
+      }
+
+      return '/'.$theVarName.'/'.urlencode($theValue);
+    }
+
+    return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

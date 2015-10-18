@@ -48,8 +48,8 @@ class TabDetailsPage extends CorePage
    */
   public static function getUrl($theTabId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_TAB_DETAILS, 'pag');
-    $url .= '/tab/'.Abc::obfuscate($theTabId, 'tab');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_TAB_DETAILS, 'pag');
+    $url .= self::putCgiVar('ptb', $theTabId, 'ptb');
 
     return $url;
   }

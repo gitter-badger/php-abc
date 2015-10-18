@@ -47,8 +47,8 @@ class PageDetailsPage extends CorePage
    */
   public static function getUrl($thePagId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_PAGE_DETAILS, 'pag');
-    $url .= '/tar_pag/'.Abc::obfuscate($thePagId, 'pag');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_PAGE_DETAILS, 'pag');
+    $url .= self::putCgiVar('tar_pag', $thePagId, 'pag');
 
     return $url;
   }

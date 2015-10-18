@@ -3,7 +3,6 @@
 namespace SetBased\Abc\Core\Page\Misc;
 
 use Gajus\Dindent\Indenter;
-use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Error\FallenException;
 use SetBased\Abc\Helper\Html;
@@ -62,7 +61,7 @@ class W3cValidatePage extends Page
   {
     parent::__construct();
 
-    $this->myFilename = self::getCgiVar('file');
+    $this->myFilename = self::getCgiUrl('file');
     $this->myMode     = self::getCgiVar('mode');
 
     $this->myPathName = DIR_TMP.'/'.basename($_GET['file']);
@@ -79,8 +78,9 @@ class W3cValidatePage extends Page
    */
   public static function getUrl($theFileName, $theMode = 'validate')
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_MISC_W3C_VALIDATE, 'pag');
-    $url .= '/mode/'.urlencode($theMode).'/file/'.urlencode($theFileName);
+    $url = self::putCgiVar('pag', C::PAG_ID_MISC_W3C_VALIDATE, 'pag');
+    $url .= self::putCgiVar('mode', $theMode);
+    $url .= self::putCgiVar('file', $theFileName);
 
     return $url;
   }

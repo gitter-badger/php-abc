@@ -29,7 +29,7 @@ class DomainRedirectPage extends Page
    *
    * @var string
    */
-  private $myRequest;
+  private $myRedirect;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -39,7 +39,7 @@ class DomainRedirectPage extends Page
   {
     parent::__construct();
 
-    $this->myRequest = self::getCgiVar('request');
+    $this->myRedirect = self::getCgiUrl('redirect');
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -52,8 +52,8 @@ class DomainRedirectPage extends Page
    */
   public static function getUrl($theRequest)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_USER_DOMAIN_REDIRECT, 'pag');
-    if ($theRequest) $url .= '?request='.urlencode($theRequest);
+    $url = self::putCgiVar('pag', C::PAG_ID_USER_DOMAIN_REDIRECT, 'pag');
+    $url .= self::putCgiVar('redirect', $theRequest);
 
     return $url;
   }
@@ -128,7 +128,7 @@ class DomainRedirectPage extends Page
       setcookie('ses_csrf_token', $session['ses_csrf_token'], false, '/', $_SERVER['SERVER_NAME'], true, false);
 
       // Redirect the browser to the requested page (if any).
-      Http::redirect(($this->myRequest) ? $this->myRequest : '/');
+      Http::redirect(($this->myRedirect) ? $this->myRedirect : '/');
     }
     else
     {

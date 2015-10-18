@@ -37,9 +37,9 @@ class SpecificPageDeletePage extends Page
    */
   public static function getUrl($theCmpId, $theTargetPagId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_SPECIFIC_PAGE_DELETE, 'pag');
-    $url .= '/cmp/'.Abc::obfuscate($theCmpId, 'cmp');
-    $url .= '/tar_pag/'.Abc::obfuscate($theTargetPagId, 'pag');
+    $url = self::putCgiVar('pag', C::PAG_ID_COMPANY_SPECIFIC_PAGE_DELETE, 'pag');
+    $url .= self::putCgiVar('cmp', $theCmpId, 'cmp');
+    $url .= self::putCgiVar('tar_pag', $theTargetPagId, 'pag');
 
     return $url;
   }

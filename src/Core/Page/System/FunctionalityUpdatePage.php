@@ -34,8 +34,8 @@ class FunctionalityUpdatePage extends FunctionalityBasePage
    */
   public static function getUrl($theFunId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_FUNCTIONALITY_UPDATE, 'pag');
-    $url .= '/fun/'.Abc::obfuscate($theFunId, 'fun');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_FUNCTIONALITY_UPDATE, 'pag');
+    $url .= self::putCgiVar('fun', $theFunId, 'fun');
 
     return $url;
   }

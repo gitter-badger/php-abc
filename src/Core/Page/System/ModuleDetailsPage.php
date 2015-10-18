@@ -60,8 +60,8 @@ class ModuleDetailsPage extends CorePage
    */
   public static function getUrl($theMdlId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_MODULE_DETAILS, 'pag');
-    $url .= '/mdl/'.Abc::obfuscate($theMdlId, 'mdl');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_MODULE_DETAILS, 'pag');
+    $url .= self::putCgiVar('mdl', $theMdlId, 'mdl');
 
     return $url;
   }

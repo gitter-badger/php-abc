@@ -30,7 +30,7 @@ class ModuleInsertPage extends ModuleBasePage
    */
   public static function getUrl()
   {
-    return '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_MODULE_INSERT, 'pag');
+    return self::putCgiVar('pag', C::PAG_ID_SYSTEM_MODULE_INSERT, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

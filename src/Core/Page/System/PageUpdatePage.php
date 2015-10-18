@@ -35,8 +35,8 @@ class PageUpdatePage extends PageBasePage
    */
   public static function getUrl($thePagId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_PAGE_UPDATE, 'pag');
-    $url .= '/tar_pag/'.Abc::obfuscate($thePagId, 'pag');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_PAGE_UPDATE, 'pag');
+    $url .= self::putCgiVar('tar_pag', $thePagId, 'pag');
 
     return $url;
   }

@@ -34,8 +34,8 @@ class TabUpdatePage extends TabBasePage
    */
   public static function getUrl($thePtbId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_TAB_UPDATE, 'pag');
-    $url .= '/ptb/'.Abc::obfuscate($thePtbId, 'ptb');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_TAB_UPDATE, 'pag');
+    $url .= self::putCgiVar('ptb', $thePtbId, 'ptb');
 
     return $url;
   }

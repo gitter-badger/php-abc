@@ -35,8 +35,8 @@ class ModuleUpdatePage extends CompanyPage
    */
   public static function getUrl($theCmpId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_MODULE_UPDATE, 'pag');
-    $url .= '/cmp/'.Abc::obfuscate($theCmpId, 'cmp');
+    $url = self::putCgiVar('pag', C::PAG_ID_COMPANY_MODULE_UPDATE, 'pag');
+    $url .= self::putCgiVar('cmp', $theCmpId, 'cmp');
 
     return $url;
   }

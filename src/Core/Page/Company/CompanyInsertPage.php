@@ -28,9 +28,7 @@ class CompanyInsertPage extends CompanyBasePage
    */
   public static function getUrl()
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_INSERT, 'pag');
-
-    return $url;
+    return self::putCgiVar('pag', C::PAG_ID_COMPANY_INSERT, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

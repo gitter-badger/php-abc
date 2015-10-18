@@ -21,7 +21,7 @@ class LogoutPage extends Page
    */
   public static function getUrl()
   {
-    return '/pag/'.Abc::obfuscate(C::PAG_ID_MISC_LOGOUT, 'pag');
+    return self::putCgiVar('pag', C::PAG_ID_MISC_LOGOUT, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

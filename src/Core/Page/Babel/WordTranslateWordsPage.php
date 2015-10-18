@@ -61,9 +61,9 @@ class WordTranslateWordsPage extends BabelPage
    */
   public static function getUrl($theWdgId, $theLanId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_TRANSLATE_WORDS, 'pag');
-    $url .= '/wdg/'.Abc::obfuscate($theWdgId, 'wdg');
-    $url .= '/act_lan/'.Abc::obfuscate($theLanId, 'lan');
+    $url = self::putCgiVar('pag', C::PAG_ID_BABEL_WORD_TRANSLATE_WORDS, 'pag');
+    $url .= self::putCgiVar('wdg', $theWdgId, 'wdg');
+    $url .= self::putCgiVar('act_lan', $theLanId, 'lan');
 
     return $url;
   }

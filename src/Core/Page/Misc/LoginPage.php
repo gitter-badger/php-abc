@@ -59,8 +59,8 @@ class LoginPage extends Page
    */
   public static function getUrl($theUri = null)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_MISC_LOGIN, 'pag');
-    if ($theUri) $url .= '/redirect/'.urlencode($theUri);
+    $url = self::putCgiVar('pag', C::PAG_ID_MISC_LOGIN, 'pag');
+    $url .= self::putCgiVar('redirect', $theUri);
 
     return $url;
   }

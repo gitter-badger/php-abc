@@ -40,8 +40,8 @@ class ModuleUpdatePage extends ModuleBasePage
    */
   public static function getUrl($theMdlId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_MODULE_UPDATE, 'pag');
-    $url .= '/mdl/'.Abc::obfuscate($theMdlId, 'mdl');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_MODULE_UPDATE, 'pag');
+    $url .= self::putCgiVar('mdl', $theMdlId, 'mdl');
 
     return $url;
   }

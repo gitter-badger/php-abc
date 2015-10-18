@@ -26,7 +26,7 @@ class CompanyOverviewPage extends CompanyPage
    */
   public static function getUrl()
   {
-    return '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_OVERVIEW, 'pag');
+    return self::putCgiVar('pag', C::PAG_ID_COMPANY_OVERVIEW, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

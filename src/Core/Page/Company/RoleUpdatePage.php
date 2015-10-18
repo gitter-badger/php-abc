@@ -36,9 +36,9 @@ class RoleUpdatePage extends RoleBasePage
    */
   public static function getUrl($theCmpId, $theRolId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_ROLE_UPDATE, 'pag');
-    $url .= '/cmp/'.Abc::obfuscate($theCmpId, 'cmp');
-    $url .= '/rol/'.Abc::obfuscate($theRolId, 'rol');
+    $url = self::putCgiVar('pag', C::PAG_ID_COMPANY_ROLE_UPDATE, 'pag');
+    $url .= self::putCgiVar('cmp', $theCmpId, 'cmp');
+    $url .= self::putCgiVar('rol', $theRolId, 'rol');
 
     return $url;
   }

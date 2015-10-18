@@ -30,7 +30,7 @@ class TabInsertPage extends TabBasePage
    */
   public static function getUrl()
   {
-    return '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_TAB_INSERT, 'pag');
+    return self::putCgiVar('pag', C::PAG_ID_SYSTEM_TAB_INSERT, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

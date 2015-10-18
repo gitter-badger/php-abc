@@ -51,14 +51,14 @@ class FunctionalityUpdatePagesPage extends CorePage
   /**
    * Returns the relative URL to this page.
    *
-   * @param int $theFunId
+   * @param int $theFunId The ID of the functionality.
    *
    * @return string
    */
   public static function getUrl($theFunId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_FUNCTIONALITY_UPDATE_PAGES, 'pag');
-    $url .= '/fun/'.Abc::obfuscate($theFunId, 'fun');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_FUNCTIONALITY_UPDATE_PAGES, 'pag');
+    $url .= self::putCgiVar('fun', $theFunId, 'fun');
 
     return $url;
   }

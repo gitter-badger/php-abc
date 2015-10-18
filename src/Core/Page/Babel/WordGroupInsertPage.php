@@ -30,8 +30,8 @@ class WordGroupInsertPage extends WordGroupBasePage
    */
   public static function getUrl()
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_BABEL_WORD_GROUP_INSERT, 'pag');
-    $url .= '/act_lan/'.Abc::obfuscate(C::LAN_ID_BABEL_REFERENCE, 'lan');
+    $url = self::putCgiVar('pag', C::PAG_ID_BABEL_WORD_GROUP_INSERT, 'pag');
+    $url .= self::putCgiVar('act_lan', C::LAN_ID_BABEL_REFERENCE, 'lan');
 
     return $url;
   }

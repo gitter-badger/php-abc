@@ -56,9 +56,9 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
    */
   public static function getUrl($theCmpId, $theRolId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_COMPANY_ROLE_UPDATE_FUNCTIONALITIES, 'pag');
-    $url .= '/cmp/'.Abc::obfuscate($theCmpId, 'cmp');
-    $url .= '/rol/'.Abc::obfuscate($theRolId, 'rol');
+    $url = self::putCgiVar('pag', C::PAG_ID_COMPANY_ROLE_UPDATE_FUNCTIONALITIES, 'pag');
+    $url .= self::putCgiVar('cmp', $theCmpId, 'cmp');
+    $url .= self::putCgiVar('rol', $theRolId, 'rol');
 
     return $url;
   }

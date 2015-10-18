@@ -30,9 +30,7 @@ class PageInsertPage extends PageBasePage
    */
   public static function getUrl()
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_PAGE_INSERT, 'pag');
-
-    return $url;
+    return self::putCgiVar('pag', C::PAG_ID_SYSTEM_PAGE_INSERT, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

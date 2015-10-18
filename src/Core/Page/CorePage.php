@@ -213,7 +213,7 @@ abstract class CorePage extends Page
    */
   protected function getTabUrl($thePagId)
   {
-    $url = '/pag/'.Abc::obfuscate($thePagId, 'pag');
+    $url = self::putCgiVar('pag', $thePagId, 'pag');
 
     return $url;
   }

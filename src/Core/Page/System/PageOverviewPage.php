@@ -26,7 +26,7 @@ class PageOverviewPage extends CorePage
    */
   public static function getUrl()
   {
-    return '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_PAGE_OVERVIEW, 'pag');
+    return self::putCgiVar('pag', C::PAG_ID_SYSTEM_PAGE_OVERVIEW, 'pag');
   }
 
   //--------------------------------------------------------------------------------------------------------------------

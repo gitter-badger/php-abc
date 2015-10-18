@@ -34,8 +34,8 @@ class MenuUpdatePage extends MenuBasePage
    */
   public static function getUrl($theMnuId)
   {
-    $url = '/pag/'.Abc::obfuscate(C::PAG_ID_SYSTEM_MENU_MODIFY, 'pag');
-    $url .= '/mnu/'.Abc::obfuscate($theMnuId, 'mnu');
+    $url = self::putCgiVar('pag', C::PAG_ID_SYSTEM_MENU_MODIFY, 'pag');
+    $url .= self::putCgiVar('mnu', $theMnuId, 'mnu');
 
     return $url;
   }
