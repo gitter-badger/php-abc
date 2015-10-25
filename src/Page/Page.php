@@ -199,6 +199,35 @@ abstract class Page
    */
   public function appendCssSource($theSource, $theDevice = null)
   {
+    $path = HOME.'/www'.$theSource;
+    if (!file_exists($path))
+    {
+      throw new \LogicException(sprintf("CSS file '%s' does not exists.", $theSource));
+    }
+
+    $this->appendOptimizedCssSource($theSource, $theDevice);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds an optimized CCS file to the header of this page.
+   *
+   * Do not use this method directly. Use {@link appendPageSpecificCssSource} instead.
+   *
+   * @param string      $theSource The filename relative to the resource root of the CSS source.
+   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
+   *                               * null       Suitable for all devices. null is preferred over 'all'.
+   *                               * aural      Speech synthesizers
+   *                               * braille    Braille feedback devices
+   *                               * handheld   Handheld devices (small screen, limited bandwidth)
+   *                               * projection Projectors
+   *                               * print      Print preview mode/printed pages
+   *                               * screen     Computer screens
+   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
+   *                               * tv         Television type devices (low resolution, limited scroll ability)
+   */
+  public function appendOptimizedCssSource($theSource, $theDevice = null)
+  {
     $this->myCssSources[] = ['href'  => $theSource,
                              'media' => $theDevice,
                              'rel'   => 'stylesheet',
@@ -230,21 +259,26 @@ abstract class Page
     if (isset($theDevice)) $filename .= '.'.$theDevice;
     $filename .= '.css';
 
-    // On development environments throw exception if the CSS file is missing.
-    if (isset($_ENV['ABC_ENV']) && $_ENV['ABC_ENV']=='dev')
-    {
-      $path = HOME.'/www'.$filename;
-      if (!file_exists($path))
-      {
-        throw new \LogicException(sprintf("CSS file '%s' does not exists.", $filename));
-      }
-    }
+    $this->appendCssSource($filename, $theDevice);
+  }
 
-    // Append the CSS source the the list of CSS sources.
-    $this->myCssSources[] = ['href'  => $filename,
-                             'media' => $theDevice,
-                             'rel'   => 'stylesheet',
-                             'type'  => 'text/css'];
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Using RequiresJS calls a function in a namespace.
+   *
+   * @param string $theNamespace      The namespace as in RequireJS.
+   * @param string $theJsFunctionName The function name inside the namespace.
+   * @param array  $args              The optional arguments for the function.
+   */
+  public function callJsFunction($theNamespace, $theJsFunctionName, $args = [])
+  {
+    $this->myJavaScript .= 'require(["';
+    $this->myJavaScript .= $theNamespace;
+    $this->myJavaScript .= '"],function(page){\'use strict\';page.';
+    $this->myJavaScript .= $theJsFunctionName;
+    $this->myJavaScript .= '(';
+    $this->myJavaScript .= implode(',', array_map('json_encode', $args));
+    $this->myJavaScript .= ');});';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -262,13 +296,20 @@ abstract class Page
    */
   public function callPageSpecificJsFunction($theClassName, $theJsFunctionName, $args = [])
   {
-    $this->myJavaScript .= 'require(["';
-    $this->myJavaScript .= str_replace('\\', '/', $theClassName);
-    $this->myJavaScript .= '"],function(page){\'use strict\';page.';
-    $this->myJavaScript .= $theJsFunctionName;
-    $this->myJavaScript .= '(';
-    $this->myJavaScript .= implode(',', array_map('json_encode', $args));
-    $this->myJavaScript .= ');});';
+    // Convert PHP class name to RequireJS namespace name.
+    $namespace = str_replace('\\', '/', $theClassName);
+
+    // Construct the filename of the JS file.
+    $filename = '/js/'.$namespace.'.js';
+
+    // Test JS file actually exists.
+    $path = HOME.'/www'.$filename;
+    if (!file_exists($path))
+    {
+      throw new \LogicException(sprintf("JavaScript file '%s' does not exists.", $filename));
+    }
+
+    $this->callJsFunction($namespace, $theJsFunctionName, $args);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -390,7 +431,7 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the XHTML document leader, i.e. the opening html tag, the head element, and opening body tag.
+   * Echos the XHTML document leader, i.e. the start html tag, the head element, and start body tag.
    */
   protected function echoPageLeader()
   {
@@ -414,7 +455,7 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Echos the XHTML document trailer, i.e. the closing body and html tags, including the JavaScript code that will be
+   * Echos the XHTML document trailer, i.e. the end body and html tags, including the JavaScript code that will be
    * executed using RequireJS.
    */
   protected function echoPageTrailer()
