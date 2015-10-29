@@ -5,6 +5,7 @@ namespace SetBased\Abc\Page;
 use SetBased\Abc\Abc;
 use SetBased\Abc\Core\Page\Misc\W3cValidatePage;
 use SetBased\Abc\Error\InvalidUrlException;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Helper\Url;
 
@@ -202,7 +203,7 @@ abstract class Page
     $path = HOME.'/www'.$theSource;
     if (!file_exists($path))
     {
-      throw new \LogicException(sprintf("CSS file '%s' does not exists.", $theSource));
+      throw new LogicException("CSS file '%s' does not exists.", $theSource);
     }
 
     $this->appendOptimizedCssSource($theSource, $theDevice);
@@ -306,7 +307,7 @@ abstract class Page
     $path = HOME.'/www'.$filename;
     if (!file_exists($path))
     {
-      throw new \LogicException(sprintf("JavaScript file '%s' does not exists.", $filename));
+      throw new LogicException("JavaScript file '%s' does not exists.", $filename);
     }
 
     $this->callJsFunction($namespace, $theJsFunctionName, $args);
