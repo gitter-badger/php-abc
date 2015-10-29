@@ -61,7 +61,7 @@ class W3cValidatePage extends Page
   {
     parent::__construct();
 
-    $this->myFilename = self::getCgiUrl('file');
+    $this->myFilename = self::getCgiVar('file');
     $this->myMode     = self::getCgiVar('mode');
 
     $this->myPathName = DIR_TMP.'/'.basename($_GET['file']);
