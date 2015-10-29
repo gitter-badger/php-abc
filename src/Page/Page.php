@@ -461,14 +461,14 @@ abstract class Page
    */
   protected function echoPageTrailer()
   {
+    if ($this->myJavaScript)
+    {
+      $js = 'require([],function(){'.$this->myJavaScript.'});';
+      echo '<script type="text/javascript">/*<![CDATA[*/set_based_abc_inline_js='.json_encode($js).'/*]]>*/</script>';
+    }
     if (Abc::$ourJsTrailerAttributes)
     {
       echo Html::generateElement('script', Abc::$ourJsTrailerAttributes);
-    }
-    if ($this->myJavaScript)
-    {
-      echo '<script type="text/javascript">/*<![CDATA[*/require([],function(){', $this->myJavaScript,
-      '});/*]]>*/</script>';
     }
 
     echo '</body></html>';
