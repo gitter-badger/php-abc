@@ -27,16 +27,6 @@ abstract class Abc
   public static $DL;
 
   /**
-   * The attributes of the script element in the page trailer (i.e. near the end html tag). Example:
-   * ```
-   * [ 'src' => '/js/requirejs.js', 'data-main' => '/js/main.js' ]
-   * ```
-   *
-   * @var array
-   */
-  public static $ourJsTrailerAttributes;
-
-  /**
    * The start time of serving the page request.
    *
    * @var float

@@ -47,18 +47,18 @@ abstract class CorePage extends Page
   {
     parent::__construct();
 
-    $this->appendCssSource('/css/abc/reset.css');
-    $this->appendCssSource('/css/abc/layout.css');
-    $this->appendCssSource('/css/abc/main-menu.css');
-    $this->appendCssSource('/css/abc/secondary-menu.css');
-    $this->appendCssSource('/css/abc/dashboard.css');
-    $this->appendCssSource('/css/abc/content.css');
-    $this->appendCssSource('/css/abc/style.css');
-    $this->appendCssSource('/css/abc/overview_table.css');
-    $this->appendCssSource('/css/abc/detail_table.css');
-    $this->appendCssSource('/css/abc/input_table.css');
+    $this->cssAppendSource('/css/abc/reset.css');
+    $this->cssAppendSource('/css/abc/layout.css');
+    $this->cssAppendSource('/css/abc/main-menu.css');
+    $this->cssAppendSource('/css/abc/secondary-menu.css');
+    $this->cssAppendSource('/css/abc/dashboard.css');
+    $this->cssAppendSource('/css/abc/content.css');
+    $this->cssAppendSource('/css/abc/style.css');
+    $this->cssAppendSource('/css/abc/overview_table.css');
+    $this->cssAppendSource('/css/abc/detail_table.css');
+    $this->cssAppendSource('/css/abc/input_table.css');
 
-    // xxx combine and minimize
+    $this->jsAdmSetPageSpecificMain(__CLASS__);
 
     if (isset($_SERVER['ABC_ENV']) && $_SERVER['ABC_ENV']=='dev')
     {
@@ -179,9 +179,9 @@ abstract class CorePage extends Page
   {
     if (!$this->myDatePickerEnabled)
     {
-      $this->callPageSpecificJsFunction('SetBased/Abc/Abc', 'enableDatePicker');
+      $this->jsAdmFunctionCall('SetBased/Abc/Page/Page', 'enableDatePicker');
 
-      $this->appendCssSource('/css/ui-lightness/jquery-ui-1.10.4.custom.min.css');
+      $this->cssAppendSource('/css/ui-lightness/jquery-ui-1.10.4.custom.min.css');
 
       $this->myDatePickerEnabled = true;
     }
