@@ -523,7 +523,7 @@ abstract class Page
    */
   protected function jsAdmOptimizedSetPageSpecificMain($theMainJsScript)
   {
-    $this->myJsTrailerAttributes = ['src' => '/js/require.js', 'data-main' => $theMainJsScript];
+    $this->myJsTrailerAttributes = ['src' => $theMainJsScript];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
