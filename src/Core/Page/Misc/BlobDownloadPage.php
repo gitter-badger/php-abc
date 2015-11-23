@@ -42,7 +42,7 @@ abstract class BlobDownloadPage extends Page
         header('Cache-Control: public, store, cache');
         header('Expires: '.$expires);
         header('Last-Modified: '.$date);
-        header('Content-Disposition: attachment; filename='.utf8_decode($this->myBlob['blb_file_name']));
+        header('Content-Disposition: attachment; filename*=UTF-8\'\''.rawurlencode($this->myBlob['blb_file_name']));
         header('Content-Type: application/force-download');
         header('Content-Length: '.$this->myBlob['blb_size']);
         break;
@@ -55,7 +55,7 @@ abstract class BlobDownloadPage extends Page
         header('Content-Length: '.$this->myBlob['blb_size']);
         header('Content-Type: '.$this->myBlob['blb_mime_type']);
         // @todo use encoding as in HTML or DataLayer.
-        header('Content-Disposition: inline; filename*=UTF-8\'\''.$this->myBlob['blb_file_name']);
+        header('Content-Disposition: inline; filename*=UTF-8\'\''.rawurlencode($this->myBlob['blb_file_name']));
         break;
     }
 
