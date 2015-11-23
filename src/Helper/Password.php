@@ -2,7 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Helper;
 
-use SetBased\Affirm\Affirm;
+use SetBased\Abc\Error\RuntimeException;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -32,7 +32,10 @@ class Password
     $options = ['cost' => self::$ourCost];
 
     $hash = password_hash($thePassword, PASSWORD_DEFAULT, $options);
-    if ($hash===false) Affirm::assertFailed('Function password_hash failed');
+    if ($hash===false)
+    {
+      throw new RuntimeException('Function password_hash failed');
+    }
 
     return $hash;
   }
