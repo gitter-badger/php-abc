@@ -2,7 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Obfuscator;
 
-use SetBased\Affirm\Affirm;
+use SetBased\Abc\Error\LogicException;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
@@ -24,7 +24,10 @@ class ReferenceObfuscatorFactory implements ObfuscatorFactory
    */
   public static function decode($theCode, $theLabel)
   {
-    if (!isset(self::$ourLabels[$theLabel])) Affirm::assertFailed("Unknown label '%s'.", $theLabel);
+    if (!isset(self::$ourLabels[$theLabel]))
+    {
+      throw new LogicException("Unknown label '%s'.", $theLabel);
+    }
 
     return ReferenceObfuscator::decrypt($theCode,
                                         self::$ourLabels[$theLabel][0],
@@ -38,7 +41,10 @@ class ReferenceObfuscatorFactory implements ObfuscatorFactory
    */
   public static function encode($theId, $theLabel)
   {
-    if (!isset(self::$ourLabels[$theLabel])) Affirm::assertFailed("Unknown label '%s'.", $theLabel);
+    if (!isset(self::$ourLabels[$theLabel]))
+    {
+      throw new LogicException("Unknown label '%s'.", $theLabel);
+    }
 
     return ReferenceObfuscator::encrypt($theId,
                                         self::$ourLabels[$theLabel][0],
@@ -54,7 +60,10 @@ class ReferenceObfuscatorFactory implements ObfuscatorFactory
    */
   public static function getObfuscator($theLabel)
   {
-    if (!isset(self::$ourLabels[$theLabel])) Affirm::assertFailed("Unknown label '%s'.", $theLabel);
+    if (!isset(self::$ourLabels[$theLabel]))
+    {
+      throw new LogicException("Unknown label '%s'.", $theLabel);
+    }
 
     return new ReferenceObfuscator(self::$ourLabels[$theLabel][0],
                                    self::$ourLabels[$theLabel][1],
