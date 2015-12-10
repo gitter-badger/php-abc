@@ -113,7 +113,7 @@ class Form extends RawForm
    * Appends an event handler for form submit.
    *
    * @param Control $theControl The form control that submits the form.
-   * @param string  $theMethod  The method for handeling the form submit.
+   * @param string  $theMethod  The method for handling the form submit.
    */
   public function addSubmitHandler($theControl, $theMethod)
   {

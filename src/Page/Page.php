@@ -109,6 +109,24 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the value of a boolean CGI variable.
+   *
+   * @param string $theVarName The name of the CGI variable.
+   *
+   * @return bool
+   */
+  public static function getCgiBool($theVarName)
+  {
+    if (isset($_GET[$theVarName]))
+    {
+      return !empty($_GET[$theVarName]);
+    }
+
+    return false;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Return the value of a CGI variable holding an URL.
    *
    * This method will protect against unvalidated redirects, see
@@ -164,6 +182,25 @@ abstract class Page
     }
 
     return null;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns a string with holding a boolean CGI variable that can be used as a part of a URL.
+   *
+   * @param string $theVarName The name of the boolean CGI variable.
+   * @param mixed  $theValue   The value of the CGI variable. Only and only a nonempty value evaluates to true.
+   *
+   * @return string
+   */
+  public static function putCgiBool($theVarName, $theValue)
+  {
+    if (!empty($theValue))
+    {
+      return '/'.$theVarName.'/1';
+    }
+
+    return '';
   }
 
   //--------------------------------------------------------------------------------------------------------------------

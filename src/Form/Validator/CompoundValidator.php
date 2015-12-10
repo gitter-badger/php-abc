@@ -1,22 +1,24 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
-namespace SetBased\Abc\Form;
+namespace SetBased\Abc\Form\Validator;
+
+use SetBased\Abc\Form\Control\CompoundControl;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Interface for defining classes that validate forms at form level.
+ * Interface for defining classes that validate compound controls (e.g. a complex control or a form).
  */
-interface FormValidator
+interface CompoundValidator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Validates a form at form level.
+   * Validates a compound control (e.g. a complex control or a form).
    *
-   * @param RawForm $theForm The form to be validated.
+   * @param CompoundControl $theControl The compound control to be validated.
    *
    * @return bool On Successful validation returns true, otherwise false.
    */
-  public function validate($theForm);
+  public function validate($theControl);
 
   //--------------------------------------------------------------------------------------------------------------------
 }

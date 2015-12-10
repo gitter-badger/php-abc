@@ -6,6 +6,7 @@ use SetBased\Abc\Error\FallenException;
 use SetBased\Abc\Form\Control\ComplexControl;
 use SetBased\Abc\Form\Control\CompoundControl;
 use SetBased\Abc\Form\Control\FieldSet;
+use SetBased\Abc\Form\Validator\CompoundValidator;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Misc\HtmlElement;
 
@@ -34,7 +35,7 @@ class RawForm extends HtmlElement implements CompoundControl
   /**
    * The (form) validators for validating the submitted values for this form.
    *
-   * @var FormValidator[]
+   * @var CompoundValidator[]
    */
   protected $myFormValidators = [];
 
@@ -106,15 +107,15 @@ class RawForm extends HtmlElement implements CompoundControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a form validator to list of form validators for this form.
+   * Adds a compound validator to list of compound validators for this form.
    *
-   * @param FormValidator $theFormValidator
+   * @param CompoundValidator $theValidator
    *
-   * @return FormValidator
+   * @return CompoundValidator
    */
-  public function addFormValidator($theFormValidator)
+  public function addValidator($theValidator)
   {
-    return $this->myFieldSets->addValidator($theFormValidator);
+    return $this->myFieldSets->addValidator($theValidator);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -233,6 +234,17 @@ class RawForm extends HtmlElement implements CompoundControl
     $this->myFieldSets->getSetValuesBase($ret);
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the submitted value of all form controls. This method is an alias of {@link getValues}.
+   *
+   * @returns array
+   */
+  public function getSubmittedValue()
+  {
+    return $this->getValues();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

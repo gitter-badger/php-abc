@@ -5,7 +5,7 @@ namespace SetBased\Abc\Core\Page\System;
 use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
-use SetBased\Abc\Core\Form\FormValidator\SystemModuleInsertFormValidator;
+use SetBased\Abc\Core\Form\FormValidator\SystemModuleInsertCompoundValidator;
 use SetBased\Abc\Core\Page\CorePage;
 use SetBased\Abc\Helper\Http;
 
@@ -52,7 +52,7 @@ abstract class ModuleBasePage extends CorePage
     $this->createForm();
     $this->loadValues();
     $method = $this->myForm->execute();
-    if ($method) $this->$method();
+    if ($method) $method();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -87,9 +87,9 @@ abstract class ModuleBasePage extends CorePage
     $input->setAttrMaxLength(C::LEN_WDT_TEXT);
 
     // Create a submit button.
-    $this->myForm->addSubmitButton($this->myButtonWrdId, 'handleForm');
+    $this->myForm->addSubmitButton($this->myButtonWrdId, function() {$this->handleForm();});
 
-    $this->myForm->addFormValidator(new SystemModuleInsertFormValidator());
+    $this->myForm->addValidator(new SystemModuleInsertCompoundValidator());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
