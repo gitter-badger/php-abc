@@ -6,6 +6,7 @@ use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Page\CorePage;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Form\Form;
 use SetBased\Abc\Helper\Http;
 
@@ -67,7 +68,15 @@ abstract class BabelPage extends CorePage
 
     $form   = $this->createSelectLanguageForm($theTargetLanId, $languages);
     $method = $form->execute();
-    if ($method) $this->$method($form);
+    switch ($method)
+    {
+      case  'handleSelectLanguage':
+        $this->handleSelectLanguage($form);
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------

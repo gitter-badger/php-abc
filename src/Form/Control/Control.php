@@ -2,7 +2,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Form\Control;
 
-use SetBased\Abc\Form\Validator\CompoundValidator;
 use SetBased\Abc\Form\Validator\Validator;
 use SetBased\Abc\Misc\HtmlElement;
 use SetBased\Abc\Obfuscator\Obfuscator;
@@ -89,7 +88,7 @@ abstract class Control extends HtmlElement
   /**
    * Adds a compound validator for this form control.
    *
-   * @param CompoundValidator $theValidator
+   * @param Validator $theValidator
    */
   public function addValidator($theValidator)
   {

@@ -10,6 +10,7 @@ use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\SlatControlFactory\SystemFunctionalityUpdatePagesSlatControlFactory;
 use SetBased\Abc\Core\Page\CorePage;
 use SetBased\Abc\Core\Table\CoreDetailTable;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
 use SetBased\Abc\Table\TableRow\NumericTableRow;
@@ -72,8 +73,7 @@ class FunctionalityUpdatePagesPage extends CorePage
     $this->showFunctionality();
 
     $this->createForm();
-    $method = $this->myForm->execute();
-    if ($method) $this->$method();
+    $this->executeForm();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -133,6 +133,28 @@ class FunctionalityUpdatePagesPage extends CorePage
         Abc::$DL->systemFunctionalityDeletePage($this->myFunId, $pag_id);
       }
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Executes the form shown on this page.
+   */
+  private function executeForm()
+  {
+    $method = $this->myForm->execute();
+    switch ($method)
+    {
+      case null;
+        // Nothing to do.
+        break;
+
+      case  'handleForm':
+        $this->handleForm();
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------

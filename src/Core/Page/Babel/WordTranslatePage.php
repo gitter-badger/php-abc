@@ -6,6 +6,7 @@ use SetBased\Abc\Abc;
 use SetBased\Abc\Babel;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Helper\Http;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -90,8 +91,7 @@ class WordTranslatePage extends BabelPage
   public function echoTabContent()
   {
     $this->createForm();
-    $method = $this->myForm->execute();
-    if ($method) $this->$method();
+    $this->executeForm();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -150,6 +150,28 @@ class WordTranslatePage extends BabelPage
     if (!$changes) return;
 
     Abc::$DL->wordTranslateWord($this->myUsrId, $this->myWrdId, $this->myActLanId, $values['wdt_text']);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Executes the form shown on this page.
+   */
+  private function executeForm()
+  {
+    $method = $this->myForm->execute();
+    switch ($method)
+    {
+      case null;
+        // Nothing to do.
+        break;
+
+      case  'handleForm':
+        $this->handleForm();
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -11,6 +11,7 @@ use SetBased\Abc\Core\Form\SlatControlFactory\SystemPageUpdateFunctionalitiesSla
 use SetBased\Abc\Core\Page\CorePage;
 use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Core\TableRow\System\PageDetailsTableRow;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
 use SetBased\Abc\Table\TableRow\NumericTableRow;
@@ -89,8 +90,7 @@ class PageUpdateFunctionalitiesPage extends CorePage
     $this->showPageDetails();
 
     $this->createForm();
-    $method = $this->myForm->execute();
-    if ($method) $this->$method();
+    $this->executeForm();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -128,6 +128,28 @@ class PageUpdateFunctionalitiesPage extends CorePage
 
     // Add the lover control to the form.
     $field_set->addFormControl($louver);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Executes the form shown on this page.
+   */
+  private function executeForm()
+  {
+    $method = $this->myForm->execute();
+    switch ($method)
+    {
+      case null;
+        // Nothing to do.
+        break;
+
+      case  'handleForm':
+        $this->handleForm();
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------
