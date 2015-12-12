@@ -6,8 +6,17 @@ use SetBased\Abc\Form\Cleaner\DateCleaner;
 /**
  * Class DateCleanerTest
  */
-class DateCleanerTest extends PHPUnit_Framework_TestCase
+class DateCleanerTest extends CleanerTest
 {
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  function makeCleaner()
+  {
+    return new DateCleaner('d-m-Y');
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test against ISO 8601 format.

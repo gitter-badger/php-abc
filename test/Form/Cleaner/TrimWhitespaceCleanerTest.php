@@ -3,8 +3,17 @@
 use SetBased\Abc\Form\Cleaner\TrimWhitespaceCleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
-class TrimWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
+class TrimWhitespaceCleanerTest extends CleanerTest
 {
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  function makeCleaner()
+  {
+    return TrimWhitespaceCleaner::get();
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   public function testClean()
   {

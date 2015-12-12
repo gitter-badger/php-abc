@@ -41,10 +41,13 @@ class TrimWhitespaceCleaner implements Cleaner
   {
     if ($theValue==='' || $theValue===null || $theValue===false)
     {
-      return '';
+      return null;
     }
 
-    return trim($theValue, " \t\n\r\0\x0B\xA0");
+    $tmp = trim($theValue, " \t\n\r\0\x0B\xA0");
+    if ($tmp==='') $tmp = null;
+
+    return $tmp;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

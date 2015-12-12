@@ -64,7 +64,7 @@ class DateCleaner implements Cleaner
     // If the value is empty return immediately.
     if ($value==='' || $value===null || $value===false)
     {
-      return '';
+      return null;
     }
 
     // First validate against ISO 8601.

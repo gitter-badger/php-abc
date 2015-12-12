@@ -41,10 +41,13 @@ class RemoveWhitespaceCleaner implements Cleaner
   {
     if ($theValue==='' || $theValue===null || $theValue===false)
     {
-      return '';
+      return null;
     }
 
-    return trim(mb_ereg_replace('[\ \t\n\r\0\x0B\xA0]+', '', $theValue, 'p'));
+    $tmp = trim(mb_ereg_replace('[\ \t\n\r\0\x0B\xA0]+', '', $theValue, 'p'));
+    if ($tmp==='') $tmp = null;
+
+    return $tmp;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

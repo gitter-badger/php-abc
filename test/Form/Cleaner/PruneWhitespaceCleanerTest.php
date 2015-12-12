@@ -3,8 +3,18 @@
 use SetBased\Abc\Form\Cleaner\PruneWhitespaceCleaner;
 
 //----------------------------------------------------------------------------------------------------------------------
-class PruneWhitespaceCleanerTest extends PHPUnit_Framework_TestCase
+class PruneWhitespaceCleanerTest extends CleanerTest
 {
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  function makeCleaner()
+  {
+    return PruneWhitespaceCleaner::get();
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   public function testClean()
   {

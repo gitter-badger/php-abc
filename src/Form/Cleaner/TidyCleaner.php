@@ -2,13 +2,11 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Form\Cleaner;
 
-//----------------------------------------------------------------------------------------------------------------------
 use SetBased\Abc\Helper\Html;
 
+//----------------------------------------------------------------------------------------------------------------------
 /**
- * Class TidyCleaner
- *
- * @package SetBased\Form\Form\Cleaner
+ * Cleaner for cleaning HTML code using [HTML Tidy](http://www.html-tidy.org/).
  */
 class TidyCleaner implements Cleaner
 {
@@ -35,7 +33,7 @@ class TidyCleaner implements Cleaner
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns a HTML snippet cleaned by [Tidy](http://tidy.sourceforge.net/).
+   * Returns a HTML snippet cleaned by [HTML Tidy](http://www.html-tidy.org/).
    *
    * @param string $theValue The submitted HTML snippet.
    *
@@ -49,7 +47,7 @@ class TidyCleaner implements Cleaner
 
     if ($value==='' || $value===null || $value===false)
     {
-      return '';
+      return null;
     }
 
     $tidy_config = ['clean'          => false,
@@ -66,7 +64,7 @@ class TidyCleaner implements Cleaner
     // In some cases Tidy returns an empty paragraph only.
     if (preg_match('/^(([\ \r\n\t])|(<p>)|(<\/p>)|(&nbsp;))*$/', $value)==1)
     {
-      $value = '';
+      $value = null;
     }
 
     return $value;

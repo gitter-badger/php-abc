@@ -46,7 +46,7 @@ class UrlCleaner implements Cleaner
     // If the value is empty return immediately,
     if ($value==='' || $value===null || $value===false)
     {
-      return '';
+      return null;
     }
 
     // Split the URL in parts.
