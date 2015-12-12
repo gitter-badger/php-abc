@@ -8,6 +8,7 @@ use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\Control\CoreButtonControl;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Form\SlatControlFactory\CompanyRoleUpdateFunctionalitiesSlatControlFactory;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Form\Control\LouverControl;
 use SetBased\Abc\Helper\Http;
 
@@ -70,8 +71,7 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
   protected function echoTabContent()
   {
     $this->createForm();
-    $method = $this->myForm->execute();
-    if ($method) $this->$method();
+    $this->executeForm();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -134,6 +134,28 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
         Abc::$DL->companyRoleDeleteFunctionality($this->myActCmpId, $this->myRolId, $fun_id);
       }
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Executes the form shown on this page.
+   */
+  private function executeForm()
+  {
+    $method = $this->myForm->execute();
+    switch ($method)
+    {
+      case null;
+        // Nothing to do.
+        break;
+
+      case  'handleForm':
+        $this->handleForm();
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------

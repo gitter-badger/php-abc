@@ -6,6 +6,7 @@ use SetBased\Abc\Abc;
 use SetBased\Abc\C;
 use SetBased\Abc\Core\Form\CoreForm;
 use SetBased\Abc\Core\Page\CorePage;
+use SetBased\Abc\Error\LogicException;
 use SetBased\Abc\Helper\Html;
 use SetBased\Abc\Helper\Http;
 
@@ -137,7 +138,7 @@ abstract class CompanyPage extends CorePage
     $input->setAttrMaxLength(C::LEN_CMP_ABBR);
 
     // Create "OK" submit button.
-    $form->addSubmitButton(C::WRD_ID_BUTTON_OK, 'handleForm');
+    $form->addSubmitButton(C::WRD_ID_BUTTON_OK, 'handleCompanyForm');
 
     return $form;
   }
@@ -149,7 +150,15 @@ abstract class CompanyPage extends CorePage
   {
     $form   = $this->createCompanyForm();
     $method = $form->execute();
-    if ($method) $this->$method($form);
+    switch ($method)
+    {
+      case  'handleCompanyForm':
+        $this->handleCompanyForm($form);
+        break;
+
+      default:
+        throw new LogicException("Unknown form method '%s'.", $method);
+    };
   }
 
   //--------------------------------------------------------------------------------------------------------------------
