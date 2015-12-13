@@ -11,6 +11,7 @@ begin
   ,      mnu.mnu_id             mnu_id
   ,      pag.pag_class          pag_class
   ,      pag.pag_label          pag_label
+  ,      pag.pag_weight         pag_weight
   ,      wd1.wdt_text           pag_title
   ,      wd2.wdt_text           mnu_name
   ,      ptb.ptb_label          ptb_label
