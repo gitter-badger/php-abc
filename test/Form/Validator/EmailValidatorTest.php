@@ -117,7 +117,8 @@ class ValidatorEmailTest extends PHPUnit_Framework_TestCase
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  /** A valid email address must be valid.
+  /**
+   * A valid email address must be valid.
    */
   public function testValidEmail1()
   {
