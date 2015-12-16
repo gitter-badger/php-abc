@@ -13,7 +13,7 @@ class MenuInsertPage extends MenuBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

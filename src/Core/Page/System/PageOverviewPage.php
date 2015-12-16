@@ -50,7 +50,10 @@ class PageOverviewPage extends CorePage
     // Show title of page.
     $table->addColumn(new TextTableColumn('Title', 'pag_title'));
 
-    // Show label of the page ID.
+    // Show the alias of the page.
+    $table->addColumn(new TextTableColumn('Label', 'pag_alias'));
+
+    // Show label of the page.
     $table->addColumn(new TextTableColumn('Label', 'pag_label'));
 
     // Show associated menu item of the page.

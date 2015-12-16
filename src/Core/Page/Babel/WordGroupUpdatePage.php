@@ -13,7 +13,7 @@ class WordGroupUpdatePage extends WordGroupBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

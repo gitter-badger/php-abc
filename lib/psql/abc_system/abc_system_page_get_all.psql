@@ -7,13 +7,14 @@ create procedure abc_system_page_get_all( in p_lan_id @bbl_language.lan_id%type@
 reads sql data
 -- type: rows
 begin
-  select pag.pag_id             pag_id
-  ,      mnu.mnu_id             mnu_id
-  ,      pag.pag_class          pag_class
-  ,      pag.pag_label          pag_label
+  select pag.pag_id
+  ,      mnu.mnu_id
+  ,      pag.pag_alias
+  ,      pag.pag_class
+  ,      pag.pag_label
   ,      wd1.wdt_text           pag_title
   ,      wd2.wdt_text           mnu_name
-  ,      ptb.ptb_label          ptb_label
+  ,      ptb.ptb_label
   from            AUT_PAGE      pag
   inner join      BBL_WORD_TEXT wd1  on  wd1.wrd_id = pag.wrd_id and
                                          wd1.lan_id = p_lan_id

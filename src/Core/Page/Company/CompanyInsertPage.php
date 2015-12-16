@@ -13,7 +13,7 @@ class CompanyInsertPage extends CompanyBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

@@ -20,7 +20,7 @@ class SpecificPageOverviewPage extends CompanyPage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

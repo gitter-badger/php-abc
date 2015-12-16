@@ -1,11 +1,11 @@
 /*================================================================================*/
 /* DDL SCRIPT                                                                     */
 /*================================================================================*/
-/*  Title    : Abc                                                          */
-/*  FileName : abc.ecm                                                      */
+/*  Title    : ABC Framework                                                      */
+/*  FileName : framework.ecm                                                      */
 /*  Platform : MySQL 5                                                            */
 /*  Version  : Concept                                                            */
-/*  Date     : zondag 27 september 2015                                           */
+/*  Date     : dinsdag 15 december 2015                                           */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -14,7 +14,7 @@
 CREATE TABLE `AUT_COMPANY` (
   `cmp_id` SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `cmp_abbr` VARCHAR(15) NOT NULL,
-  `cmp_label` VARCHAR(20) CHARACTER SET ascii NOT NULL,
+  `cmp_label` VARCHAR(20) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`cmp_id`)
 );
 
@@ -59,34 +59,6 @@ COMMENT ON COLUMN `AUT_CONFIG_CLASS`.`ccl_class`
 The class for showing and modifying the parameter value.
 */
 
-CREATE TABLE `AUT_CONFIG` (
-  `cfg_id` SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  `cmp_id` SMALLINT UNSIGNED NOT NULL,
-  `ccl_id` SMALLINT UNSIGNED NOT NULL,
-  `cfg_mandatory` BOOL DEFAULT 1 NOT NULL,
-  `cfg_show_to_company` BOOL DEFAULT 0 NOT NULL,
-  `cfg_modify_by_company` BOOL DEFAULT 0 NOT NULL,
-  `cfg_description` VARCHAR(400) NOT NULL,
-  `cfg_label` VARCHAR(48) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`cfg_id`)
-)
-engine=innodb;
-
-/*
-COMMENT ON COLUMN `AUT_CONFIG`.`cfg_mandatory`
-If true: this parameter must have a value.
-*/
-
-/*
-COMMENT ON COLUMN `AUT_CONFIG`.`cfg_show_to_company`
-If true: this parameter is visible by the administrator of the company. Otherwise this parameter is visible to the system administrator.
-*/
-
-/*
-COMMENT ON COLUMN `AUT_CONFIG`.`cfg_modify_by_company`
-If true: the value of this parameter can be modified by the administrator of the company.
-*/
-
 CREATE TABLE `AUT_CONFIG_VALUE` (
   `cmp_id` SMALLINT UNSIGNED NOT NULL,
   `cfg_id` SMALLINT UNSIGNED NOT NULL,
@@ -98,7 +70,7 @@ engine=innodb;
 CREATE TABLE `BBL_WORD_GROUP` (
   `wdg_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `wdg_name` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `wdg_label` VARCHAR(32) CHARACTER SET ascii,
+  `wdg_label` VARCHAR(30) CHARACTER SET ascii COLLATE ascii_general_ci,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`wdg_id`)
 );
 
@@ -107,7 +79,7 @@ CREATE TABLE `BBL_WORD` (
   `wdg_id` TINYINT UNSIGNED NOT NULL,
   `wrd_modified` DATETIME NOT NULL,
   `wrd_comment` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `wrd_label` VARCHAR(48) CHARACTER SET ascii,
+  `wrd_label` VARCHAR(50) CHARACTER SET ascii COLLATE ascii_general_ci,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`wrd_id`),
   CONSTRAINT `wrd_label` UNIQUE (`wrd_label`)
 );
@@ -134,6 +106,7 @@ CREATE TABLE `AUT_USER` (
   `usr_password_hash` VARCHAR(60) CHARACTER SET ascii COLLATE ascii_bin,
   `usr_anonymous` BOOL,
   `usr_blocked` BOOL DEFAULT 0 NOT NULL,
+  `usr_last_login` DATETIME,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`usr_id`),
   CONSTRAINT `usr_name` UNIQUE (`cmp_id`, `usr_name`)
 );
@@ -183,14 +156,14 @@ engine=innodb;
 CREATE TABLE `AUT_LOGIN_RESPONSE` (
   `lgr_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `wrd_id` SMALLINT UNSIGNED NOT NULL,
-  `lgr_label` VARCHAR(40) CHARACTER SET ascii NOT NULL,
+  `lgr_label` VARCHAR(40) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`lgr_id`)
 );
 
 CREATE TABLE `AUT_PAGE_TAB` (
   `ptb_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `wrd_id` SMALLINT UNSIGNED NOT NULL,
-  `ptb_label` VARCHAR(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `ptb_label` VARCHAR(30) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`ptb_id`)
 )
 engine=innodb;
@@ -201,8 +174,9 @@ CREATE TABLE `AUT_PAGE` (
   `ptb_id` TINYINT UNSIGNED,
   `mnu_id` SMALLINT UNSIGNED,
   `wrd_id` SMALLINT UNSIGNED NOT NULL,
+  `pag_alias` VARCHAR(32),
   `pag_class` VARCHAR(128) NOT NULL,
-  `pag_label` VARCHAR(128) CHARACTER SET ascii,
+  `pag_label` VARCHAR(128) CHARACTER SET ascii COLLATE ascii_general_ci,
   `pag_weight` INT,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`pag_id`)
 );
@@ -241,14 +215,6 @@ CREATE TABLE `AUT_PAGE_COMPANY` (
   CONSTRAINT `PK_AUT_PAGE_COMPANY` PRIMARY KEY (`pag_id`, `cmp_id`)
 )
 engine=innodb;
-
-CREATE TABLE `AUT_ROLE` (
-  `rol_id` SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  `cmp_id` SMALLINT UNSIGNED NOT NULL,
-  `rol_weight` SMALLINT NOT NULL,
-  `rol_name` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`rol_id`)
-);
 
 CREATE TABLE `AUT_ROL_FUN` (
   `rol_id` SMALLINT UNSIGNED NOT NULL,
@@ -295,7 +261,7 @@ CREATE TABLE `DEV_UUID_KEY` (
 
 CREATE TABLE `ELM_ATTRIBUTE` (
   `mat_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  `mat_label` VARCHAR(32) CHARACTER SET ascii NOT NULL,
+  `mat_label` VARCHAR(30) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`mat_id`)
 );
 
@@ -313,7 +279,7 @@ CREATE TABLE `LOG_SESSION` (
 CREATE TABLE `LOG_EVENT_TYPE` (
   `let_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `wrd_id` SMALLINT UNSIGNED NOT NULL,
-  `let_label` VARCHAR(48) CHARACTER SET ascii NOT NULL,
+  `let_label` VARCHAR(50) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`let_id`)
 )
 engine=innodb;
@@ -339,7 +305,7 @@ CREATE TABLE `LOG_LOGIN` (
   `lgr_id` TINYINT UNSIGNED NOT NULL,
   `cmp_id` SMALLINT UNSIGNED,
   `usr_id` INTEGER UNSIGNED,
-  `llg_date_time` DATETIME NOT NULL,
+  `llg_datetime` DATETIME NOT NULL,
   `llg_user_name` VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `llg_company_abbr` VARCHAR(15) CHARACTER SET ascii NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`lli_id`)
@@ -404,10 +370,6 @@ CREATE INDEX `bdt_id` ON `ABC_BLOB` (`bdt_id`);
 
 CREATE INDEX `cmp_id` ON `ABC_BLOB` (`cmp_id`);
 
-CREATE INDEX `IX_AUT_CONFIG1` ON `AUT_CONFIG` (`cmp_id`);
-
-CREATE INDEX `IX_AUT_CONFIG2` ON `AUT_CONFIG` (`ccl_id`);
-
 CREATE INDEX `CFG_ID` ON `AUT_CONFIG_VALUE` (`cfg_id`);
 
 CREATE INDEX `wdg_id` ON `BBL_WORD` (`wdg_id`);
@@ -454,8 +416,6 @@ CREATE INDEX `IX_AUT_PAGE_COMPANY1` ON `AUT_PAGE_COMPANY` (`pag_id`);
 
 CREATE INDEX `IX_AUT_PAGE_COMPANY2` ON `AUT_PAGE_COMPANY` (`cmp_id`);
 
-CREATE INDEX `cmp_id` ON `AUT_ROLE` (`cmp_id`);
-
 CREATE INDEX `IX_AUT_ROL_FUN3` ON `AUT_ROL_FUN` (`cmp_id`);
 
 CREATE INDEX `cmp_id` ON `AUT_USR_ROL` (`cmp_id`);
@@ -486,7 +446,7 @@ CREATE INDEX `cmp_id` ON `LOG_LOGIN` (`cmp_id`);
 
 CREATE INDEX `lgr_id` ON `LOG_LOGIN` (`lgr_id`);
 
-CREATE INDEX `llg_date_time` ON `LOG_LOGIN` (`llg_date_time`);
+CREATE INDEX `llg_date_time` ON `LOG_LOGIN` (`llg_datetime`);
 
 CREATE INDEX `llg_user_name` ON `LOG_LOGIN` (`llg_user_name`);
 
@@ -529,14 +489,6 @@ ALTER TABLE `ABC_BLOB`
   FOREIGN KEY (`bdt_id`) REFERENCES `ABC_BLOB_DATA` (`bdt_id`)
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
-
-ALTER TABLE `AUT_CONFIG`
-  ADD CONSTRAINT `FK_AUT_CONFIG_AUT_CONFIG_CLASS`
-  FOREIGN KEY (`ccl_id`) REFERENCES `AUT_CONFIG_CLASS` (`ccl_id`);
-
-ALTER TABLE `AUT_CONFIG`
-  ADD CONSTRAINT `FK_AUT_CONFIG_AUT_COMPANY`
-  FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`);
 
 ALTER TABLE `AUT_CONFIG_VALUE`
   ADD CONSTRAINT `AUT_CONFIG_VALUE_ibfk_2`
@@ -655,12 +607,6 @@ ALTER TABLE `AUT_PAGE_COMPANY`
 ALTER TABLE `AUT_PAGE_COMPANY`
   ADD CONSTRAINT `FK_AUT_PAGE_COMPANY_AUT_PAGE`
   FOREIGN KEY (`pag_id`) REFERENCES `AUT_PAGE` (`pag_id`);
-
-ALTER TABLE `AUT_ROLE`
-  ADD CONSTRAINT `AUT_ROLE_ibfk_1`
-  FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`)
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION;
 
 ALTER TABLE `AUT_ROL_FUN`
   ADD CONSTRAINT `FK_AUT_ROL_FUN_AUT_COMPANY`

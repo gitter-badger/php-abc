@@ -95,6 +95,9 @@ class PageDetailsPage extends CorePage
     // Add row with the menu item of the page.
     TextTableRow::addRow($table, 'Menu', $details['mnu_name']);
 
+    // Add row with the alias of the page.
+    TextTableRow::addRow($table, 'Alias', $details['pag_alias']);
+
     // Add row with the class name of the page.
     TextTableRow::addRow($table, 'Class', $details['pag_class']);
 

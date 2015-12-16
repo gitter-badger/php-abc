@@ -70,6 +70,10 @@ abstract class BabelPage extends CorePage
     $method = $form->execute();
     switch ($method)
     {
+      case null:
+        // Nothing to do;
+        break;
+
       case  'handleSelectLanguage':
         $this->handleSelectLanguage($form);
         break;

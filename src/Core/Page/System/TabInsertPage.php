@@ -13,7 +13,7 @@ class TabInsertPage extends TabBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

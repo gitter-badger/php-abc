@@ -35,7 +35,7 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

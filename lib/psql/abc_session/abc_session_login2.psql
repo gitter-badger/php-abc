@@ -52,7 +52,7 @@ begin
   ,                      lgr_id
   ,                      cmp_id
   ,                      usr_id
-  ,                      llg_date_time
+  ,                      llg_datetime
   ,                      llg_user_name
   ,                      llg_company_abbr )
   values( p_ses_id

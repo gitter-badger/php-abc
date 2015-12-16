@@ -13,7 +13,7 @@ class RoleUpdatePage extends RoleBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

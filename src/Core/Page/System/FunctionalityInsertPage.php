@@ -13,7 +13,7 @@ class FunctionalityInsertPage extends FunctionalityBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

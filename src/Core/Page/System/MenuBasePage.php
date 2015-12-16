@@ -71,6 +71,7 @@ abstract class MenuBasePage extends CorePage
 
     $input = $this->myForm->createFormControl('select', 'wrd_id', 'Menu Title');
     $input->setOptions($titles, 'wrd_id', 'wrd_text');
+    $input->setOptionsObfuscator(Abc::getObfuscator('wrd'));
     $input->setEmptyOption('');
 
 
@@ -81,29 +82,29 @@ abstract class MenuBasePage extends CorePage
 
     // Create select box for chose page for menu.
     $pages   = Abc::$DL->systemPageGetAll($this->myLanId);
-    $control = $this->myForm->createFormControl('select', 'pag_id', 'Page Class', true);
-    $control->setOptions($pages, 'pag_id', 'pag_class');
-    $control->setEmptyOption(' ');
-    $control->setOptionsObfuscator(Abc::getObfuscator('pag'));
+    $input = $this->myForm->createFormControl('select', 'pag_id', 'Page Class', true);
+    $input->setOptions($pages, 'pag_id', 'pag_class');
+    $input->setEmptyOption(' ');
+    $input->setOptionsObfuscator(Abc::getObfuscator('pag'));
 
 
     // Create text form control for input menu level.
     $input = $this->myForm->createFormControl('text', 'mnu_level', 'Menu Level', true);
     $input->setAttrMaxLength(C::LEN_MNU_LEVEL);
     $input->setValue(1);
-    $input->addValidator(new IntegerValidator(0, $this->myLanId));
+    $input->addValidator(new IntegerValidator(0, 100));
 
 
     // Create text form control for input menu group.
     $input = $this->myForm->createFormControl('text', 'mnu_group', 'Menu Group', true);
     $input->setAttrMaxLength(C::LEN_MNU_GROUP);
-    $input->addValidator(new IntegerValidator(0, $this->myLanId));
+    $input->addValidator(new IntegerValidator(0, 100));
 
 
     // Create text form control for input menu weight.
     $input = $this->myForm->createFormControl('text', 'mnu_weight', 'Menu Weight', true);
     $input->setAttrMaxLength(C::LEN_MNU_WEIGHT);
-    $input->addValidator(new IntegerValidator(0, $this->myLanId));
+    $input->addValidator(new IntegerValidator(0, 999));
 
 
     // Create text box for URL of the menu item.

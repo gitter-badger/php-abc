@@ -93,12 +93,6 @@ begin
     set l_ses_session_token = sha2( uuid(), 256 );
     set l_ses_csrf_token    = sha2( uuid(), 256 );
 
-    insert into LOG_SESSION( ses_datetime )
-    values( now() )
-    ;
-
-    set l_ses_id = last_insert_id();
-
     insert into AUT_SESSION( ses_id
     ,                        usr_id
     ,                        cmp_id
@@ -114,6 +108,8 @@ begin
     ,       now()
     ,       now() )
     ;
+
+    set l_ses_id = last_insert_id();
   end if;
 
   -- To be used in audit triggers.

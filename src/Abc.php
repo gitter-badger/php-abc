@@ -60,9 +60,18 @@ abstract class Abc
   protected $myDomain;
 
   /**
-   * The ID of the requested page.
+   * Information about the session.
+   *
+   * @var array
    */
-  private $myPagId;
+  protected $mySessionInfo;
+
+  /**
+   * The page for handling the HTTP request.
+   *
+   * @var Page
+   */
+  private $myPage;
 
   /**
    * Information about the requested page.
@@ -83,13 +92,6 @@ abstract class Abc
    */
   private $myRqlId;
 
-  /**
-   * Information about the session.
-   *
-   * @var array
-   */
-  private $mySessionInfo;
-
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Object constructor.
@@ -104,21 +106,6 @@ abstract class Abc
     self::$DL = $theDataLayer;
 
     self::$ourObfuscatorFactory = $theObfuscatorFactory;
-
-    // Derive the canonical server name aka fully qualified server name.
-    $this->setCanonicalServerName();
-
-    // Derive the domain (a.k.a. company abbreviation).
-    $this->setDomain();
-
-    // Get the CGI variables from a clean URL.
-    $this->uncleanUrl();
-
-    // Derive the ID of the requested page.
-    $this->derivePagId();
-
-    // Retrieve the session or create an new session.
-    $this->getSession();
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -158,6 +145,7 @@ abstract class Abc
   {
     return self::$ourObfuscatorFactory->getObfuscator($theLabel);
   }
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Obfuscates a database ID.
@@ -279,7 +267,7 @@ abstract class Abc
    */
   public function getPagId()
   {
-    return $this->myPagId;
+    return $this->myPageInfo['pag_id'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -344,6 +332,21 @@ abstract class Abc
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns true if the current user is authorized the request a page.
+   *
+   * @param int $thePagId The ID of the page.
+   *
+   * @return bool
+   */
+  public function getPathAuth($thePagId)
+  {
+    return self::$DL->authGetPageAuth($this->mySessionInfo['cmp_id'],
+                                      $this->mySessionInfo['usr_id'],
+                                      $thePagId);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Returns page group title.
    *
    * @return string
@@ -398,14 +401,25 @@ abstract class Abc
 
     try
     {
+      // Derive the canonical server name aka fully qualified server name.
+      $this->setCanonicalServerName();
+
+      // Derive the domain (a.k.a. company abbreviation).
+      $this->setDomain();
+
+      // Get the CGI variables from a clean URL.
+      $this->uncleanUrl();
+
+      // Retrieve the session or create an new session.
+      $this->getSession();
+
       // Test the user is authorized for the requested page.
       $this->checkAuthorization();
 
       $page_class = $this->myPageInfo['pag_class'];
       try
       {
-        /** @var Page $page */
-        $page = new $page_class();
+        $this->myPage = new $page_class();
       }
       catch (ResultException $e)
       {
@@ -413,7 +427,7 @@ abstract class Abc
         throw new InvalidUrlException('No data found', $e);
       }
 
-      $uri = $page->getPreferredUri();
+      $uri = $this->myPage->getPreferredUri();
       if (isset($uri) && $uri!=$_SERVER['REQUEST_URI'])
       {
         // The preferred URI differs from the requested URI. Redirect the user agent to the preferred URL.
@@ -423,12 +437,12 @@ abstract class Abc
       else
       {
         // Echo the page content.
-        $page->echoPage();
+        $this->myPage->echoPage();
 
         // Flush the page content.
         ob_flush();
 
-        $this->myPageSize = $page->getPageSize();
+        $this->myPageSize = $this->myPage->getPageSize();
       }
     }
     catch (NotAuthorizedException $e)
@@ -477,35 +491,6 @@ abstract class Abc
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Derives the ID of the requested page.
-   */
-  protected function derivePagId()
-  {
-    if (isset($_GET['pag']))
-    {
-      $this->myPagId = Abc::deObfuscate($_GET['pag'], 'pag');
-    }
-    else if (isset($_GET['page']))
-    {
-      switch ($_GET['page'])
-      {
-        case 'w3c_validate':
-          $this->myPagId = C::PAG_ID_MISC_W3C_VALIDATE;
-          break;
-
-        default:
-          // xxx what to do? Exception or use index?
-          $this->myPagId = C::PAG_ID_MISC_INDEX;
-      }
-    }
-    else
-    {
-      $this->myPagId = C::PAG_ID_MISC_INDEX;
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Handles any other caught exception.
    *
    * @param \Exception $theException The caught exception.
@@ -546,6 +531,7 @@ abstract class Abc
       Abc::$DL->rollback();
       // Redirect the user agent to the login page. After the user has successfully logged on the user agent will be
       // redirected to currently requested URL.
+
       Http::redirect(LoginPage::getUrl($_SERVER['REQUEST_URI']));
     }
     else
@@ -589,15 +575,41 @@ abstract class Abc
    */
   private function checkAuthorization()
   {
+    if (isset($_GET['pag']))
+    {
+      $pag_id    = Abc::deObfuscate($_GET['pag'], 'pag');
+      $pag_alias = null;
+    }
+    else if (isset($_GET['page']))
+    {
+      $pag_id    = null;
+      $pag_alias = $_GET['page'];
+    }
+    else
+    {
+      $pag_id    = C::PAG_ID_MISC_INDEX;
+      $pag_alias = null;
+    }
+
     $this->myPageInfo = Abc::$DL->authGetPageInfo($this->mySessionInfo['cmp_id'],
-                                                  $this->myPagId,
+                                                  $pag_id,
                                                   $this->mySessionInfo['usr_id'],
-                                                  $this->mySessionInfo['lan_id']);
+                                                  $this->mySessionInfo['lan_id'],
+                                                  $pag_alias);
     if (!$this->myPageInfo)
     {
-      throw new NotAuthorizedException("User %d is not authorized for page '%d'.",
-                                       $this->mySessionInfo['usr_id'],
-                                       $this->myPagId);
+      if (isset($pag_id))
+      {
+        throw new NotAuthorizedException("User %d is not authorized for page ID=%d.",
+                                         $this->mySessionInfo['usr_id'],
+                                         $pag_id);
+      }
+      else
+      {
+        throw new NotAuthorizedException("User %d is not authorized for page alias='%s'.",
+                                         $this->mySessionInfo['usr_id'],
+                                         $pag_alias);
+      }
     }
   }
 
@@ -608,14 +620,26 @@ abstract class Abc
    */
   private function getSession()
   {
-    $this->mySessionInfo = Abc::$DL->sessionGetSession($this->myDomain,
-                                                       isset($_COOKIE['ses_session_token']) ? $_COOKIE['ses_session_token'] : null);
+    $cookie              = isset($_COOKIE['ses_session_token']) ? $_COOKIE['ses_session_token'] : null;
+    $this->mySessionInfo = Abc::$DL->sessionGetSession($this->myDomain, $cookie);
 
     if (isset($_SERVER['HTTPS']))
     {
       // Set session and CSRF cookies.
-      setcookie('ses_session_token', $this->mySessionInfo['ses_session_token'], false, '/', $_SERVER['HTTP_HOST'], true, true);
-      setcookie('ses_csrf_token', $this->mySessionInfo['ses_csrf_token'], false, '/', $_SERVER['HTTP_HOST'], true, false);
+      setcookie('ses_session_token',
+                $this->mySessionInfo['ses_session_token'],
+                false,
+                '/',
+                $_SERVER['HTTP_HOST'],
+                true,
+                true);
+      setcookie('ses_csrf_token',
+                $this->mySessionInfo['ses_csrf_token'],
+                false,
+                '/',
+                $_SERVER['HTTP_HOST'],
+                true,
+                false);
     }
   }
 
@@ -706,13 +730,13 @@ abstract class Abc
       $this->mySessionInfo['ses_id'],
       $this->mySessionInfo['cmp_id'],
       $this->mySessionInfo['usr_id'],
-      $this->myPagId,
-      mb_substr($_SERVER['REQUEST_URI'], 0, 255),
-      mb_substr($_SERVER['REQUEST_METHOD'], 0, 8),
-      (isset($_SERVER['HTTP_REFERER'])) ? mb_substr($_SERVER['HTTP_REFERER'], 0, 255) : null,
+      $this->myPageInfo['pag_id'],
+      mb_substr($_SERVER['REQUEST_URI'], 0, C::LEN_RQL_REQUEST),
+      mb_substr($_SERVER['REQUEST_METHOD'], 0, C::LEN_RQL_METHOD),
+      (isset($_SERVER['HTTP_REFERER'])) ? mb_substr($_SERVER['HTTP_REFERER'], 0, C::LEN_RQL_REFERER) : null,
       $_SERVER['REMOTE_ADDR'],
-      (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 64) : null,
-      (isset($_SERVER['HTTP_USER_AGENT'])) ? mb_substr($_SERVER['HTTP_USER_AGENT'], 0, 255) : null,
+      (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, C::LEN_RQL_LANGUAGE) : null,
+      (isset($_SERVER['HTTP_USER_AGENT'])) ? mb_substr($_SERVER['HTTP_USER_AGENT'], 0, C::LEN_RQL_USER_AGENT) : null,
       0, // XXX query count
       microtime(true) - self::$ourTime0,
       $this->myPageSize);

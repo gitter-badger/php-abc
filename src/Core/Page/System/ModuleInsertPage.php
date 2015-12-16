@@ -13,7 +13,7 @@ class ModuleInsertPage extends ModuleBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

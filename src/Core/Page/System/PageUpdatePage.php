@@ -53,7 +53,6 @@ class PageUpdatePage extends PageBasePage
     // Return immediately if no changes are submitted.
     if (!$changes) return;
 
-
     if ($values['pag_title'])
     {
       $wrd_id = Abc::$DL->wordInsertWord($this->myUsrId,
@@ -72,6 +71,7 @@ class PageUpdatePage extends PageBasePage
                                       $values['ptb_id'],
                                       $values['pag_id_org'],
                                       $values['mnu_id'],
+                                      $values['pag_alias'],
                                       $values['pag_class'],
                                       $values['pag_label'],
                                       $values['pag_weight']);

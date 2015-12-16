@@ -55,7 +55,7 @@ class W3cValidatePage extends Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

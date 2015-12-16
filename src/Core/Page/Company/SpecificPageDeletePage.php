@@ -15,7 +15,7 @@ class SpecificPageDeletePage extends Page
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

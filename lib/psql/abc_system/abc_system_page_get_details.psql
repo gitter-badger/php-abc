@@ -9,14 +9,15 @@ create procedure abc_system_page_get_details( in p_pag_id @aut_page.pag_id%type@
 reads sql data
 -- type: row1
 begin
-  select pag.pag_id         pag_id
-  ,      pag.ptb_id         ptb_id
-  ,      pag.pag_id_org     pag_id_org
-  ,      pag.mnu_id         mnu_id
-  ,      pag.wrd_id         wrd_id
-  ,      pag.pag_class      pag_class
-  ,      pag.pag_label      pag_label
-  ,      pag.pag_weight     pag_weight
+  select pag.pag_id
+  ,      pag.ptb_id
+  ,      pag.pag_id_org
+  ,      pag.mnu_id
+  ,      pag.wrd_id
+  ,      pag.pag_alias
+  ,      pag.pag_class
+  ,      pag.pag_label
+  ,      pag.pag_weight
   ,      wd1.wdt_text       pag_title
   ,      wd2.wdt_text       mnu_name
   ,      wd3.wdt_text       ptb_name

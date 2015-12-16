@@ -78,7 +78,7 @@ abstract class PageBasePage extends CorePage
     $input = $this->myForm->createFormControl('select', 'wrd_id', 'Title');
     $input->setOptions($titles, 'wrd_id', 'wrd_text');
     $input->setEmptyOption(true);
-    $input->setObfuscator(Abc::getObfuscator('wrd'));
+    $input->setOptionsObfuscator(Abc::getObfuscator('wrd'));
 
     // Create text box for (new) page title.
     $input = $this->myForm->createFormControl('text', 'pag_title', 'Title');
@@ -97,14 +97,18 @@ abstract class PageBasePage extends CorePage
     $input = $this->myForm->createFormControl('select', 'pag_id_org', 'Original Page');
     $input->setOptions($pages, 'pag_id', 'pag_class');
     $input->setEmptyOption('');
-    $input->setObfuscator(Abc::getObfuscator('pag'));
+    $input->setOptionsObfuscator(Abc::getObfuscator('pag'));
 
     // Create form control for menu item with which the page is associated..
     $menus = Abc::$DL->systemMenuGetAllEntries($this->myLanId);
     $input = $this->myForm->createFormControl('select', 'mnu_id', 'Menu');
     $input->setOptions($menus, 'mnu_id', 'mnu_name');
     $input->setEmptyOption(true);
-    $input->setObfuscator(Abc::getObfuscator('mnu'));
+    $input->setOptionsObfuscator(Abc::getObfuscator('mnu'));
+
+    // Create form control for page alias.
+    $input = $this->myForm->createFormControl('text', 'pag_alias', 'Alias');
+    $input->setAttrMaxLength(C::LEN_PAG_ALIAS);
 
     // Create form control for page class.
     $input = $this->myForm->createFormControl('text', 'pag_class', 'Class', true);

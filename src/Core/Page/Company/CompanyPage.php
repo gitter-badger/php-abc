@@ -33,7 +33,7 @@ abstract class CompanyPage extends CorePage
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

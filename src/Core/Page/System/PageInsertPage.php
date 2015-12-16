@@ -13,7 +13,7 @@ class PageInsertPage extends PageBasePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {
@@ -57,6 +57,7 @@ class PageInsertPage extends PageBasePage
                                                              $values['ptb_id'],
                                                              $values['pag_id_org'],
                                                              $values['mnu_id'],
+                                                             $values['pag_alias'],
                                                              $values['pag_class'],
                                                              $values['pag_label'],
                                                              $values['pag_weight']);

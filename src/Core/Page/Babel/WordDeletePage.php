@@ -14,7 +14,7 @@ class WordDeletePage extends BabelPage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * {@inheritdoc}
+   * Object constructor.
    */
   public function __construct()
   {

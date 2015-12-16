@@ -75,7 +75,7 @@ abstract class ModuleBasePage extends CorePage
 
     if ($words)
     {
-      // If there are unused modules names (i.e. words in the word group BBL_WDG_ID_MODULES that are not used by a
+      // If there are unused modules names (i.e. words in the word group WDG_ID_MODULES that are not used by a
       // module) create a select box with free modules names.
       $input = $this->myForm->createFormControl('select', 'wrd_id', 'Module Name');
       $input->setOptions($words, 'wrd_id', 'wrd_text');
