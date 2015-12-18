@@ -11,7 +11,7 @@ use SetBased\Abc\Table\TableColumn\TextTableColumn;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Page with an the details of a compnay.
+ * Page with an overview of the enabled modules of a company.
  */
 class ModuleOverviewPage extends CompanyPage
 {
@@ -41,7 +41,7 @@ class ModuleOverviewPage extends CompanyPage
 
     $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
 
-    // Add table action for modifying the enabled modules of the Company.
+    // Add table action for modifying the enabled modules of the target company.
     $table->addTableAction('default', new ModuleUpdateTableAction($this->myActCmpId));
 
     // Show the ID of the module.
