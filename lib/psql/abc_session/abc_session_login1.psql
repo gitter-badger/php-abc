@@ -8,8 +8,8 @@
  * @param p_cmp_abbr The abbreviation of the company.
  */
 create procedure abc_session_login1(in p_ses_id   @aut_session.ses_id%type@,
-                                    in p_usr_name @aut_session.usr_name%type@,
-                                    in p_cmp_abbr @aut_session.cmp_abbr%type@)
+                                    in p_usr_name @aut_user.usr_name%type@,
+                                    in p_cmp_abbr @aut_company.cmp_abbr%type@)
 modifies sql data
 -- type: row1
 begin
