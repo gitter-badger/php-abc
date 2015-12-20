@@ -33,7 +33,7 @@ abstract class Page
   /**
    * CSS code to be included in the head of this page.
    */
-  protected $myCss = null;
+  protected $myCss;
 
   /**
    * List with CSS sources to be included on this page.
@@ -47,7 +47,7 @@ abstract class Page
    *
    * @var string
    */
-  protected $myJavaScript = null;
+  protected $myJavaScript;
 
   /**
    * The attributes of the script element in the page trailer (i.e. near the end html tag). Example:
@@ -136,14 +136,14 @@ abstract class Page
    *                                  * tty        Teletypes and similar media using a fixed-pitch character grid
    *                                  * tv         Television type devices (low resolution, limited scroll ability)
    */
-  public static function cssAppendClassSourceStatic($theClassName, $theDevice = null)
+  public static function cssStaticAppendClassSource($theClassName, $theDevice = null)
   {
     self::$ourPage->cssAppendPageSpecificSource($theClassName, $theDevice);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a CCS file to the header of last created page.
+   * Adds a CCS file to the header to the last created page.
    *
    * This method is a static wrapper around method {@link cssAppendSource}.
    *
@@ -159,9 +159,35 @@ abstract class Page
    *                               * tty        Teletypes and similar media using a fixed-pitch character grid
    *                               * tv         Television type devices (low resolution, limited scroll ability)
    */
-  public static function cssAppendSourceStatic($theSource, $theDevice = null)
+  public static function cssStaticAppendSource($theSource, $theDevice = null)
   {
     self::$ourPage->cssAppendSource($theSource, $theDevice);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds an optimized CCS file to the header of last created page.
+   *
+   * Do not use this method directly. Use {@link cssAppendPageSpecificSource} instead.
+   *
+   * @param string      $theSource The filename relative to the resource root of the CSS source.
+   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
+   *                               * null       Suitable for all devices. null is preferred over 'all'.
+   *                               * aural      Speech synthesizers
+   *                               * braille    Braille feedback devices
+   *                               * handheld   Handheld devices (small screen, limited bandwidth)
+   *                               * projection Projectors
+   *                               * print      Print preview mode/printed pages
+   *                               * screen     Computer screens
+   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
+   *                               * tv         Television type devices (low resolution, limited scroll ability)
+   */
+  public static function cssStaticOptimizedAppendSource($theSource, $theDevice = null)
+  {
+    self::$ourPage->myCssSources[] = ['href'  => $theSource,
+                                      'media' => $theDevice,
+                                      'rel'   => 'stylesheet',
+                                      'type'  => 'text/css'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -256,7 +282,7 @@ abstract class Page
    * @param string $theJsFunctionName The function name inside the namespace.
    * @param array  $args              The optional arguments for the function.
    */
-  public static function jsAdmClassFunctionCallStatic($theClassName, $theJsFunctionName, $args = [])
+  public static function jsAdmStaticClassSpecificFunctionCall($theClassName, $theJsFunctionName, $args = [])
   {
     self::$ourPage->jsAdmPageSpecificFunctionCall($theClassName, $theJsFunctionName, $args);
   }
@@ -271,9 +297,28 @@ abstract class Page
    * @param string $theJsFunctionName The function name inside the namespace.
    * @param array  $args              The optional arguments for the function.
    */
-  public static function jsAdmFunctionCallStatic($theNamespace, $theJsFunctionName, $args = [])
+  public static function jsAdmStaticFunctionCall($theNamespace, $theJsFunctionName, $args = [])
   {
     self::$ourPage->jsAdmFunctionCall($theNamespace, $theJsFunctionName, $args);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Do not use this function, use {@link jsAdmFunctionCall} instead.
+   *
+   * @param string $theNamespace      The namespace as in RequireJS.
+   * @param string $theJsFunctionName The function name inside the namespace.
+   * @param array  $args              The optional arguments for the function.
+   */
+  public static function jsAdmStaticOptimizedFunctionCall($theNamespace, $theJsFunctionName, $args = [])
+  {
+    self::$ourPage->myJavaScript .= 'require(["';
+    self::$ourPage->myJavaScript .= $theNamespace;
+    self::$ourPage->myJavaScript .= '"],function(page){\'use strict\';page.';
+    self::$ourPage->myJavaScript .= $theJsFunctionName;
+    self::$ourPage->myJavaScript .= '(';
+    self::$ourPage->myJavaScript .= implode(',', array_map('json_encode', $args));
+    self::$ourPage->myJavaScript .= ');});';
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -323,87 +368,6 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Adds a page specific CCS file to the header of this page.
-   *
-   * @param string      $theClassName The PHP class name, i.e. __CLASS__. Backslashes will be translated to forward
-   *                                  slashes to construct the filename relative to the resource root of the CSS
-   *                                  source.
-   * @param string|null $theDevice    The device for which the CSS source is optimized for.
-   *                                  * null       Suitable for all devices. null is preferred over 'all'.
-   *                                  * aural      Speech synthesizers
-   *                                  * braille    Braille feedback devices
-   *                                  * handheld   Handheld devices (small screen, limited bandwidth)
-   *                                  * projection Projectors
-   *                                  * print      Print preview mode/printed pages
-   *                                  * screen     Computer screens
-   *                                  * tty        Teletypes and similar media using a fixed-pitch character grid
-   *                                  * tv         Television type devices (low resolution, limited scroll ability)
-   */
-  public function cssAppendPageSpecificSource($theClassName, $theDevice = null)
-  {
-    // Construct the filename of the CSS file.
-    $filename = '/css/'.str_replace('\\', '/', $theClassName);
-    if (isset($theDevice)) $filename .= '.'.$theDevice;
-    $filename .= '.css';
-
-    $this->cssAppendSource($filename, $theDevice);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Adds a CCS file to the header of this page.
-   *
-   * @param string      $theSource The filename relative to the resource root of the CSS source.
-   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
-   *                               * null       Suitable for all devices. null is preferred over 'all'.
-   *                               * aural      Speech synthesizers
-   *                               * braille    Braille feedback devices
-   *                               * handheld   Handheld devices (small screen, limited bandwidth)
-   *                               * projection Projectors
-   *                               * print      Print preview mode/printed pages
-   *                               * screen     Computer screens
-   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
-   *                               * tv         Television type devices (low resolution, limited scroll ability)
-   */
-  public function cssAppendSource($theSource, $theDevice = null)
-  {
-    $path = HOME.'/www'.$theSource;
-    if (!file_exists($path))
-    {
-      throw new LogicException("CSS file '%s' does not exists.", $theSource);
-    }
-
-    $this->cssOptimizedAppendSource($theSource, $theDevice);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Adds an optimized CCS file to the header of this page.
-   *
-   * Do not use this method directly. Use {@link cssAppendPageSpecificSource} instead.
-   *
-   * @param string      $theSource The filename relative to the resource root of the CSS source.
-   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
-   *                               * null       Suitable for all devices. null is preferred over 'all'.
-   *                               * aural      Speech synthesizers
-   *                               * braille    Braille feedback devices
-   *                               * handheld   Handheld devices (small screen, limited bandwidth)
-   *                               * projection Projectors
-   *                               * print      Print preview mode/printed pages
-   *                               * screen     Computer screens
-   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
-   *                               * tv         Television type devices (low resolution, limited scroll ability)
-   */
-  public function cssOptimizedAppendSource($theSource, $theDevice = null)
-  {
-    $this->myCssSources[] = ['href'  => $theSource,
-                             'media' => $theDevice,
-                             'rel'   => 'stylesheet',
-                             'type'  => 'text/css'];
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Must be implemented in child classes to echo the actual page content, i.e. the inner HTML of the body tag.
    *
    * @return null
@@ -444,69 +408,6 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Using RequiresJS calls a function in a namespace.
-   *
-   * @param string $theNamespace      The namespace as in RequireJS.
-   * @param string $theJsFunctionName The function name inside the namespace.
-   * @param array  $args              The optional arguments for the function.
-   */
-  public function jsAdmFunctionCall($theNamespace, $theJsFunctionName, $args = [])
-  {
-    // Construct the filename of the JS file.
-    $filename = '/js/'.$theNamespace.'.js';
-
-    // Test JS file actually exists.
-    $path = HOME.'/www'.$filename;
-    if (!file_exists($path))
-    {
-      throw new LogicException("JavaScript file '%s' does not exists.", $filename);
-    }
-
-    $this->jsAdmOptimizedFunctionCall($theNamespace, $theJsFunctionName, $args);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Do not use this function, use {@link jsAdmFunctionCall} instead.
-   *
-   * @param string $theNamespace      The namespace as in RequireJS.
-   * @param string $theJsFunctionName The function name inside the namespace.
-   * @param array  $args              The optional arguments for the function.
-   */
-  public function jsAdmOptimizedFunctionCall($theNamespace, $theJsFunctionName, $args = [])
-  {
-    $this->myJavaScript .= 'require(["';
-    $this->myJavaScript .= $theNamespace;
-    $this->myJavaScript .= '"],function(page){\'use strict\';page.';
-    $this->myJavaScript .= $theJsFunctionName;
-    $this->myJavaScript .= '(';
-    $this->myJavaScript .= implode(',', array_map('json_encode', $args));
-    $this->myJavaScript .= ');});';
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   * Using RequiresJS calls a function in the same namespace as the PHP class (where backslashes will be translated to
-   * forward slashes). Example:
-   * ```
-   * $this->jsAdmPageSpecificFunctionCall(__CLASS__, 'init');
-   * ```
-   *
-   * @param string $theClassName      The PHP cass name, i.e. __CLASS__. Backslashes will be translated to forward
-   *                                  slashes to construct the namespace.
-   * @param string $theJsFunctionName The function name inside the namespace.
-   * @param array  $args              The optional arguments for the function.
-   */
-  public function jsAdmPageSpecificFunctionCall($theClassName, $theJsFunctionName, $args = [])
-  {
-    // Convert PHP class name to RequireJS namespace name.
-    $namespace = str_replace('\\', '/', $theClassName);
-
-    $this->jsAdmFunctionCall($namespace, $theJsFunctionName, $args);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
    * Adds a word to the key words to be included in a meta tag for this page.
    *
    * @param string $theKeyword The keyword.
@@ -536,6 +437,87 @@ abstract class Page
   protected function appendPageTitle($thePageTitleAddendum)
   {
     Abc::getInstance()->appendPageTitle($thePageTitleAddendum);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a page specific CCS file to the header of this page.
+   *
+   * @param string      $theClassName The PHP class name, i.e. __CLASS__. Backslashes will be translated to forward
+   *                                  slashes to construct the filename relative to the resource root of the CSS
+   *                                  source.
+   * @param string|null $theDevice    The device for which the CSS source is optimized for.
+   *                                  * null       Suitable for all devices. null is preferred over 'all'.
+   *                                  * aural      Speech synthesizers
+   *                                  * braille    Braille feedback devices
+   *                                  * handheld   Handheld devices (small screen, limited bandwidth)
+   *                                  * projection Projectors
+   *                                  * print      Print preview mode/printed pages
+   *                                  * screen     Computer screens
+   *                                  * tty        Teletypes and similar media using a fixed-pitch character grid
+   *                                  * tv         Television type devices (low resolution, limited scroll ability)
+   */
+  protected function cssAppendPageSpecificSource($theClassName, $theDevice = null)
+  {
+    // Construct the filename of the CSS file.
+    $filename = '/css/'.str_replace('\\', '/', $theClassName);
+    if (isset($theDevice)) $filename .= '.'.$theDevice;
+    $filename .= '.css';
+
+    $this->cssAppendSource($filename, $theDevice);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds a CCS file to the header of this page.
+   *
+   * @param string      $theSource The filename relative to the resource root of the CSS source.
+   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
+   *                               * null       Suitable for all devices. null is preferred over 'all'.
+   *                               * aural      Speech synthesizers
+   *                               * braille    Braille feedback devices
+   *                               * handheld   Handheld devices (small screen, limited bandwidth)
+   *                               * projection Projectors
+   *                               * print      Print preview mode/printed pages
+   *                               * screen     Computer screens
+   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
+   *                               * tv         Television type devices (low resolution, limited scroll ability)
+   */
+  protected function cssAppendSource($theSource, $theDevice = null)
+  {
+    $path = HOME.'/www'.$theSource;
+    if (!file_exists($path))
+    {
+      throw new LogicException("CSS file '%s' does not exists.", $theSource);
+    }
+
+    $this->cssOptimizedAppendSource($theSource, $theDevice);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Adds an optimized CCS file to the header of this page.
+   *
+   * Do not use this method directly. Use {@link cssAppendPageSpecificSource} instead.
+   *
+   * @param string      $theSource The filename relative to the resource root of the CSS source.
+   * @param string|null $theDevice The device for which the CSS source is optimized for. Possible values:
+   *                               * null       Suitable for all devices. null is preferred over 'all'.
+   *                               * aural      Speech synthesizers
+   *                               * braille    Braille feedback devices
+   *                               * handheld   Handheld devices (small screen, limited bandwidth)
+   *                               * projection Projectors
+   *                               * print      Print preview mode/printed pages
+   *                               * screen     Computer screens
+   *                               * tty        Teletypes and similar media using a fixed-pitch character grid
+   *                               * tv         Television type devices (low resolution, limited scroll ability)
+   */
+  protected function cssOptimizedAppendSource($theSource, $theDevice = null)
+  {
+    $this->myCssSources[] = ['href'  => $theSource,
+                             'media' => $theDevice,
+                             'rel'   => 'stylesheet',
+                             'type'  => 'text/css'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -664,6 +646,48 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Using RequiresJS calls a function in a namespace.
+   *
+   * @param string $theNamespace      The namespace as in RequireJS.
+   * @param string $theJsFunctionName The function name inside the namespace.
+   * @param array  $args              The optional arguments for the function.
+   */
+  protected function jsAdmFunctionCall($theNamespace, $theJsFunctionName, $args = [])
+  {
+    // Construct the filename of the JS file.
+    $filename = '/js/'.$theNamespace.'.js';
+
+    // Test JS file actually exists.
+    $path = HOME.'/www'.$filename;
+    if (!file_exists($path))
+    {
+      throw new LogicException("JavaScript file '%s' does not exists.", $filename);
+    }
+
+    $this->jsAdmOptimizedFunctionCall($theNamespace, $theJsFunctionName, $args);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Do not use this function, use {@link jsAdmFunctionCall} instead.
+   *
+   * @param string $theNamespace      The namespace as in RequireJS.
+   * @param string $theJsFunctionName The function name inside the namespace.
+   * @param array  $args              The optional arguments for the function.
+   */
+  protected function jsAdmOptimizedFunctionCall($theNamespace, $theJsFunctionName, $args = [])
+  {
+    $this->myJavaScript .= 'require(["';
+    $this->myJavaScript .= $theNamespace;
+    $this->myJavaScript .= '"],function(page){\'use strict\';page.';
+    $this->myJavaScript .= $theJsFunctionName;
+    $this->myJavaScript .= '(';
+    $this->myJavaScript .= implode(',', array_map('json_encode', $args));
+    $this->myJavaScript .= ');});';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Do not use this function, use {@link jsAdmFunctionCall} instead.
    * ```
    * $this->jsAdmSetPageSpecificMain(__CLASS__);
@@ -674,6 +698,27 @@ abstract class Page
   protected function jsAdmOptimizedSetPageSpecificMain($theMainJsScript)
   {
     $this->myJsTrailerAttributes = ['src' => $theMainJsScript];
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Using RequiresJS calls a function in the same namespace as the PHP class (where backslashes will be translated to
+   * forward slashes). Example:
+   * ```
+   * $this->jsAdmPageSpecificFunctionCall(__CLASS__, 'init');
+   * ```
+   *
+   * @param string $theClassName      The PHP cass name, i.e. __CLASS__. Backslashes will be translated to forward
+   *                                  slashes to construct the namespace.
+   * @param string $theJsFunctionName The function name inside the namespace.
+   * @param array  $args              The optional arguments for the function.
+   */
+  protected function jsAdmPageSpecificFunctionCall($theClassName, $theJsFunctionName, $args = [])
+  {
+    // Convert PHP class name to RequireJS namespace name.
+    $namespace = str_replace('\\', '/', $theClassName);
+
+    $this->jsAdmFunctionCall($namespace, $theJsFunctionName, $args);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
