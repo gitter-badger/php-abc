@@ -1,5 +1,8 @@
 /**
- * Fase 2 of the login process.
+ * Phase 3 of the login process.
+ *
+ * Phase 3 logs the login attempt and if login is granted upgrades the current session to a session that is tied to the
+ * user.
  *
  * @param p_ses_id     The ID of the session.
  * @param p_cmp_id     The ID of the company (safeguard).
@@ -9,13 +12,13 @@
  * @param p_cmp_abbr   The company abbreviation of the login attempt.
  * @param p_ip_address The remote IPv4 address.
  */
-create procedure abc_session_login2( in p_ses_id         @log_login.ses_id%type@,
-                                     in p_cmp_id         @log_login.cmp_id%type@,
-                                     in p_usr_id         @log_login.usr_id%type@,
-                                     in p_lgr_id         @log_login.lgr_id%type@,
-                                     in p_user_name      @log_login.llg_user_name%type@,
-                                     in p_cmp_abbr       @log_login.llg_company_abbr%type@,
-                                     in p_ip_address     varchar(15) )
+create procedure abc_session_login3(in p_ses_id     @log_login.ses_id%type@,
+                                    in p_cmp_id     @log_login.cmp_id%type@,
+                                    in p_usr_id     @log_login.usr_id%type@,
+                                    in p_lgr_id     @log_login.lgr_id%type@,
+                                    in p_user_name  @log_login.llg_user_name%type@,
+                                    in p_cmp_abbr   @log_login.llg_company_abbr%type@,
+                                    in p_ip_address varchar(15))
 modifies sql data
 -- type: row1
 begin
@@ -23,8 +26,8 @@ begin
   declare l_ses_csrf_token     @aut_session.ses_csrf_token%type@;
 
   if (p_lgr_id=@LGR_ID_GRANTED@) then
-    set l_ses_session_token = sha2( uuid(), 256 );
-    set l_ses_csrf_token    = sha2( uuid(), 256 );
+    set l_ses_session_token = sha2(uuid(), 256);
+    set l_ses_csrf_token    = sha2(uuid(), 256);
 
     update AUT_SESSION
     set    usr_id            = p_usr_id
@@ -36,12 +39,10 @@ begin
 
     set @abc_g_skip_aut_user  = 1;
 
-    /*
     update AUT_USER
     set    usr_last_login = now()
     where  usr_id = p_usr_id
     ;
-    */
 
     set @abc_g_skip_aut_user = null;
   end if;

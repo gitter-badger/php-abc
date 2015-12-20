@@ -201,19 +201,19 @@ class LoginPage extends Page
 
     $values = $this->myForm->getValues();
 
-    // Validate the user is allowed to login (except for password validation).
+    // Phase 1: Validate the user is allowed to login (except for password validation).
     $response1 = Abc::$DL->sessionLogin1($abc->getSesId(), $values['usr_name'], $values['cmp_abbr']);
     $lgr_id    = $response1['lgr_id'];
 
     if ($lgr_id==C::LGR_ID_GRANTED)
     {
-      // So far, user is allowed to login. Last validation: verify password.
+      // Phase 2: So far, user is allowed to login. Last validation: verify password.
       $match = Password::passwordVerify($values['usr_password'], $response1['usr_password_hash']);
       if ($match!==true) $lgr_id = C::LGR_ID_WRONG_PASSWORD;
     }
 
-    // Log the login attempt and set session.
-    $response2 = Abc::$DL->sessionLogin2($abc->getSesId(),
+    // Phase 3: Log the login attempt and set session.
+    $response3 = Abc::$DL->sessionLogin3($abc->getSesId(),
                                          $response1['cmp_id'],
                                          $response1['usr_id'],
                                          $lgr_id,
@@ -221,7 +221,7 @@ class LoginPage extends Page
                                          $values['cmp_abbr'],
                                          $_SERVER['REMOTE_ADDR']);
 
-    if ($response2['lgr_id']==C::LGR_ID_GRANTED)
+    if ($response3['lgr_id']==C::LGR_ID_GRANTED)
     {
       // The user has logged on successfully.
 
@@ -269,14 +269,14 @@ class LoginPage extends Page
         if ($_SERVER['HTTPS']=='on')
         {
           setcookie('ses_session_token',
-                    $response2['ses_session_token'],
+                    $response3['ses_session_token'],
                     false,
                     '/',
                     $abc->getCanonicalServerName(),
                     true,
                     true);
           setcookie('ses_csrf_token',
-                    $response2['ses_csrf_token'],
+                    $response3['ses_csrf_token'],
                     false,
                     '/',
                     $abc->getCanonicalServerName(),
