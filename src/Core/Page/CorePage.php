@@ -128,6 +128,8 @@ abstract class CorePage extends Page
   {
     $this->echoDashboard();
 
+    $this->showIconBar();
+
     echo '<nav id="secondary-menu" class="clearfix">';
     $this->echoTabs();
     echo '</nav>';
@@ -135,6 +137,12 @@ abstract class CorePage extends Page
     echo '<div id="content">';
     $this->echoTabContent();
     echo '</div>';
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  protected function showIconBar()
+  {
+    // Nothing to do.
   }
 
   //--------------------------------------------------------------------------------------------------------------------
