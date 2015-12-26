@@ -49,11 +49,9 @@ abstract class BabelPage extends CorePage
   /**
    * Returns the selected language for the languages the user is authorized.
    *
-   * @param int $theTargetLanId
-   *
    * @return int The ID of the selected language.
    */
-  public function selectLanguage($theTargetLanId = 0)
+  public function selectLanguage()
   {
     //$languages = Abc::$DL->languageGetAllTranslator( $this->myUsrId, $this->myRefLanId );
     $languages = Abc::$DL->languageGetAllLanguages($this->myRefLanId);
@@ -66,7 +64,7 @@ abstract class BabelPage extends CorePage
       $this->myActLanId = $languages[$key]['lan_id'];
     }
 
-    $form   = $this->createSelectLanguageForm($theTargetLanId, $languages);
+    $form   = $this->createSelectLanguageForm($languages);
     $method = $form->execute();
     switch ($method)
     {
@@ -105,14 +103,14 @@ abstract class BabelPage extends CorePage
   }
 
   //--------------------------------------------------------------------------------------------------------------------
-  private function createSelectLanguageForm($theTargetLanId, $languages)
+  private function createSelectLanguageForm($languages)
   {
-    $form = new CoreForm('babel');
+    $form = new CoreForm('babel', false);
 
     $input = $form->createFormControl('select', 'act_lan_id', C::WRD_ID_LANGUAGE, true);
     $input->setOptions($languages, 'lan_id', 'lan_name');
     $input->setOptionsObfuscator(Abc::getObfuscator('lan'));
-    $input->setValue($theTargetLanId);
+    $input->setValue($this->myActLanId);
 
     // Create a submit button.
     $form->addSubmitButton(C::WRD_ID_BUTTON_OK, 'handleSelectLanguage');
