@@ -112,6 +112,17 @@ class SelectControl extends SimpleControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Returns the options of this select box as set by {@link setOptions}.
+   *
+   * @return array[]
+   */
+  public function getOptions()
+  {
+    return $this->myOptions;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Adds an option with empty label as first option to this select box.
    *
    * @param string $theEmptyOption The value for the empty option. This value will not be obfuscated.
@@ -121,11 +132,12 @@ class SelectControl extends SimpleControl
     $this->myEmptyOption = $theEmptyOption;
   }
 
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Sets the options for this select box.
    *
-   * @param array[]     $theOptions      An array of arrays with the options.
+   * @param array[]     $theOptions      The options of this select box.
    * @param string      $theKeyKey       The key holding the keys of the options.
    * @param string      $theLabelKey     The key holding the labels for the options.
    * @param string|null $theDisabledKey  The key holding the disabled flag. Any none empty value results that the
