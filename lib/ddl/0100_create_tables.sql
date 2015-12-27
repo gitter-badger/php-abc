@@ -5,7 +5,7 @@
 /*  FileName : framework.ecm                                                      */
 /*  Platform : MySQL 5                                                            */
 /*  Version  : Concept                                                            */
-/*  Date     : dinsdag 15 december 2015                                           */
+/*  Date     : zondag 27 december 2015                                            */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -57,6 +57,34 @@ The PHP type of the parameter value.
 /*
 COMMENT ON COLUMN `AUT_CONFIG_CLASS`.`ccl_class`
 The class for showing and modifying the parameter value.
+*/
+
+CREATE TABLE `AUT_CONFIG` (
+  `cfg_id` SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
+  `cmp_id` SMALLINT UNSIGNED NOT NULL,
+  `ccl_id` SMALLINT UNSIGNED NOT NULL,
+  `cfg_mandatory` BOOL DEFAULT 1 NOT NULL,
+  `cfg_show_to_company` BOOL DEFAULT 0 NOT NULL,
+  `cfg_modify_by_company` BOOL DEFAULT 0 NOT NULL,
+  `cfg_description` VARCHAR(400) NOT NULL,
+  `cfg_label` VARCHAR(50) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`cfg_id`)
+)
+engine=innodb;
+
+/*
+COMMENT ON COLUMN `AUT_CONFIG`.`cfg_mandatory`
+If true: this parameter must have a value.
+*/
+
+/*
+COMMENT ON COLUMN `AUT_CONFIG`.`cfg_show_to_company`
+If true: this parameter is visible by the administrator of the company. Otherwise this parameter is visible to the system administrator.
+*/
+
+/*
+COMMENT ON COLUMN `AUT_CONFIG`.`cfg_modify_by_company`
+If true: the value of this parameter can be modified by the administrator of the company.
 */
 
 CREATE TABLE `AUT_CONFIG_VALUE` (
@@ -216,6 +244,14 @@ CREATE TABLE `AUT_PAGE_COMPANY` (
 )
 engine=innodb;
 
+CREATE TABLE `AUT_ROLE` (
+  `rol_id` SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
+  `cmp_id` SMALLINT UNSIGNED NOT NULL,
+  `rol_weight` SMALLINT NOT NULL,
+  `rol_name` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`rol_id`)
+);
+
 CREATE TABLE `AUT_ROL_FUN` (
   `rol_id` SMALLINT UNSIGNED NOT NULL,
   `fun_id` SMALLINT UNSIGNED NOT NULL,
@@ -252,13 +288,6 @@ CREATE TABLE `BBL_WORD_TRANSLATE_HISTORY` (
 )
 engine=innodb;
 
-CREATE TABLE `DEV_UUID_KEY` (
-  `uid_table_name` VARCHAR(64) NOT NULL,
-  `uid_key` BIGINT NOT NULL,
-  `uid_uuid` VARCHAR(32) NOT NULL,
-  CONSTRAINT `PK_DEV_UUID_KEY` PRIMARY KEY (`uid_table_name`, `uid_key`)
-);
-
 CREATE TABLE `ELM_ATTRIBUTE` (
   `mat_id` TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `mat_label` VARCHAR(30) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
@@ -268,12 +297,6 @@ CREATE TABLE `ELM_ATTRIBUTE` (
 CREATE TABLE `ELM_AUTHORIZED_DOMAIN` (
   `atd_domain_name` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`atd_domain_name`)
-);
-
-CREATE TABLE `LOG_SESSION` (
-  `ses_id` INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
-  `ses_datetime` DATETIME NOT NULL,
-  CONSTRAINT `PRIMARY_KEY` PRIMARY KEY (`ses_id`)
 );
 
 CREATE TABLE `LOG_EVENT_TYPE` (
@@ -287,10 +310,10 @@ engine=innodb;
 CREATE TABLE `LOG_EVENT` (
   `lev_id` INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
   `cmp_id` SMALLINT UNSIGNED NOT NULL,
-  `usr_id` INTEGER UNSIGNED ZEROFILL NOT NULL,
+  `usr_id` INTEGER UNSIGNED NOT NULL,
   `let_id` TINYINT UNSIGNED NOT NULL,
-  `ses_id` INTEGER UNSIGNED NOT NULL,
   `lgr_id` TINYINT UNSIGNED,
+  `ses_id` INTEGER UNSIGNED NOT NULL,
   `lev_datetime` DATETIME NOT NULL,
   `lev_ip` INTEGER UNSIGNED,
   `lev_arg1` VARCHAR(64),
@@ -301,7 +324,7 @@ engine=innodb;
 
 CREATE TABLE `LOG_LOGIN` (
   `lli_id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
-  `ses_id` INTEGER UNSIGNED NOT NULL,
+  `ses_id` INTEGER UNSIGNED,
   `lgr_id` TINYINT UNSIGNED NOT NULL,
   `cmp_id` SMALLINT UNSIGNED,
   `usr_id` INTEGER UNSIGNED,
@@ -315,7 +338,7 @@ CREATE TABLE `LOG_REQUEST` (
   `rql_id` INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
   `cmp_id` SMALLINT UNSIGNED NOT NULL,
   `pag_id` SMALLINT UNSIGNED NOT NULL,
-  `ses_id` INTEGER UNSIGNED NOT NULL,
+  `ses_id` INTEGER UNSIGNED,
   `usr_id` INTEGER UNSIGNED NOT NULL,
   `rql_datetime` DATETIME NOT NULL,
   `rql_request` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
@@ -370,6 +393,10 @@ CREATE INDEX `bdt_id` ON `ABC_BLOB` (`bdt_id`);
 
 CREATE INDEX `cmp_id` ON `ABC_BLOB` (`cmp_id`);
 
+CREATE INDEX `IX_AUT_CONFIG1` ON `AUT_CONFIG` (`cmp_id`);
+
+CREATE INDEX `IX_AUT_CONFIG2` ON `AUT_CONFIG` (`ccl_id`);
+
 CREATE INDEX `CFG_ID` ON `AUT_CONFIG_VALUE` (`cfg_id`);
 
 CREATE INDEX `wdg_id` ON `BBL_WORD` (`wdg_id`);
@@ -416,6 +443,8 @@ CREATE INDEX `IX_AUT_PAGE_COMPANY1` ON `AUT_PAGE_COMPANY` (`pag_id`);
 
 CREATE INDEX `IX_AUT_PAGE_COMPANY2` ON `AUT_PAGE_COMPANY` (`cmp_id`);
 
+CREATE INDEX `cmp_id` ON `AUT_ROLE` (`cmp_id`);
+
 CREATE INDEX `IX_AUT_ROL_FUN3` ON `AUT_ROL_FUN` (`cmp_id`);
 
 CREATE INDEX `cmp_id` ON `AUT_USR_ROL` (`cmp_id`);
@@ -428,17 +457,13 @@ CREATE INDEX `IX_BBL_WORD_TRANSLATE_HISTORY2` ON `BBL_WORD_TRANSLATE_HISTORY` (`
 
 CREATE INDEX `IX_BBL_WORD_TRANSLATE_HISTORY3` ON `BBL_WORD_TRANSLATE_HISTORY` (`lan_id`);
 
-CREATE INDEX `IX_DEV_UUID_KEY1` ON `DEV_UUID_KEY` (`uid_uuid`);
-
-CREATE INDEX `ses_datetime` ON `LOG_SESSION` (`ses_datetime`);
-
 CREATE INDEX `WRD_ID` ON `LOG_EVENT_TYPE` (`wrd_id`);
 
 CREATE INDEX `cmp_id` ON `LOG_EVENT` (`cmp_id`);
 
-CREATE INDEX `lgr_id` ON `LOG_EVENT` (`lgr_id`);
+CREATE INDEX `IX_LOG_EVENT1` ON `LOG_EVENT` (`ses_id`);
 
-CREATE INDEX `ses_id` ON `LOG_EVENT` (`ses_id`);
+CREATE INDEX `lgr_id` ON `LOG_EVENT` (`lgr_id`);
 
 CREATE INDEX `usr_id` ON `LOG_EVENT` (`usr_id`);
 
@@ -456,9 +481,9 @@ CREATE INDEX `usr_id` ON `LOG_LOGIN` (`usr_id`);
 
 CREATE INDEX `cmp_id` ON `LOG_REQUEST` (`cmp_id`);
 
-CREATE INDEX `pag_id` ON `LOG_REQUEST` (`pag_id`);
+CREATE INDEX `IX_LOG_REQUEST1` ON `LOG_REQUEST` (`ses_id`);
 
-CREATE INDEX `ses_id` ON `LOG_REQUEST` (`ses_id`);
+CREATE INDEX `pag_id` ON `LOG_REQUEST` (`pag_id`);
 
 CREATE INDEX `usr_id` ON `LOG_REQUEST` (`usr_id`);
 
@@ -489,6 +514,14 @@ ALTER TABLE `ABC_BLOB`
   FOREIGN KEY (`bdt_id`) REFERENCES `ABC_BLOB_DATA` (`bdt_id`)
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
+
+ALTER TABLE `AUT_CONFIG`
+  ADD CONSTRAINT `FK_AUT_CONFIG_AUT_CONFIG_CLASS`
+  FOREIGN KEY (`ccl_id`) REFERENCES `AUT_CONFIG_CLASS` (`ccl_id`);
+
+ALTER TABLE `AUT_CONFIG`
+  ADD CONSTRAINT `FK_AUT_CONFIG_AUT_COMPANY`
+  FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`);
 
 ALTER TABLE `AUT_CONFIG_VALUE`
   ADD CONSTRAINT `AUT_CONFIG_VALUE_ibfk_2`
@@ -526,11 +559,12 @@ ALTER TABLE `AUT_SESSION`
   ADD CONSTRAINT `AUT_SESSION_ibfk_2`
   FOREIGN KEY (`usr_id`) REFERENCES `AUT_USER` (`usr_id`)
   ON UPDATE NO ACTION
-  ON DELETE NO ACTION;
+  ON DELETE CASCADE;
 
 ALTER TABLE `AUT_CROSS_DOMAIN_REDIRECT`
   ADD CONSTRAINT `FK_AUT_CROSS_DOMAIN_REDIRECT_AUT_SESSION`
-  FOREIGN KEY (`ses_id`) REFERENCES `AUT_SESSION` (`ses_id`);
+  FOREIGN KEY (`ses_id`) REFERENCES `AUT_SESSION` (`ses_id`)
+  ON DELETE CASCADE;
 
 ALTER TABLE `AUT_MODULE`
   ADD CONSTRAINT `FK_AUT_MODULE_BBL_WORD`
@@ -608,6 +642,12 @@ ALTER TABLE `AUT_PAGE_COMPANY`
   ADD CONSTRAINT `FK_AUT_PAGE_COMPANY_AUT_PAGE`
   FOREIGN KEY (`pag_id`) REFERENCES `AUT_PAGE` (`pag_id`);
 
+ALTER TABLE `AUT_ROLE`
+  ADD CONSTRAINT `AUT_ROLE_ibfk_1`
+  FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
 ALTER TABLE `AUT_ROL_FUN`
   ADD CONSTRAINT `FK_AUT_ROL_FUN_AUT_COMPANY`
   FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`);
@@ -675,14 +715,14 @@ ALTER TABLE `LOG_EVENT`
   FOREIGN KEY (`usr_id`) REFERENCES `AUT_USER` (`usr_id`);
 
 ALTER TABLE `LOG_EVENT`
-  ADD CONSTRAINT `FK_LOG_EVENT_LOG_SESSION`
-  FOREIGN KEY (`ses_id`) REFERENCES `LOG_SESSION` (`ses_id`);
-
-ALTER TABLE `LOG_EVENT`
   ADD CONSTRAINT `LOG_EVENT_ibfk_3`
   FOREIGN KEY (`let_id`) REFERENCES `LOG_EVENT_TYPE` (`let_id`)
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
+
+ALTER TABLE `LOG_EVENT`
+  ADD CONSTRAINT `FK_LOG_EVENT_AUT_SESSION`
+  FOREIGN KEY (`ses_id`) REFERENCES `AUT_SESSION` (`ses_id`);
 
 ALTER TABLE `LOG_LOGIN`
   ADD CONSTRAINT `LOG_LOGIN_ibfk_6`
@@ -706,12 +746,6 @@ ALTER TABLE `LOG_LOGIN`
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
 
-ALTER TABLE `LOG_LOGIN`
-  ADD CONSTRAINT `LOG_LOGIN_ibfk_4`
-  FOREIGN KEY (`ses_id`) REFERENCES `LOG_SESSION` (`ses_id`)
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION;
-
 ALTER TABLE `LOG_REQUEST`
   ADD CONSTRAINT `FK_LOG_REQUEST_AUT_COMPANY`
   FOREIGN KEY (`cmp_id`) REFERENCES `AUT_COMPANY` (`cmp_id`);
@@ -725,8 +759,8 @@ ALTER TABLE `LOG_REQUEST`
   FOREIGN KEY (`usr_id`) REFERENCES `AUT_USER` (`usr_id`);
 
 ALTER TABLE `LOG_REQUEST`
-  ADD CONSTRAINT `FK_LOG_REQUEST_LOG_SESSION`
-  FOREIGN KEY (`ses_id`) REFERENCES `LOG_SESSION` (`ses_id`);
+  ADD CONSTRAINT `FK_LOG_REQUEST_AUT_SESSION`
+  FOREIGN KEY (`ses_id`) REFERENCES `AUT_SESSION` (`ses_id`);
 
 ALTER TABLE `LOG_REQUEST_COOKIE`
   ADD CONSTRAINT `FK_LOG_REQUEST_COOKIE_LOG_REQUEST`
