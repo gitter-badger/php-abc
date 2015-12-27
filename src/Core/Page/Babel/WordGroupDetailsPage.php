@@ -76,7 +76,7 @@ class WordGroupDetailsPage extends BabelPage
    */
   public function echoTabContent()
   {
-    $this->selectLanguage($this->myActLanId);
+    $this->selectLanguage();
 
     if ($this->myActLanId)
     {
