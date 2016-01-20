@@ -134,6 +134,9 @@ class RoleUpdateFunctionalitiesPage extends CompanyPage
         Abc::$DL->companyRoleDeleteFunctionality($this->myActCmpId, $this->myRolId, $fun_id);
       }
     }
+
+    // Use brute force to proper profiles.
+    Abc::$DL->profileProper();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

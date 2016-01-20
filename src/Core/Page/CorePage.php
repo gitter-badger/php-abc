@@ -203,7 +203,7 @@ abstract class CorePage extends Page
   {
     $this->myTabs = Abc::$DL->authGetPageTabs($this->myCmpId,
                                               Abc::getInstance()->getPtbId(),
-                                              $this->myUsrId,
+                                              $this->myProId,
                                               $this->myLanId);
     foreach ($this->myTabs as &$tab)
     {
@@ -232,7 +232,7 @@ abstract class CorePage extends Page
    */
   private function echoMainMenu()
   {
-    $menu_items  = Abc::$DL->authGetMenu($this->myCmpId, $this->myUsrId, $this->myLanId);
+    $menu_items  = Abc::$DL->authGetMenu($this->myCmpId, $this->myProId, $this->myLanId);
     $page_mnu_id = Abc::getInstance()->getMnuId();
 
     // $logo_html = $this->myConfig->getValue( MMM_CFG_ID_RELATIONS_LOGO );

@@ -68,6 +68,9 @@ class PageUpdateFunctionalitiesPage extends CorePage
     $changes = $this->myForm->getChangedControls();
     $values  = $this->myForm->getValues();
 
+    // Return immediately if no changes are submitted.
+    if (!$changes) return;
+
     foreach ($changes['data'] as $fun_id => $dummy)
     {
       if ($values['data'][$fun_id]['fun_checked'])
@@ -79,6 +82,9 @@ class PageUpdateFunctionalitiesPage extends CorePage
         Abc::$DL->systemFunctionalityDeletePage($fun_id, $this->myTargetPagId);
       }
     }
+
+    // Use brute force to proper profiles.
+    Abc::$DL->profileProper();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

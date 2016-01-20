@@ -111,7 +111,7 @@ class WordGroupDetailsPage extends BabelPage
   {
     // Determine whether the user is a translator.
     $is_translator = ($this->myActLanId!=$this->myRefLanId &&
-      Abc::$DL->authGetPageAuth($this->myCmpId, $this->myUsrId, C::PAG_ID_BABEL_WORD_TRANSLATE));
+      Abc::$DL->authGetPageAuth($this->myCmpId, $this->myProId, C::PAG_ID_BABEL_WORD_TRANSLATE));
 
     $words = Abc::$DL->wordGroupGetAllWordsTranslator($this->myWdgId, $this->myActLanId);
 
@@ -162,7 +162,7 @@ class WordGroupDetailsPage extends BabelPage
     $table->addColumn(new WordUpdateIconTableColumn());
 
     // Show link to delete the word.
-    if (Abc::$DL->authGetPageAuth($this->myCmpId, $this->myUsrId, C::PAG_ID_BABEL_WORD_DELETE))
+    if (Abc::$DL->authGetPageAuth($this->myCmpId, $this->myProId, C::PAG_ID_BABEL_WORD_DELETE))
     {
       $table->addColumn(new WordDeleteIconTableColumn($this->myActLanId));
     }

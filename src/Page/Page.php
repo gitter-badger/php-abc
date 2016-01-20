@@ -74,6 +74,13 @@ abstract class Page
   protected $myLanId;
 
   /**
+   * The profile ID (pro_id) of the page requestor.
+   *
+   * @var int
+   */
+  protected $myProId;
+
+  /**
    * The user ID (usr_id) of the page requestor.
    *
    * @var int
@@ -110,6 +117,7 @@ abstract class Page
     $abc = Abc::getInstance();
 
     $this->myCmpId = $abc->getCmpId();
+    $this->myProId = $abc->getProId();
     $this->myUsrId = $abc->getUsrId();
     $this->myLanId = $abc->getLanId();
 

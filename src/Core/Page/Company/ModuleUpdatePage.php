@@ -98,6 +98,9 @@ class ModuleUpdatePage extends CompanyPage
     $values  = $this->myForm->getValues();
     $changes = $this->myForm->getChangedControls();
 
+    // If no changes are submitted return immediately.
+    if (!$changes) return;
+
     foreach ($changes['data'] as $mdl_id => $dummy)
     {
       if ($values['data'][$mdl_id]['mdl_enabled'])
@@ -109,6 +112,9 @@ class ModuleUpdatePage extends CompanyPage
         Abc::$DL->companyModuleDisable($this->myActCmpId, $mdl_id);
       }
     }
+
+    // Use brute force to proper profiles.
+    Abc::$DL->profileProper();
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -341,8 +341,19 @@ abstract class Abc
   public function getPathAuth($thePagId)
   {
     return self::$DL->authGetPageAuth($this->mySessionInfo['cmp_id'],
-                                      $this->mySessionInfo['usr_id'],
+                                      $this->mySessionInfo['pro_id'],
                                       $thePagId);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Returns the profile ID of the requestor.
+   *
+   * @return int
+   */
+  public function getProId()
+  {
+    return $this->mySessionInfo['pro_id'];
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -593,7 +604,7 @@ abstract class Abc
 
     $this->myPageInfo = Abc::$DL->authGetPageInfo($this->mySessionInfo['cmp_id'],
                                                   $pag_id,
-                                                  $this->mySessionInfo['usr_id'],
+                                                  $this->mySessionInfo['pro_id'],
                                                   $this->mySessionInfo['lan_id'],
                                                   $pag_alias);
     if (!$this->myPageInfo)
