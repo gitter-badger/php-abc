@@ -119,7 +119,17 @@ class W3cValidatePage extends Page
     curl_setopt($ch, CURLOPT_URL, $this->myValidatorUrl.'check');
     curl_setopt($ch, CURLOPT_POST, true);
 
-    $post['uploaded_file'] = "@".$this->myPathName.";type=text/html";
+    if (class_exists('\\CURLFile'))
+    {
+      # PHP 5.5 and higher.
+      $file = new \CURLFile($this->myPathName, 'text/html', $this->myPathName);
+    }
+    else
+    {
+      # PHP 5.4.
+      $file = $this->myPathName.";type=text/html";
+    }
+    $post['uploaded_file'] = $file;
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -128,6 +138,7 @@ class W3cValidatePage extends Page
     curl_setopt($ch, CURLOPT_CAPATH, $this->myCaBundlePath);
 
     $response = curl_exec($ch);
+
 
     if (strpos($response, 'X-W3C-Validator-Status: Valid')>0)
     {
@@ -172,7 +183,17 @@ class W3cValidatePage extends Page
       file_put_contents($this->myPathName, file_get_contents($this->myPathName));
     };
 
-    $post['uploaded_file'] = "@".$this->myPathName.";type=text/html";
+    if (class_exists('\\CURLFile'))
+    {
+      # PHP 5.5 and higher.
+      $file = new \CURLFile($this->myPathName, 'text/html', $this->myPathName);
+    }
+    else
+    {
+      # PHP 5.4.
+      $file = $this->myPathName.";type=text/html";
+    }
+    $post['uploaded_file'] = $file;
     $post['ss']            = '1';
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
