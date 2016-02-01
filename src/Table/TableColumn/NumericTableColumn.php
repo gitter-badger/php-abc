@@ -49,7 +49,7 @@ class NumericTableColumn extends TableColumn
   {
     $value = $theData[$this->myFieldName];
 
-    if ($value!==false || $value!==null || $value!=='')
+    if ($value!==false && $value!==null && $value!=='')
     {
       return '<td class="number">'.Html::txt2Html(sprintf($this->myFormat, $value)).'</td>';
     }
