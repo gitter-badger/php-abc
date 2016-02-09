@@ -737,7 +737,7 @@ abstract class Abc
    */
   private function requestLog()
   {
-    $this->myRqlId = Abc::$DL->RequestLogLogRequest(
+    $this->myRqlId = Abc::$DL->requestLogInsertRequest(
       $this->mySessionInfo['ses_id'],
       $this->mySessionInfo['cmp_id'],
       $this->mySessionInfo['usr_id'],
@@ -755,6 +755,20 @@ abstract class Abc
     // $this->requestLogQuery();
     // $this->requestLogPost( $_POST );
     // $this->requestLogCookie( $_COOKIE );
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Logs the executed executed database queries.
+   */
+  private function requestLogQuery()
+  {
+    $queries = Abc::$DL->getQueryLog();
+
+    foreach($queries as $query)
+    {
+      Abc::$DL->requestLogInsertQuery($this->myRqlId, $query['query'], $query['time']);
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

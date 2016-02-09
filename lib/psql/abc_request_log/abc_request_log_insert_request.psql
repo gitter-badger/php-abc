@@ -15,19 +15,19 @@
  * @param p_time
  * @param p_size                    The size (in bytes) of the page.
  */
-create procedure abc_request_log_log_request( in p_ses_id                  @log_request.ses_id%type@,
-                                              in p_cmp_id                  @log_request.cmp_id%type@,
-                                              in p_usr_id                  @log_request.usr_id%type@,
-                                              in p_pag_id                  @log_request.pag_id%type@,
-                                              in p_query_string            @log_request.rql_request%type@,
-                                              in p_request_method          @log_request.rql_method%type@,
-                                              in p_http_referer            @log_request.rql_referer%type@,
-                                              in p_remote_addr             varchar(15),
-                                              in p_http_accept_language    @log_request.rql_language%type@,
-                                              in p_http_user_agent         @log_request.rql_user_agent%type@,
-                                              in p_query_count             @log_request.rql_number_of_queries%type@,
-                                              in p_time                    @log_request.rql_time%type@,
-                                              in p_size                    @log_request.rql_size%type@ )
+create procedure abc_request_log_insert_request( in p_ses_id               @log_request.ses_id%type@,
+                                                 in p_cmp_id               @log_request.cmp_id%type@,
+                                                 in p_usr_id               @log_request.usr_id%type@,
+                                                 in p_pag_id               @log_request.pag_id%type@,
+                                                 in p_query_string         @log_request.rql_request%type@,
+                                                 in p_request_method       @log_request.rql_method%type@,
+                                                 in p_http_referer         @log_request.rql_referer%type@,
+                                                 in p_remote_addr          varchar(15),
+                                                 in p_http_accept_language @log_request.rql_language%type@,
+                                                 in p_http_user_agent      @log_request.rql_user_agent%type@,
+                                                 in p_query_count          @log_request.rql_number_of_queries%type@,
+                                                 in p_time                 @log_request.rql_time%type@,
+                                                 in p_size                 @log_request.rql_size%type@ )
 modifies sql data
 -- type: singleton1
 begin
