@@ -42,7 +42,7 @@ abstract class IconTableColumn extends TableColumn
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   *
+   * Object constructor.
    */
   public function __construct()
   {
