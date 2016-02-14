@@ -24,6 +24,13 @@ class ModuleUpdateCompaniesPage extends CorePage
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * The details of the module.
+   *
+   * @var array
+   */
+  private $myDetails;
+
+  /**
    * The form shown on this page.
    *
    * @var CoreForm
@@ -46,6 +53,10 @@ class ModuleUpdateCompaniesPage extends CorePage
     parent::__construct();
 
     $this->myModId = self::getCgiVar('mdl', 'mdl');
+
+    $this->myDetails = Abc::$DL->systemModuleGetDetails($this->myModId, $this->myLanId);
+
+    $this->appendPageTitle($this->myDetails['mdl_name']);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -180,15 +191,13 @@ class ModuleUpdateCompaniesPage extends CorePage
    */
   private function showModule()
   {
-    $details = Abc::$DL->systemModuleGetDetails($this->myModId, $this->myLanId);
-
     $table = new CoreDetailTable();
 
     // Add row for the ID of the module.
-    NumericTableRow::addRow($table, 'ID', $details['mdl_id'], '%d');
+    NumericTableRow::addRow($table, 'ID', $this->myDetails['mdl_id'], '%d');
 
     // Add row for the module name.
-    TextTableRow::addRow($table, 'Module', $details['mdl_name']);
+    TextTableRow::addRow($table, 'Module', $this->myDetails['mdl_name']);
 
     echo $table->getHtmlTable();
   }
