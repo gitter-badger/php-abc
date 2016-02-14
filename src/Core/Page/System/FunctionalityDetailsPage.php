@@ -8,6 +8,7 @@ use SetBased\Abc\Core\Page\CorePage;
 use SetBased\Abc\Core\Table\CoreDetailTable;
 use SetBased\Abc\Core\Table\CoreOverviewTable;
 use SetBased\Abc\Core\TableAction\System\FunctionalityUpdatePagesTableAction;
+use SetBased\Abc\Core\TableAction\System\FunctionalityUpdateRolesTableAction;
 use SetBased\Abc\Core\TableColumn\Company\RoleDetailsIconTableColumn;
 use SetBased\Abc\Core\TableColumn\System\PageDetailsIconTableColumn;
 use SetBased\Abc\Table\TableColumn\NumericTableColumn;
@@ -139,6 +140,9 @@ class FunctionalityDetailsPage extends CorePage
     $roles = Abc::$DL->systemFunctionalityGetRoles($this->myFunId);
 
     $table = new CoreOverviewTable($this->myCmpId, $this->myUsrId);
+
+    // Add table action for granting and revoking this functionality to/from roles.
+    $table->addTableAction('default', new FunctionalityUpdateRolesTableAction($this->myFunId));
 
     // Show Company ID.
     $table->addColumn(new NumericTableColumn('ID', 'cmp_id'));

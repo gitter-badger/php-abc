@@ -27,7 +27,7 @@ class SystemPageUpdateFunctionalitiesSlatControlFactory extends SlatControlFacto
     $this->addSlatJoint('mdl_id', new TableColumnSlatJoint($table_column));
 
     // Create slat joint for table column with name of module.
-    $table_column = new TextTableColumn('Name', 'mdl_name');
+    $table_column = new TextTableColumn('Module', 'mdl_name');
     $this->addSlatJoint('mdl_name', new TableColumnSlatJoint($table_column));
 
     // Create slat joint for table column with functionality ID.
@@ -35,7 +35,7 @@ class SystemPageUpdateFunctionalitiesSlatControlFactory extends SlatControlFacto
     $this->addSlatJoint('fun_id', new TableColumnSlatJoint($table_column));
 
     // Create slat joint for table column with name of functionality.
-    $table_column = new TextTableColumn('Name', 'fun_name');
+    $table_column = new TextTableColumn('Functionality', 'fun_name');
     $this->addSlatJoint('fun_name', new TableColumnSlatJoint($table_column));
 
     // Create slat joint with checkbox for enabled or disabled page.
