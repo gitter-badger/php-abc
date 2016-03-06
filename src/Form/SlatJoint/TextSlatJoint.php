@@ -7,7 +7,7 @@ use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Slat joint for table columns witch table cells with a input:text form control.
+ * Slat joint for table columns with table cells with a input:text form control.
  */
 class TextSlatJoint extends SlatJoint
 {
