@@ -11,7 +11,7 @@ class EmailValidator implements Validator
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Returns true ife. the value of the form control is a valid email address. Otherwise returns false.
+   * Returns true if the value of the form control is a valid email address. Otherwise returns false.
    *
    * Note:
    * * Empty values are considered valid.
