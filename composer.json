@@ -5,28 +5,13 @@
   "keyword": [
     "Framework"
   ],
-  "authors": [
-    {
-      "name": "Paul Water",
-      "email": "p.r.water@setbased.nl",
-      "homepage": "http://www.setbased.nl",
-      "role": "Architect"
-    }
-  ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packagist.setbased.nl/"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
     "gajus/dindent": "2.*",
     "phing/phing": "*",
     "phpunit/phpunit": "*",
-    "setbased/phing-extensions": "1.*",
-    "setbased/php-coding-standards": "*"
+    "setbased/phing-extensions": "1.*"
   },
   "require": {
     "php": ">=5.4.0",
