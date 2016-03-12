@@ -11,11 +11,11 @@
     "gajus/dindent": "2.*",
     "phing/phing": "*",
     "phpunit/phpunit": "*",
-    "setbased/phing-extensions": "1.*"
+    "setbased/phing-extensions": ">=2.0"
   },
   "require": {
     "php": ">=5.4.0",
-    "ircmaxell/password-compat": "1.0.3"
+    "ircmaxell/password-compat": ">=1.0.3"
   },
   "autoload": {
     "psr-4": {
