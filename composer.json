@@ -10,8 +10,7 @@
   "require-dev": {
     "gajus/dindent": "2.*",
     "phing/phing": "*",
-    "phpunit/phpunit": "*",
-    "setbased/phing-extensions": ">=2.0"
+    "phpunit/phpunit": "*"
   },
   "require": {
     "php": ">=5.4.0",
