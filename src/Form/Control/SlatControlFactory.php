@@ -78,6 +78,8 @@ abstract class SlatControlFactory
    *
    * @param LouverControl $theLouverControl The louver control.
    * @param array         $theData          An array from the nested arrays as set in LouverControl::setData.
+   *
+   * @return SlatControl
    */
   abstract public function createRow($theLouverControl, $theData);
 
@@ -113,6 +115,8 @@ abstract class SlatControlFactory
       $ret .= $factory->getHtmlColumn();
     }
 
+    $ret .= '<col/>';
+
     return $ret;
   }
 
@@ -129,6 +133,7 @@ abstract class SlatControlFactory
     {
       $ret .= $factory->getHtmlColumnHeader();
     }
+    $ret .= '<td class="error"></td>';
     $ret .= '</tr>';
 
     if ($this->myFilter)
@@ -138,6 +143,7 @@ abstract class SlatControlFactory
       {
         $ret .= $factory->getHtmlColumnFilter();
       }
+      $ret .= '<td class="error"></td>';
       $ret .= '</tr>';
     }
 

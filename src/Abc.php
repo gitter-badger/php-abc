@@ -438,6 +438,9 @@ abstract class Abc
         throw new InvalidUrlException('No data found', $e);
       }
 
+      // Perform addition authorization and security checks.
+      $this->myPage->checkAuthorization();
+
       $uri = $this->myPage->getPreferredUri();
       if (isset($uri) && $uri!=$_SERVER['REQUEST_URI'])
       {

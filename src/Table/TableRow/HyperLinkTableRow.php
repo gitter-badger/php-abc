@@ -26,12 +26,7 @@ class HyperLinkTableRow
     $row .= '</th><td>';
     if ($theValue!==null && $theValue!==false && $theValue!=='')
     {
-      $url = Html::txt2Html($theValue);
-      $row .= '<a href="';
-      $row .= $url;
-      $row .= '"">';
-      $row .= $url;
-      $row .= '</a>';
+      $row .= Html::generateElement('a', ['href' => $theValue], $theValue);
     }
     $row .= '</td></tr>';
 

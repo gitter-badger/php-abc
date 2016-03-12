@@ -32,6 +32,20 @@ class LouverControl extends ComplexControl
    */
   protected $myRowFactory;
 
+  /**
+   * The data for initializing teh template row(s).
+   *
+   * @var array
+   */
+  private $myTemplateData;
+
+  /**
+   * The key of the key in the template row.
+   *
+   * @var string
+   */
+  private $myTemplateKey;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the HTML code of displaying the form controls of this complex form control in a table.
@@ -40,6 +54,19 @@ class LouverControl extends ComplexControl
    */
   public function generate()
   {
+    if ($this->myTemplateData)
+    {
+      $this->setAttrData('slat-name', $this->mySubmitName);
+
+      // If required add template row to this louver control. This row will be used by JS for adding dynamically
+      // additional rows to the louver control.
+      $this->myTemplateData[$this->myTemplateKey] = 0;
+      $row                                        = $this->myRowFactory->createRow($this, $this->myTemplateData);
+      $row->setAttrClass('slat_template');
+      $row->setAttrStyle('visibility: collapse');
+      $row->prepare($this->mySubmitName);
+    }
+
     $ret = $this->myPrefix;
 
     $ret .= Html::generateTag('div', $this->myAttributes);
@@ -61,6 +88,7 @@ class LouverControl extends ComplexControl
       $ret .= '<td colspan="'.$this->myRowFactory->getNumberOfColumns().'">';
       $ret .= $this->myFooterControl->generate();
       $ret .= '</td>';
+      $ret .= '<td class="error"></td>';
       $ret .= '</tr>';
       $ret .= '</tfoot>';
     }
@@ -75,6 +103,34 @@ class LouverControl extends ComplexControl
     $ret .= $this->myPostfix;
 
     return $ret;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * {@inheritdoc}
+   */
+  public function loadSubmittedValuesBase(&$theSubmittedValue, &$theWhiteListValue, &$theChangedInputs)
+  {
+    $submit_name = ($this->myObfuscator) ? $this->myObfuscator->encode($this->myName) : $this->myName;
+
+    if ($this->myTemplateData)
+    {
+      $children         = $this->myControls;
+      $this->myControls = [];
+      foreach ($theSubmittedValue[$submit_name] as $key => $row)
+      {
+        if (is_numeric($key) && $key<0)
+        {
+          $this->myTemplateData[$this->myTemplateKey] = $key;
+          $row                                        = $this->myRowFactory->createRow($this, $this->myTemplateData);
+          $row->prepare($this->mySubmitName);
+        }
+      }
+
+      $this->myControls = array_merge($this->myControls, $children);
+    }
+
+    parent::loadSubmittedValuesBase($theSubmittedValue, $theWhiteListValue, $theChangedInputs);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -122,6 +178,18 @@ class LouverControl extends ComplexControl
     $this->myRowFactory = $theRowFactory;
   }
 
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the template data and key of the key for dynamically adding additional rows to form.
+   *
+   * @param array  $theData The date for initializing template row(s).
+   * @param string $theKey  The key of the key in the template row.
+   */
+  public function setTemplate($theData, $theKey)
+  {
+    $this->myTemplateData = $theData;
+    $this->myTemplateKey  = $theKey;
+  }
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Returns the inner HTML code of the tbody element of this table form control.

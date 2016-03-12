@@ -2,14 +2,14 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\Abc\Form\SlatJoint;
 
-use SetBased\Abc\Form\Control\TextControl;
+use SetBased\Abc\Form\Control\DateControl;
 use SetBased\Abc\Helper\Html;
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Slat joint for table columns with table cells with a input:text form control.
+ * Slat joint for table columns with table cells with a input:text form control for dates.
  */
-class TextSlatJoint extends SlatJoint
+class DateSlatJoint extends SlatJoint
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -25,15 +25,15 @@ class TextSlatJoint extends SlatJoint
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * Creates and returns a text form control.
+   * Creates and returns a date form control.
    *
-   * @param string $theName The local name of the text form control.
+   * @param string $theName The local name of the date form control.
    *
-   * @return TextControl
+   * @return DateControl
    */
   public function createCell($theName)
   {
-    return new TextControl($theName);
+    return new DateControl($theName);
   }
 
   //--------------------------------------------------------------------------------------------------------------------

@@ -10,9 +10,18 @@ class DateFormatter implements Formatter
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
-   * @var string The format specifier, see <http://www.php.net/manual/function.date.php>.
+   * The format specifier, see <http://www.php.net/manual/function.date.php>.
+   *
+   * @var string
    */
   private $myFormat;
+
+  /**
+   * If set the date that will treated as an open date. An open date will be shown as an empty form control.
+   *
+   * @var string
+   */
+  private $myOpenDate;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -42,6 +51,8 @@ class DateFormatter implements Formatter
 
     if ($valid)
     {
+      if ($theValue==$this->myOpenDate) return '';
+
       $date = new \DateTime($theValue);
 
       return $date->format($this->myFormat);
@@ -50,6 +61,17 @@ class DateFormatter implements Formatter
     {
       return $theValue;
     }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the open date. An open date will be shown as an empty field.
+   *
+   * @param string $theOpenDate The open date in YYYY-MM-DD format.
+   */
+  public function setOpenDate($theOpenDate)
+  {
+    $this->myOpenDate = $theOpenDate;
   }
 
   //--------------------------------------------------------------------------------------------------------------------

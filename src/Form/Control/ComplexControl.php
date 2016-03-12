@@ -3,6 +3,7 @@
 namespace SetBased\Abc\Form\Control;
 
 use SetBased\Abc\Error\LogicException;
+use SetBased\Abc\Form\Cleaner\Cleaner;
 
 /**
  * Class for complex form controls. A complex form control consists of one of more form controls.
@@ -10,6 +11,13 @@ use SetBased\Abc\Error\LogicException;
 class ComplexControl extends Control implements CompoundControl
 {
   //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * The cleaner to clean and/or translate (to machine format) the submitted values.
+   *
+   * @var Cleaner
+   */
+  protected $myCleaner;
+
   /**
    * The child form controls of this form control.
    *
@@ -236,11 +244,12 @@ class ComplexControl extends Control implements CompoundControl
    */
   public function generate()
   {
-    $ret = '';
+    $ret = $this->myPrefix;
     foreach ($this->myControls as $control)
     {
       $ret .= $control->generate();
     }
+    $ret .= $this->myPostfix;
 
     return $ret;
   }
@@ -377,6 +386,7 @@ class ComplexControl extends Control implements CompoundControl
 
     foreach ($this->myControls as $control)
     {
+      if ($this->myCleaner) $tmp1 = $this->myCleaner->clean($tmp1);
       $control->loadSubmittedValuesBase($tmp1, $tmp2, $tmp3);
     }
 
@@ -439,6 +449,32 @@ class ComplexControl extends Control implements CompoundControl
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Sets the cleaner for this form control.
+   *
+   * @param Cleaner $theCleaner The cleaner.
+   */
+  public function setCleaner($theCleaner)
+  {
+    $this->myCleaner = $theCleaner;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the values of the form controls of this complex control. The values of form controls for which no explicit
+   * value is set are set to null.
+   *
+   * @param mixed $theValues The values as a nested array.
+   */
+  public function setValue($theValues)
+  {
+    foreach ($this->myControls as $control)
+    {
+      $control->setValuesBase($theValues);
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Sets the values of the form controls of this complex control. The values of form controls for which no explicit
    * value is set are set to null.
    *
@@ -481,7 +517,11 @@ class ComplexControl extends Control implements CompoundControl
     // First, validate all child form controls.
     foreach ($this->myControls as $control)
     {
-      $valid = $control->validateBase($theInvalidFormControls) && $valid;
+      if (!$control->validateBase($theInvalidFormControls))
+      {
+        $this->myInvalidControls[] = $control;
+        $valid                     = false;
+      }
     }
 
     if ($valid)

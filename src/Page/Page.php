@@ -376,6 +376,17 @@ abstract class Page
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * If a page needs additional and page specific authorization and/or security checks this method must be overridden.
+   *
+   * When a HTTP request must be denied a NotAuthorizedException must be raised.
+   */
+  public function checkAuthorization()
+  {
+    // Nothing to do.
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
    * Must be implemented in child classes to echo the actual page content, i.e. the inner HTML of the body tag.
    *
    * @return null

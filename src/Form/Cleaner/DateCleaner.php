@@ -30,6 +30,13 @@ class DateCleaner implements Cleaner
    */
   protected $mySeparator;
 
+  /**
+   * If set the date that will treated as an open date. An an empty form control will be translated to the open date.
+   *
+   * @var string
+   */
+  private $myOpenDate;
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Object constructor.
@@ -64,7 +71,7 @@ class DateCleaner implements Cleaner
     // If the value is empty return immediately.
     if ($value==='' || $value===null || $value===false)
     {
-      return null;
+      return ($this->myOpenDate) ? $this->myOpenDate : null;
     }
 
     // First validate against ISO 8601.
@@ -96,6 +103,17 @@ class DateCleaner implements Cleaner
     }
 
     return $value;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Sets the open date. An empty submitted value will be replaced with the open date.
+   *
+   * @param string $theOpenDate The open date in YYYY-MM-DD format.
+   */
+  public function setOpenDate($theOpenDate)
+  {
+    $this->myOpenDate = $theOpenDate;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
